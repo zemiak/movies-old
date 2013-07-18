@@ -6,3 +6,8 @@
 *.ear
 *~
 target
+.DS_Store
+
+# Vaadin Widgetsets
+src/main/webapp/VAADIN/gwt-unitCache/
+src/main/webapp/VAADIN/widgetsets/
