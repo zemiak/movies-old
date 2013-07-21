@@ -1,29 +1,144 @@
-/**
- * NavigationButton descriptions (search results)
- */
+@import url("../reindeer/legacy-styles.css");
 
-.v-touchkit-navbutton-desc {
-    float: left;
-    color: black;
-    font-weight: bold;
+
+.v-horizontallayout-header {
+    background: #353637;
+    background-image: -webkit-linear-gradient(right, #5A6066 0%, #353637 100%);
+    background-image: -moz-linear-gradient(right, #5A6066 0%, #353637 100%);
+    background-image: -ms-linear-gradient(right, #5A6066 0%, #353637 100%);
 }
 
-div .v-touchkit-navbutton-desc {
-    float: left;
-    color: black;
-    font-weight: bold;
+.v-horizontallayout-header .title {
+    color: lavender;
+    padding: 3px 10px;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.v-horizontallayout-header .menu {
+    background: inherit;
+}
+
+.v-horizontallayout-header .menu .v-menubar-menuitem-caption {
+    text-shadow: none;
+}
+
+.v-horizontallayout-header .menu .v-menubar-menuitem {
+    cursor: pointer;
+    color: #ddd;
+    text-shadow: none;
+}
+
+.v-horizontallayout-header .menu .v-menubar-menuitem:hover,
+.v-horizontallayout-header .menu .v-menubar-menuitem-selected,
+.v-menubar-submenu .v-menubar-menuitem-selected {
+    background: #2b71c7;
+    color: white;
+    text-shadow: none;
+}
+
+.v-menubar-submenu {
+    border-radius: 0;
+    background: #353637;
+    color: #ddd;
+    border: 1px solid #666;
+}
+
+.v-menubar-separator span {
+    border-top: 1px solid #666;
+}
+
+.v-text-field {
+    width: 100%;
+}
+
+.v-window-maximizebox {
+    display: none;
+}
+
+.v-window-closebox {
+    display: none;
+}
+
+.side-bar {
+    background: #d1d8e0;
+    background-image: -webkit-linear-gradient(top, #e8ecf1 0%, #d1d8e0 100%);
+    background-image: -moz-linear-gradient(top, #e8ecf1 0%, #d1d8e0 100%);
+    background-image: -ms-linear-gradient(top, #e8ecf1 0%, #d1d8e0 100%);
+}
+
+.side-bar .v-accordion {
+    border: none;
+}
+
+.side-bar .v-accordion .v-accordion-item {
+    background: transparent;
+}
+
+.side-bar .v-accordion .v-accordion-item-caption {
+    text-transform: uppercase;
+    font-weight: normal;
+    text-shadow: none;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    color: white;
+    background: #8a98b9;
+    border-bottom: 1px solid #818dac;
+    border-top: none;
+    opacity: 0.7;
+}
+
+.side-bar .v-accordion .v-accordion-item-caption:hover {
+    opacity: 1.0;
+}
+
+.side-bar .v-accordion .v-accordion-item-first .v-accordion-item-caption {
+    border-top: 1px solid #818dac;
+}
+
+.side-bar .v-accordion .v-accordion-item-open .v-accordion-item-caption {
+    background: #2b71c7;
+    border-top: 1px solid #2865b8;
+    border-bottom: 1px solid #2865b8;
+    font-weight: 600;
+    opacity: 1.0;
+}
+
+.side-bar button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 2px;
+    margin-top: 2px;
+    font-weight: normal;
+}
+
+.side-bar button:hover {
+    text-decoration: underline;
+}
+
+.side-bar button:focus {
+    outline: none;
+}
+
+.side-bar button span {
+    display: block;
+}
+
+/* catalog-form forms */
+.v-app input.v-textfield.v-widget.catalog-form, .v-window input.v-textfield.v-widget.catalog-form {
+    font-size: 16px;
 }
 
 /**
  * Tablet responsive design
  */
-
 .grid {
     overflow: visible;
 }
 
 /* Style the items in the grid */
-.grid > .v-touchkit-navbutton {
+.grid > .v-label {
     outline: 1px dotted rgba(0,0,0,.3);
     text-align: center;
     padding: 2em 0;
@@ -33,26 +148,26 @@ div .v-touchkit-navbutton-desc {
 }
 
 /* We want the items in the grid to stay between 100px and 200px, if possible */
-.grid[width-range~="0-200px"] .v-touchkit-navbutton {
+.grid[width-range~="0-200px"] .v-label {
     width: 100%;
 }
 
-.grid[width-range~="201px-400px"] > .v-touchkit-navbutton {
+.grid[width-range~="201px-400px"] > .v-label {
     width: 50%;
 }
 
-.grid[width-range~="401px-600px"] > .v-touchkit-navbutton {
+.grid[width-range~="401px-600px"] > .v-label {
     width: 33.3333%;
 }
 
-.grid[width-range~="601px-800px"] > .v-touchkit-navbutton {
+.grid[width-range~="601px-800px"] > .v-label {
     width: 25%;
 }
 
-.grid[width-range~="801px-1000px"] > .v-touchkit-navbutton {
+.grid[width-range~="801px-1000px"] > .v-label {
     width: 20%;
 }
 
-.grid[width-range~="1001px-"] > .v-touchkit-navbutton {
+.grid[width-range~="1001px-"] > .v-label {
     width: 16.6667%;
 }

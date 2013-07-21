@@ -42,7 +42,6 @@
     -->
     <!-- <set-configuration-property name="devModeRedirectEnabled" value="true" /> -->
     
-    <inherits name="com.vaadin.addon.touchkit.gwt.TouchKitWidgetSet" />
     <inherits name="com.vaadin.addon.responsive.ResponsiveWidgetSet" /> 
     
     <generate-with class="com.zemiak.movies.OptimizedConnectorBundleLoaderFactory">
