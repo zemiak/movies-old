@@ -31,10 +31,7 @@ public class LanguageService {
         if (null == lang) {
             em.persist(entity);
         } else {
-            lang.setId(entity.getId());
-            lang.setName(entity.getName());
-            lang.setDisplayOrder(entity.getDisplayOrder());
-            lang.setPictureFileName(entity.getPictureFileName());
+            lang.copyFrom(entity);
         }
     }
     

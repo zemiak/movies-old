@@ -63,6 +63,13 @@ public class Language implements Serializable {
     public Language(String id) {
         this.id = id;
     }
+    
+    public void copyFrom(Language entity) {
+        this.setId(entity.getId());
+        this.setName(entity.getName());
+        this.setDisplayOrder(entity.getDisplayOrder());
+        this.setPictureFileName(entity.getPictureFileName());
+    }
 
     public Language(String id, String name) {
         this.id = id;
