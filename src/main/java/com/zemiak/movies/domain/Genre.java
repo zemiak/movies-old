@@ -58,6 +58,9 @@ public class Genre implements Serializable {
     private int protected1;
     
     @OneToMany(mappedBy = "genreId")
+    private List<Serie> serieList;
+    
+    @OneToMany(mappedBy = "genreId")
     private List<Movie> movieList;
 
     public Genre() {
@@ -83,6 +86,10 @@ public class Genre implements Serializable {
 
     public Integer getId() {
         return id;
+    }
+
+    public List<Serie> getSerieList() {
+        return serieList;
     }
 
     public void setId(Integer id) {

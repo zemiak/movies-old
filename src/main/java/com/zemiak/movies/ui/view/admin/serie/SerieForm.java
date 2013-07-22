@@ -1,4 +1,4 @@
-package com.zemiak.movies.ui.view.admin.genre;
+package com.zemiak.movies.ui.view.admin.serie;
 
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.ExternalResource;
@@ -14,8 +14,8 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import com.zemiak.movies.boundary.GenreService;
-import com.zemiak.movies.domain.Genre;
+import com.zemiak.movies.boundary.SerieService;
+import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.ui.view.UrlData;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
@@ -26,27 +26,27 @@ import javax.inject.Inject;
  * @author vasko
  */
 @Dependent
-public class GenreForm extends Window {
+public class SerieForm extends Window {
 
     private FormLayout layout;
-    private Genre entity;
+    private Serie entity;
     private TextField id, name;
     
     private Embedded image;
     private Layout panelContent;
     
     @Inject
-    private GenreService service;
+    private SerieService service;
     
     @Inject
-    private javax.enterprise.event.Event<GenreListRefreshEvent> events;
+    private javax.enterprise.event.Event<SerieListRefreshEvent> events;
     
-    public GenreForm() {
+    public SerieForm() {
     }
 
     public void setEntity(Integer entityId) {
         if (null == entityId) {
-            entity = new Genre();
+            entity = new Serie();
             
             image = new Embedded("Icon");
             image.setVisible(false);
@@ -54,7 +54,7 @@ public class GenreForm extends Window {
             entity = service.find(entityId);
             
             image = new Embedded("Icon", 
-                new ExternalResource(UrlData.IMG_PATH + "genre/"
+                new ExternalResource(UrlData.IMG_PATH + "serie/"
                 + entity.getPictureFileName()));
         }
         
@@ -127,7 +127,7 @@ public class GenreForm extends Window {
                     
                     service.save(entity);
                     
-                    events.fire(new GenreListRefreshEvent());
+                    events.fire(new SerieListRefreshEvent());
                     Notification.show("The language has been saved.", Notification.Type.HUMANIZED_MESSAGE);
                 } catch (Exception e) {
                     Notification.show("Error: " + e.getMessage(), Notification.Type.ERROR_MESSAGE);

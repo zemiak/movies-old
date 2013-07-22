@@ -10,6 +10,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -50,8 +52,9 @@ public class Serie implements Serializable {
     @Column(name = "display_order")
     private Integer displayOrder;
     
-    @Column(name = "genre_id")
-    private Integer genreId;
+    @JoinColumn(name = "genre_id", referencedColumnName = "id")
+    @ManyToOne
+    private Genre genreId;
     
     @OneToMany(mappedBy = "serieId")
     private List<Movie> movieList;
@@ -103,12 +106,12 @@ public class Serie implements Serializable {
         this.displayOrder = displayOrder;
     }
 
-    public Integer getGenreId() {
+    public Genre getGenreId() {
         return genreId;
     }
 
-    public void setGenreId(Integer genreId) {
-        this.genreId = genreId;
+    public void setGenreId(Genre genre) {
+        this.genreId = genre;
     }
 
     public List<Movie> getMovieList() {

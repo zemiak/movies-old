@@ -19,7 +19,7 @@ public class SerieService {
     private EntityManager em;
     
     public List<Serie> all() {
-        Query query = em.createQuery("SELECT l FROM Serie l ORDER by l.displayOrder");
+        Query query = em.createQuery("SELECT l FROM Serie l ORDER by l.genreId");
         query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         
         return query.getResultList();
@@ -35,11 +35,11 @@ public class SerieService {
         }
     }
     
-    public Serie find(String id) {
+    public Serie find(Integer id) {
         return em.find(Serie.class, id);
     }
 
-    public void remove(String entityId) {
+    public void remove(Integer entityId) {
         em.remove(em.find(Serie.class, entityId));
     }
 }
