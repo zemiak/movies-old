@@ -7,10 +7,12 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
+import com.zemiak.movies.MoviesTheme;
 import com.zemiak.movies.boundary.GenreService;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.ui.view.ViewAbstract;
@@ -41,6 +43,7 @@ public class GenreListView extends ViewAbstract {
         setSizeFull();
         setMargin(true);
         
+        initLabel();
         initTable();
         initContainer(table);
         initButtonBar();
@@ -156,5 +159,11 @@ public class GenreListView extends ViewAbstract {
         buttonBar.addComponent(button);
         
         addComponent(buttonBar);
+    }
+
+    private void initLabel() {
+        Label head = new Label("Genres");
+        head.addStyleName(MoviesTheme.LABEL_H1);
+        addComponent(head);
     }
 }

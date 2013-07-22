@@ -1,6 +1,8 @@
 package com.zemiak.movies.ui.view.admin.serie;
 
 import com.vaadin.data.Validator;
+import com.vaadin.data.fieldgroup.FieldGroup;
+import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Button;
@@ -32,6 +34,7 @@ public class SerieForm extends Window {
     private FormLayout layout;
     private Serie entity;
     private TextField id, name, order;
+    FieldGroup binder;
     
     private Embedded image;
     private Layout panelContent;
@@ -123,6 +126,11 @@ public class SerieForm extends Window {
             }
         });
         layout.addComponent(order);
+        
+        binder = new FieldGroup();
+        binder.bind(id, "ID");
+        binder.bind(name, "Name");
+        binder.bind(order, "Order");
     }
 
     private void initLayout() {
@@ -141,6 +149,10 @@ public class SerieForm extends Window {
             @Override
             public void buttonClick(ClickEvent event) {
                 try {
+                    if (! binder.isValid()) {
+                        throw new FieldGroup.CommitException("");
+                    }
+                    
                     entity.setId(Integer.valueOf(id.getValue()));
                     entity.setName(name.getValue());
                     entity.setDisplayOrder(Integer.valueOf(order.getValue()));
@@ -148,11 +160,12 @@ public class SerieForm extends Window {
                     
                     events.fire(new SerieListRefreshEvent());
                     Notification.show("The language has been saved.", Notification.Type.HUMANIZED_MESSAGE);
+                    close();
+                } catch (FieldGroup.CommitException e) {
+                    Notification.show("Validation error", Notification.Type.WARNING_MESSAGE);
                 } catch (Exception e) {
                     Notification.show("Error: " + e.getMessage(), Notification.Type.ERROR_MESSAGE);
                     throw e;
-                } finally {
-                    close();
                 }
             }
         });

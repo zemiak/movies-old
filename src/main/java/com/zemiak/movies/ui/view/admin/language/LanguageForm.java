@@ -1,5 +1,6 @@
 package com.zemiak.movies.ui.view.admin.language;
 
+import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -26,6 +27,7 @@ public class LanguageForm extends Window {
     private FormLayout layout;
     private Language entity;
     TextField id, name;
+    private FieldGroup binder;
     
     @Inject
     private LanguageService service;
@@ -80,6 +82,10 @@ public class LanguageForm extends Window {
         name.addStyleName("catalog-form");
         name.focus();
         layout.addComponent(name);
+        
+        binder = new FieldGroup();
+        binder.bind(id, "ID");
+        binder.bind(name, "Name");
     }
 
     private void initLayout() {
@@ -98,6 +104,10 @@ public class LanguageForm extends Window {
             @Override
             public void buttonClick(ClickEvent event) {
                 try {
+                    if (! binder.isValid()) {
+                        throw new FieldGroup.CommitException("");
+                    }
+                    
                     entity.setId(id.getValue());
                     entity.setName(name.getValue());
                     
@@ -105,11 +115,12 @@ public class LanguageForm extends Window {
                     
                     events.fire(new LanguageListRefreshEvent());
                     Notification.show("The language has been saved.", Notification.Type.HUMANIZED_MESSAGE);
+                    close();
+                } catch (FieldGroup.CommitException e) {
+                    Notification.show("Validation error", Notification.Type.WARNING_MESSAGE);
                 } catch (Exception e) {
                     Notification.show("Error: " + e.getMessage(), Notification.Type.ERROR_MESSAGE);
                     throw e;
-                } finally {
-                    close();
                 }
             }
         });
