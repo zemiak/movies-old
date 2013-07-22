@@ -1,5 +1,6 @@
 package com.zemiak.movies.ui.view.admin.serie;
 
+import com.vaadin.data.Validator;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Button;
@@ -30,7 +31,7 @@ public class SerieForm extends Window {
 
     private FormLayout layout;
     private Serie entity;
-    private TextField id, name;
+    private TextField id, name, order;
     
     private Embedded image;
     private Layout panelContent;
@@ -60,6 +61,7 @@ public class SerieForm extends Window {
         
         id.setValue(String.valueOf(entity.getId()));
         name.setValue(entity.getName());
+        order.setValue(String.valueOf(entity.getDisplayOrder()));
         
         panelContent.removeAllComponents();
         panelContent.addComponent(image);
@@ -104,6 +106,23 @@ public class SerieForm extends Window {
 
         panelContent = new VerticalLayout();
         layout.addComponent(panelContent);
+        
+        order = new TextField("Order");
+        order.addStyleName("catalog-form");
+        order.addValidator(new Validator() {
+            @Override
+            public void validate(Object value) throws Validator.InvalidValueException {
+                String val = (String) value;
+                Integer real;
+                
+                try {
+                    real = Integer.valueOf(val);
+                } catch (NumberFormatException ex) {
+                    throw new Validator.InvalidValueException("Cannot convert to Integer");
+                }
+            }
+        });
+        layout.addComponent(order);
     }
 
     private void initLayout() {
@@ -124,7 +143,7 @@ public class SerieForm extends Window {
                 try {
                     entity.setId(Integer.valueOf(id.getValue()));
                     entity.setName(name.getValue());
-                    
+                    entity.setDisplayOrder(Integer.valueOf(order.getValue()));
                     service.save(entity);
                     
                     events.fire(new SerieListRefreshEvent());
