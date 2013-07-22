@@ -1,13 +1,14 @@
 package com.zemiak.movies.ui.view.admin.serie;
 
+import com.vaadin.data.Item;
 import com.vaadin.data.Validator;
 import com.vaadin.data.fieldgroup.FieldGroup;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -17,7 +18,9 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import com.zemiak.movies.boundary.GenreService;
 import com.zemiak.movies.boundary.SerieService;
+import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.ui.view.UrlData;
 import javax.annotation.PostConstruct;
@@ -34,6 +37,7 @@ public class SerieForm extends Window {
     private FormLayout layout;
     private Serie entity;
     private TextField id, name, order;
+    private ComboBox genre;
     FieldGroup binder;
     
     private Embedded image;
@@ -41,6 +45,9 @@ public class SerieForm extends Window {
     
     @Inject
     private SerieService service;
+    
+    @Inject
+    private GenreService genreService;
     
     @Inject
     private javax.enterprise.event.Event<SerieListRefreshEvent> events;
@@ -65,6 +72,7 @@ public class SerieForm extends Window {
         id.setValue(String.valueOf(entity.getId()));
         name.setValue(entity.getName());
         order.setValue(String.valueOf(entity.getDisplayOrder()));
+        genre.setValue(entity.getGenreId().getId());
         
         panelContent.removeAllComponents();
         panelContent.addComponent(image);
@@ -73,8 +81,8 @@ public class SerieForm extends Window {
     @PostConstruct
     public void init() {
         this.center();
-        this.setHeight("30em");
-        this.setWidth("30em");
+        this.setHeight("35em");
+        this.setWidth("35em");
         
         initLayout();
         initFields();
@@ -127,10 +135,13 @@ public class SerieForm extends Window {
         });
         layout.addComponent(order);
         
+        initGenreCombo();
+        
         binder = new FieldGroup();
         binder.bind(id, "ID");
         binder.bind(name, "Name");
         binder.bind(order, "Order");
+        binder.bind(genre, "Genre");
     }
 
     private void initLayout() {
@@ -156,6 +167,7 @@ public class SerieForm extends Window {
                     entity.setId(Integer.valueOf(id.getValue()));
                     entity.setName(name.getValue());
                     entity.setDisplayOrder(Integer.valueOf(order.getValue()));
+                    entity.setGenreId(genreService.find((Integer) genre.getValue()));
                     service.save(entity);
                     
                     events.fire(new SerieListRefreshEvent());
@@ -182,5 +194,16 @@ public class SerieForm extends Window {
         hlayout.addComponent(button);
         
         layout.addComponent(hlayout);
+    }
+
+    private void initGenreCombo() {
+        genre = new ComboBox("Genre");
+
+        for (Genre entry: genreService.all()) {
+            genre.addItem(entry.getId());
+            genre.setItemCaption(entry.getId(), entry.getName());
+        }
+        
+        layout.addComponent(genre);
     }
 }
