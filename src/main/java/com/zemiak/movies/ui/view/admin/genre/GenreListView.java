@@ -1,4 +1,4 @@
-package com.zemiak.movies.ui.view.admin.language;
+package com.zemiak.movies.ui.view.admin.genre;
 
 import com.vaadin.cdi.CDIView;
 import com.vaadin.data.Item;
@@ -11,29 +11,29 @@ import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
-import com.zemiak.movies.boundary.LanguageService;
-import com.zemiak.movies.domain.Language;
+import com.zemiak.movies.boundary.GenreService;
+import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.ui.view.ViewAbstract;
 import javax.annotation.PostConstruct;
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
-@CDIView(LanguageListView.VIEW_ID)
-public class LanguageListView extends ViewAbstract {
-    public static final String VIEW_ID = "language";
-    public static final ThemeResource ICON = new ThemeResource("icons/world.png");
+@CDIView(GenreListView.VIEW_ID)
+public class GenreListView extends ViewAbstract {
+    public static final String VIEW_ID = "genre";
+    public static final ThemeResource ICON = new ThemeResource("icons/music_beamed_note.png");
     
     @Inject
-    private LanguageService service;
+    private GenreService service;
     
     @Inject
-    Instance<LanguageForm> form;
+    Instance<GenreForm> form;
     
     private Table table;
     private IndexedContainer container;
 
-    public LanguageListView() {
+    public GenreListView() {
     }
     
     @PostConstruct
@@ -45,28 +45,30 @@ public class LanguageListView extends ViewAbstract {
         initContainer(table);
         initButtonBar();
         
-        table.setVisibleColumns((Object[]) new String[]{"ID", "Name"});
+        table.setVisibleColumns((Object[]) new String[]{"ID", "Name", "Display Order"});
         setExpandRatio(table, 1);
     }
     
-    public void refreshContainer(@Observes LanguageListRefreshEvent event) {
+    public void refreshContainer(@Observes GenreListRefreshEvent event) {
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {
                 container.removeAllItems();
         
-                for (Language entry: service.all()) {
+                for (Genre entry: service.all()) {
                     addRow(entry);
                 }
             }
         });
     }
     
-    private void addRow(Language entity) {
+    private void addRow(Genre entity) {
         int id = entity.hashCode();
         Item newItem = container.addItem(id);
+        
         newItem.getItemProperty("ID").setValue(entity.getId());
         newItem.getItemProperty("Name").setValue(entity.getName());
+        newItem.getItemProperty("Display Order").setValue(entity.getDisplayOrder());
     }
 
     @Override
@@ -96,8 +98,9 @@ public class LanguageListView extends ViewAbstract {
 
     private void initContainer(Table table) {
         container = new IndexedContainer();
-        container.addContainerProperty("ID", String.class, null);
+        container.addContainerProperty("ID", Integer.class, null);
         container.addContainerProperty("Name", String.class, null);
+        container.addContainerProperty("Display Order", Integer.class, null);
         table.setContainerDataSource(container);
     }
 
@@ -112,9 +115,9 @@ public class LanguageListView extends ViewAbstract {
                 Integer id = (Integer) table.getValue();
                 
                 if (null != id) {
-                    String entityId = (String) container.getItem(id).getItemProperty("ID").getValue();
-                    LanguageForm form = LanguageListView.this.form.get();
-                    form.setEntity(entityId);                    
+                    Integer entityId = (Integer) container.getItem(id).getItemProperty("ID").getValue();
+                    GenreForm form = GenreListView.this.form.get();
+                    form.setEntity(entityId);
                     getUI().addWindow(form);
                 } else {
                     Notification.show("Select an item, first.", Notification.Type.HUMANIZED_MESSAGE);
@@ -127,7 +130,7 @@ public class LanguageListView extends ViewAbstract {
         button = new NativeButton("New", new Button.ClickListener(){
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                LanguageForm form = LanguageListView.this.form.get();
+                GenreForm form = GenreListView.this.form.get();
                 form.setEntity(null);
                 getUI().addWindow(form);
             }

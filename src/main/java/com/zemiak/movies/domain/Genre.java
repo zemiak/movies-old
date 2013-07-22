@@ -72,6 +72,14 @@ public class Genre implements Serializable {
         this.name = name;
         this.protected1 = protected1;
     }
+    
+    public void copyFrom(Genre entity) {
+        this.setId(entity.getId());
+        this.setName(entity.getName());
+        this.setDisplayOrder(entity.getDisplayOrder());
+        this.setPictureFileName(entity.getPictureFileName());
+        this.setProtected1(entity.getProtected1());
+    }
 
     public Integer getId() {
         return id;

@@ -1,17 +1,25 @@
-package com.zemiak.movies.ui.view.admin.language;
+package com.zemiak.movies.ui.view.admin.genre;
 
-import com.vaadin.event.ShortcutAction;
+import com.vaadin.event.ShortcutListener;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Layout;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.Upload;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import com.zemiak.movies.boundary.LanguageService;
-import com.zemiak.movies.domain.Language;
+import com.zemiak.movies.boundary.GenreService;
+import com.zemiak.movies.domain.Genre;
+import com.zemiak.movies.ui.view.ImageUploader;
+import com.zemiak.movies.ui.view.UrlData;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -21,37 +29,50 @@ import javax.inject.Inject;
  * @author vasko
  */
 @Dependent
-public class LanguageForm extends Window {
+public class GenreForm extends Window {
 
     private FormLayout layout;
-    private Language entity;
-    TextField id, name;
+    private Genre entity;
+    private TextField id, name;
+    
+    private Embedded image;
+    private Layout panelContent;
     
     @Inject
-    private LanguageService service;
+    private GenreService service;
     
     @Inject
-    private javax.enterprise.event.Event<LanguageListRefreshEvent> events;
+    private javax.enterprise.event.Event<GenreListRefreshEvent> events;
     
-    public LanguageForm() {
+    public GenreForm() {
     }
 
-    public void setEntity(String entityId) {
+    public void setEntity(Integer entityId) {
         if (null == entityId) {
-            entity = new Language();
+            entity = new Genre();
+            
+            image = new Embedded("Icon");
+            image.setVisible(false);
         } else {
             entity = service.find(entityId);
+            
+            image = new Embedded("Icon", 
+                new ExternalResource(UrlData.IMG_PATH + "genre/"
+                + entity.getPictureFileName()));
         }
         
-        id.setValue(entity.getId());
+        id.setValue(String.valueOf(entity.getId()));
         name.setValue(entity.getName());
+        
+        panelContent.removeAllComponents();
+        panelContent.addComponent(image);
     }
 
     @PostConstruct
     public void init() {
         this.center();
-        this.setHeight("14em");
-        this.setWidth("35em");
+        this.setHeight("30em");
+        this.setWidth("30em");
         
         initLayout();
         initFields();
@@ -61,7 +82,7 @@ public class LanguageForm extends Window {
     @Override
     public void attach() {
         super.attach();
-        setCloseShortcut(ShortcutAction.KeyCode.ESCAPE);
+        setCloseShortcut(ShortcutListener.KeyCode.ESCAPE);
     }
     
     @Override
@@ -70,7 +91,7 @@ public class LanguageForm extends Window {
     }
 
     private void initFields() {
-        id = new TextField("Code");
+        id = new TextField("ID");
         id.setWidth("100%");
         id.addStyleName("catalog-form");
         layout.addComponent(id);
@@ -80,6 +101,12 @@ public class LanguageForm extends Window {
         name.addStyleName("catalog-form");
         name.focus();
         layout.addComponent(name);
+        
+        image = new Embedded("Icon");
+        image.setVisible(false);
+
+        panelContent = new VerticalLayout();
+        layout.addComponent(panelContent);
     }
 
     private void initLayout() {
@@ -98,12 +125,12 @@ public class LanguageForm extends Window {
             @Override
             public void buttonClick(ClickEvent event) {
                 try {
-                    entity.setId(id.getValue());
+                    entity.setId(Integer.valueOf(id.getValue()));
                     entity.setName(name.getValue());
                     
                     service.save(entity);
                     
-                    events.fire(new LanguageListRefreshEvent());
+                    events.fire(new GenreListRefreshEvent());
                     Notification.show("The language has been saved.", Notification.Type.HUMANIZED_MESSAGE);
                 } catch (Exception e) {
                     Notification.show("Error: " + e.getMessage(), Notification.Type.ERROR_MESSAGE);

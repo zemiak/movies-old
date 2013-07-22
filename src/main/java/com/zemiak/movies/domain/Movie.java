@@ -96,6 +96,22 @@ public class Movie implements Serializable {
     public Movie(Integer id) {
         this.id = id;
     }
+    
+    public void copyFrom(Movie entity) {
+        this.setId(entity.getId());
+        this.setName(entity.getName());
+        this.setDisplayOrder(entity.getDisplayOrder());
+        this.setPictureFileName(entity.getPictureFileName());
+        this.setDescription(entity.getDescription());
+        this.setFileName(entity.getFileName());
+        this.setGenreId(entity.getGenreId());
+        this.setLanguage(entity.getLanguage());
+        this.setOriginalLanguage(entity.getOriginalLanguage());
+        this.setOriginalName(entity.getOriginalName());
+        this.setSerieId(entity.getSerieId());
+        this.setSubtitles(entity.getSubtitles());
+        this.setUrl(entity.getUrl());
+    }
 
     public Integer getId() {
         return id;

@@ -1,6 +1,6 @@
 package com.zemiak.movies.boundary;
 
-import com.zemiak.movies.domain.Language;
+import com.zemiak.movies.domain.Serie;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -14,19 +14,19 @@ import org.eclipse.persistence.config.QueryHints;
  * @author vasko
  */
 @Stateless
-public class LanguageService {
+public class SerieService {
     @PersistenceContext
     private EntityManager em;
     
-    public List<Language> all() {
-        Query query = em.createQuery("SELECT l FROM Language l ORDER by l.displayOrder");
+    public List<Serie> all() {
+        Query query = em.createQuery("SELECT l FROM Serie l ORDER by l.displayOrder");
         query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         
         return query.getResultList();
     }
     
-    public void save(Language entity) {
-        Language target = em.find(Language.class, entity.getId());
+    public void save(Serie entity) {
+        Serie target = em.find(Serie.class, entity.getId());
         
         if (null == target) {
             em.persist(entity);
@@ -35,11 +35,11 @@ public class LanguageService {
         }
     }
     
-    public Language find(String id) {
-        return em.find(Language.class, id);
+    public Serie find(String id) {
+        return em.find(Serie.class, id);
     }
 
     public void remove(String entityId) {
-        em.remove(em.find(Language.class, entityId));
+        em.remove(em.find(Serie.class, entityId));
     }
 }

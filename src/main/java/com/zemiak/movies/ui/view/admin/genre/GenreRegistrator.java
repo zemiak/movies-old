@@ -1,4 +1,4 @@
-package com.zemiak.movies.ui.view;
+package com.zemiak.movies.ui.view.admin.genre;
 
 import com.zemiak.movies.ui.SideBarActionRegistrationEvent;
 
@@ -10,8 +10,9 @@ import javax.enterprise.event.Observes;
  * @author peholmst
  */
 @Dependent
-public class SideBarRegistrator {
+public class GenreRegistrator {
     public void registerActions(@Observes SideBarActionRegistrationEvent event) {
-        event.registerAction("About", AboutView.ICON, AboutView.VIEW_ID);
-    }
+        event.registerAction("Genre", GenreListView.ICON, GenreListView.VIEW_ID);
+
+   }
 }

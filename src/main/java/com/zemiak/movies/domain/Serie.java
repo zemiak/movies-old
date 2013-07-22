@@ -62,6 +62,14 @@ public class Serie implements Serializable {
     public Serie(Integer id) {
         this.id = id;
     }
+    
+    public void copyFrom(Serie entity) {
+        this.setId(entity.getId());
+        this.setName(entity.getName());
+        this.setDisplayOrder(entity.getDisplayOrder());
+        this.setPictureFileName(entity.getPictureFileName());
+        this.setGenreId(entity.getGenreId());
+    }
 
     public Integer getId() {
         return id;
