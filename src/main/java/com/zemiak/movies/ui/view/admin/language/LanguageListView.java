@@ -70,6 +70,7 @@ public class LanguageListView extends ViewAbstract {
         Item newItem = container.addItem(id);
         newItem.getItemProperty("ID").setValue(entity.getId());
         newItem.getItemProperty("Name").setValue(entity.getName());
+        newItem.getItemProperty("Display Order").setValue(entity.getDisplayOrder());
     }
 
     @Override
@@ -101,6 +102,7 @@ public class LanguageListView extends ViewAbstract {
         container = new IndexedContainer();
         container.addContainerProperty("ID", String.class, null);
         container.addContainerProperty("Name", String.class, null);
+        container.addContainerProperty("Display Order", Integer.class, null);
         table.setContainerDataSource(container);
     }
 
@@ -153,6 +155,46 @@ public class LanguageListView extends ViewAbstract {
             }
         });
         button.addStyleName("catalog-table");
+        buttonBar.addComponent(button);
+        
+        button = new NativeButton("Order Up", new Button.ClickListener(){
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                Integer id = (Integer) table.getValue();
+                
+                if (null != id) {
+                    String entityId = (String) container.getItem(id).getItemProperty("ID").getValue();
+                    Language entity = service.find(entityId);
+                    entity.setDisplayOrder(entity.getDisplayOrder() - 1);
+                    service.save(entity);
+                    refreshContainer(null);
+                } else {
+                    Notification.show("Select an item, first.", Notification.Type.HUMANIZED_MESSAGE);
+                }
+            }
+        });
+        button.addStyleName("catalog-table");
+        button.setIcon(new ThemeResource("icons/arrow_up.png"));
+        buttonBar.addComponent(button);
+        
+        button = new NativeButton("Order Down", new Button.ClickListener(){
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                Integer id = (Integer) table.getValue();
+                
+                if (null != id) {
+                    String entityId = (String) container.getItem(id).getItemProperty("ID").getValue();
+                    Language entity = service.find(entityId);
+                    entity.setDisplayOrder(entity.getDisplayOrder() + 1);
+                    service.save(entity);
+                    refreshContainer(null);
+                } else {
+                    Notification.show("Select an item, first.", Notification.Type.HUMANIZED_MESSAGE);
+                }
+            }
+        });
+        button.addStyleName("catalog-table");
+        button.setIcon(new ThemeResource("icons/arrow_down.png"));
         buttonBar.addComponent(button);
         
         addComponent(buttonBar);

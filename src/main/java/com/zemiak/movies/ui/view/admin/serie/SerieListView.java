@@ -160,6 +160,46 @@ public class SerieListView extends ViewAbstract {
         button.addStyleName("catalog-table");
         buttonBar.addComponent(button);
         
+        button = new NativeButton("Order Up", new Button.ClickListener(){
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                Integer id = (Integer) table.getValue();
+                
+                if (null != id) {
+                    Integer entityId = (Integer) container.getItem(id).getItemProperty("ID").getValue();
+                    Serie entity = service.find(entityId);
+                    entity.setDisplayOrder(entity.getDisplayOrder() - 1);
+                    service.save(entity);
+                    refreshContainer(null);
+                } else {
+                    Notification.show("Select an item, first.", Notification.Type.HUMANIZED_MESSAGE);
+                }
+            }
+        });
+        button.addStyleName("catalog-table");
+        button.setIcon(new ThemeResource("icons/arrow_up.png"));
+        buttonBar.addComponent(button);
+        
+        button = new NativeButton("Order Down", new Button.ClickListener(){
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                Integer id = (Integer) table.getValue();
+                
+                if (null != id) {
+                    Integer entityId = (Integer) container.getItem(id).getItemProperty("ID").getValue();
+                    Serie entity = service.find(entityId);
+                    entity.setDisplayOrder(entity.getDisplayOrder() + 1);
+                    service.save(entity);
+                    refreshContainer(null);
+                } else {
+                    Notification.show("Select an item, first.", Notification.Type.HUMANIZED_MESSAGE);
+                }
+            }
+        });
+        button.addStyleName("catalog-table");
+        button.setIcon(new ThemeResource("icons/arrow_down.png"));
+        buttonBar.addComponent(button);
+        
         addComponent(buttonBar);
     }
     
