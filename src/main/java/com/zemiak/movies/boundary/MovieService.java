@@ -1,6 +1,8 @@
 package com.zemiak.movies.boundary;
 
+import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.domain.Serie;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -20,6 +22,29 @@ public class MovieService {
     
     public List<Movie> all() {
         Query query = em.createQuery("SELECT l FROM Movie l ORDER by l.genreId, l.serieId, l.displayOrder");
+        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+        
+        return query.getResultList();
+    }
+    
+    public List<Movie> getNewMovies() {
+        Query query = em.createQuery("SELECT l FROM Movie l ORDER by l.genreId, l.serieId, l.displayOrder");
+        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+        
+        return query.getResultList();
+    }
+    
+    public List<Movie> getSerieMovies(Serie serie) {
+        Query query = em.createQuery("SELECT l FROM Movie l WHERE l.serieId IS NULL OR l.serieId = :serie ORDER by l.genreId, l.serieId, l.displayOrder");
+        query.setParameter("serie", serie);
+        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+        
+        return query.getResultList();
+    }
+    
+    public List<Movie> getGenreMovies(Genre genre) {
+        Query query = em.createQuery("SELECT l FROM Movie l WHERE l.genreId IS NULL OR l.genreId = :genre ORDER by l.genreId, l.serieId, l.displayOrder");
+        query.setParameter("genre", genre);
         query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         
         return query.getResultList();

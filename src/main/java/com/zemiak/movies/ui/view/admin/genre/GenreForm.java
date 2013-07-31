@@ -92,44 +92,12 @@ public class GenreForm extends Window {
     }
 
     private void initFields() {
-        id = new TextField("ID");
-        id.setWidth("100%");
-        id.addStyleName("catalog-form");
-        layout.addComponent(id);
-        
-        name = new TextField("Name");
-        name.setWidth("100%");
-        name.addStyleName("catalog-form");
-        name.focus();
-        layout.addComponent(name);
-        
-        image = new Embedded("Icon");
-        image.setVisible(false);
-
-        panelContent = new VerticalLayout();
-        layout.addComponent(panelContent);
-        
-        order = new TextField("Order");
-        order.addStyleName("catalog-form");
-        order.addValidator(new Validator() {
-            @Override
-            public void validate(Object value) throws Validator.InvalidValueException {
-                String val = (String) value;
-                Integer real;
-                
-                try {
-                    real = Integer.valueOf(val);
-                } catch (NumberFormatException ex) {
-                    throw new Validator.InvalidValueException("Cannot convert to Integer");
-                }
-            }
-        });
-        layout.addComponent(order);
-        
-        binder = new FieldGroup();
-        binder.bind(id, "ID");
-        binder.bind(name, "Name");
-        binder.bind(order, "Order");
+        initIdField();
+        initNameField();
+        initImage();
+        initPanel();
+        initOrderField();
+        initBinder();
     }
 
     private void initLayout() {
@@ -158,7 +126,7 @@ public class GenreForm extends Window {
                     service.save(entity);
                     
                     events.fire(new GenreListRefreshEvent());
-                    Notification.show("The language has been saved.", Notification.Type.HUMANIZED_MESSAGE);
+                    Notification.show("The genre has been saved.", Notification.Type.HUMANIZED_MESSAGE);
                     close();
                 } catch (FieldGroup.CommitException e) {
                     Notification.show("Validation error", Notification.Type.WARNING_MESSAGE);
@@ -181,5 +149,56 @@ public class GenreForm extends Window {
         hlayout.addComponent(button);
         
         layout.addComponent(hlayout);
+    }
+
+    private void initIdField() {
+        id = new TextField("ID");
+        id.setWidth("100%");
+        id.addStyleName("catalog-form");
+        layout.addComponent(id);
+    }
+
+    private void initNameField() {
+        name = new TextField("Name");
+        name.setWidth("100%");
+        name.addStyleName("catalog-form");
+        name.focus();
+        layout.addComponent(name);
+    }
+
+    private void initImage() {
+        image = new Embedded("Icon");
+        image.setVisible(false);
+    }
+
+    private void initPanel() {
+        panelContent = new VerticalLayout();
+        layout.addComponent(panelContent);
+    }
+
+    private void initOrderField() {
+        order = new TextField("Order");
+        order.addStyleName("catalog-form");
+        order.addValidator(new Validator() {
+            @Override
+            public void validate(Object value) throws Validator.InvalidValueException {
+                String val = (String) value;
+                Integer real;
+                
+                try {
+                    real = Integer.valueOf(val);
+                } catch (NumberFormatException ex) {
+                    throw new Validator.InvalidValueException("Cannot convert to Integer");
+                }
+            }
+        });
+        layout.addComponent(order);
+    }
+
+    private void initBinder() throws FieldGroup.BindException {
+        binder = new FieldGroup();
+        binder.bind(id, "ID");
+        binder.bind(name, "Name");
+        binder.bind(order, "Order");
     }
 }

@@ -72,20 +72,9 @@ public class LanguageForm extends Window {
     }
 
     private void initFields() {
-        id = new TextField("Code");
-        id.setWidth("100%");
-        id.addStyleName("catalog-form");
-        layout.addComponent(id);
-        
-        name = new TextField("Name");
-        name.setWidth("100%");
-        name.addStyleName("catalog-form");
-        name.focus();
-        layout.addComponent(name);
-        
-        binder = new FieldGroup();
-        binder.bind(id, "ID");
-        binder.bind(name, "Name");
+        initIdField();
+        initNameField();
+        initBinder();
     }
 
     private void initLayout() {
@@ -137,5 +126,26 @@ public class LanguageForm extends Window {
         hlayout.addComponent(button);
         
         layout.addComponent(hlayout);
+    }
+
+    private void initIdField() {
+        id = new TextField("Code");
+        id.setWidth("100%");
+        id.addStyleName("catalog-form");
+        layout.addComponent(id);
+    }
+
+    private void initNameField() {
+        name = new TextField("Name");
+        name.setWidth("100%");
+        name.addStyleName("catalog-form");
+        name.focus();
+        layout.addComponent(name);
+    }
+
+    private void initBinder() throws FieldGroup.BindException {
+        binder = new FieldGroup();
+        binder.bind(id, "ID");
+        binder.bind(name, "Name");
     }
 }
