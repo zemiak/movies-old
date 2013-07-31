@@ -35,11 +35,11 @@ public class MovieService {
         }
     }
     
-    public Movie find(String id) {
+    public Movie find(Integer id) {
         return em.find(Movie.class, id);
     }
 
-    public void remove(String entityId) {
+    public void remove(Integer entityId) {
         em.remove(em.find(Movie.class, entityId));
     }
 }
