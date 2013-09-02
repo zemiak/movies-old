@@ -19,7 +19,7 @@ public class SerieService {
     private EntityManager em;
     
     public List<Serie> all() {
-        Query query = em.createQuery("SELECT l FROM Serie l ORDER by l.genreId");
+        Query query = em.createQuery("SELECT l FROM Serie l ORDER by l.name");
         query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         
         return query.getResultList();

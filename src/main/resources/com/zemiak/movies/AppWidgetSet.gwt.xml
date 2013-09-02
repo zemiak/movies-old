@@ -42,10 +42,14 @@
     -->
     <!-- <set-configuration-property name="devModeRedirectEnabled" value="true" /> -->
     
-    <inherits name="com.vaadin.addon.responsive.ResponsiveWidgetSet" /> 
+     
     
     <generate-with class="com.zemiak.movies.OptimizedConnectorBundleLoaderFactory">
         <when-type-assignable class="com.vaadin.client.metadata.ConnectorBundleLoader" />
     </generate-with>
 
+
+    <inherits name="org.vaadin.hene.popupbutton.widgetset.PopupbuttonWidgetset" />
+
+    <inherits name="org.tepi.filtertable.gwt.FilterTableWidgetset" />
 </module>

@@ -13,7 +13,6 @@ public class OptimizedConnectorBundleLoaderFactory extends ConnectorBundleLoader
         eagerConnectors.add(com.vaadin.client.ui.ui.UIConnector.class.getName());
         eagerConnectors.add(com.vaadin.client.ui.csslayout.CssLayoutConnector.class.getName());
         eagerConnectors.add(com.vaadin.client.ui.button.ButtonConnector.class.getName());
-        eagerConnectors.add(com.vaadin.addon.responsive.client.ResponsiveConnector.class.getName());
     }
 
     @Override

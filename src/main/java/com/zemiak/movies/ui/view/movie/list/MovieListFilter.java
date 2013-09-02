@@ -1,4 +1,4 @@
-package com.zemiak.movies.ui.view.movie;
+package com.zemiak.movies.ui.view.movie.list;
 
 /**
  *

@@ -1,5 +1,6 @@
 package com.zemiak.movies.ui.view.movie;
 
+import com.zemiak.movies.ui.view.movie.list.MovieListView;
 import com.zemiak.movies.ui.SideBarActionRegistrationEvent;
 
 import javax.enterprise.context.Dependent;

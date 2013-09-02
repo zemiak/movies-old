@@ -1,5 +1,6 @@
 package com.zemiak.movies.ui.view.movie;
 
+import com.zemiak.movies.ui.view.movie.list.MovieListRefreshEvent;
 import com.vaadin.data.Validator;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.event.ShortcutListener;
