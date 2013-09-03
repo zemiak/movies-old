@@ -154,7 +154,7 @@ public class Language implements Serializable {
 
     @Override
     public String toString() {
-        return "com.zemiak.movies.domain.Language[ id=" + id + " ]";
+        return getName();
     }
     
 }

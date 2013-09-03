@@ -21,21 +21,22 @@ public class MovieService {
     private EntityManager em;
     
     public List<Movie> all() {
-        Query query = em.createQuery("SELECT l FROM Movie l ORDER by l.genreId, l.serieId, l.displayOrder");
+        Query query = em.createQuery("SELECT l FROM Movie l ORDER BY l.genreId, l.serieId, l.displayOrder");
         query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         
         return query.getResultList();
     }
     
     public List<Movie> getNewMovies() {
-        Query query = em.createQuery("SELECT l FROM Movie l ORDER by l.genreId, l.serieId, l.displayOrder");
+        Query query = em.createQuery("SELECT l FROM Movie l WHERE (l.genreId = :genreNew1 OR l.genreId IS NULL) ORDER BY l.genreId, l.serieId, l.displayOrder");
+        query.setParameter("genreNew1", em.find(Genre.class, 0));
         query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         
         return query.getResultList();
     }
     
     public List<Movie> getSerieMovies(Serie serie) {
-        Query query = em.createQuery("SELECT l FROM Movie l WHERE l.serieId IS NULL OR l.serieId = :serie ORDER by l.genreId, l.serieId, l.displayOrder");
+        Query query = em.createQuery("SELECT l FROM Movie l WHERE l.serieId IS NULL OR l.serieId = :serie ORDER BY l.genreId, l.serieId, l.displayOrder");
         query.setParameter("serie", serie);
         query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         

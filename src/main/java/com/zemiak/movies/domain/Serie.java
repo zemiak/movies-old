@@ -144,7 +144,7 @@ public class Serie implements Serializable {
 
     @Override
     public String toString() {
-        return "com.zemiak.movies.domain.Serie[ id=" + id + " ]";
+        return getName();
     }
     
 }

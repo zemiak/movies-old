@@ -7,6 +7,7 @@ import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -17,7 +18,10 @@ import com.zemiak.movies.MoviesTheme;
 import com.zemiak.movies.boundary.GenreService;
 import com.zemiak.movies.boundary.MovieService;
 import com.zemiak.movies.boundary.SerieService;
+import com.zemiak.movies.domain.Genre;
+import com.zemiak.movies.domain.Language;
 import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.ui.view.ViewAbstract;
 import com.zemiak.movies.ui.view.movie.MovieForm;
 import java.util.List;
@@ -54,6 +58,7 @@ public class MovieListView extends ViewAbstract {
         setMargin(true);
 
         initLabel();
+        initFilterBar();
         initTable();
         initContainer(table);
         initButtonBar();
@@ -62,12 +67,18 @@ public class MovieListView extends ViewAbstract {
         setExpandRatio(table, 1);
     }
 
-    public void refreshContainer(@Observes MovieListRefreshEvent event) {
+    public void refreshContainer(@Observes final MovieListRefreshEvent event) {
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {
                 container.removeAllItems();
-                addItems(service.all());
+                
+                if (null != event && event.isOnlyNew()) {
+                    addItems(service.getNewMovies());
+                } else {
+                    addItems(service.all());
+                }
+                
             }
         });
     }
@@ -80,13 +91,22 @@ public class MovieListView extends ViewAbstract {
         newItem.getItemProperty("Name").setValue(entity.getName());
         newItem.getItemProperty("Display Order").setValue(entity.getDisplayOrder());
         
-        newItem.getItemProperty("Genre").setValue(null == entity.getGenreId() ? "" : entity.getGenreId().getName());
-        newItem.getItemProperty("Serie").setValue(null == entity.getSerieId() ? "" : entity.getSerieId().getName());
+        newItem.getItemProperty("Genre").setValue(entity.getGenreId());
+        newItem.getItemProperty("Serie").setValue(entity.getSerieId());
+        
+        newItem.getItemProperty("Language").setValue(entity.getLanguage());
+        newItem.getItemProperty("Subtitles").setValue(entity.getSubtitles());
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        refreshContainer(null);
+        if (!service.getNewMovies().isEmpty()) {
+            refreshContainer(new MovieListRefreshEvent(true));
+        } else {
+            refreshContainer(null);
+            Notification.show("There are no new movies, showing all of them.");
+        }
+        
     }
 
     @Override
@@ -128,8 +148,10 @@ public class MovieListView extends ViewAbstract {
         container.addContainerProperty("ID", Integer.class, null);
         container.addContainerProperty("Name", String.class, null);
         container.addContainerProperty("Display Order", Integer.class, null);
-        container.addContainerProperty("Genre", String.class, null);
-        container.addContainerProperty("Serie", String.class, null);
+        container.addContainerProperty("Genre", Genre.class, null);
+        container.addContainerProperty("Serie", Serie.class, null);
+        container.addContainerProperty("Language", Language.class, null);
+        container.addContainerProperty("Subtitles", Language.class, null);
         table.setContainerDataSource(container);
     }
 
@@ -245,5 +267,30 @@ public class MovieListView extends ViewAbstract {
         } else {
             Notification.show("Select an item, first.", Notification.Type.HUMANIZED_MESSAGE);
         }
+    }
+
+    private void initFilterBar() {
+        Button button;
+        HorizontalLayout filterBar = new HorizontalLayout();
+        filterBar.setSpacing(true);
+
+        button = new NativeButton("All", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                refreshContainer(null);
+            }
+        });
+        filterBar.addComponent(button);
+        
+        button = new NativeButton("New", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                refreshContainer(new MovieListRefreshEvent(true));
+            }
+        });
+        filterBar.addComponent(button);
+        
+        addComponent(filterBar);
+        this.setComponentAlignment(filterBar, Alignment.BOTTOM_RIGHT);
     }
 }

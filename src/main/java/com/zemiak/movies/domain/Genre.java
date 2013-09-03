@@ -158,7 +158,7 @@ public class Genre implements Serializable {
 
     @Override
     public String toString() {
-        return "com.zemiak.movies.domain.Genre[ id=" + id + " ]";
+        return getName();
     }
     
 }
