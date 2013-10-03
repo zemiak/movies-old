@@ -67,7 +67,7 @@ public class MovieForm extends Window {
         }
         
         name.setValue(entity.getName());
-        order.setValue(String.valueOf(entity.getDisplayOrder()));
+        order.setValue(null == entity.getDisplayOrder() ? "0" : String.valueOf(entity.getDisplayOrder()));
         genre.setValue(null == entity.getGenreId() ? null : entity.getGenreId().getId());
         serie.setValue(null == entity.getSerieId() ? null : entity.getSerieId().getId());
         originalLanguage.setValue(null == entity.getOriginalLanguage() ? null : entity.getOriginalLanguage().getId());
@@ -222,6 +222,7 @@ public class MovieForm extends Window {
         name.setWidth("100%");
         name.addStyleName("catalog-form");
         name.focus();
+        name.setNullRepresentation("");
         layout.addComponent(name);
     }
     
@@ -230,6 +231,7 @@ public class MovieForm extends Window {
         url.setWidth("100%");
         url.addStyleName("catalog-form");
         url.focus();
+        url.setNullRepresentation("");
         layout.addComponent(url);
     }
     
@@ -238,6 +240,7 @@ public class MovieForm extends Window {
         description.setWidth("100%");
         description.addStyleName("catalog-form");
         description.focus();
+        description.setNullRepresentation("");
         layout.addComponent(description);
     }
     
@@ -246,12 +249,14 @@ public class MovieForm extends Window {
         originalName.setWidth("100%");
         originalName.addStyleName("catalog-form");
         originalName.focus();
+        originalName.setNullRepresentation("");
         layout.addComponent(originalName);
     }
 
     private void initOrderField() {
         order = new TextField("Order");
         order.addStyleName("catalog-form");
+        order.setNullRepresentation("0");
         order.addValidator(new Validator() {
             @Override
             public void validate(Object value) throws Validator.InvalidValueException {

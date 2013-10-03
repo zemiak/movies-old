@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,6 +32,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Genre.findByPictureFileName", query = "SELECT g FROM Genre g WHERE g.pictureFileName = :pictureFileName"),
     @NamedQuery(name = "Genre.findByDisplayOrder", query = "SELECT g FROM Genre g WHERE g.displayOrder = :displayOrder"),
     @NamedQuery(name = "Genre.findByProtected1", query = "SELECT g FROM Genre g WHERE g.protected1 = :protected1")})
+@XmlRootElement
 public class Genre implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -88,6 +91,7 @@ public class Genre implements Serializable {
         return id;
     }
 
+    @XmlTransient
     public List<Serie> getSerieList() {
         return serieList;
     }
@@ -128,6 +132,7 @@ public class Genre implements Serializable {
         this.protected1 = protected1;
     }
 
+    @XmlTransient
     public List<Movie> getMovieList() {
         return movieList;
     }

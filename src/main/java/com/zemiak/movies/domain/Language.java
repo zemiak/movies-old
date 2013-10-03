@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -25,6 +27,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Language.findByName", query = "SELECT l FROM Language l WHERE l.name = :name"),
     @NamedQuery(name = "Language.findByPictureFileName", query = "SELECT l FROM Language l WHERE l.pictureFileName = :pictureFileName"),
     @NamedQuery(name = "Language.findByDisplayOrder", query = "SELECT l FROM Language l WHERE l.displayOrder = :displayOrder")})
+@XmlRootElement
 public class Language implements Serializable {
     private static final long serialVersionUID = 2L;
     
@@ -108,6 +111,7 @@ public class Language implements Serializable {
         this.displayOrder = displayOrder;
     }
 
+    @XmlTransient
     public List<Movie> getMovieList() {
         return movieList;
     }
@@ -116,6 +120,7 @@ public class Language implements Serializable {
         this.movieList = movieList;
     }
 
+    @XmlTransient
     public List<Movie> getMovieList1() {
         return movieList1;
     }
@@ -124,6 +129,7 @@ public class Language implements Serializable {
         this.movieList1 = movieList1;
     }
 
+    @XmlTransient
     public List<Movie> getMovieList2() {
         return movieList2;
     }
