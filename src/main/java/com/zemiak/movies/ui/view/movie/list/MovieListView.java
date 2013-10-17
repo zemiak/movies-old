@@ -36,18 +36,21 @@ public class MovieListView extends ViewAbstract {
 
     public static final String VIEW_ID = "movie";
     public static final ThemeResource ICON = new ThemeResource("icons/video.png");
-    private MovieListFilter filter = MovieListFilter.NEW;
+    MovieListFilter filter = MovieListFilter.NEW;
     
     @Inject private MovieService service;
     @Inject private SerieService serieService;
     @Inject private GenreService genreService;
     
-    @Inject private javax.enterprise.event.Event<MovieListRefreshEvent> events;
+    @Inject javax.enterprise.event.Event<MovieListRefreshEvent> events;
     
-    @Inject private Instance<MovieForm> form;
+    @Inject Instance<MovieForm> form;
     
-    private FilterTable table;
-    private IndexedContainer container;
+    FilterTable table;
+    IndexedContainer container;
+    
+    @Inject
+    Instance<MovieListButtons> buttons;
 
     public MovieListView() {
     }
@@ -61,7 +64,7 @@ public class MovieListView extends ViewAbstract {
         initFilterBar();
         initTable();
         initContainer(table);
-        initButtonBar();
+        buttons.get().setView(this).initialize();
 
         table.setVisibleColumns((Object[]) new String[]{"ID", "Name", "Display Order", "Genre", "Serie"});
         setExpandRatio(table, 1);
@@ -83,7 +86,7 @@ public class MovieListView extends ViewAbstract {
         });
     }
 
-    private void addRow(Movie entity) {
+    void addRow(Movie entity) {
         int id = entity.hashCode();
         Item newItem = container.addItem(id);
 
@@ -125,7 +128,7 @@ public class MovieListView extends ViewAbstract {
         table.setHeight("100%");
         table.addStyleName("catalog-table");
         table.setSelectable(true);
-        table.setMultiSelect(false);
+        table.setMultiSelect(true);
 
         table.setFilterBarVisible(true);
         table.setFilterGenerator(new CustomFilterGenerator(
@@ -155,90 +158,7 @@ public class MovieListView extends ViewAbstract {
         table.setContainerDataSource(container);
     }
 
-    private void initButtonBar() {
-        Button button;
-        HorizontalLayout buttonBar = new HorizontalLayout();
-        buttonBar.setSpacing(true);
-
-        button = new NativeButton("Edit", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                editItem();
-            }
-        });
-        button.addStyleName("catalog-table");
-        buttonBar.addComponent(button);
-
-        button = new NativeButton("New", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                MovieForm f = MovieListView.this.form.get();
-                f.setEntity(null);
-                getUI().addWindow(f);
-            }
-        });
-        button.addStyleName("catalog-table");
-        buttonBar.addComponent(button);
-
-        button = new NativeButton("Delete", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                Integer id = (Integer) table.getValue();
-
-                if (null != id) {
-                    Integer entityId = (Integer) container.getItem(id).getItemProperty("ID").getValue();
-                    service.remove(entityId);
-                    refreshContainer(null);
-                } else {
-                    Notification.show("Select an item, first.", Notification.Type.HUMANIZED_MESSAGE);
-                }
-            }
-        });
-        button.addStyleName("catalog-table");
-        buttonBar.addComponent(button);
-
-        button = new NativeButton("Order Up", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                Integer id = (Integer) table.getValue();
-
-                if (null != id) {
-                    Integer entityId = (Integer) container.getItem(id).getItemProperty("ID").getValue();
-                    Movie entity = service.find(entityId);
-                    entity.setDisplayOrder(entity.getDisplayOrder() - 1);
-                    service.save(entity);
-                    refreshContainer(null);
-                } else {
-                    Notification.show("Select an item, first.", Notification.Type.HUMANIZED_MESSAGE);
-                }
-            }
-        });
-        button.addStyleName("catalog-table");
-        button.setIcon(new ThemeResource("icons/arrow_up.png"));
-        buttonBar.addComponent(button);
-
-        button = new NativeButton("Order Down", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                Integer id = (Integer) table.getValue();
-
-                if (null != id) {
-                    Integer entityId = (Integer) container.getItem(id).getItemProperty("ID").getValue();
-                    Movie entity = service.find(entityId);
-                    entity.setDisplayOrder(entity.getDisplayOrder() + 1);
-                    service.save(entity);
-                    refreshContainer(null);
-                } else {
-                    Notification.show("Select an item, first.", Notification.Type.HUMANIZED_MESSAGE);
-                }
-            }
-        });
-        button.addStyleName("catalog-table");
-        button.setIcon(new ThemeResource("icons/arrow_down.png"));
-        buttonBar.addComponent(button);
-
-        addComponent(buttonBar);
-    }
+    
 
     private void initLabel() {
         Label head = new Label("Movies");
@@ -254,11 +174,11 @@ public class MovieListView extends ViewAbstract {
         System.err.println("Done adding " + list.size() + " items.");
     }
     
-    private void editItem() {
+    void editItem() {
         editItem((Integer) table.getValue());
     }
 
-    private void editItem(Integer id) {
+    void editItem(Integer id) {
         if (null != id) {
             Integer entityId = (Integer) container.getItem(id).getItemProperty("ID").getValue();
             MovieForm f = MovieListView.this.form.get();
