@@ -16,7 +16,6 @@ import com.zemiak.movies.ui.view.movie.list.dialog.SerieEditWindow;
 import com.zemiak.movies.ui.view.movie.list.dialog.SubtitlesEditWindow;
 import java.util.Set;
 import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 /**
@@ -30,11 +29,11 @@ public class MovieListButtons {
     
     @Inject private MovieService service;
     
-    @Inject private Instance<GenreEditWindow> genreEditWindow;
-    @Inject private Instance<SerieEditWindow> serieEditWindow;
-    @Inject private Instance<LanguageEditWindow> languageEditWindow;
-    @Inject private Instance<OriginalLanguageEditWindow> originalLanguageEditWindow;
-    @Inject private Instance<SubtitlesEditWindow> subtitlesEditWindow;
+    @Inject private GenreEditWindow genreEditWindow;
+    @Inject private SerieEditWindow serieEditWindow;
+    @Inject private LanguageEditWindow languageEditWindow;
+    @Inject private OriginalLanguageEditWindow originalLanguageEditWindow;
+    @Inject private SubtitlesEditWindow subtitlesEditWindow;
 
     public MovieListButtons setView(MovieListView view) {
         this.view = view;
@@ -81,7 +80,7 @@ public class MovieListButtons {
         button = new NativeButton("New", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                MovieForm f = view.form.get();
+                MovieForm f = view.form;
                 f.setEntity(null);
                 view.getUI().addWindow(f);
             }
@@ -187,22 +186,22 @@ public class MovieListButtons {
     }
 
     private void initGenreButton() {
-        initActionButton("Genre", genreEditWindow.get());
+        initActionButton("Genre", genreEditWindow);
     }
     
     private void initSerieButton() {
-        initActionButton("Serie", serieEditWindow.get());
+        initActionButton("Serie", serieEditWindow);
     }
 
     private void initLanguageButton() {
-        initActionButton("Language", languageEditWindow.get());
+        initActionButton("Language", languageEditWindow);
     }
 
     private void initOriginalLanguageButton() {
-        initActionButton("Original Language", originalLanguageEditWindow.get());
+        initActionButton("Original Language", originalLanguageEditWindow);
     }
 
     private void initSubtitleButton() {
-        initActionButton("Subtitles", subtitlesEditWindow.get());
+        initActionButton("Subtitles", subtitlesEditWindow);
     }
 }

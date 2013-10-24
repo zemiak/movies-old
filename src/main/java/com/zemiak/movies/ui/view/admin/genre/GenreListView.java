@@ -18,7 +18,6 @@ import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.ui.view.ViewAbstract;
 import javax.annotation.PostConstruct;
 import javax.enterprise.event.Observes;
-import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 @CDIView(GenreListView.VIEW_ID)
@@ -30,7 +29,7 @@ public class GenreListView extends ViewAbstract {
     private GenreService service;
     
     @Inject
-    Instance<GenreForm> form;
+    GenreForm form;
     
     private Table table;
     private IndexedContainer container;
@@ -119,7 +118,7 @@ public class GenreListView extends ViewAbstract {
                 
                 if (null != id) {
                     Integer entityId = (Integer) container.getItem(id).getItemProperty("ID").getValue();
-                    GenreForm form = GenreListView.this.form.get();
+                    GenreForm form = GenreListView.this.form;
                     form.setEntity(entityId);
                     getUI().addWindow(form);
                 } else {
@@ -133,7 +132,7 @@ public class GenreListView extends ViewAbstract {
         button = new NativeButton("New", new Button.ClickListener(){
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                GenreForm form = GenreListView.this.form.get();
+                GenreForm form = GenreListView.this.form;
                 form.setEntity(null);
                 getUI().addWindow(form);
             }

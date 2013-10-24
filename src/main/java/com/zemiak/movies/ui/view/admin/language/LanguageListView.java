@@ -18,7 +18,6 @@ import com.zemiak.movies.domain.Language;
 import com.zemiak.movies.ui.view.ViewAbstract;
 import javax.annotation.PostConstruct;
 import javax.enterprise.event.Observes;
-import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 @CDIView(LanguageListView.VIEW_ID)
@@ -30,7 +29,7 @@ public class LanguageListView extends ViewAbstract {
     private LanguageService service;
     
     @Inject
-    Instance<LanguageForm> form;
+    LanguageForm form;
     
     private Table table;
     private IndexedContainer container;
@@ -118,7 +117,7 @@ public class LanguageListView extends ViewAbstract {
                 
                 if (null != id) {
                     String entityId = (String) container.getItem(id).getItemProperty("ID").getValue();
-                    LanguageForm form = LanguageListView.this.form.get();
+                    LanguageForm form = LanguageListView.this.form;
                     form.setEntity(entityId);                    
                     getUI().addWindow(form);
                 } else {
@@ -132,7 +131,7 @@ public class LanguageListView extends ViewAbstract {
         button = new NativeButton("New", new Button.ClickListener(){
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                LanguageForm form = LanguageListView.this.form.get();
+                LanguageForm form = LanguageListView.this.form;
                 form.setEntity(null);
                 getUI().addWindow(form);
             }

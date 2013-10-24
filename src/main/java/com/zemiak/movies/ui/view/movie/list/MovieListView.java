@@ -27,7 +27,6 @@ import com.zemiak.movies.ui.view.movie.MovieForm;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.event.Observes;
-import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import org.tepi.filtertable.FilterTable;
 
@@ -44,13 +43,13 @@ public class MovieListView extends ViewAbstract {
     
     @Inject javax.enterprise.event.Event<MovieListRefreshEvent> events;
     
-    @Inject Instance<MovieForm> form;
+    @Inject MovieForm form;
     
     FilterTable table;
     IndexedContainer container;
     
     @Inject
-    Instance<MovieListButtons> buttons;
+    MovieListButtons buttons;
 
     public MovieListView() {
     }
@@ -64,7 +63,7 @@ public class MovieListView extends ViewAbstract {
         initFilterBar();
         initTable();
         initContainer(table);
-        buttons.get().setView(this).initialize();
+        buttons.setView(this).initialize();
 
         table.setVisibleColumns((Object[]) new String[]{"ID", "Name", "Display Order", "Genre", "Serie"});
         setExpandRatio(table, 1);
@@ -181,7 +180,7 @@ public class MovieListView extends ViewAbstract {
     void editItem(Integer id) {
         if (null != id) {
             Integer entityId = (Integer) container.getItem(id).getItemProperty("ID").getValue();
-            MovieForm f = MovieListView.this.form.get();
+            MovieForm f = MovieListView.this.form;
             f.setEntity(entityId);
             getUI().addWindow(f);
         } else {

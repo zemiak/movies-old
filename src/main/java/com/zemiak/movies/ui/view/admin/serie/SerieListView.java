@@ -18,7 +18,6 @@ import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.ui.view.ViewAbstract;
 import javax.annotation.PostConstruct;
 import javax.enterprise.event.Observes;
-import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 @CDIView(SerieListView.VIEW_ID)
@@ -30,7 +29,7 @@ public class SerieListView extends ViewAbstract {
     private SerieService service;
     
     @Inject
-    Instance<SerieForm> form;
+    SerieForm form;
     
     private Table table;
     private IndexedContainer container;
@@ -121,7 +120,7 @@ public class SerieListView extends ViewAbstract {
                 
                 if (null != id) {
                     Integer entityId = (Integer) container.getItem(id).getItemProperty("ID").getValue();
-                    SerieForm form = SerieListView.this.form.get();
+                    SerieForm form = SerieListView.this.form;
                     form.setEntity(entityId);
                     getUI().addWindow(form);
                 } else {
@@ -135,7 +134,7 @@ public class SerieListView extends ViewAbstract {
         button = new NativeButton("New", new Button.ClickListener(){
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                SerieForm form = SerieListView.this.form.get();
+                SerieForm form = SerieListView.this.form;
                 form.setEntity(null);
                 getUI().addWindow(form);
             }
