@@ -1,6 +1,7 @@
 package com.zemiak.movies.ui.view.movie.list.dialog;
 
 import com.vaadin.data.Container;
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
@@ -8,7 +9,6 @@ import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import com.zemiak.movies.boundary.MovieService;
 import com.zemiak.movies.domain.Movie;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +61,7 @@ abstract public class AbstractEditWindow extends Window {
                 process(getSelected());
             }
         });
+        ok.setClickShortcut(KeyCode.ENTER);
         ok.addStyleName("catalog-table");
         
         Button cancel = new NativeButton("Cancel", new Button.ClickListener() {
@@ -69,6 +70,7 @@ abstract public class AbstractEditWindow extends Window {
                 that.close();
             }
         });
+        cancel.setClickShortcut(KeyCode.ESCAPE);
         cancel.addStyleName("catalog-table");
         
         buttonLayout.setSpacing(true);

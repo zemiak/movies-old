@@ -2,6 +2,7 @@ package com.zemiak.movies.ui.view.movie.list.dialog;
 
 import com.zemiak.movies.boundary.LanguageService;
 import com.zemiak.movies.boundary.MovieService;
+import com.zemiak.movies.ui.view.movie.list.MovieListRefreshEvent;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -16,6 +17,7 @@ public class LanguageEditWindow extends AbstractLanguageEditWindow {
     @PersistenceContext private EntityManager em;
     @Inject private MovieService movieService;
     @Inject private LanguageService languageService;
+    @Inject private javax.enterprise.event.Event<MovieListRefreshEvent> events;
     
     public LanguageEditWindow() {
         super();
@@ -34,5 +36,10 @@ public class LanguageEditWindow extends AbstractLanguageEditWindow {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+
+    @Override
+    protected void fireRefreshEvent() {
+        events.fire(new MovieListRefreshEvent());
     }
 }

@@ -15,7 +15,7 @@ import java.util.List;
  * @author vasko
  */
 abstract public class AbstractLanguageEditWindow extends AbstractEditWindow {
-    protected ComboBox language;
+    protected ComboBox select;
     
     public AbstractLanguageEditWindow() {
         super();
@@ -23,15 +23,18 @@ abstract public class AbstractLanguageEditWindow extends AbstractEditWindow {
 
     @Override
     public void process(List<Movie> movies) {
-        if (language.getValue() == null) {
+        if (select.getValue() == null) {
             Notification.show("Please, select a language, first", Notification.Type.WARNING_MESSAGE);
             return;
         }
         
         for (Movie movie: movies) {
-            movie.setLanguage((Language) language.getValue());
+            movie.setLanguage((Language) select.getValue());
             getMovieService().save(movie);
         }
+        
+        fireRefreshEvent();
+        close();
     }
     
     protected String caption() {
@@ -42,19 +45,21 @@ abstract public class AbstractLanguageEditWindow extends AbstractEditWindow {
     protected Component content() {
         FormLayout layout = new FormLayout();
         
-        language = new ComboBox(caption());
-        language.setWidth("10em");
+        select = new ComboBox(caption());
+        select.setWidth("10em");
+        select.setNullSelectionAllowed(false);
+        select.setPageLength(0);
         
         for (Language entry: getLanguageService().all()) {
-            language.addItem(entry.getId());
-            language.setItemCaption(entry.getId(), entry.getName());
+            select.addItem(entry);
         }
         
-        layout.addComponent(language);
+        layout.addComponent(select);
         
         return layout;
     }
     
     abstract protected MovieService getMovieService();
     abstract protected LanguageService getLanguageService();
+    abstract protected void fireRefreshEvent();
 }

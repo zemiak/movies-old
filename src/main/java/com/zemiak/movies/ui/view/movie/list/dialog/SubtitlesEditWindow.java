@@ -5,6 +5,7 @@ import com.zemiak.movies.boundary.LanguageService;
 import com.zemiak.movies.boundary.MovieService;
 import com.zemiak.movies.domain.Language;
 import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.ui.view.movie.list.MovieListRefreshEvent;
 import java.util.List;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -17,6 +18,8 @@ import javax.persistence.PersistenceContext;
  */
 @Dependent
 public class SubtitlesEditWindow extends AbstractLanguageEditWindow {
+    @Inject private javax.enterprise.event.Event<MovieListRefreshEvent> events;
+    
     public SubtitlesEditWindow() {
         super();
     }
@@ -28,15 +31,18 @@ public class SubtitlesEditWindow extends AbstractLanguageEditWindow {
     
     @Override
     public void process(List<Movie> movies) {
-        if (language.getValue() == null) {
+        if (select.getValue() == null) {
             Notification.show("Please, select a language, first", Notification.Type.WARNING_MESSAGE);
             return;
         }
         
         for (Movie movie: movies) {
-            movie.setSubtitles((Language) language.getValue());
+            movie.setSubtitles((Language) select.getValue());
             getMovieService().save(movie);
         }
+        
+        fireRefreshEvent();
+        close();
     }
 
     @Inject private MovieService movieService;
@@ -55,5 +61,10 @@ public class SubtitlesEditWindow extends AbstractLanguageEditWindow {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+
+    @Override
+    protected void fireRefreshEvent() {
+        events.fire(new MovieListRefreshEvent());
     }
 }

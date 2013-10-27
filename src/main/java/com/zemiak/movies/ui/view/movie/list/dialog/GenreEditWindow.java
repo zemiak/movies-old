@@ -8,6 +8,7 @@ import com.zemiak.movies.boundary.GenreService;
 import com.zemiak.movies.boundary.MovieService;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.ui.view.movie.list.MovieListRefreshEvent;
 import java.util.List;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -23,6 +24,7 @@ public class GenreEditWindow extends AbstractEditWindow {
     @Inject private GenreService service;
     @Inject private MovieService movieService;
     @PersistenceContext private EntityManager em;
+    @Inject private javax.enterprise.event.Event<MovieListRefreshEvent> events;
     
     protected ComboBox select;
     
@@ -41,6 +43,9 @@ public class GenreEditWindow extends AbstractEditWindow {
             movie.setGenreId((Genre) select.getValue());
             movieService.save(movie);
         }
+        
+        events.fire(new MovieListRefreshEvent());
+        close();
     }
     
     @Override
@@ -49,10 +54,11 @@ public class GenreEditWindow extends AbstractEditWindow {
         
         select = new ComboBox("Genre");
         select.setWidth("10em");
+        select.setNullSelectionAllowed(false);
+        select.setPageLength(0);
         
         for (Genre entry: service.all()) {
-            select.addItem(entry.getId());
-            select.setItemCaption(entry.getId(), entry.getName());
+            select.addItem(entry);
         }
         
         layout.addComponent(select);

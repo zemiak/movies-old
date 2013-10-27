@@ -8,8 +8,8 @@ import com.zemiak.movies.boundary.MovieService;
 import com.zemiak.movies.boundary.SerieService;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
+import com.zemiak.movies.ui.view.movie.list.MovieListRefreshEvent;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -22,6 +22,7 @@ import javax.persistence.PersistenceContext;
 @Dependent
 public class SerieEditWindow extends AbstractEditWindow {
     @Inject private SerieService service;
+    @Inject private javax.enterprise.event.Event<MovieListRefreshEvent> events;
     
     protected ComboBox select;
     
@@ -40,6 +41,9 @@ public class SerieEditWindow extends AbstractEditWindow {
             movie.setSerieId((Serie) select.getValue());
             getMovieService().save(movie);
         }
+        
+        events.fire(new MovieListRefreshEvent());
+        close();
     }
     
     @Override
@@ -48,6 +52,8 @@ public class SerieEditWindow extends AbstractEditWindow {
         
         select = new ComboBox("Serie");
         select.setWidth("10em");
+        select.setNullSelectionAllowed(false);
+        select.setPageLength(0);
         
         for (Serie entry: service.all()) {
             select.addItem(entry);
