@@ -1,8 +1,10 @@
 package com.zemiak.movies.boundary;
 
+import com.zemiak.movies.domain.CacheClearEvent;
 import com.zemiak.movies.domain.Language;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.enterprise.event.Observes;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -41,5 +43,9 @@ public class LanguageService {
 
     public void remove(String entityId) {
         em.remove(em.find(Language.class, entityId));
+    }
+    
+    public void clearCache(@Observes CacheClearEvent event) {
+        em.getEntityManagerFactory().getCache().evictAll();
     }
 }

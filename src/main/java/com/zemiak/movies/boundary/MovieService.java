@@ -1,10 +1,12 @@
 package com.zemiak.movies.boundary;
 
+import com.zemiak.movies.domain.CacheClearEvent;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.enterprise.event.Observes;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -67,5 +69,13 @@ public class MovieService {
 
     public void remove(Integer entityId) {
         em.remove(em.find(Movie.class, entityId));
+    }
+    
+    public void clearCache(@Observes CacheClearEvent event) {
+        em.getEntityManagerFactory().getCache().evictAll();
+    }
+
+    public List<Movie> getByExpression(String text) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

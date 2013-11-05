@@ -14,10 +14,13 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <vaadin.version>7.1.6</vaadin.version>
+        <javaee.version>7.0</javaee.version>
+        <vaadin.version>7.1.7</vaadin.version>
         <vaadin.cdi.version>1.0.0.alpha1</vaadin.cdi.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
-        <jersey.version>1.17.1</jersey.version>
+        <vaadin.touchkit.version>3.0.0</vaadin.touchkit.version>
+        <vaadin.filteringtable.version>0.9.0.v7</vaadin.filteringtable.version>
+        <vaadin.responsive.version>1.0.0.alpha4</vaadin.responsive.version>
         <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
     </properties>
 
@@ -99,7 +102,13 @@
         <dependency>
             <groupId>org.vaadin.addons</groupId>
             <artifactId>filteringtable</artifactId>
-            <version>0.9.0.v7</version>
+            <version>${vaadin.filteringtable.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.vaadin.addon</groupId>
+            <artifactId>vaadin-touchkit-agpl</artifactId>
+            <version>${vaadin.touchkit.version}</version>
         </dependency>
         
         <dependency>
@@ -133,8 +142,20 @@
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>6.0</version>
+            <version>${javaee.version}</version>
             <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.vaadin.addon</groupId>
+            <artifactId>vaadin-touchkit-agpl</artifactId>
+            <version>${vaadin.touchkit.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.vaadin.addon.responsive</groupId>
+            <artifactId>responsive</artifactId>
+            <version>${vaadin.responsive.version}</version>
         </dependency>
     </dependencies>
 
@@ -177,7 +198,7 @@
                                 <artifactItem>
                                     <groupId>javax</groupId>
                                     <artifactId>javaee-endorsed-api</artifactId>
-                                    <version>6.0</version>
+                                    <version>${javaee.version}</version>
                                     <type>jar</type>
                                 </artifactItem>
                             </artifactItems>

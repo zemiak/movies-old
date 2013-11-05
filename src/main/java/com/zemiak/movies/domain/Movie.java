@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Movie.findAll", query = "SELECT m FROM Movie m"),
     @NamedQuery(name = "Movie.findById", query = "SELECT m FROM Movie m WHERE m.id = :id"),
+    @NamedQuery(name = "Movie.findByIdDesc", query = "SELECT m FROM Movie m ORDER BY m.id DESC"),
     @NamedQuery(name = "Movie.findByFileName", query = "SELECT m FROM Movie m WHERE m.fileName = :fileName"),
     @NamedQuery(name = "Movie.findByName", query = "SELECT m FROM Movie m WHERE m.name = :name"),
     @NamedQuery(name = "Movie.findByOriginalName", query = "SELECT m FROM Movie m WHERE m.originalName = :originalName"),
