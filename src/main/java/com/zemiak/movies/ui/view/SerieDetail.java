@@ -11,21 +11,19 @@ import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
 @Dependent
-class GenreDetail extends ViewAbstract {
+class SerieDetail extends ViewAbstract {
     CssLayout grid = null;
     
-    Genre genre;
-    List<Serie> series;
+    Serie serie;
     List<Movie> movies;
     
-    @Inject SerieDetail serieView;
     @Inject MovieDetail movieView;
     
-    public GenreDetail() {
+    public SerieDetail() {
     }
 
-    public void setGenre(Genre genre) {
-        this.genre = genre;
+    public void setSerie(Serie serie) {
+        this.serie = serie;
         refreshData();
     }
     
@@ -44,7 +42,7 @@ class GenreDetail extends ViewAbstract {
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        setCaption("Genre " + genre.getName());
+        setCaption("Serie " + serie.getName());
         
         refresh();
     }
@@ -52,22 +50,6 @@ class GenreDetail extends ViewAbstract {
     private void refresh() {
         grid.removeAllComponents();
 
-        for (Serie serie: series) {
-            NavigationButton button = new NavigationButton(serie.getName());
-            button.setSizeUndefined();
-            grid.addComponent(button);
-
-            final Serie finalSerie = serie;
-
-            button.addClickListener(new NavigationButton.NavigationButtonClickListener() {
-                @Override
-                public void buttonClick(NavigationButton.NavigationButtonClickEvent event) {
-                    serieView.setSerie(finalSerie);
-                    getNavManager().navigateTo(serieView);
-                }
-            });
-        }
-        
         for (Movie movie: movies) {
             NavigationButton button = new NavigationButton(movie.getName());
             button.setSizeUndefined();
@@ -86,7 +68,6 @@ class GenreDetail extends ViewAbstract {
     }
 
     private void refreshData() {
-        series = genre.getSerieList();
-        movies = genre.getMovieList();
+        movies = serie.getMovieList();
     }
 }
