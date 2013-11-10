@@ -50,6 +50,10 @@ public class GenreService {
     }
 
     public List<Genre> getByExpression(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query query = em.createQuery("SELECT l FROM Genre l WHERE (l.name LIKE :expr) ORDER BY l.name");
+        query.setParameter("expr", text);
+        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+        
+        return query.getResultList();
     }
 }

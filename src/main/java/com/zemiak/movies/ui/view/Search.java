@@ -104,7 +104,7 @@ public class Search extends ViewAbstract {
         VerticalComponentGroup group = new VerticalComponentGroup("Filters");
         
         NavigationButton navButton = new NavigationButton();
-        navButton.setCaption("Last 50 movies");
+        navButton.setCaption("Last " + SearchResultsNew.COUNT + " movies");
         navButton.addClickListener(new NavigationButton.NavigationButtonClickListener() {
             @Override
             public void buttonClick(NavigationButton.NavigationButtonClickEvent event) {

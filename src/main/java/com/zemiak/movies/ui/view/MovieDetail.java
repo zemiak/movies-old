@@ -1,19 +1,25 @@
 package com.zemiak.movies.ui.view;
 
-import com.vaadin.addon.responsive.Responsive;
-import com.vaadin.addon.touchkit.ui.NavigationButton;
-import com.vaadin.ui.CssLayout;
-import com.zemiak.movies.domain.Genre;
+import com.vaadin.data.Property;
+import com.vaadin.server.StreamResource;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Video;
+import com.zemiak.movies.MoviesTheme;
 import com.zemiak.movies.domain.Movie;
-import com.zemiak.movies.domain.Serie;
-import java.util.List;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
 
 @Dependent
 class MovieDetail extends ViewAbstract {
-    CssLayout grid;
+    final private String MOVIE_PREFIX = "/mnt/media/Movies/";
     
+    VerticalLayout layout;
     Movie movie;
     
     public MovieDetail() {
@@ -27,23 +33,122 @@ class MovieDetail extends ViewAbstract {
     public void attach() {
         super.attach();
         
-        grid = new CssLayout();
-        grid.setWidth("100%");
-        grid.addStyleName("grid");
-        setContent(grid);
+        layout = new VerticalLayout();
+        layout.setWidth("100%");
+        setContent(layout);
     }
     
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        setCaption("Movie " + movie.getName());
+        setCaption(movie.getName());
         
         refresh();
     }
+    
+    public class VideoSource implements StreamResource.StreamSource {
+        InputStream stream;
+        
+        public VideoSource(String fileName) {
+            try {
+                stream = new FileInputStream(MOVIE_PREFIX + fileName);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(MovieDetail.class.getName()).log(Level.SEVERE, "Cannot open file " + MOVIE_PREFIX + fileName, ex);
+                stream = null;
+            }
+        }
+
+        @Override
+        public InputStream getStream() {
+            return stream;
+        }
+        
+    }
 
     private void refresh() {
-        grid.removeAllComponents();
+        layout.removeAllComponents();
+        initMovieName();
+        initPlayer();
+        initDescription();
+        initGenre();
+        initSerie();
+        initLanguage();
+        initOriginalLanguage();
+        initSubtitles();
+        initOriginalName();        
+   }
 
-        // TODO: render movie details
+    private void initOriginalName() throws Property.ReadOnlyException {
+        if (null != movie.getOriginalName()) {
+            TextField origName = new TextField("Original Name");
+            origName.setValue(movie.getOriginalName());
+            origName.setReadOnly(true);
+            layout.addComponent(origName);
+        }
+    }
+
+    private void initSubtitles() throws Property.ReadOnlyException {
+        if (null != movie.getSubtitles()) {
+            TextField subtitles = new TextField("Subtitles");
+            subtitles.setValue(movie.getSubtitles().getName());
+            subtitles.setReadOnly(true);
+            layout.addComponent(subtitles);
+        }
+    }
+
+    private void initOriginalLanguage() throws Property.ReadOnlyException {
+        if (null != movie.getOriginalLanguage()) {
+            TextField origLang = new TextField("Original Language");
+            origLang.setValue(movie.getOriginalLanguage().getName());
+            origLang.setReadOnly(true);
+            layout.addComponent(origLang);
+        }
+    }
+
+    private void initLanguage() throws Property.ReadOnlyException {
+        if (null != movie.getLanguage()) {
+            TextField lang = new TextField("Language");
+            lang.setValue(movie.getLanguage().getName());
+            lang.setReadOnly(true);
+            layout.addComponent(lang);
+        }
+    }
+
+    private void initSerie() throws Property.ReadOnlyException {
+        if (null != movie.getSerieId()) {
+            TextField serie = new TextField("Serie");
+            serie.setValue(movie.getSerieId().getName());
+            serie.setReadOnly(true);
+            layout.addComponent(serie);
+        }
+    }
+
+    private void initGenre() throws Property.ReadOnlyException {
+        TextField genre = new TextField("Genre");
+        genre.setValue(movie.getGenreId().getName());
+        genre.setReadOnly(true);
+        layout.addComponent(genre);
+    }
+
+    private void initDescription() {
+        if (null != movie.getDescription() && !movie.getDescription().isEmpty()) {
+            Label desc = new Label(movie.getDescription());
+            layout.addComponent(desc);
+        }
+    }
+
+    private void initPlayer() {
+        Video player = new Video();
+        player.setAltText("Please, use a HTML5 compatible browser to play the video.");
+        player.setSource(new StreamResource(new VideoSource(movie.getFileName()), movie.getFileName()));
+        player.setWidth("560");
+        player.setHeight("432");
+        layout.addComponent(player);
+    }
+
+    private void initMovieName() {
+        Label movieLabel = new Label(movie.getName());
+        movieLabel.setStyleName(MoviesTheme.LABEL_H1);
+        layout.addComponent(movieLabel);
     }
 }

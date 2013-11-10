@@ -44,7 +44,7 @@ public class SearchResults extends ViewAbstract {
     private void refreshData() {
         movies = movieService.getByExpression(this.text);
         genres = genreService.getByExpression(this.text);
-        movies = serieService.getByExpression(this.text);
+        series = serieService.getByExpression(this.text);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class SearchResults extends ViewAbstract {
             return;
         }
         
-        if (movies.isEmpty() && genres.isEmpty() && movies.isEmpty()) {
+        if (movies.isEmpty() && genres.isEmpty() && series.isEmpty()) {
             Label searchText = new Label("No results for text: <b>" + text + "</b>");
             searchText.setContentMode(ContentMode.HTML);
             grid.addComponent(searchText);

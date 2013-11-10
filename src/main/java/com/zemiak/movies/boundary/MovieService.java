@@ -76,6 +76,19 @@ public class MovieService {
     }
 
     public List<Movie> getByExpression(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query query = em.createQuery("SELECT l FROM Movie l WHERE (l.name LIKE :expr1 OR l.description LIKE :expr2) ORDER BY l.name");
+        query.setParameter("expr1", text);
+        query.setParameter("expr2", text);
+        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+        
+        return query.getResultList();
+    }
+
+    public List<Movie> getLastMovies(int count) {
+        Query query = em.createQuery("SELECT l FROM Movie l ORDER BY l.id DESC");
+        query.setMaxResults(count);
+        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+        
+        return query.getResultList();
     }
 }
