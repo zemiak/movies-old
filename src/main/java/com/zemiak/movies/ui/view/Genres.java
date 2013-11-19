@@ -6,6 +6,7 @@ import com.vaadin.cdi.CDIView;
 import com.vaadin.ui.CssLayout;
 import com.zemiak.movies.boundary.GenreService;
 import com.zemiak.movies.domain.Genre;
+import com.zemiak.movies.ui.view.icon.ButtonIcon;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -46,6 +47,7 @@ public class Genres extends ViewAbstract {
         for (Genre genre: genres) {
             NavigationButton button = new NavigationButton(genre.getName());
             button.setSizeUndefined();
+            button.setIcon(ButtonIcon.genreIcon(genre));
             grid.addComponent(button);
 
             final Genre finalGenre = genre;

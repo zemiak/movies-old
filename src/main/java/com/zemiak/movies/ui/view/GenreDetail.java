@@ -6,6 +6,7 @@ import com.vaadin.ui.CssLayout;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
+import com.zemiak.movies.ui.view.icon.ButtonIcon;
 import java.util.List;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -55,6 +56,7 @@ class GenreDetail extends ViewAbstract {
         for (Serie serie: series) {
             NavigationButton button = new NavigationButton(serie.getName());
             button.setSizeUndefined();
+            button.setIcon(ButtonIcon.serieIcon(serie));
             grid.addComponent(button);
 
             final Serie finalSerie = serie;
@@ -71,6 +73,7 @@ class GenreDetail extends ViewAbstract {
         for (Movie movie: movies) {
             NavigationButton button = new NavigationButton(movie.getName());
             button.setSizeUndefined();
+            button.setIcon(ButtonIcon.movieIcon(movie));
             grid.addComponent(button);
 
             final Movie finalMovie = movie;
