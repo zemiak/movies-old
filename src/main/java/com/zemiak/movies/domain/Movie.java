@@ -244,5 +244,12 @@ public class Movie implements Serializable {
     public String toString() {
         return "com.zemiak.movies.domain.Movie[ id=" + id + " ]";
     }
-    
+ 
+    public String composeGenreName() {
+        if (null == getSerieId()) {
+            return getGenreId().getName();
+        }
+        
+        return getSerieId().getId() + " " + getSerieId().getName();
+    }
 }

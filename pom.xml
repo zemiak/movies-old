@@ -157,6 +157,12 @@
             <artifactId>responsive</artifactId>
             <version>${vaadin.responsive.version}</version>
         </dependency>
+        
+        <dependency>
+            <groupId>com.googlecode.mp4parser</groupId> 
+            <artifactId>isoparser</artifactId> 
+            <version>1.0-RC-27</version>
+        </dependency>
     </dependencies>
 
     <build>

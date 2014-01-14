@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<job id="metadata-job" xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="1.0">
+    <properties>
+        <property name="fileList" value="/tmp/books-filelist"/>
+    </properties>
+    
+    <flow id="newmovies" next="metadata">
+        <step id="newmovies-prepare" next="newmovies-run">
+            <listeners>
+                <listener ref="com.zemiak.movies.batch.service.Listener"/>
+            </listeners>
+            <batchlet ref="PrepareFileList"></batchlet>
+        </step>
+        
+        <step id="newmovies-run" next="newmovies-cleanup">
+            <listeners>
+                <listener ref="com.zemiak.movies.batch.service.Listener"/>
+            </listeners>
+            
+            <chunk item-count="1">
+                <reader ref="FilenameItemReader"></reader>
+                <processor ref="NewmoviesProcessor"></processor>
+                <writer ref="NewmoviesWriter"></writer>
+            </chunk>
+        </step>
+        
+        <step id="newmovies-cleanup" >
+            <listeners>
+                <listener ref="com.zemiak.movies.batch.service.Listener"/>
+            </listeners>
+            <batchlet ref="com.zemiak.movies.batch.service.RemoveFileList">
+            </batchlet>
+        </step>
+    </flow>
+
+    <flow id="metadata" next="thumbnails"> 
+        <step id="metadata-prepare" next="metadata-run">
+            <listeners>
+                <listener ref="com.zemiak.movies.batch.service.Listener"/>
+            </listeners>
+            <batchlet ref="PrepareFileList"></batchlet>
+        </step>
+        
+        <step id="metadata-run" next="metadata-cleanup">
+            <listeners>
+                <listener ref="com.zemiak.movies.batch.service.Listener"/>
+            </listeners>
+            
+            <chunk item-count="1">
+                <reader ref="FilenameItemReader"></reader>
+                <processor ref="MetadataProcessor"></processor>
+                <writer ref="MetadataWriter"></writer>
+            </chunk>
+        </step>
+        
+        <step id="metadata-cleanup" >
+            <listeners>
+                <listener ref="com.zemiak.movies.batch.service.Listener"/>
+            </listeners>
+            <batchlet ref="com.zemiak.movies.batch.service.RemoveFileList">
+            </batchlet>
+        </step>
+    </flow>
+    
+    <flow id="thumbnails">
+        <step id="thumbnails-prepare" next="thumbnails-run">
+            <listeners>
+                <listener ref="com.zemiak.movies.batch.service.Listener"/>
+            </listeners>
+            <batchlet ref="PrepareFileList"></batchlet>
+        </step>
+        
+        <step id="thumbnails-run" next="thumbnails-cleanup">
+            <listeners>
+                <listener ref="com.zemiak.movies.batch.service.Listener"/>
+            </listeners>
+            
+            <chunk item-count="1">
+                <reader ref="FilenameItemReader"></reader>
+                <processor ref="com.zemiak.movies.batch.thumbnails.Processor"></processor>
+                <writer ref="com.zemiak.movies.batch.thumbnails.Writer"></writer>
+            </chunk>
+        </step>
+        
+        <step id="metadata-cleanup" >
+            <listeners>
+                <listener ref="com.zemiak.movies.batch.service.Listener"/>
+            </listeners>
+            <batchlet ref="com.zemiak.movies.batch.service.RemoveFileList">
+            </batchlet>
+        </step>
+    </flow>
+</job>
