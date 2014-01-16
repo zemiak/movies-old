@@ -1,7 +1,7 @@
-package com.zemiak.batch.metadata;
+package com.zemiak.movies.batch.metadata;
 
-import com.zemiak.batch.service.CommandLine;
-import com.zemiak.batch.metadata.description.DescriptionReader;
+import com.zemiak.movies.batch.service.CommandLine;
+import com.zemiak.movies.batch.metadata.description.DescriptionReader;
 import com.zemiak.movies.domain.Movie;
 import java.io.IOException;
 import java.util.List;
@@ -19,7 +19,7 @@ import javax.inject.Named;
 public class Writer extends AbstractItemWriter {
     private static final Logger LOG = Logger.getLogger(Writer.class.getName());
     
-    private static final String MP4TAGS = "mp4tags";
+    private static final String MP4TAGS = "/Users/vasko/bin/mp4tags";
     private static final String GENRE = "-g";
     private static final String NAME = "-s";
     private static final String COMMENTS = "-c";

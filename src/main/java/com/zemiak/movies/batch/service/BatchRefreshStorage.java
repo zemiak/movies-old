@@ -1,4 +1,4 @@
-package com.zemiak.batch.service;
+package com.zemiak.movies.batch.service;
 
 import com.zemiak.movies.domain.CacheClearEvent;
 import javax.batch.api.Batchlet;

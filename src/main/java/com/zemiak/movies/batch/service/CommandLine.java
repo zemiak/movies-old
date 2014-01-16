@@ -1,4 +1,4 @@
-package com.zemiak.batch.service;
+package com.zemiak.movies.batch.service;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,9 +19,8 @@ public class CommandLine {
     public static List<String> execCmd(final String cmd) throws IOException {
         List<String> lines;
         
-        LOG.log(Level.INFO, "execCmd: ''{0}''", cmd);
-        
         if (isDebug) {
+            LOG.log(Level.INFO, "execCmd: ''{0}''", cmd);
             return new ArrayList<>();
         }
         

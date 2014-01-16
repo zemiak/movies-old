@@ -1,6 +1,6 @@
-package com.zemiak.batch.thumbnails;
+package com.zemiak.movies.batch.thumbnails;
 
-import com.zemiak.batch.service.CommandLine;
+import com.zemiak.movies.batch.service.CommandLine;
 import java.io.File;
 import java.util.List;
 import java.util.Properties;

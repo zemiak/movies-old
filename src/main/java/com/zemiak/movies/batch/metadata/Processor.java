@@ -1,7 +1,7 @@
-package com.zemiak.batch.metadata;
+package com.zemiak.movies.batch.metadata;
 
-import com.zemiak.batch.metadata.domain.MovieMetadata;
-import com.zemiak.batch.metadata.domain.MetadataReader;
+import com.zemiak.movies.batch.metadata.domain.MovieMetadata;
+import com.zemiak.movies.batch.metadata.domain.MetadataReader;
 import com.zemiak.movies.domain.Movie;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;

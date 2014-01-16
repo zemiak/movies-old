@@ -1,4 +1,4 @@
-package com.zemiak.batch.service;
+package com.zemiak.movies.batch.service;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -53,7 +53,7 @@ public class PrepareFileList implements Batchlet {
             throw ex;
         }
         
-        LOG.log(Level.INFO, "Going to add {0} movies to DB.", counter);
+        LOG.log(Level.INFO, "Found {0} movies on HDD.", counter);
         
         return "done";
     }

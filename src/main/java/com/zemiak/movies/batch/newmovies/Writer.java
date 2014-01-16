@@ -1,4 +1,4 @@
-package com.zemiak.batch.newmovies;
+package com.zemiak.movies.batch.newmovies;
 
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;

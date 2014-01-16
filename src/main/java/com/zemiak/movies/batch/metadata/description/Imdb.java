@@ -1,11 +1,11 @@
-package com.zemiak.batch.metadata.description;
+package com.zemiak.movies.batch.metadata.description;
 
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
-import org.jsoup.nodes.Document;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 /**
@@ -13,11 +13,11 @@ import org.jsoup.nodes.Element;
  * @author vasko
  */
 @Dependent
-public class Csfd implements IDescriptionReader {
-    private static final String URL1 = "www.csfd.cz/";
+public class Imdb implements IDescriptionReader {
+    private static final String URL1 = "www.imdb.com/";
     private static final String URL2 = "http://" + URL1;
     
-    public Csfd() {
+    public Imdb() {
     }
 
     @Override
@@ -31,12 +31,11 @@ public class Csfd implements IDescriptionReader {
         try {
             doc = Jsoup.connect(url).get();
         } catch (IOException ex) {
-            Logger.getLogger(Csfd.class.getName()).log(Level.SEVERE, "Cannot read " + url, ex);
+            Logger.getLogger(Imdb.class.getName()).log(Level.SEVERE, "Cannot read " + url, ex);
             return null;
         }
         
-        Element description = doc.select("div[data-truncate]").first();
-        
-        return description.text();
+        Element description = doc.select("meta[name=description]").first();
+        return description.attr("description");
     }
 }

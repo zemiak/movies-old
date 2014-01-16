@@ -79,11 +79,11 @@
             <chunk item-count="1">
                 <reader ref="FilenameItemReader"></reader>
                 <processor ref="ThumbnailsProcessor"></processor>
-                <writer ref="com.zemiak.movies.batch.thumbnails.Writer"></writer>
+                <writer ref="ThumbnailsWriter"></writer>
             </chunk>
         </step>
         
-        <step id="metadata-cleanup" >
+        <step id="thumbnails-cleanup" >
             <listeners>
                 <listener ref="com.zemiak.movies.batch.service.Listener"/>
             </listeners>

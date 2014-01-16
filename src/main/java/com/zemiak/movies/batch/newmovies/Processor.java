@@ -1,6 +1,6 @@
-package com.zemiak.batch.newmovies;
+package com.zemiak.movies.batch.newmovies;
 
-import com.zemiak.batch.service.RemoveFileList;
+import com.zemiak.movies.batch.service.RemoveFileList;
 import com.zemiak.movies.domain.Movie;
 import java.util.Properties;
 import java.util.logging.Level;

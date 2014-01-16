@@ -1,4 +1,4 @@
-package com.zemiak.batch.service;
+package com.zemiak.movies.batch.service;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

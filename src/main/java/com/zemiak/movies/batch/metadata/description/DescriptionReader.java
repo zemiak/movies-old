@@ -1,4 +1,4 @@
-package com.zemiak.batch.metadata.description;
+package com.zemiak.movies.batch.metadata.description;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;

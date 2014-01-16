@@ -1,4 +1,4 @@
-package com.zemiak.batch.metadata.domain;
+package com.zemiak.movies.batch.metadata.domain;
 
 /**
  *

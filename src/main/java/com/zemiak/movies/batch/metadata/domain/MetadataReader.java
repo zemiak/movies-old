@@ -1,6 +1,6 @@
-package com.zemiak.batch.metadata.domain;
+package com.zemiak.movies.batch.metadata.domain;
 
-import com.zemiak.batch.service.CommandLine;
+import com.zemiak.movies.batch.service.CommandLine;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  * @author vasko
  */
 public class MetadataReader {
-    private static final String MP4INFO = "mp4info";
+    private static final String MP4INFO = "/Users/vasko/bin/mp4info";
     private static final String ERROR = "mp4info: can't open";
     private static final String NAME = " Name: ";
     private static final String GENRE = " Genre: ";
