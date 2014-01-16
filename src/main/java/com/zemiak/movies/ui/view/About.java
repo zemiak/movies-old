@@ -8,6 +8,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
+import com.zemiak.movies.boundary.BatchRunner;
 import com.zemiak.movies.domain.CacheClearEvent;
 import javax.inject.Inject;
 
@@ -19,6 +20,9 @@ class About extends ViewAbstract {
     
     @Inject 
     private javax.enterprise.event.Event<CacheClearEvent> clearEvent;
+    
+    @Inject
+    private BatchRunner runner;
 
     public About() {
     }
@@ -61,6 +65,19 @@ class About extends ViewAbstract {
         });
         clearCacheButton.setSizeFull();
         content.addComponent(clearCacheButton);
+        
+        NativeButton updateCollectionButton = new NativeButton("Update Movies", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                if (runner.isUpdateMoviesRunning()) {
+                    Notification.show("Job is still running");
+                } else {
+                    runner.runUpdateCollection();
+                }
+            }
+        });
+        updateCollectionButton.setSizeFull();
+        content.addComponent(updateCollectionButton);
     }
 
     private String getBold(String text) {

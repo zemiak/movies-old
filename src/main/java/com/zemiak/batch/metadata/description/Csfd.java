@@ -1,6 +1,12 @@
 package com.zemiak.batch.metadata.description;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
+import org.jsoup.nodes.Document;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
 
 /**
  *
@@ -10,6 +16,9 @@ import javax.enterprise.context.Dependent;
 public class Csfd implements IDescriptionReader {
     private static final String URL1 = "www.csfd.cz/";
     private static final String URL2 = "http://" + URL1;
+    
+    public Csfd() {
+    }
 
     @Override
     public boolean acceptsUrl(final String url) {
@@ -18,42 +27,16 @@ public class Csfd implements IDescriptionReader {
 
     @Override
     public String getDescription(final String url) {
-        return null;
-    }
-    
-    /*
-    if ((is_null($row->description) || trim($row->description) == '') && (strpos($row->url, 'www.csfd.cz') !== false)) {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $row->url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $output = curl_exec($ch);
-        curl_close($ch);
-
-        $description = '';
-        $lines = explode("\n", $output);
-        $i = 0;
-
-        for ($i = 0; $i < count($lines); $i++) {
-            $line = $lines[$i];
-
-            if (strpos($line, $beforeDesc) !== false) {
-                $description = trim($lines[$i + 1]);
-                if ($description == "") $description = trim($lines[$i + 2]);
-                $pos = strpos($description, '&nbsp;');
-                if ($pos !== false) $description = trim(substr($description, 0, $pos));
-                break;
-            }
+        Document doc;
+        try {
+            doc = Jsoup.connect(url).get();
+        } catch (IOException ex) {
+            Logger.getLogger(Csfd.class.getName()).log(Level.SEVERE, "Cannot read " + url, ex);
+            return null;
         }
-
-        $description = str_replace('<BR>', "\n", $description);
-        $descriptionAscii = iconv("UTF-8", "ASCII//TRANSLIT", $description);
         
-        $row->description = $description;
-        $id = $row->id;
-        unset($row->id);
-
-        $movie->update($id, $row);
-        echo "$id ";
+        Element description = doc.select("div[data-truncate]").first();
+        
+        return description.text();
     }
-    */
 }

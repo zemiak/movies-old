@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<job id="metadata-job" xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="1.0">
+<job id="update-movies" xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="1.0">
     <properties>
         <property name="fileList" value="/tmp/books-filelist"/>
     </properties>
@@ -63,7 +63,7 @@
         </step>
     </flow>
     
-    <flow id="thumbnails">
+    <flow id="thumbnails" next="updateStorageCleanup">
         <step id="thumbnails-prepare" next="thumbnails-run">
             <listeners>
                 <listener ref="com.zemiak.movies.batch.service.Listener"/>
@@ -78,7 +78,7 @@
             
             <chunk item-count="1">
                 <reader ref="FilenameItemReader"></reader>
-                <processor ref="com.zemiak.movies.batch.thumbnails.Processor"></processor>
+                <processor ref="ThumbnailsProcessor"></processor>
                 <writer ref="com.zemiak.movies.batch.thumbnails.Writer"></writer>
             </chunk>
         </step>
@@ -88,6 +88,13 @@
                 <listener ref="com.zemiak.movies.batch.service.Listener"/>
             </listeners>
             <batchlet ref="com.zemiak.movies.batch.service.RemoveFileList">
+            </batchlet>
+        </step>
+    </flow>
+    
+    <flow id="updateStorageCleanup">
+        <step id="refreshStorage">
+            <batchlet ref="BatchRefreshStorage">
             </batchlet>
         </step>
     </flow>

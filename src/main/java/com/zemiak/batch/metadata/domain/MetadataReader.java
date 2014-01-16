@@ -1,6 +1,6 @@
 package com.zemiak.batch.metadata.domain;
 
-import com.zemiak.batch.metadata.CommandLine;
+import com.zemiak.batch.service.CommandLine;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -22,11 +22,15 @@ public class MetadataReader {
         List<String> info;
         
         try {
+            CommandLine.isDebug = false;
             info = CommandLine.execCmd(MP4INFO + " \"" + name + "\"");
         } catch (IOException ex) {
+            CommandLine.isDebug = true;
             Logger.getLogger(MetadataReader.class.getName()).log(Level.SEVERE, "Can't read metadata for " + name, ex);
             return null;
         }
+        
+        CommandLine.isDebug = true;
 
         for (String line: info) {
             line = line.trim();

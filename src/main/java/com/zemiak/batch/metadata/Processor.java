@@ -31,8 +31,8 @@ public class Processor implements ItemProcessor {
     }
     
     @Override
-    public Object processItem(Object book) throws Exception {
-        final String fileName = (String) book;
+    public Object processItem(final Object movieName) throws Exception {
+        final String fileName = (String) movieName;
         MovieMetadata data = MetadataReader.read(fileName);
         Movie movie = find(fileName);
         

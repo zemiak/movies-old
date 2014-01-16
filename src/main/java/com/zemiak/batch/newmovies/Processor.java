@@ -38,8 +38,8 @@ public class Processor implements ItemProcessor {
     }
     
     @Override
-    public Object processItem(Object book) throws Exception {
-        String fileName = (String) book;
+    public Object processItem(final Object movie) throws Exception {
+        final String fileName = (String) movie;
         if (! exists(getRelativeFilename(fileName))) {
             LOG.log(Level.INFO, "Found a new file: {0}", fileName);
             return fileName;

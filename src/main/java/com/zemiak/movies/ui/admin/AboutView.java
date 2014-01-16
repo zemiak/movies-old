@@ -9,7 +9,7 @@ import com.vaadin.ui.Table;
 
 @CDIView(AboutView.VIEW_ID)
 public class AboutView extends ViewAbstract {
-    public static final String VIEW_ID = "about";
+    public static final String VIEW_ID = "aboutAdmin";
     public static final ThemeResource ICON = new ThemeResource("icons/stats.png");
     
     public AboutView() {

@@ -1,5 +1,6 @@
 package com.zemiak.batch.metadata;
 
+import com.zemiak.batch.service.CommandLine;
 import com.zemiak.batch.metadata.description.DescriptionReader;
 import com.zemiak.movies.domain.Movie;
 import java.io.IOException;

@@ -147,12 +147,6 @@
         </dependency>
         
         <dependency>
-            <groupId>com.vaadin.addon</groupId>
-            <artifactId>vaadin-touchkit-agpl</artifactId>
-            <version>${vaadin.touchkit.version}</version>
-        </dependency>
-        
-        <dependency>
             <groupId>com.vaadin.addon.responsive</groupId>
             <artifactId>responsive</artifactId>
             <version>${vaadin.responsive.version}</version>
@@ -162,6 +156,12 @@
             <groupId>com.googlecode.mp4parser</groupId> 
             <artifactId>isoparser</artifactId> 
             <version>1.0-RC-27</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.7.3</version>
         </dependency>
     </dependencies>
 

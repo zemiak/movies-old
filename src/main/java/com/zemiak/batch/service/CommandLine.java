@@ -1,18 +1,29 @@
-package com.zemiak.batch.metadata;
+package com.zemiak.batch.service;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author vasko
  */
 public class CommandLine {
-    public static List<String> execCmd(String cmd) throws IOException {
+    private static final Logger LOG = Logger.getLogger(CommandLine.class.getName());
+    public static boolean isDebug = true;
+    
+    public static List<String> execCmd(final String cmd) throws IOException {
         List<String> lines;
+        
+        LOG.log(Level.INFO, "execCmd: ''{0}''", cmd);
+        
+        if (isDebug) {
+            return new ArrayList<>();
+        }
         
         try (InputStream stream = Runtime.getRuntime().exec(cmd).getInputStream(); 
                 Scanner scanner = new Scanner(stream)) {
