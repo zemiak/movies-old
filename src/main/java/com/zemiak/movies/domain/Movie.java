@@ -240,16 +240,16 @@ public class Movie implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "com.zemiak.movies.domain.Movie[ id=" + id + " ]";
-    }
- 
     public String composeGenreName() {
-        if (null == getSerieId()) {
+        if (null == getSerieId() || getSerieId().getId() == 0) {
             return getGenreId().getName();
         }
         
         return getSerieId().getId() + " " + getSerieId().getName();
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" + "id=" + id + ", name=" + name + '}';
     }
 }

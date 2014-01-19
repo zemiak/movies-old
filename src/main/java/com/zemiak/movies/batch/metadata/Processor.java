@@ -1,10 +1,11 @@
 package com.zemiak.movies.batch.metadata;
 
-import com.zemiak.movies.batch.metadata.domain.MovieMetadata;
-import com.zemiak.movies.batch.metadata.domain.MetadataReader;
 import com.zemiak.movies.domain.Movie;
+import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.batch.api.chunk.ItemProcessor;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -23,21 +24,30 @@ public class Processor implements ItemProcessor {
     @PersistenceContext
     private EntityManager em;
     
+    @Resource(name = "com.zemiak.movies")
+    private Properties conf;
+    
     private Query query;
     
     @PostConstruct
     public void init() {
+        System.err.println("MetadataProcessor.init.begin");
         query = em.createNamedQuery("Movie.findByFileName");
+        System.err.println("MetadataProcessor.init.end");
     }
     
     @Override
     public Object processItem(final Object movieName) throws Exception {
         final String fileName = (String) movieName;
         MovieMetadata data = MetadataReader.read(fileName);
-        Movie movie = find(fileName);
+        Movie movie = find(fileName.substring(conf.getProperty("path").length()));
         
         if (null != movie && null != data) {
             if (! isMetadataEqual(movie, data)) {
+                LOG.log(Level.INFO, "... MetadataProcessor: Going to update metadata {0}", 
+                        new Object[]{fileName});
+                LOG.log(Level.INFO, "..... Metadata {0}, Movie {1}, current Genre {2}", 
+                        new Object[]{data, movie, movie.composeGenreName()});
                 return fileName;
             }
         }
@@ -68,6 +78,11 @@ public class Processor implements ItemProcessor {
             return false;
         }
         
-        return data.getName().equals(movie.getName());
+        if (! data.getName().equals(movie.getName())) {
+            return false;
+        }
+        
+        return (data.getComments() != null && 
+                (data.getComments().trim().isEmpty() || "''".equals(data.getComments())));
     }
 }

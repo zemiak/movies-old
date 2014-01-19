@@ -4,9 +4,12 @@ import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.batch.metadata.description.DescriptionReader;
 import com.zemiak.movies.domain.Movie;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.batch.api.chunk.AbstractItemWriter;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,7 +22,9 @@ import javax.inject.Named;
 public class Writer extends AbstractItemWriter {
     private static final Logger LOG = Logger.getLogger(Writer.class.getName());
     
-    private static final String MP4TAGS = "/Users/vasko/bin/mp4tags";
+    @Resource(name = "com.zemiak.movies")
+    private Properties conf;
+            
     private static final String GENRE = "-g";
     private static final String NAME = "-s";
     private static final String COMMENTS = "-c";
@@ -37,14 +42,24 @@ public class Writer extends AbstractItemWriter {
                 updateName(fileName, movie);
                 updateGenre(fileName, movie);
                 updateComment(fileName, movie);
+                
+                LOG.log(Level.INFO, "MetadataWriter: Updated movie metadata: ''{0}'' ...", 
+                        fileName);
             }
         }
     }
     
     private void update(final String fileName, final String commandLineSwitch, final String value) {
+        final List<String> params = new ArrayList<>();
+        
+        params.add(commandLineSwitch);
+        params.add(value);
+        params.add(fileName);
+        
         try {
-            CommandLine.execCmd(MP4TAGS + " " + commandLineSwitch + " \"" + value + "\" \"" + fileName + "\"");
-        } catch (IOException ex) {
+            CommandLine.isDebug = true;
+            CommandLine.execCmd(conf.getProperty("mp4tags"), params);
+        } catch (IOException | InterruptedException | IllegalStateException ex) {
             Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, "Cannot update " + commandLineSwitch + " for " + fileName, ex);
         }
     }

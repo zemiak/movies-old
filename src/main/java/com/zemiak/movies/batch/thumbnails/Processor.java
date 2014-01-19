@@ -2,6 +2,7 @@ package com.zemiak.movies.batch.thumbnails;
 
 import java.io.File;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.batch.api.chunk.ItemProcessor;
@@ -21,7 +22,8 @@ public class Processor implements ItemProcessor {
     @Override
     public Object processItem(final Object movie) throws Exception {
         final File file = new File((String) movie);
-        final String imageName = conf.getProperty("imgPath") + file.getName();
+        String imageName = conf.getProperty("imgPath") + file.getName();
+        imageName = imageName.substring(0, imageName.lastIndexOf(".")) + ".jpg";
         
         return ((new File(imageName).exists()) ? null : movie);
     }

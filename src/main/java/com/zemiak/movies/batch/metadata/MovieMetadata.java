@@ -1,4 +1,4 @@
-package com.zemiak.movies.batch.metadata.domain;
+package com.zemiak.movies.batch.metadata;
 
 /**
  *
@@ -34,5 +34,10 @@ public class MovieMetadata {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    @Override
+    public String toString() {
+        return "MovieMetadata{" + "genre=" + genre + ", name=" + name + ", comments=" + comments + '}';
     }
 }

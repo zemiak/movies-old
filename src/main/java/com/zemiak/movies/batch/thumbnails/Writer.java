@@ -2,6 +2,7 @@ package com.zemiak.movies.batch.thumbnails;
 
 import com.zemiak.movies.batch.service.CommandLine;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
@@ -18,12 +19,9 @@ import javax.inject.Named;
 public class Writer extends AbstractItemWriter {
     private static final Logger LOG = Logger.getLogger(Writer.class.getName());
     
-    private static final String FFMPEG="ffmpeg -itsoffset -%d -i \"%s\" -vcodec mjpeg"
-            + " -vframes 1 -an -f rawvideo -s 220x160 \"%s\"";
-    
     @Resource(name = "com.zemiak.movies")
     private Properties conf;
-
+    
     @Override
     public void writeItems(List list) throws Exception {
         for (Object obj : list) {
@@ -36,9 +34,31 @@ public class Writer extends AbstractItemWriter {
             
             imageFileName = imageFileName.substring(0, pos) + ".jpg";
             
-            final String command = String.format(FFMPEG, offset, movieFileName, imageFileName);
+            final List<String> params = new ArrayList<>();
             
-            CommandLine.execCmd(command);
+            params.add("-itsoffset");
+            params.add(String.valueOf(offset));
+            
+            params.add("-i");
+            params.add(movieFileName);
+            
+            params.add("-vcodec");
+            params.add("mjpeg");
+            
+            params.add("-vframes");
+            params.add("1");
+            
+            params.add("-an");
+            
+            params.add("-f");
+            params.add("rawvideo");
+            
+            params.add("-s");
+            params.add("220x160");
+            
+            params.add(imageFileName);
+            
+            CommandLine.execCmd(conf.getProperty("ffmpeg"), params);
         }
     }
 }
