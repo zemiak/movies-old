@@ -13,6 +13,8 @@ import javax.annotation.Resource;
 import javax.batch.api.chunk.AbstractItemWriter;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -22,29 +24,30 @@ import javax.inject.Named;
 public class Writer extends AbstractItemWriter {
     private static final Logger LOG = Logger.getLogger(Writer.class.getName());
     
-    @Resource(name = "com.zemiak.movies")
-    private Properties conf;
+    @Resource(name = "com.zemiak.movies") private Properties conf;
+    @Inject private DescriptionReader descriptions;
             
     private static final String GENRE = "-g";
     private static final String NAME = "-s";
     private static final String COMMENTS = "-c";
-    
-    @Inject private Processor processor;
-    @Inject private DescriptionReader descriptions;
 
     @Override
     public void writeItems(List list) throws Exception {
         for (Object obj : list) {
-            String fileName = (String) obj;
-            Movie movie = processor.find(fileName);
+            Movie movie = (Movie) obj;
             
             if (null != movie) {
+                String fileName = conf.getProperty("path") + movie.getFileName();
+                
                 updateName(fileName, movie);
                 updateGenre(fileName, movie);
                 updateComment(fileName, movie);
                 
-                LOG.log(Level.INFO, "MetadataWriter: Updated movie metadata: ''{0}'' ...", 
+                LOG.log(Level.INFO, "MetadataWriter: Updated movie metadata: {0} ...", 
                         fileName);
+            } else {
+                LOG.log(Level.SEVERE, "MetadataWriter: NOT Updated movie metadata: #{0} ...", 
+                        movie.getFileName());
             }
         }
     }
@@ -57,7 +60,7 @@ public class Writer extends AbstractItemWriter {
         params.add(fileName);
         
         try {
-            CommandLine.isDebug = true;
+            CommandLine.isDebug = false;
             CommandLine.execCmd(conf.getProperty("mp4tags"), params);
         } catch (IOException | InterruptedException | IllegalStateException ex) {
             Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, "Cannot update " + commandLineSwitch + " for " + fileName, ex);

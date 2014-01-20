@@ -27,7 +27,7 @@ public class Writer extends AbstractItemWriter {
         for (Object obj : list) {
             final File file = new File((String) obj);
             final String movieFileName = file.getAbsolutePath();
-            final int offset = new Random().nextInt(400) + 240;
+            final int offset = new Random().nextInt(200) + 240;
             
             String imageFileName = conf.getProperty("imgPath") + file.getName();
             final int pos = imageFileName.lastIndexOf(".");

@@ -31,9 +31,7 @@ public class Processor implements ItemProcessor {
     
     @PostConstruct
     public void init() {
-        System.err.println("MetadataProcessor.init.begin");
         query = em.createNamedQuery("Movie.findByFileName");
-        System.err.println("MetadataProcessor.init.end");
     }
     
     @Override
@@ -48,7 +46,7 @@ public class Processor implements ItemProcessor {
                         new Object[]{fileName});
                 LOG.log(Level.INFO, "..... Metadata {0}, Movie {1}, current Genre {2}", 
                         new Object[]{data, movie, movie.composeGenreName()});
-                return fileName;
+                return movie;
             }
         }
 
@@ -71,18 +69,28 @@ public class Processor implements ItemProcessor {
 
     private boolean isMetadataEqual(Movie movie, MovieMetadata data) {
         if (null == data.getGenre() || null == data.getName()) {
+            LOG.info("isMetadataEqual: Genre or name is null");
             return false;
         }
         
         if (! data.getGenre().equals(movie.composeGenreName())) {
+            LOG.info("isMetadataEqual: Genre is not equal");
             return false;
         }
         
         if (! data.getName().equals(movie.getName())) {
+            LOG.info("isMetadataEqual: Name is not equal");
             return false;
         }
         
-        return (data.getComments() != null && 
-                (data.getComments().trim().isEmpty() || "''".equals(data.getComments())));
+        boolean commentsAreEmpty = (data.getComments() == null
+                || data.getComments().trim().isEmpty() 
+                || "''".equals(data.getComments()));
+        
+        if (commentsAreEmpty) {
+            LOG.info("isMetadataEqual: Comments are empty");
+        }
+        
+        return !commentsAreEmpty;
     }
 }
