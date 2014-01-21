@@ -21,8 +21,6 @@ import java.util.logging.Logger;
 public class CommandLine {
 
     private static final Logger LOG = Logger.getLogger(CommandLine.class.getName());
-    public static boolean isDebug = true;
-
     public static List<String> execCmd(final String cmd, final List<String> arguments)
             throws IOException, InterruptedException, IllegalStateException {
         List<String> lines = new ArrayList<>();
@@ -30,10 +28,6 @@ public class CommandLine {
 
         LOG.log(Level.INFO, "execCmd: ''{0} {1}",
                 new Object[]{cmd, Joiner.on(" ").join(arguments)});
-
-        if (isDebug) {
-            return lines;
-        }
 
         command.add(0, cmd);
         Process process = Runtime.getRuntime().exec(command.toArray(new String[]{}));

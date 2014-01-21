@@ -44,16 +44,12 @@ public class MetadataReader {
         params.add(name);
         
         try {
-            CommandLine.isDebug = false;
             info = CommandLine.execCmd(mp4info, params);
         } catch (IOException | InterruptedException | IllegalStateException ex) {
-            CommandLine.isDebug = false;
             Logger.getLogger(MetadataReader.class.getName()).log(Level.SEVERE, "Can't read metadata for " + name, ex);
             return null;
         }
         
-        CommandLine.isDebug = false;
-
         for (String line: info) {
             line = line.trim();
             

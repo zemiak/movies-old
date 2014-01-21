@@ -27,7 +27,7 @@ public class Writer extends AbstractItemWriter {
         for (Object obj : list) {
             final File file = new File((String) obj);
             final String movieFileName = file.getAbsolutePath();
-            final int offset = new Random().nextInt(200) + 240;
+            final int offset = new Random().nextInt(200) + 300;
             
             String imageFileName = conf.getProperty("imgPath") + file.getName();
             final int pos = imageFileName.lastIndexOf(".");
@@ -36,25 +36,17 @@ public class Writer extends AbstractItemWriter {
             
             final List<String> params = new ArrayList<>();
             
-            params.add("-itsoffset");
-            params.add(String.valueOf(offset));
-            
             params.add("-i");
             params.add(movieFileName);
             
-            params.add("-vcodec");
-            params.add("mjpeg");
+            params.add("-ss");
+            params.add(String.valueOf(offset));
             
-            params.add("-vframes");
+            params.add("-vf");
+            params.add("scale=220x160");
+            
+            params.add("-frames:v");
             params.add("1");
-            
-            params.add("-an");
-            
-            params.add("-f");
-            params.add("rawvideo");
-            
-            params.add("-s");
-            params.add("220x160");
             
             params.add(imageFileName);
             

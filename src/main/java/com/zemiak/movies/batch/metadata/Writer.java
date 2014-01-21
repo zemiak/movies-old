@@ -13,8 +13,6 @@ import javax.annotation.Resource;
 import javax.batch.api.chunk.AbstractItemWriter;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -60,7 +58,6 @@ public class Writer extends AbstractItemWriter {
         params.add(fileName);
         
         try {
-            CommandLine.isDebug = false;
             CommandLine.execCmd(conf.getProperty("mp4tags"), params);
         } catch (IOException | InterruptedException | IllegalStateException ex) {
             Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, "Cannot update " + commandLineSwitch + " for " + fileName, ex);
