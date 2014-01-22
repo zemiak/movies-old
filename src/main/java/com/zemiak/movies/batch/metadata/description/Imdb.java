@@ -36,6 +36,6 @@ public class Imdb implements IDescriptionReader {
         }
         
         Element description = doc.select("meta[name=description]").first();
-        return description.attr("description");
+        return description.attr("content");
     }
 }
