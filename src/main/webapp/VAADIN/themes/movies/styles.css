@@ -206,3 +206,13 @@ div .v-touchkit-navbutton-desc {
 .grid[width-range~="1001px-"] > .v-touchkit-navbutton {
     width: 16.6667%;
 }
+
+/* Thumbnailed buttons */
+.v-touchkit-navbutton-image-button {
+    float: left;
+}
+
+.v-touchkit-componentgroup-row>.v-caption>.v-icon, .v-touchkit-navbutton-image-button .v-icon {
+/*    width: 100px;
+    height: 100px;*/
+}

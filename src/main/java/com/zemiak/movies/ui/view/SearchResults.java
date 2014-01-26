@@ -11,6 +11,8 @@ import com.zemiak.movies.boundary.SerieService;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
+import com.zemiak.movies.ui.view.components.ButtonIcon;
+import com.zemiak.movies.ui.view.components.ImageButton;
 import java.util.List;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -55,17 +57,21 @@ public class SearchResults extends ViewAbstract {
         refresh();
     }
 
-    private String getHighlightedValue(String value) {
+    private String getHighlightedValue(final String value) {
         String highlighted = "";
         int i = value.toLowerCase().indexOf(text);
 
         if (i > 0) {
             highlighted = value.substring(0, i);
+        } else {
+            return value;
         }
+        
+        System.err.println("");
 
         // Gold color
         highlighted += "<span style=\"background-color: #FFD700;\">"
-                + value.substring(i, i + text.length())
+                + value.substring(i, i + (value.length() > text.length() ? text.length() : value.length()))
                 + "</span>";
 
         if (value.length() > i + text.length()) {
@@ -97,9 +103,7 @@ public class SearchResults extends ViewAbstract {
         
         if (! genres.isEmpty()) {
             for (Genre genre: genres) {
-                NavigationButton button = new NavigationButton();
-                button.setSizeUndefined();
-                button.setDescription(getHighlightedValue(genre.getName()));
+                NavigationButton button = new ImageButton(getHighlightedValue(genre.getName()), ButtonIcon.genreIcon(genre));
                 grid.addComponent(button);
 
                 final Genre finalGenre = genre;
@@ -116,9 +120,7 @@ public class SearchResults extends ViewAbstract {
 
         if (! series.isEmpty()) {
             for (Serie serie: series) {
-                NavigationButton button = new NavigationButton();
-                button.setSizeUndefined();
-                button.setDescription(getHighlightedValue(serie.getName()));
+                NavigationButton button = new ImageButton(getHighlightedValue(serie.getName()), ButtonIcon.serieIcon(serie));
                 grid.addComponent(button);
 
                 final Serie finalSerie = serie;
@@ -135,9 +137,7 @@ public class SearchResults extends ViewAbstract {
         
         if (! movies.isEmpty()) {
             for (Movie movie: movies) {
-                NavigationButton button = new NavigationButton();
-                button.setSizeUndefined();
-                button.setDescription(getHighlightedValue(movie.getName()));
+                NavigationButton button = new ImageButton(getHighlightedValue(movie.getName()), ButtonIcon.movieIcon(movie));
                 grid.addComponent(button);
 
                 final Movie finalMovie = movie;

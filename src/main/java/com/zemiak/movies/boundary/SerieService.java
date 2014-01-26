@@ -1,8 +1,8 @@
 package com.zemiak.movies.boundary;
 
 import com.zemiak.movies.domain.CacheClearEvent;
-import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
@@ -28,7 +28,7 @@ public class SerieService {
         return query.getResultList();
     }
     
-    public void save(Serie entity) {
+    public void save(final Serie entity) {
         Serie target = em.find(Serie.class, entity.getId());
         
         if (null == target) {
@@ -38,23 +38,27 @@ public class SerieService {
         }
     }
     
-    public Serie find(Integer id) {
+    public Serie find(final Integer id) {
         return em.find(Serie.class, id);
     }
 
-    public void remove(Integer entityId) {
+    public void remove(final Integer entityId) {
         em.remove(em.find(Serie.class, entityId));
     }
     
-    public void clearCache(@Observes CacheClearEvent event) {
+    public void clearCache(@Observes final CacheClearEvent event) {
         em.getEntityManagerFactory().getCache().evictAll();
     }
 
-    public List<Serie> getByExpression(String text) {
-        Query query = em.createQuery("SELECT l FROM Serie l WHERE (l.name LIKE :expr) ORDER BY l.name");
-        query.setParameter("expr", text);
-        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+    public List<Serie> getByExpression(final String text) {
+        List<Serie> res = new ArrayList<>();
         
-        return query.getResultList();
+        for (Serie entry: all()) {
+            if (entry.getName().toLowerCase().contains(text.toLowerCase())) {
+                res.add(entry);
+            }
+        }
+        
+        return res;
     }
 }

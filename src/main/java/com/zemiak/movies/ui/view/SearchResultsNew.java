@@ -5,6 +5,8 @@ import com.vaadin.addon.touchkit.ui.NavigationButton;
 import com.vaadin.ui.CssLayout;
 import com.zemiak.movies.boundary.MovieService;
 import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.ui.view.components.ButtonIcon;
+import com.zemiak.movies.ui.view.components.ImageButton;
 import java.util.List;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -43,9 +45,7 @@ public class SearchResultsNew extends ViewAbstract {
         
         if (! movies.isEmpty()) {
             for (Movie movie: movies) {
-                NavigationButton button = new NavigationButton();
-                button.setSizeUndefined();
-                button.setDescription(movie.getName());
+                NavigationButton button = new ImageButton(movie.getName(), ButtonIcon.movieIcon(movie));
                 grid.addComponent(button);
 
                 final Movie finalMovie = movie;

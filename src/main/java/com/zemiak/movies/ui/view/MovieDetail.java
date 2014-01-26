@@ -2,25 +2,29 @@ package com.zemiak.movies.ui.view;
 
 import com.vaadin.data.Property;
 import com.vaadin.server.StreamResource;
+import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Video;
 import com.zemiak.movies.MoviesTheme;
 import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.ui.view.components.ButtonIcon;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.enterprise.context.Dependent;
 
 @Dependent
 class MovieDetail extends ViewAbstract {
-    final private String MOVIE_PREFIX = "/mnt/media/Movies/";
-    
-    VerticalLayout layout;
+    FormLayout layout;
     Movie movie;
+    
+    @Resource(name = "com.zemiak.movies")
+    private Properties properties;
     
     public MovieDetail() {
     }
@@ -33,7 +37,7 @@ class MovieDetail extends ViewAbstract {
     public void attach() {
         super.attach();
         
-        layout = new VerticalLayout();
+        layout = new FormLayout();
         layout.setWidth("100%");
         setContent(layout);
     }
@@ -46,14 +50,19 @@ class MovieDetail extends ViewAbstract {
         refresh();
     }
     
+    private String getAbsoluteFileName() {
+        return properties.getProperty("path") + movie.getFileName();
+    }
+    
     public class VideoSource implements StreamResource.StreamSource {
         InputStream stream;
         
         public VideoSource(String fileName) {
             try {
-                stream = new FileInputStream(MOVIE_PREFIX + fileName);
+                stream = new FileInputStream(getAbsoluteFileName());
+                System.err.println("Creating Video Stream: '" + getAbsoluteFileName() + "'");
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(MovieDetail.class.getName()).log(Level.SEVERE, "Cannot open file " + MOVIE_PREFIX + fileName, ex);
+                Logger.getLogger(MovieDetail.class.getName()).log(Level.SEVERE, "Cannot open file " + getAbsoluteFileName(), ex);
                 stream = null;
             }
         }
@@ -88,7 +97,7 @@ class MovieDetail extends ViewAbstract {
     }
 
     private void initSubtitles() throws Property.ReadOnlyException {
-        if (null != movie.getSubtitles()) {
+        if (null != movie.getSubtitles() && !movie.getSubtitles().isNone()) {
             TextField subtitles = new TextField("Subtitles");
             subtitles.setValue(movie.getSubtitles().getName());
             subtitles.setReadOnly(true);
@@ -97,7 +106,7 @@ class MovieDetail extends ViewAbstract {
     }
 
     private void initOriginalLanguage() throws Property.ReadOnlyException {
-        if (null != movie.getOriginalLanguage()) {
+        if (null != movie.getOriginalLanguage() && !movie.getOriginalLanguage().isNone()) {
             TextField origLang = new TextField("Original Language");
             origLang.setValue(movie.getOriginalLanguage().getName());
             origLang.setReadOnly(true);
@@ -106,7 +115,7 @@ class MovieDetail extends ViewAbstract {
     }
 
     private void initLanguage() throws Property.ReadOnlyException {
-        if (null != movie.getLanguage()) {
+        if (null != movie.getLanguage() && !movie.getLanguage().isNone()) {
             TextField lang = new TextField("Language");
             lang.setValue(movie.getLanguage().getName());
             lang.setReadOnly(true);
@@ -138,11 +147,15 @@ class MovieDetail extends ViewAbstract {
     }
 
     private void initPlayer() {
+        final StreamResource res = new StreamResource(new VideoSource(getAbsoluteFileName()), movie.getName());
+        res.setMIMEType("video/mp4");
+        
         Video player = new Video();
-        player.setAltText("Please, use a HTML5 compatible browser to play the video.");
-        player.setSource(new StreamResource(new VideoSource(movie.getFileName()), movie.getFileName()));
+        
+        player.setSource(res);
         player.setWidth("560");
         player.setHeight("432");
+        player.setPoster(ButtonIcon.movieIcon(movie));
         layout.addComponent(player);
     }
 

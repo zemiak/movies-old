@@ -163,4 +163,8 @@ public class Language implements Serializable {
         return getName();
     }
     
+    public boolean isNone() {
+        return "  ".equals(id);
+    }
+    
 }

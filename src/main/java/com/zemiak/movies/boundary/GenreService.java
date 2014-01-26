@@ -2,6 +2,8 @@ package com.zemiak.movies.boundary;
 
 import com.zemiak.movies.domain.CacheClearEvent;
 import com.zemiak.movies.domain.Genre;
+import com.zemiak.movies.domain.Movie;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
@@ -49,11 +51,23 @@ public class GenreService {
         em.getEntityManagerFactory().getCache().evictAll();
     }
 
-    public List<Genre> getByExpression(String text) {
-        Query query = em.createQuery("SELECT l FROM Genre l WHERE (l.name LIKE :expr) ORDER BY l.name");
-        query.setParameter("expr", text);
-        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+    public List<Genre> getByExpression(final String text) {
+        List<Genre> res = new ArrayList<>();
         
+        for (Genre entry: all()) {
+            if (entry.getName().toLowerCase().contains(text.toLowerCase())) {
+                res.add(entry);
+            }
+        }
+        
+        return res;
+    }
+
+    public List<Movie> getMoviesWithoutSerie(Genre genre) {
+        Query query = em.createNamedQuery("Movie.findByGenreWithoutSerie");
+        query.setParameter("genre", genre);
+        
+        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         return query.getResultList();
     }
 }

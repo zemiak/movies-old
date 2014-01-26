@@ -1,4 +1,4 @@
-package com.zemiak.movies.ui.view.icon;
+package com.zemiak.movies.ui.view.components;
 
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;

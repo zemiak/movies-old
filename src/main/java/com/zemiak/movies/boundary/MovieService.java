@@ -4,6 +4,7 @@ import com.zemiak.movies.domain.CacheClearEvent;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
@@ -76,12 +77,16 @@ public class MovieService {
     }
 
     public List<Movie> getByExpression(String text) {
-        Query query = em.createQuery("SELECT l FROM Movie l WHERE (l.name LIKE :expr1 OR l.description LIKE :expr2) ORDER BY l.name");
-        query.setParameter("expr1", text);
-        query.setParameter("expr2", text);
-        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+        List<Movie> res = new ArrayList<>();
         
-        return query.getResultList();
+        for (Movie entry: all()) {
+            if ((null != entry.getDescription() && entry.getDescription().toLowerCase().contains(text.toLowerCase()))
+                    || entry.getName().toLowerCase().contains(text.toLowerCase())) {
+                res.add(entry);
+            }
+        }
+        
+        return res;
     }
 
     public List<Movie> getLastMovies(int count) {

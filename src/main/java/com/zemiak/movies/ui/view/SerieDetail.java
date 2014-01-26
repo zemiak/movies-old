@@ -3,10 +3,10 @@ package com.zemiak.movies.ui.view;
 import com.vaadin.addon.responsive.Responsive;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
 import com.vaadin.ui.CssLayout;
-import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
-import com.zemiak.movies.ui.view.icon.ButtonIcon;
+import com.zemiak.movies.ui.view.components.ButtonIcon;
+import com.zemiak.movies.ui.view.components.ImageButton;
 import java.util.List;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -52,9 +52,7 @@ class SerieDetail extends ViewAbstract {
         grid.removeAllComponents();
 
         for (Movie movie: movies) {
-            NavigationButton button = new NavigationButton(movie.getName());
-            button.setSizeUndefined();
-            button.setIcon(ButtonIcon.movieIcon(movie));
+            NavigationButton button = new ImageButton(movie.getName(), ButtonIcon.movieIcon(movie));
             grid.addComponent(button);
 
             final Movie finalMovie = movie;
