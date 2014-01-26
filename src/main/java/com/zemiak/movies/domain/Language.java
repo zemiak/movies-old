@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author vasko
  */
 @Entity
-@Table(name = "language", catalog = "movies", schema = "data")
+@Table(name = "language", schema = "data")
 @NamedQueries({
     @NamedQuery(name = "Language.findAll", query = "SELECT l FROM Language l"),
     @NamedQuery(name = "Language.findById", query = "SELECT l FROM Language l WHERE l.id = :id"),
@@ -30,33 +30,33 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 public class Language implements Serializable {
     private static final long serialVersionUID = 2L;
-    
+
     @Id
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2)
     @Column(name = "id")
     private String id;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 128)
     @Column(name = "name")
     private String name;
-    
+
     @Size(max = 512)
     @Column(name = "picture_file_name")
     private String pictureFileName;
-    
+
     @Column(name = "display_order")
     private Integer displayOrder;
-    
+
     @OneToMany(mappedBy = "subtitles")
     private List<Movie> movieList;
-    
+
     @OneToMany(mappedBy = "originalLanguage")
     private List<Movie> movieList1;
-    
+
     @OneToMany(mappedBy = "language")
     private List<Movie> movieList2;
 
@@ -66,7 +66,7 @@ public class Language implements Serializable {
     public Language(String id) {
         this.id = id;
     }
-    
+
     public void copyFrom(Language entity) {
         this.setId(entity.getId());
         this.setName(entity.getName());
@@ -166,5 +166,4 @@ public class Language implements Serializable {
     public boolean isNone() {
         return "  ".equals(id);
     }
-    
 }

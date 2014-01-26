@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author vasko
  */
 @Entity
-@Table(name = "serie", catalog = "movies", schema = "data")
+@Table(name = "serie", schema = "data")
 @NamedQueries({
     @NamedQuery(name = "Serie.findAll", query = "SELECT s FROM Serie s"),
     @NamedQuery(name = "Serie.findById", query = "SELECT s FROM Serie s WHERE s.id = :id"),
@@ -37,28 +37,28 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 public class Serie implements Serializable {
     private static final long serialVersionUID = 4L;
-    
+
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
     private Integer id;
-    
+
     @Size(max = 128)
     @Column(name = "name")
     private String name;
-    
+
     @Size(max = 512)
     @Column(name = "picture_file_name")
     private String pictureFileName;
-    
+
     @Column(name = "display_order")
     private Integer displayOrder;
-    
+
     @JoinColumn(name = "genre_id", referencedColumnName = "id")
     @ManyToOne
     private Genre genreId;
-    
+
     @OneToMany(mappedBy = "serieId")
     private List<Movie> movieList;
 
@@ -68,7 +68,7 @@ public class Serie implements Serializable {
     public Serie(Integer id) {
         this.id = id;
     }
-    
+
     public void copyFrom(Serie entity) {
         this.setId(entity.getId());
         this.setName(entity.getName());
@@ -150,5 +150,5 @@ public class Serie implements Serializable {
     public String toString() {
         return getName();
     }
-    
+
 }

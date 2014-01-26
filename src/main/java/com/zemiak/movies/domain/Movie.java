@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author vasko
  */
 @Entity
-@Table(name = "movie", catalog = "movies", schema = "data")
+@Table(name = "movie", schema = "data")
 @NamedQueries({
     @NamedQuery(name = "Movie.findByGenreWithoutSerie", query = "SELECT m FROM Movie m WHERE m.genreId = :genre AND (m.serieId IS NULL OR m.serieId.id = 0) ORDER BY m.name"),
     @NamedQuery(name = "Movie.findAll", query = "SELECT m FROM Movie m"),
@@ -40,56 +40,56 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Movie implements Serializable {
     private static final long serialVersionUID = 3L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @Size(max = 512)
     @Column(name = "file_name")
     private String fileName;
-    
+
     @Size(max = 128)
     @Column(name = "name")
     private String name;
-    
+
     @Size(max = 128)
     @Column(name = "original_name")
     private String originalName;
-    
+
     @Size(max = 128)
     @Column(name = "url")
     private String url;
-    
+
     @Size(max = 512)
     @Column(name = "picture_file_name")
     private String pictureFileName;
-    
+
     @Column(name = "display_order")
     private Integer displayOrder;
-    
+
     @Size(max = 2147483647)
     @Column(name = "description")
     private String description;
-    
+
     @JoinColumn(name = "serie_id", referencedColumnName = "id")
     @ManyToOne
     private Serie serieId;
-    
+
     @JoinColumn(name = "subtitles", referencedColumnName = "id")
     @ManyToOne
     private Language subtitles;
-    
+
     @JoinColumn(name = "original_language", referencedColumnName = "id")
     @ManyToOne
     private Language originalLanguage;
-    
+
     @JoinColumn(name = "language", referencedColumnName = "id")
     @ManyToOne
     private Language language;
-    
+
     @JoinColumn(name = "genre_id", referencedColumnName = "id")
     @ManyToOne
     private Genre genreId;
@@ -100,7 +100,7 @@ public class Movie implements Serializable {
     public Movie(Integer id) {
         this.id = id;
     }
-    
+
     public void copyFrom(Movie entity) {
         this.setId(entity.getId());
         this.setName(entity.getName());
@@ -245,7 +245,7 @@ public class Movie implements Serializable {
         if (null == getSerieId() || getSerieId().getId() == 0) {
             return getGenreId().getName();
         }
-        
+
         return getSerieId().getId() + " " + getSerieId().getName();
     }
 
