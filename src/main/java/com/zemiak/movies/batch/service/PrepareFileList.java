@@ -47,10 +47,6 @@ public class PrepareFileList implements Batchlet {
             for (String name: files) {
                 stream.write(name + newLine);
                 counter++;
-                
-                if (counter == 3) {
-                    break;
-                }
             }
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, "Cannot open " + fileList + " for writing.", ex);

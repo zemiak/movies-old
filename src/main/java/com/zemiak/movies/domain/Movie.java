@@ -246,7 +246,7 @@ public class Movie implements Serializable {
             return getGenreId().getName();
         }
 
-        return getSerieId().getId() + " " + getSerieId().getName();
+        return getGenreId().getId() + " " + getSerieId().getName();
     }
 
     @Override
