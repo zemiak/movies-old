@@ -1,6 +1,7 @@
 package com.zemiak.movies.ui.view;
 
 import com.vaadin.data.Property;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Label;
@@ -9,6 +10,7 @@ import com.vaadin.ui.Video;
 import com.zemiak.movies.MoviesTheme;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.ui.view.components.ButtonIcon;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -23,8 +25,7 @@ class MovieDetail extends ViewAbstract {
     FormLayout layout;
     Movie movie;
     
-    @Resource(name = "com.zemiak.movies")
-    private Properties properties;
+    @Resource(name = "com.zemiak.movies") private Properties properties;
     
     public MovieDetail() {
     }
@@ -147,7 +148,8 @@ class MovieDetail extends ViewAbstract {
     }
 
     private void initPlayer() {
-        final StreamResource res = new StreamResource(new VideoSource(getAbsoluteFileName()), movie.getName());
+        final ExternalResource res = new ExternalResource(
+                String.format(properties.getProperty("player"), movie.getId()));
         res.setMIMEType("video/mp4");
         
         Video player = new Video();
