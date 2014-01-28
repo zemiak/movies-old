@@ -1,5 +1,6 @@
 package com.zemiak.movies.batch.metadata.description;
 
+import com.zemiak.movies.domain.Movie;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
@@ -7,18 +8,19 @@ import javax.inject.Inject;
 public class DescriptionReader {
     @Inject private Csfd csfd;
     @Inject private Imdb imdb;
+    @Inject private Mash mash;
     
-    public String read(final String url) {
-        if (null == url || url.trim().isEmpty()) {
-            return null;
+    public String read(final Movie movie) {
+        if (csfd.accepts(movie)) {
+            return csfd.getDescription(movie);
         }
         
-        if (csfd.acceptsUrl(url)) {
-            return csfd.getDescription(url);
+        if (imdb.accepts(movie)) {
+            return imdb.getDescription(movie);
         }
         
-        if (imdb.acceptsUrl(url)) {
-            return imdb.getDescription(url);
+        if (mash.accepts(movie)) {
+            return mash.getDescription(movie);
         }
         
         return null;

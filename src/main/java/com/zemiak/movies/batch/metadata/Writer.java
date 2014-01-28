@@ -3,6 +3,7 @@ package com.zemiak.movies.batch.metadata;
 import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.batch.metadata.description.DescriptionReader;
 import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.domain.Serie;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +41,6 @@ public class Writer extends AbstractItemWriter {
                 updateName(fileName, movie);
                 updateGenre(fileName, movie);
                 updateComment(fileName, movie);
-                
-                LOG.log(Level.INFO, "MetadataWriter: Updated movie metadata: {0} ...", 
-                        fileName);
             } else {
                 LOG.log(Level.SEVERE, "MetadataWriter: NOT Updated movie metadata: #{0} ...", 
                         movie.getFileName());
@@ -59,6 +57,7 @@ public class Writer extends AbstractItemWriter {
         
         try {
             CommandLine.execCmd(conf.getProperty("mp4tags"), params);
+            LOG.info(String.format("Updating %s with %s on %s", commandLineSwitch, value, fileName));
         } catch (IOException | InterruptedException | IllegalStateException ex) {
             Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, "Cannot update " + commandLineSwitch + " for " + fileName, ex);
         }
@@ -73,9 +72,11 @@ public class Writer extends AbstractItemWriter {
     }
 
     private void updateComment(String fileName, Movie movie) {
-        if (null == movie.getDescription() || movie.getDescription().trim().isEmpty() || "''".equals(movie.getDescription())) {
-            final String desc = descriptions.read(movie.getUrl());
-            
+        if (null == movie.getDescription() 
+                || movie.getDescription().trim().isEmpty() 
+                || "''".equals(movie.getDescription())) {
+            final String desc = descriptions.read(movie);
+
             if (null != desc && !desc.trim().isEmpty()) {
                 update(fileName, COMMENTS, desc);
             }

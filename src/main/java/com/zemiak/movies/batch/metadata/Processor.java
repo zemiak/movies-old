@@ -42,10 +42,6 @@ public class Processor implements ItemProcessor {
         
         if (null != movie && null != data) {
             if (! isMetadataEqual(movie, data)) {
-                LOG.log(Level.INFO, "... MetadataProcessor: Going to update metadata {0}", 
-                        new Object[]{fileName});
-                LOG.log(Level.INFO, "..... Metadata {0}, Movie {1}, current Genre {2}", 
-                        new Object[]{data, movie, movie.composeGenreName()});
                 return movie;
             }
         }

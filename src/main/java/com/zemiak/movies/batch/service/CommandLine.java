@@ -26,9 +26,6 @@ public class CommandLine {
         List<String> lines = new ArrayList<>();
         final List<String> command = new ArrayList<>(arguments);
 
-        LOG.log(Level.INFO, "execCmd: ''{0} {1}",
-                new Object[]{cmd, Joiner.on(" ").join(arguments)});
-
         command.add(0, cmd);
         Process process = Runtime.getRuntime().exec(command.toArray(new String[]{}));
 
@@ -46,8 +43,6 @@ public class CommandLine {
         try (InputStream stream = process.getInputStream();) {
             lines.addAll(Arrays.asList(streamToString(stream).split(System.getProperty("line.separator"))));
         }
-
-        LOG.log(Level.INFO, "... execCmd: output is {0}", Joiner.on("|").join(lines));
 
         return lines;
     }
