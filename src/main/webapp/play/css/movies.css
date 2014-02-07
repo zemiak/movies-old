@@ -1,0 +1,74 @@
+/**
+ * All the items
+ */
+.page {
+    width: 100%;
+}
+
+.inactive {
+    display: none;
+}
+
+/**
+ * One item (box)
+ */
+.movie-box {
+    width: 165px;
+    height: 167px;
+    margin-left: 10px;
+}
+
+/**
+ * a label inside the item
+ */
+.movie-label {
+    width: 165px;
+    text-align: center;
+}
+
+/**
+ * IMG inside the item
+ */
+.movie-thumbnail {
+    width:152px;
+    height:114px;
+}
+
+.movie-picture {
+    width: 360px;
+    height: 480px;
+}
+
+.genre-box {
+    text-shadow:5px 5px 10px black;
+}
+
+.serie-box {
+    border: 1px black;
+    text-shadow:5px 5px 10px black;
+}
+
+.fullwidth {
+    width: 100%;
+}
+
+#searchBox {
+    padding-top: 5px;
+}
+
+/**
+ * Movie detail
+ */
+.movie-description {
+    padding-top: 2em;
+    font-style: italic;
+}
+
+.movie-title {
+    font-size: 3em;
+    text-align: center;
+}
+
+.movie-title-row {
+    padding-bottom: 3em;
+}

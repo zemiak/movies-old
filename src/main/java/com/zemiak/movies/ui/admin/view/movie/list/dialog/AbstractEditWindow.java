@@ -2,10 +2,9 @@ package com.zemiak.movies.ui.admin.view.movie.list.dialog;
 
 import com.vaadin.data.Container;
 import com.vaadin.event.ShortcutAction.KeyCode;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.NativeButton;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -55,7 +54,7 @@ abstract public class AbstractEditWindow extends Window {
         HorizontalLayout buttonLayout = new HorizontalLayout();
         final Window that = this;
         
-        Button ok = new NativeButton("OK", new Button.ClickListener() {
+        Button ok = new Button("OK", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 process(getSelected());
@@ -64,7 +63,7 @@ abstract public class AbstractEditWindow extends Window {
         ok.setClickShortcut(KeyCode.ENTER);
         ok.addStyleName("catalog-table");
         
-        Button cancel = new NativeButton("Cancel", new Button.ClickListener() {
+        Button cancel = new Button("Cancel", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 that.close();

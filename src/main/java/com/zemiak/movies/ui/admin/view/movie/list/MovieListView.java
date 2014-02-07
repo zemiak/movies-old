@@ -8,10 +8,9 @@ import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.NativeButton;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.zemiak.movies.MoviesTheme;
@@ -25,6 +24,7 @@ import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.ui.admin.ViewAbstract;
 import com.zemiak.movies.ui.admin.view.movie.MovieForm;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
@@ -157,8 +157,6 @@ public class MovieListView extends ViewAbstract {
         table.setContainerDataSource(container);
     }
 
-    
-
     private void initLabel() {
         Label head = new Label("Movies");
         head.addStyleName(MoviesTheme.LABEL_H1);
@@ -174,7 +172,13 @@ public class MovieListView extends ViewAbstract {
     }
     
     void editItem() {
-        editItem((Integer) table.getValue());
+        final Object[] selected = ((Set<Object>) table.getValue()).toArray();
+        if (selected.length == 1) {
+            editItem((Integer) selected[0]);
+        } else {
+            Notification.show("Please, select exactly one item...");
+        }
+        
     }
 
     void editItem(Integer id) {
@@ -193,7 +197,7 @@ public class MovieListView extends ViewAbstract {
         HorizontalLayout filterBar = new HorizontalLayout();
         filterBar.setSpacing(true);
 
-        button = new NativeButton("All", new Button.ClickListener() {
+        button = new Button("All", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 refreshContainer(null);
@@ -201,7 +205,7 @@ public class MovieListView extends ViewAbstract {
         });
         filterBar.addComponent(button);
         
-        button = new NativeButton("New", new Button.ClickListener() {
+        button = new Button("New", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 refreshContainer(new MovieListRefreshEvent(true));

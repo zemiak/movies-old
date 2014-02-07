@@ -1,0 +1,4 @@
+<a href="<%= url %>">
+    <img class="movie-thumbnail" 
+        src="/movies/play/img/arrow-back.jpg" />
+</a>

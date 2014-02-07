@@ -4,4 +4,26 @@
         <!-- Minutes: 14 days -->
         <session-timeout>20160</session-timeout>
     </session-config>
+    
+    <!-- 
+    <servlet>
+        <servlet-name>vaadin</servlet-name>
+        <servlet-class>com.zemiak.movies.Servlet</servlet-class>
+        
+        <init-param>
+            <param-name>UI</param-name>
+            <param-value>com.zemiak.movies.MoviesUI</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>vaadin</servlet-name>
+        <url-pattern>/admin/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>vaadin</servlet-name>
+        <url-pattern>/VAADIN/*</url-pattern>
+    </servlet-mapping>
+    -->
 </web-app>

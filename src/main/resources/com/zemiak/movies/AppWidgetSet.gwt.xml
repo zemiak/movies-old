@@ -49,9 +49,6 @@
     </generate-with>
 
 
-    <inherits name="com.vaadin.addon.touchkit.gwt.TouchKitWidgetSet" />
-    <inherits name="com.vaadin.addon.responsive.ResponsiveWidgetSet" /> 
-
     <inherits name="org.tepi.filtertable.gwt.FilterTableWidgetset" />
 
     <inherits name="org.vaadin.hene.popupbutton.widgetset.PopupbuttonWidgetset" />

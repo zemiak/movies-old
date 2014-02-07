@@ -1,0 +1,60 @@
+<div class="row-fluid movie-title-row">
+    <div class="span12">
+        <div class="movie-title"><%= name %></div>
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span12">
+        <center>
+        <video id="my_video_<%= id %>" class="video-js vjs-default-skin" controls
+          preload="auto" poster="http://lenovo-server.local/movies/img/movie/<%= pictureFileName %>"
+          data-setup="{}" width="248" height="192">
+          <source src="http://lenovo-server.local/movies/backend/play-movie.php?id=<%= id %>" type='video/mp4'>
+        </video>
+        </center>
+
+        <br />
+
+        <div class="movie-description"><%= description %></div>
+
+        <p />
+        <a href="<%= _backUrl %>" class="back">
+            <img src="/movies/play/img/arrow-back.jpg" style="width:64px; height:64px;" />
+        </a>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <label>Genre</label>
+        <select id="genre" name="genre" disabled class="fullwidth">
+            <%= _genre_options %>
+        </select>
+
+        <label>Serie</label>
+        <select id="serie" name="serie" disabled class="fullwidth">
+            <%= _serie_options %>
+        </select>
+
+        <label>Language</label>
+        <select id="language" name="language" disabled class="fullwidth">
+            <%= _language_options %>
+        </select>
+        
+        <label>Original Language</label>
+        <select id="original_language" name="original_language" disabled class="fullwidth">
+            <%= _original_language_options %>
+        </select>
+
+        <label>Subtitles</label>
+        <select id="subtitles" name="subtitles" disabled class="fullwidth">
+            <%= _subtitles_options %>
+        </select>
+
+        <label>Original Name</label>
+        <input type="text" id="original_name" name="original_name" value="<%= originalName %>" disabled class="fullwidth" />
+
+
+        <button onclick="javascript:window.open('<%= url %>');" class="fullwidth" id="url" name="url">Movie Info</button>
+    </div>
+</div>

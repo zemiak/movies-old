@@ -1,0 +1,5 @@
+<a href="#serie/<%= id %>">
+    <img class="movie-thumbnail"
+        src="http://lenovo-server.local/movies/img/serie/<%= pictureFileName %>" />
+    <p class="movie-label"><%= name %></p>
+</a>

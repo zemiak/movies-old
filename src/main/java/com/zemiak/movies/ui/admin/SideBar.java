@@ -2,13 +2,11 @@ package com.zemiak.movies.ui.admin;
 
 import com.vaadin.cdi.UIScoped;
 import com.vaadin.server.Resource;
-import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.zemiak.movies.MoviesTheme;
-import com.zemiak.movies.MoviesUI;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -54,8 +52,6 @@ public class SideBar extends VerticalLayout {
             layout.setWidth("100%");
             layout.addStyleName("section-content");
             setContent(layout);
-            
-            addBackAction();
         }
 
         public void addAction(String caption, Resource icon, final String viewId) {
@@ -66,22 +62,6 @@ public class SideBar extends VerticalLayout {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     getUI().getNavigator().navigateTo(viewId);
-                }
-            });
-            layout.addComponent(button);
-        }
-        
-        final public void addBackAction() {
-            final ThemeResource icon = new ThemeResource("icons/shop.png");
-            
-            NativeButton button = new NativeButton("Back");
-            button.setWidth("100%");
-            button.setIcon(icon);
-            button.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    MoviesUI ui = (MoviesUI) getUI();
-                    ui.initMainContent();
                 }
             });
             layout.addComponent(button);

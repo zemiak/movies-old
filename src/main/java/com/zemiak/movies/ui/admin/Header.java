@@ -26,7 +26,7 @@ public class Header extends HorizontalLayout implements ViewChangeListener {
         addStyleName("header");
         setWidth("100%");
 
-        title = new Label("Zemiak Movies");
+        title = new Label("Videotéka: Administration");
         title.addStyleName("title");
         title.setSizeUndefined();
         addComponent(title);

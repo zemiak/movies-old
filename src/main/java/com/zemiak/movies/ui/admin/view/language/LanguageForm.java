@@ -2,12 +2,11 @@ package com.zemiak.movies.ui.admin.view.language;
 
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.event.ShortcutAction;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.NativeButton;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
@@ -89,7 +88,7 @@ public class LanguageForm extends Window {
         HorizontalLayout hlayout = new HorizontalLayout();
         hlayout.setSpacing(true);
         
-        Button button = new NativeButton("Save", new ClickListener() {
+        Button button = new Button("Save", new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
                 try {
@@ -116,7 +115,7 @@ public class LanguageForm extends Window {
         button.addStyleName("catalog-form");
         hlayout.addComponent(button);
         
-        button = new NativeButton("Close", new ClickListener() {
+        button = new Button("Close", new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
                 close();

@@ -29,7 +29,11 @@ public class SerieService {
     }
     
     public void save(final Serie entity) {
-        Serie target = em.find(Serie.class, entity.getId());
+        Serie target = null;
+        
+        if (null != entity.getId()) {
+            target = em.find(Serie.class, entity.getId());
+        }
         
         if (null == target) {
             em.persist(entity);

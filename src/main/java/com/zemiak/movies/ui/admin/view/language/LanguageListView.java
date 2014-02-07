@@ -5,10 +5,9 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.ThemeResource;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.NativeButton;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
@@ -110,7 +109,7 @@ public class LanguageListView extends ViewAbstract {
         HorizontalLayout buttonBar = new HorizontalLayout();
         buttonBar.setSpacing(true);
         
-        button = new NativeButton("Edit", new Button.ClickListener(){
+        button = new Button("Edit", new Button.ClickListener(){
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 Integer id = (Integer) table.getValue();
@@ -128,7 +127,7 @@ public class LanguageListView extends ViewAbstract {
         button.addStyleName("catalog-table");
         buttonBar.addComponent(button);
         
-        button = new NativeButton("New", new Button.ClickListener(){
+        button = new Button("New", new Button.ClickListener(){
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 LanguageForm form = LanguageListView.this.form;
@@ -139,7 +138,7 @@ public class LanguageListView extends ViewAbstract {
         button.addStyleName("catalog-table");
         buttonBar.addComponent(button);
         
-        button = new NativeButton("Delete", new Button.ClickListener(){
+        button = new Button("Delete", new Button.ClickListener(){
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 Integer id = (Integer) table.getValue();
@@ -156,7 +155,7 @@ public class LanguageListView extends ViewAbstract {
         button.addStyleName("catalog-table");
         buttonBar.addComponent(button);
         
-        button = new NativeButton("Order Up", new Button.ClickListener(){
+        button = new Button("Order Up", new Button.ClickListener(){
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 Integer id = (Integer) table.getValue();
@@ -173,10 +172,9 @@ public class LanguageListView extends ViewAbstract {
             }
         });
         button.addStyleName("catalog-table");
-        button.setIcon(new ThemeResource("icons/arrow_up.png"));
         buttonBar.addComponent(button);
         
-        button = new NativeButton("Order Down", new Button.ClickListener(){
+        button = new Button("Order Down", new Button.ClickListener(){
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 Integer id = (Integer) table.getValue();
@@ -193,7 +191,6 @@ public class LanguageListView extends ViewAbstract {
             }
         });
         button.addStyleName("catalog-table");
-        button.setIcon(new ThemeResource("icons/arrow_down.png"));
         buttonBar.addComponent(button);
         
         addComponent(buttonBar);

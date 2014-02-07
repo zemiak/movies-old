@@ -55,7 +55,11 @@ public class MovieService {
     }
     
     public void save(Movie entity) {
-        Movie target = em.find(Movie.class, entity.getId());
+        Movie target = null;
+        
+        if (null != entity.getId()) {
+            target = em.find(Movie.class, entity.getId());
+        }
         
         if (null == target) {
             em.persist(entity);

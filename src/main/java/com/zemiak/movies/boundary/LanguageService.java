@@ -2,6 +2,7 @@ package com.zemiak.movies.boundary;
 
 import com.zemiak.movies.domain.CacheClearEvent;
 import com.zemiak.movies.domain.Language;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
@@ -28,7 +29,11 @@ public class LanguageService {
     }
     
     public void save(Language entity) {
-        Language target = em.find(Language.class, entity.getId());
+        Language target = null;
+        
+        if (null != entity.getId()) {
+            target = em.find(Language.class, entity.getId());
+        }
         
         if (null == target) {
             em.persist(entity);
@@ -47,5 +52,17 @@ public class LanguageService {
     
     public void clearCache(@Observes CacheClearEvent event) {
         em.getEntityManagerFactory().getCache().evictAll();
+    }
+    
+    public List<Language> getByExpression(final String text) {
+        List<Language> res = new ArrayList<>();
+        
+        for (Language entry: all()) {
+            if (entry.getName().toLowerCase().contains(text.toLowerCase())) {
+                res.add(entry);
+            }
+        }
+        
+        return res;
     }
 }

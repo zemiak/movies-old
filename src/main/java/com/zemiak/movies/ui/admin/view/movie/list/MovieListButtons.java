@@ -1,9 +1,7 @@
 package com.zemiak.movies.ui.admin.view.movie.list;
 
-import com.vaadin.server.ThemeResource;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.NativeButton;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Notification;
 import com.zemiak.movies.boundary.MovieService;
 import com.zemiak.movies.domain.Movie;
@@ -65,7 +63,7 @@ public class MovieListButtons {
     
     private void initEditButton() {
         Button button;
-        button = new NativeButton("Edit", new Button.ClickListener() {
+        button = new Button("Edit", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 view.editItem();
@@ -77,7 +75,7 @@ public class MovieListButtons {
 
     private void initNewButton() {
         Button button;
-        button = new NativeButton("New", new Button.ClickListener() {
+        button = new Button("New", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 MovieForm f = view.form;
@@ -91,7 +89,7 @@ public class MovieListButtons {
 
     private void initDeleteButton() {
         Button button;
-        button = new NativeButton("Delete", new Button.ClickListener() {
+        button = new Button("Delete", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 Integer id = getOneSelection();
@@ -111,7 +109,7 @@ public class MovieListButtons {
 
     private void initOrderUpButton() {
         Button button;
-        button = new NativeButton("Order Up", new Button.ClickListener() {
+        button = new Button("Order Up", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 Integer id = getOneSelection();
@@ -128,13 +126,12 @@ public class MovieListButtons {
             }
         });
         button.addStyleName("catalog-table");
-        button.setIcon(new ThemeResource("icons/arrow_up.png"));
         buttonBar.addComponent(button);
     }
 
     private void initOrderDownButton() {
         Button button;
-        button = new NativeButton("Order Down", new Button.ClickListener() {
+        button = new Button("Order Down", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 Integer id = getOneSelection();
@@ -151,7 +148,6 @@ public class MovieListButtons {
             }
         });
         button.addStyleName("catalog-table");
-        button.setIcon(new ThemeResource("icons/arrow_down.png"));
         buttonBar.addComponent(button);
     }
     
@@ -167,7 +163,7 @@ public class MovieListButtons {
     
     private void initActionButton(String caption, final AbstractEditWindow dialog) {
         Button button;
-        button = new NativeButton(caption, new Button.ClickListener() {
+        button = new Button(caption, new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 Set<Integer> selected = (Set<Integer>) view.table.getValue();

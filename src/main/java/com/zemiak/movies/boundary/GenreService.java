@@ -30,7 +30,11 @@ public class GenreService {
     }
     
     public void save(Genre entity) {
-        Genre target = em.find(Genre.class, entity.getId());
+        Genre target = null;
+        
+        if (null != entity.getId()) {
+            target = em.find(Genre.class, entity.getId());
+        }
         
         if (null == target) {
             em.persist(entity);
@@ -43,7 +47,7 @@ public class GenreService {
         return em.find(Genre.class, id);
     }
 
-    public void remove(String entityId) {
+    public void remove(Integer entityId) {
         em.remove(em.find(Genre.class, entityId));
     }
     

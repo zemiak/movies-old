@@ -1,0 +1,5 @@
+<a href="#movie/<%= id %>">
+    <img class="movie-thumbnail"
+        src="http://lenovo-server.local/movies/img/movie/<%= pictureFileName %>" />
+    <p class="movie-label"><%= name %></p>
+</a>
