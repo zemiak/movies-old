@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="img/icon-fav.ico">
+    <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="1024x1024" 
         href="img/icon-1024.jpg">
     <link rel="apple-touch-icon-precomposed" sizes="512x512" 
@@ -44,6 +44,11 @@
     <!-- video-js -->
     <link href="js/vendor/videojs/video-js.css" rel="stylesheet">
     <script src="js/vendor/videojs/video.js"></script>
+    
+    <!-- Global Data -->
+    <script type="text/javascript">
+        window._BACKEND_URL = "http://lenovo-server.local:8080/movies/";
+    </script>
 
     <!-- JS custom -->
     <script type="text/javascript" src="js/view/GenreItem.js"></script>
@@ -84,7 +89,7 @@
               <li class="dropdown">
                   <a class="dropdown-toggle" href="#" data-toggle="dropdown">Admin<b class="caret"></b></a>
                   <ul class="dropdown-menu">
-                      <li><a href="http://localhost:8080/movies/admin/">Úpravy</a></li>
+                      <li><a href="/movies/admin/">Úpravy</a></li>
                       <li><a href="#" onclick="javascript:app.refreshData();">Obnova databázy</a></li>
                   </ul>
               </li>

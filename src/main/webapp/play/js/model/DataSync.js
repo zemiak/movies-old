@@ -7,7 +7,7 @@
  */
 var repository = _.extend({}, {
     tables: ['genres', 'series', 'languages', 'movies'],
-    timestampUrl: 'http://localhost:8080/movies/rest/movies/version',
+    timestampUrl: window._BACKEND_URL + 'rest/movies/version',
 
     initCollections: function()
     {
@@ -33,7 +33,7 @@ var repository = _.extend({}, {
                     callback();
                 }
             }});
-        }
+        };
 
         // start with loading
         loadRepo(0);
@@ -64,7 +64,7 @@ var repository = _.extend({}, {
 
         _.each(this.tables, function(table){
             var Col = Backbone.Collection.extend({
-                url: 'http://localhost:8080/movies/rest/' + table
+                url: window._BACKEND_URL + 'rest/' + table
             });
 
             distantRepositories[table] = new Col();
