@@ -33,7 +33,7 @@ var ViewUtils = _.extend({}, {
         // All the template files should be concatenated in a single file.
         load: function(subdir, callback) {
             var that = this, names = ['genre', 'list', 'moviedetail', 'movieitem',
-                'serie', 'about', 'backbutton'];;
+                'serie', 'backbutton'];;
      
             var loadTemplate = function(index) {
                 var name = names[index];

@@ -1,7 +1,6 @@
 var MovieRouter = Backbone.Router.extend({
     routes: {
         '':             'genres',
-        'about':        'about',
         'genres':       'genres',
         'genre/:id':    'genre',
         'serie/:id':    'serie',
@@ -13,16 +12,6 @@ var MovieRouter = Backbone.Router.extend({
     pageName: 'items',
 
     playMovieUrl: 'http://lenovo-server.local/movies/backend/play-movie.php',
-
-    /**
-     * A help/about page
-     */
-    about: function()
-    {
-        var view = new AboutView({el: $('#about')});
-        view.render();
-        this.showPage('about');
-    },
 
     /**
      * Lists all genres (the first main page)
