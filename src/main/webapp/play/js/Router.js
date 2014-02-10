@@ -11,7 +11,7 @@ var MovieRouter = Backbone.Router.extend({
     // the currently active page
     pageName: 'items',
 
-    playMovieUrl: 'http://lenovo-server.local/movies/backend/play-movie.php',
+    playMovieUrl: '/movies/stream',
 
     /**
      * Lists all genres (the first main page)

@@ -1,5 +1,7 @@
 package com.zemiak.movies.batch.service;
 
+import com.zemiak.movies.batch.service.log.BatchLogger;
+import com.zemiak.movies.batch.service.log.LoggerInstance;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -7,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.batch.api.Batchlet;
 import javax.batch.runtime.context.JobContext;
@@ -28,7 +29,7 @@ public class PrepareFileList implements Batchlet {
     
     List<String> files = new ArrayList<>();
     
-    private static final Logger LOG = Logger.getLogger(PrepareFileList.class.getName());
+    private static final LoggerInstance LOG = BatchLogger.getLogger(PrepareFileList.class.getName());
     
     public PrepareFileList() {
     }

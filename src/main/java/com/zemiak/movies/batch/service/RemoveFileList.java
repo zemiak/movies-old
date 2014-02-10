@@ -1,23 +1,26 @@
 package com.zemiak.movies.batch.service;
 
+import com.zemiak.movies.batch.service.log.BatchLogger;
+import com.zemiak.movies.batch.service.log.LoggerInstance;
 import java.io.File;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.batch.api.Batchlet;
 import javax.batch.runtime.context.JobContext;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author vasko
  */
+@Named("RemoveFileList")
 public class RemoveFileList implements Batchlet {
     @Inject
     JobContext jobCtx;
     
     final static public String PATH_SEPARATOR = System.getProperty("file.separator");
 
-    private static final Logger LOG = Logger.getLogger(RemoveFileList.class.getName());
+    private static final LoggerInstance LOG = BatchLogger.getLogger(RemoveFileList.class.getName());
     
     public RemoveFileList() {
     }

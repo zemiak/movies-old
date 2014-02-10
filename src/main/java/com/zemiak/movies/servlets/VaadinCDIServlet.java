@@ -1,4 +1,4 @@
-package com.zemiak.movies;
+package com.zemiak.movies.servlets;
 
 import com.vaadin.cdi.CDIUIProvider;
 import com.vaadin.server.ServiceException;
@@ -14,7 +14,7 @@ import javax.servlet.annotation.WebServlet;
  * @author vasko
  */
 @WebServlet(urlPatterns = {"/admin/*", "/VAADIN/*"})
-public class Servlet extends VaadinServlet {
+public class VaadinCDIServlet extends VaadinServlet {
     @Inject
     CDIUIProvider uiProvider;
 

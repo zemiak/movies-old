@@ -17,7 +17,7 @@ public class UpdateMovies {
     @Inject
     BatchRunner runner;
     
-    @Schedule(dayOfWeek="*", hour="3", minute="0")
+    @Schedule(dayOfWeek="*", hour="03", minute="10")
     public void start() {
         if (runner.isUpdateMoviesRunning()) {
             LOG.log(Level.SEVERE, "Update Job is already running !!!");

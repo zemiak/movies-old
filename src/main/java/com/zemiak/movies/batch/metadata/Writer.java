@@ -2,8 +2,9 @@ package com.zemiak.movies.batch.metadata;
 
 import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.batch.metadata.description.DescriptionReader;
+import com.zemiak.movies.batch.service.log.BatchLogger;
+import com.zemiak.movies.batch.service.log.LoggerInstance;
 import com.zemiak.movies.domain.Movie;
-import com.zemiak.movies.domain.Serie;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import javax.inject.Named;
  */
 @Named("MetadataWriter")
 public class Writer extends AbstractItemWriter {
-    private static final Logger LOG = Logger.getLogger(Writer.class.getName());
+    private static final LoggerInstance LOG = BatchLogger.getLogger(Writer.class.getName());
     
     @Resource(name = "com.zemiak.movies") private Properties conf;
     @Inject private DescriptionReader descriptions;

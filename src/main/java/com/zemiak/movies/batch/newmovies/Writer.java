@@ -1,12 +1,13 @@
 package com.zemiak.movies.batch.newmovies;
 
+import com.zemiak.movies.batch.service.log.BatchLogger;
+import com.zemiak.movies.batch.service.log.LoggerInstance;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
 import java.io.File;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.batch.api.chunk.AbstractItemWriter;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -18,7 +19,7 @@ import javax.persistence.PersistenceContext;
  */
 @Named("NewmoviesWriter")
 public class Writer extends AbstractItemWriter {
-    private static final Logger LOG = Logger.getLogger(Writer.class.getName());
+    private static final LoggerInstance LOG = BatchLogger.getLogger(Writer.class.getName());
     
     @PersistenceContext
     private EntityManager em;

@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -47,7 +48,7 @@
     
     <!-- Global Data -->
     <script type="text/javascript">
-        window._BACKEND_URL = "http://lenovo-server.local:8080/movies/";
+        window._BACKEND_URL = "/movies/";
     </script>
 
     <!-- JS custom -->

@@ -1,9 +1,9 @@
 package com.zemiak.movies.batch.metadata;
 
+import com.zemiak.movies.batch.service.log.BatchLogger;
+import com.zemiak.movies.batch.service.log.LoggerInstance;
 import com.zemiak.movies.domain.Movie;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.batch.api.chunk.ItemProcessor;
@@ -19,7 +19,7 @@ import javax.persistence.Query;
  */
 @Named("MetadataProcessor")
 public class Processor implements ItemProcessor {
-    private static final Logger LOG = Logger.getLogger(Processor.class.getName());
+    private static final LoggerInstance LOG = BatchLogger.getLogger(Processor.class.getName());
     
     @PersistenceContext
     private EntityManager em;

@@ -6,11 +6,16 @@
     </properties>
     
     <flow id="newmovies" next="metadata">
-        <step id="newmovies-prepare" next="newmovies-run">
+        <step id="newmovies-prepare" next="newmovies-preparelog">
             <listeners>
                 <listener ref="com.zemiak.movies.batch.service.Listener"/>
             </listeners>
+            
             <batchlet ref="PrepareFileList"></batchlet>
+        </step>
+        
+        <step id="newmovies-preparelog" next="newmovies-run">
+            <batchlet ref="PrepareLogFile"></batchlet>
         </step>
         
         <step id="newmovies-run" next="newmovies-cleanup">
@@ -93,9 +98,12 @@
     </flow>
     
     <flow id="updateStorageCleanup">
-        <step id="refreshStorage">
-            <batchlet ref="BatchRefreshStorage">
-            </batchlet>
+        <step id="refreshStorage" next="sendLog">
+            <batchlet ref="BatchRefreshStorage"></batchlet>
+        </step>
+        
+        <step id="sendLog">
+            <batchlet ref="SendLogFile"></batchlet>
         </step>
     </flow>
 </job>

@@ -1,15 +1,13 @@
 package com.zemiak.movies.batch.metadata;
 
 import com.zemiak.movies.batch.service.CommandLine;
+import com.zemiak.movies.batch.service.log.BatchLogger;
+import com.zemiak.movies.lookup.CustomResourceLookup;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
 /**
  *
@@ -23,17 +21,10 @@ public class MetadataReader {
     
     private static String mp4info;
     static {
-        Context context;
         Properties conf;
         
-        try {
-            context = new InitialContext();
-            conf = (Properties) context.lookup("com.zemiak.movies");
-            mp4info = conf.getProperty("mp4info");
-        } catch (NamingException ex) {
-            Logger.getLogger(MetadataReader.class.getName()).log(Level.SEVERE, "Cannot initialize context", ex);
-            mp4info = null;
-        }
+        conf = new CustomResourceLookup().lookup("com.zemiak.movies");
+        mp4info = conf.getProperty("mp4info");
     }
     
     public static MovieMetadata read(final String name) {
@@ -46,7 +37,7 @@ public class MetadataReader {
         try {
             info = CommandLine.execCmd(mp4info, params);
         } catch (IOException | InterruptedException | IllegalStateException ex) {
-            Logger.getLogger(MetadataReader.class.getName()).log(Level.SEVERE, "Can't read metadata for " + name, ex);
+            BatchLogger.getLogger(MetadataReader.class.getName()).log(Level.SEVERE, "Can't read metadata for " + name, ex);
             return null;
         }
         
