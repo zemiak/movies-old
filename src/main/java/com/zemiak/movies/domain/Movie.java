@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.zemiak.movies.domain;
 
 import java.io.Serializable;
@@ -252,5 +248,13 @@ public class Movie implements Serializable {
     @Override
     public String toString() {
         return "Movie{" + "id=" + id + ", name=" + name + '}';
+    }
+
+    public boolean isDescriptionEmpty() {
+        return null == description || "".equals(description.trim()) || "''".equals(description.trim());
+    }
+
+    public boolean isUrlEmpty() {
+        return null == url || "".equals(url.trim()) || "''".equals(url.trim());
     }
 }

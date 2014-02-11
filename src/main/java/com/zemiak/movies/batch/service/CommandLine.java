@@ -2,7 +2,6 @@ package com.zemiak.movies.batch.service;
 
 import com.google.gwt.thirdparty.guava.common.base.Joiner;
 import com.zemiak.movies.batch.service.log.BatchLogger;
-import com.zemiak.movies.batch.service.log.LoggerInstance;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,8 +19,8 @@ import java.util.logging.Level;
  * @author vasko
  */
 public class CommandLine {
-    private static final LoggerInstance LOG = BatchLogger.getLogger(CommandLine.class.getName());
-    
+    private static final BatchLogger LOG = BatchLogger.getLogger(CommandLine.class.getName());
+
     public static List<String> execCmd(final String cmd, final List<String> arguments)
             throws IOException, InterruptedException, IllegalStateException {
         List<String> lines = new ArrayList<>();
@@ -36,7 +35,7 @@ public class CommandLine {
                 lines.addAll(Arrays.asList(streamToString(stream).split(System.getProperty("line.separator"))));
             }
 
-            LOG.log(Level.SEVERE, "... execCmd: error code is {0}, output is {1}", 
+            LOG.log(Level.SEVERE, "... execCmd: error code is {0}, output is {1}",
                     new Object[]{exitValue, Joiner.on("|").join(lines)});
             throw new IllegalStateException("Exit code " + exitValue + " instead of success");
         }

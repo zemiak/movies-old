@@ -1,8 +1,10 @@
 package com.zemiak.movies.batch.service;
 
-import com.zemiak.movies.batch.service.log.LoggerInstance;
+import com.zemiak.movies.batch.service.log.BatchLogger;
 import java.util.Date;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -26,15 +28,17 @@ import javax.mail.internet.MimeMultipart;
  */
 @Named("SendLogFile")
 public class SendLogFile implements Batchlet {
+    private static final Logger LOG = Logger.getLogger(SendLogFile.class.getName());
+    
     @Inject
     JobContext jobCtx;
-    
+
     @Resource(name = "mail/connect")
     private Session mailSession;
-    
+
     @Resource(name = "com.zemiak.movies")
     private Properties conf;
-    
+
     public SendLogFile() {
     }
 
@@ -45,20 +49,22 @@ public class SendLogFile implements Batchlet {
         message.setRecipient(Message.RecipientType.TO, new InternetAddress(conf.getProperty("mailTo")));
         message.setSubject(conf.getProperty("mailSubject"));
         message.setText("Batch run ended on " + new Date());
-        
+
         MimeBodyPart messageBodyPart = new MimeBodyPart();
         Multipart multipart = new MimeMultipart();
-        
-        DataSource source = new FileDataSource(LoggerInstance.getLogFileName());
+
+        DataSource source = new FileDataSource(BatchLogger.getLogFileName());
         messageBodyPart.setDataHandler(new DataHandler(source));
         messageBodyPart.setFileName("batch.log");
         multipart.addBodyPart(messageBodyPart);
 
         message.setContent(multipart);
-        
+
         Transport.send(message);
-        
-        LoggerInstance.deleteLogFile();
+
+        LOG.log(Level.INFO, "Sent LOG file to {0}", conf.getProperty("mailTo"));
+
+        BatchLogger.deleteLogFile();
         return "sent";
     }
 

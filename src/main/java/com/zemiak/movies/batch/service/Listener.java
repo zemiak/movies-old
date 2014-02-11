@@ -1,7 +1,6 @@
 package com.zemiak.movies.batch.service;
 
 import com.zemiak.movies.batch.service.log.BatchLogger;
-import com.zemiak.movies.batch.service.log.LoggerInstance;
 import java.util.logging.Level;
 import javax.batch.api.listener.JobListener;
 import javax.batch.api.listener.StepListener;
@@ -14,11 +13,11 @@ import javax.inject.Inject;
  * @author vasko
  */
 public class Listener implements JobListener, StepListener {
-    private static final LoggerInstance LOG = BatchLogger.getLogger(Listener.class.getName());
-    
+    private static final BatchLogger LOG = BatchLogger.getLogger(Listener.class.getName());
+
     @Inject
     JobContext jobCtx;
-    
+
     @Inject
     StepContext stepCtx;
 

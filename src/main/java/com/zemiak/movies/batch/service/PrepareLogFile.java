@@ -1,6 +1,6 @@
 package com.zemiak.movies.batch.service;
 
-import com.zemiak.movies.batch.service.log.LoggerInstance;
+import com.zemiak.movies.batch.service.log.BatchLogger;
 import javax.batch.api.Batchlet;
 import javax.batch.runtime.context.JobContext;
 import javax.inject.Inject;
@@ -14,14 +14,14 @@ import javax.inject.Named;
 public class PrepareLogFile implements Batchlet {
     @Inject
     JobContext jobCtx;
-    
+
     public PrepareLogFile() {
     }
 
     @Override
     public String process() throws Exception {
-        LoggerInstance.deleteLogFile();
-        
+        BatchLogger.deleteLogFile();
+
         return "done";
     }
 

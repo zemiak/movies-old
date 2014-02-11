@@ -1,7 +1,6 @@
 package com.zemiak.movies.batch.newmovies;
 
 import com.zemiak.movies.batch.service.log.BatchLogger;
-import com.zemiak.movies.batch.service.log.LoggerInstance;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
@@ -19,8 +18,8 @@ import javax.persistence.PersistenceContext;
  */
 @Named("NewmoviesWriter")
 public class Writer extends AbstractItemWriter {
-    private static final LoggerInstance LOG = BatchLogger.getLogger(Writer.class.getName());
-    
+    private static final BatchLogger LOG = BatchLogger.getLogger(Writer.class.getName());
+
     @PersistenceContext
     private EntityManager em;
 
@@ -28,12 +27,12 @@ public class Writer extends AbstractItemWriter {
     public void writeItems(final List list) throws Exception {
         for (Object obj: list) {
             final String newFile = (String) obj;
-            
+
             Movie m = createMovie(newFile);
             em.persist(m);
             em.flush();
-            
-            LOG.log(Level.INFO, "Created a new movie ''{0}''/''{1}''...", 
+
+            LOG.log(Level.INFO, "Created a new movie ''{0}''/''{1}''...",
                     new Object[]{m.getFileName(), m.getName()});
         }
     }
@@ -41,12 +40,12 @@ public class Writer extends AbstractItemWriter {
     private Movie createMovie(final String newFile) {
         final Movie m = new Movie();
         final String name = new File(newFile).getName();
-        
+
         m.setFileName(newFile);
         m.setGenreId(em.getReference(Genre.class, 0));
         m.setSerieId(em.getReference(Serie.class, 0));
         m.setName(name.substring(0, name.lastIndexOf(".")));
-        
+
         return m;
     }
 }
