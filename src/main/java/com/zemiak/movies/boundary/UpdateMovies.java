@@ -3,14 +3,14 @@ package com.zemiak.movies.boundary;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Schedule;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 /**
  *
  * @author vasko
  */
-@Singleton
+@Stateless
 public class UpdateMovies {
     private static final Logger LOG = Logger.getLogger(UpdateMovies.class.getName());
     

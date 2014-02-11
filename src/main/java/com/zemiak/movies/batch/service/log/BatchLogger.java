@@ -48,7 +48,7 @@ public class BatchLogger {
         OutputStream file;
 
         try {
-            file = new FileOutputStream(LOGFILE);
+            file = new FileOutputStream(LOGFILE, true);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(BatchLogger.class.getName()).log(Level.SEVERE, "Cannot open LOG file", ex);
             return;

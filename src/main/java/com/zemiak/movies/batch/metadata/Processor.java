@@ -3,6 +3,7 @@ package com.zemiak.movies.batch.metadata;
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.domain.Movie;
 import java.util.Properties;
+import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.batch.api.chunk.ItemProcessor;
@@ -64,22 +65,22 @@ public class Processor implements ItemProcessor {
 
     private boolean isMetadataEqual(Movie movie, MovieMetadata data) {
         if (null == data.getGenre() || null == data.getName()) {
-            LOG.info("isMetadataEqual: Genre or name is null");
+            LOG.log(Level.INFO, "{0}: isMetadataEqual: Genre or name is null", movie.getFileName());
             return false;
         }
 
         if (! data.getGenre().equals(movie.composeGenreName())) {
-            LOG.info("isMetadataEqual: Genre is not equal");
+            LOG.log(Level.INFO, "{0}: isMetadataEqual: Genre is not equal", movie.getFileName());
             return false;
         }
 
         if (! data.getName().equals(movie.getName())) {
-            LOG.info("isMetadataEqual: Name is not equal");
+            LOG.log(Level.INFO, "{0}: isMetadataEqual: Name is not equal", movie.getFileName());
             return false;
         }
 
         if (data.commentsShouldBeUpdated(movie)) {
-            LOG.info("isMetadataEqual: Comments should be updated");
+            LOG.log(Level.INFO, "{0}: isMetadataEqual: Comments should be updated", movie.getFileName());
             return false;
         }
 
