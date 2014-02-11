@@ -1,4 +1,4 @@
-package com.zemiak.movies.batch.service;
+package com.zemiak.movies.batch.service.log;
 
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import java.util.Date;
