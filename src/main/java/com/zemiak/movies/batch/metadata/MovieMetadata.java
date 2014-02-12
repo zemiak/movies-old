@@ -14,8 +14,10 @@ public class MovieMetadata {
     private String genre;
     private String name;
     private String comments;
+    private Movie movie;
 
-    public MovieMetadata() {
+    public MovieMetadata(final Movie movie) {
+        this.movie = movie;
     }
 
     public String getGenre() {
@@ -47,42 +49,93 @@ public class MovieMetadata {
         return "MovieMetadata{" + "genre=" + genre + ", name=" + name + ", comments=" + comments + '}';
     }
 
-    public boolean commentsShouldBeUpdated(Movie movie) {
+    private boolean commentsShouldBeUpdated0(final boolean debug) {
         boolean commentsAreEmpty = (comments == null
                 || comments.trim().isEmpty()
                 || "''".equals(comments));
 
         if (commentsAreEmpty && !movie.isDescriptionEmpty()) {
-            LOG.log(Level.INFO, "{0}: metadata comments empty, movie comments not", movie.getFileName());
+            if (debug) {
+                LOG.log(Level.INFO, "{0}: metadata comments empty, movie comments not", movie.getFileName());
+            }
+            
             return true;
         }
 
         if (commentsAreEmpty && movie.isDescriptionEmpty() && !movie.isUrlEmpty()) {
-            LOG.log(Level.INFO, "{0}: metadata and movie comments empty, comments URL not", movie.getFileName());
+            if (debug) {
+                LOG.log(Level.INFO, "{0}: metadata and movie comments empty, comments URL not", movie.getFileName());
+            }
+            
             return true;
         }
 
         if (!commentsAreEmpty && !movie.isDescriptionEmpty() && !comments.equals(movie.getDescription())) {
-            LOG.log(Level.INFO, "{0}: metadata and comments not empty, but not equal", movie.getFileName());
+            if (debug) {
+                LOG.log(Level.INFO, "{0}: metadata and comments not empty, but not equal", movie.getFileName());
+            }
+            
             return true;
         }
 
         return false;
     }
+    
+    public boolean commentsShouldBeUpdated() {
+        return commentsShouldBeUpdated0(true);
+    }
 
-    public boolean commentsShouldBeUpdatedQuiet(Movie movie) {
-        boolean commentsAreEmpty = (comments == null
-                || comments.trim().isEmpty()
-                || "''".equals(comments));
-
-        if (commentsAreEmpty && !movie.isDescriptionEmpty()) {
-            return true;
+    public boolean commentsShouldBeUpdatedQuiet() {
+        return commentsShouldBeUpdated0(false);
+    }
+    
+    public boolean isNameEqual() {
+        if (name == null && movie.getName() != null) {
+            return false;
         }
-
-        if (commentsAreEmpty && movie.isDescriptionEmpty() && !movie.isUrlEmpty()) {
-            return true;
+        
+        return name == null || name.equals(movie.getName());
+    }
+    
+    public boolean isGenreEqual() {
+        if (genre == null) {
+            return false;
         }
+        
+        return genre.equals(movie.composeGenreName());
+    }
+    
+    private boolean isMetadataEqual0(final boolean debug) {
+        boolean ret = true;
+        
+        if (! isNameEqual()) {
+            ret = false;
+            
+            if (debug) {
+                LOG.log(Level.INFO, "{0}: isMetadataEqual: Name is not equal", movie.getFileName());
+            }
+        }
+        
+        if (! isGenreEqual()) {
+            ret = false;
+            
+            if (debug) {
+                LOG.log(Level.INFO, "{0}: isMetadataEqual: Genre is not equal", movie.getFileName());
+            }
+        }
+        
+        if (commentsShouldBeUpdated0(debug)) {
+            ret = false;
+        }
+        
+        return ret;
+    }
+    
+    public boolean isMetadataEqual() {
+        return isMetadataEqual0(true);
+    }
 
-        return !commentsAreEmpty && !movie.isDescriptionEmpty() && !comments.equals(movie.getDescription());
+    public Movie getMovie() {
+        return movie;
     }
 }

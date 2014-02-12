@@ -2,6 +2,7 @@ package com.zemiak.movies.batch.metadata;
 
 import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.batch.service.log.BatchLogger;
+import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.lookup.CustomResourceLookup;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,8 +28,8 @@ public class MetadataReader {
         mp4info = conf.getProperty("mp4info");
     }
     
-    public static MovieMetadata read(final String name) {
-        MovieMetadata metaData = new MovieMetadata();
+    public static MovieMetadata read(final String name, final Movie movie) {
+        MovieMetadata metaData = new MovieMetadata(movie);
         List<String> info;
         List<String> params = new ArrayList<>();
         

@@ -1,18 +1,10 @@
 package com.zemiak.movies.batch.metadata.description;
 
-import com.vaadin.server.VaadinServlet;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
 
 /**
@@ -29,7 +21,11 @@ public class Mash implements IDescriptionReader {
 
     @Override
     public boolean accepts(final Movie movie) {
-        return (null != movie.getSerieId() && Serie.MASH_ID.equals(movie.getSerieId().getId()));
+        return (null != movie.getSerieId() 
+                && Serie.MASH_ID.equals(movie.getSerieId().getId())
+                && null != movie.getDisplayOrder()
+                && movie.getDisplayOrder() > 0
+                && movie.getDisplayOrder() <= 256);
     }
 
     @Override

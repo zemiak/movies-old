@@ -37,14 +37,17 @@ public class Processor implements ItemProcessor {
     @Override
     public Object processItem(final Object movieName) throws Exception {
         final String fileName = (String) movieName;
-        MovieMetadata data = MetadataReader.read(fileName);
         Movie movie = find(fileName.substring(conf.getProperty("path").length()));
+        MovieMetadata data = MetadataReader.read(fileName, movie);
+        
 
         if (null != movie && null != data) {
-            if (! isMetadataEqual(movie, data)) {
-                return movie;
+            if (! data.isMetadataEqual()) {
+                return data;
             }
         }
+        
+        System.out.println("Metadata: skipping " + fileName);
 
         return null;
     }
@@ -61,24 +64,5 @@ public class Processor implements ItemProcessor {
         }
 
         return movie;
-    }
-
-    private boolean isMetadataEqual(Movie movie, MovieMetadata data) {
-        if (null == data.getGenre() || null == data.getName()) {
-            LOG.log(Level.INFO, "{0}: isMetadataEqual: Genre or name is null", movie.getFileName());
-            return false;
-        }
-
-        if (! data.getGenre().equals(movie.composeGenreName())) {
-            LOG.log(Level.INFO, "{0}: isMetadataEqual: Genre is not equal", movie.getFileName());
-            return false;
-        }
-
-        if (! data.getName().equals(movie.getName())) {
-            LOG.log(Level.INFO, "{0}: isMetadataEqual: Name is not equal", movie.getFileName());
-            return false;
-        }
-
-        return !data.commentsShouldBeUpdated(movie);
     }
 }

@@ -37,6 +37,7 @@ public class MashTest {
         final Serie s2 = new Serie();
         s2.setId(Serie.MASH_ID);
         m1.setSerieId(s2);
+        m1.setDisplayOrder(1);
 
         assertTrue(instance.accepts(m1));
     }

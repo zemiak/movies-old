@@ -3,7 +3,6 @@ package com.zemiak.movies.batch.metadata;
 import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.batch.metadata.description.DescriptionReader;
 import com.zemiak.movies.batch.service.log.BatchLogger;
-import com.zemiak.movies.domain.Movie;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,15 +35,13 @@ public class Writer extends AbstractItemWriter {
     @Override
     public void writeItems(final List list) throws Exception {
         for (Object obj : list) {
-            Movie movie = (Movie) obj;
+            MovieMetadata data = (MovieMetadata) obj;
 
-            if (null != movie) {
-                String fileName = conf.getProperty("path") + movie.getFileName();
-                MovieMetadata data = MetadataReader.read(fileName);
-
-                updateName(fileName, movie, data);
-                updateGenre(fileName, movie, data);
-                updateComment(fileName, movie, data);
+            if (null != data) {
+                String fileName = conf.getProperty("path") + data.getMovie().getFileName();
+                updateName(fileName, data);
+                updateGenre(fileName, data);
+                updateComment(fileName, data);
             }
         }
     }
@@ -64,27 +61,27 @@ public class Writer extends AbstractItemWriter {
         }
     }
 
-    private void updateName(final String fileName, final Movie movie, final MovieMetadata data) {
-        if (null == data.getName() || !data.getName().equals(movie.getName())) {
-            update(fileName, NAME, movie.getName());
+    private void updateName(final String fileName, final MovieMetadata data) {
+        if (! data.isNameEqual()) {
+            update(fileName, NAME, data.getMovie().getName());
         }
     }
 
-    private void updateGenre(final String fileName, final Movie movie, final MovieMetadata data) {
-        if (null == data.getGenre()|| !data.getGenre().equals(movie.composeGenreName())) {
-            update(fileName, GENRE, movie.composeGenreName());
+    private void updateGenre(final String fileName, final MovieMetadata data) {
+        if (! data.isGenreEqual()) {
+            update(fileName, GENRE, data.getMovie().composeGenreName());
         }
     }
 
-    private void updateComment(final String fileName, final Movie movie, final MovieMetadata data) {
-        if (data.commentsShouldBeUpdatedQuiet(movie)) {
-            final String desc = descriptions.read(movie);
+    private void updateComment(final String fileName, final MovieMetadata data) {
+        if (data.commentsShouldBeUpdatedQuiet()) {
+            final String desc = descriptions.read(data.getMovie());
 
             if (null != desc && !desc.trim().isEmpty() && !desc.equals(data.getComments())) {
                 update(fileName, COMMENTS, desc);
 
-                movie.setDescription(desc);
-                em.merge(movie);
+                data.getMovie().setDescription(desc);
+                em.merge(data.getMovie());
                 em.flush();
             }
         }
