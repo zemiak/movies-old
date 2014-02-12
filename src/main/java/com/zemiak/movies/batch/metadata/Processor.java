@@ -79,11 +79,6 @@ public class Processor implements ItemProcessor {
             return false;
         }
 
-        if (data.commentsShouldBeUpdated(movie)) {
-            LOG.log(Level.INFO, "{0}: isMetadataEqual: Comments should be updated", movie.getFileName());
-            return false;
-        }
-
-        return true;
+        return !data.commentsShouldBeUpdated(movie);
     }
 }

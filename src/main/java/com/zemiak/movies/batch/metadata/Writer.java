@@ -77,12 +77,12 @@ public class Writer extends AbstractItemWriter {
     }
 
     private void updateComment(final String fileName, final Movie movie, final MovieMetadata data) {
-        if (data.commentsShouldBeUpdated(movie)) {
+        if (data.commentsShouldBeUpdatedQuiet(movie)) {
             final String desc = descriptions.read(movie);
 
-            if (null != desc && !desc.trim().isEmpty()) {
+            if (null != desc && !desc.trim().isEmpty() && !desc.equals(data.getComments())) {
                 update(fileName, COMMENTS, desc);
-                
+
                 movie.setDescription(desc);
                 em.merge(movie);
                 em.flush();
