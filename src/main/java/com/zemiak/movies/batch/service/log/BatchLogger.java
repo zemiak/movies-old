@@ -19,7 +19,7 @@ public class BatchLogger {
         return new BatchLogger(clazz);
     }
 
-    private final static String LOGFILE = "/tmp/batch.log";
+    private final static String LOGFILE = "/tmp/" + BatchLogger.class.getName() + ".log";
     private final Logger logger;
 
     public BatchLogger(final String clazz) {
