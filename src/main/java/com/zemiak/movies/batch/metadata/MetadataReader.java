@@ -74,47 +74,47 @@ public class MetadataReader {
 
     private void processAppleBox(final AppleItemListBox box) {
         for (Box subBox : box.getBoxes()) {
-            String data = unknownBoxToString((UnknownBox) subBox);
+            UnknownBox b = (UnknownBox) subBox;
 
-            switch (box.getType()) {
+            switch (b.getType()) {
                 case "©too":
-                    metaData.setEncoder(data);
+                    metaData.setEncoder(unknownBoxToString(b));
                     break;
 
                 case "©nam":
-                    metaData.setName(data);
+                    metaData.setName(unknownBoxToString(b));
                     break;
 
                 case "©ART":
-                    metaData.setArtist(data);
+                    metaData.setArtist(unknownBoxToString(b));
                     break;
 
                 case "aART":
-                    metaData.setAlbumArtist(data);
+                    metaData.setAlbumArtist(unknownBoxToString(b));
                     break;
 
                 case "©wrt":
-                    metaData.setComposer(data);
+                    metaData.setComposer(unknownBoxToString(b));
                     break;
 
                 case "©alb":
-                    metaData.setAlbumName(data);
+                    metaData.setAlbumName(unknownBoxToString(b));
                     break;
 
                 case "©grp":
-                    metaData.setGrouping(data);
+                    metaData.setGrouping(unknownBoxToString(b));
                     break;
 
                 case "©gen":
-                    metaData.setGenre(data);
+                    metaData.setGenre(unknownBoxToString(b));
                     break;
 
                 case "©day":
-                    metaData.setYear(data);
+                    metaData.setYear(unknownBoxToString(b));
                     break;
 
                 case "©cmt":
-                    metaData.setComments(data);
+                    metaData.setComments(unknownBoxToString(b));
                     break;
             }
         }
@@ -125,18 +125,24 @@ public class MetadataReader {
         String data;
         Charset charset = Charset.forName("UTF-8");
         CharsetDecoder decoder = charset.newDecoder();
+        
+        buffer.rewind();
+        
+        try {
+            buffer.position(16);
+        } catch (IllegalArgumentException ex) {
+            LOG.log(Level.SEVERE, "Cannot seek 16 bytes, limit is " + buffer.limit(), ex);
+            return "";
+        }
 
         try {
-            int old_position = buffer.position();
-            buffer.rewind();
             data = decoder.decode(buffer).toString();
             // reset buffer's position to its original so it is not altered:
-            buffer.position(old_position);
         } catch (CharacterCodingException e) {
             LOG.log(Level.SEVERE, "Cannot decode string data for box " + box.getType(), e);
             return "";
         }
-
+        
         if (data.contains("data")) {
             data = data.substring(data.indexOf("data") + 4).trim();
         }

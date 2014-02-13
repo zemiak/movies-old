@@ -25,24 +25,27 @@ import java.util.logging.Level;
  *
  * @author vasko
  */
-public class CommandLine {
+public final class CommandLine {
     private static final BatchLogger LOG = BatchLogger.getLogger(CommandLine.class.getName());
     private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
+    private static final Integer TIMEOUT = 300; // 5 minutes
+    
+    private CommandLine() {
+    }
 
     public static List<String> execCmd(final String cmd, final List<String> arguments)
             throws IOException, InterruptedException, IllegalStateException {
         CommandLineResult result = new CommandLineResult();
         Callable<CommandLineResult> callable = getCallable(cmd, arguments);
 
-        System.out.println(cmd + " " + Joiner.on("|").join(result.getOutput()));
-        return new ArrayList<>();
+        System.out.println("run:" + cmd + " " + (null == arguments ? "" : Joiner.on("|").join(arguments)));
+        //return new ArrayList<>();
 
-        /*
         try {
-            result = timedCall(callable, 5, TimeUnit.SECONDS);
+            result = timedCall(callable, TIMEOUT, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
             final List<String> lines = new ArrayList<>();
-            lines.add("Timeout 5 seconds");
+            lines.add("Timeout " + TIMEOUT + " seconds");
 
             result.setExitValue(-1);
             result.setOutput(lines);
@@ -61,7 +64,6 @@ public class CommandLine {
         }
 
         return result.getOutput();
-                */
     }
 
     private static String streamToString(final InputStream stream) throws IOException {

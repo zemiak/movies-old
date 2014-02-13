@@ -55,7 +55,7 @@ public class Writer extends AbstractItemWriter {
 
         try {
             CommandLine.execCmd(conf.getProperty("mp4tags"), params);
-            LOG.info(String.format("Updating %s with %s on %s", commandLineSwitch, value, fileName));
+            LOG.info(String.format("Updated %s with %s on %s", commandLineSwitch, value, fileName));
         } catch (IOException | InterruptedException | IllegalStateException ex) {
             Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, "Cannot update " + commandLineSwitch + " for " + fileName, ex);
         }

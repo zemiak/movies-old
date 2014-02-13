@@ -47,7 +47,7 @@ public class Processor implements ItemProcessor {
             }
         }
 
-        System.out.println("Metadata: skipping " + fileName);
+        //System.out.println("Metadata: skipping " + fileName);
 
         return null;
     }
