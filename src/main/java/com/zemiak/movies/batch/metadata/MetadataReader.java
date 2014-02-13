@@ -49,6 +49,11 @@ public class MetadataReader {
                 processUserData((UserDataBox) b);
             }
         }
+        try {
+            isoFile.close();
+        } catch (IOException ex) {
+            LOG.log(Level.SEVERE, "Cannot close file", ex);
+        }
     }
 
     private void processUserData(final UserDataBox box) {
