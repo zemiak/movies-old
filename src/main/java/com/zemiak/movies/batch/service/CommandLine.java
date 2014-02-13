@@ -34,6 +34,8 @@ public class CommandLine {
         CommandLineResult result = new CommandLineResult();
         Callable<CommandLineResult> callable = getCallable(cmd, arguments);
 
+        System.out.println(cmd + " " + Joiner.on("|").join(result.getOutput()));
+
         try {
             result = timedCall(callable, 5, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
