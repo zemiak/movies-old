@@ -1,15 +1,15 @@
 package com.zemiak.movies.batch.metadata;
 
+import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.domain.Movie;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author vasko
  */
 public class MovieMetadata {
-    private static final Logger LOG = Logger.getLogger(MovieMetadata.class.getName());
+    private static final BatchLogger LOG = BatchLogger.getLogger(MovieMetadata.class.getName());
 
     private String genre;
     private String name;
@@ -58,7 +58,7 @@ public class MovieMetadata {
             if (debug) {
                 LOG.log(Level.INFO, "{0}: metadata comments empty, movie comments not", movie.getFileName());
             }
-            
+
             return true;
         }
 
@@ -66,7 +66,7 @@ public class MovieMetadata {
             if (debug) {
                 LOG.log(Level.INFO, "{0}: metadata and movie comments empty, comments URL not", movie.getFileName());
             }
-            
+
             return true;
         }
 
@@ -74,13 +74,13 @@ public class MovieMetadata {
             if (debug) {
                 LOG.log(Level.INFO, "{0}: metadata and comments not empty, but not equal", movie.getFileName());
             }
-            
+
             return true;
         }
 
         return false;
     }
-    
+
     public boolean commentsShouldBeUpdated() {
         return commentsShouldBeUpdated0(true);
     }
@@ -88,49 +88,49 @@ public class MovieMetadata {
     public boolean commentsShouldBeUpdatedQuiet() {
         return commentsShouldBeUpdated0(false);
     }
-    
+
     public boolean isNameEqual() {
         if (name == null && movie.getName() != null) {
             return false;
         }
-        
+
         return name == null || name.equals(movie.getName());
     }
-    
+
     public boolean isGenreEqual() {
         if (genre == null) {
             return false;
         }
-        
+
         return genre.equals(movie.composeGenreName());
     }
-    
+
     private boolean isMetadataEqual0(final boolean debug) {
         boolean ret = true;
-        
+
         if (! isNameEqual()) {
             ret = false;
-            
+
             if (debug) {
                 LOG.log(Level.INFO, "{0}: isMetadataEqual: Name is not equal", movie.getFileName());
             }
         }
-        
+
         if (! isGenreEqual()) {
             ret = false;
-            
+
             if (debug) {
                 LOG.log(Level.INFO, "{0}: isMetadataEqual: Genre is not equal", movie.getFileName());
             }
         }
-        
+
         if (commentsShouldBeUpdated0(debug)) {
             ret = false;
         }
-        
+
         return ret;
     }
-    
+
     public boolean isMetadataEqual() {
         return isMetadataEqual0(true);
     }
