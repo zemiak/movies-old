@@ -35,7 +35,9 @@ public class CommandLine {
         Callable<CommandLineResult> callable = getCallable(cmd, arguments);
 
         System.out.println(cmd + " " + Joiner.on("|").join(result.getOutput()));
+        return new ArrayList<>();
 
+        /*
         try {
             result = timedCall(callable, 5, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
@@ -59,6 +61,7 @@ public class CommandLine {
         }
 
         return result.getOutput();
+                */
     }
 
     private static String streamToString(final InputStream stream) throws IOException {

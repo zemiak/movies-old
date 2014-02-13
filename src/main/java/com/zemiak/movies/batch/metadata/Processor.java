@@ -3,7 +3,6 @@ package com.zemiak.movies.batch.metadata;
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.domain.Movie;
 import java.util.Properties;
-import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.batch.api.chunk.ItemProcessor;
@@ -38,7 +37,7 @@ public class Processor implements ItemProcessor {
     public Object processItem(final Object movieName) throws Exception {
         final String fileName = (String) movieName;
         Movie movie = find(fileName.substring(conf.getProperty("path").length()));
-        MovieMetadata data = MetadataReader.read(fileName, movie);
+        MovieMetadata data = new MetadataReader(fileName, movie).get();
 
 
         if (null != movie && null != data) {

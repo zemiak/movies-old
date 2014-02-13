@@ -143,11 +143,17 @@
             <artifactId>jsoup</artifactId>
             <version>1.7.3</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.thetransactioncompany</groupId>
             <artifactId>cors-filter</artifactId>
             <version>1.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.mp4parser</groupId>
+            <artifactId>isoparser</artifactId>
+            <version>1.0-RC-27</version>
         </dependency>
     </dependencies>
 

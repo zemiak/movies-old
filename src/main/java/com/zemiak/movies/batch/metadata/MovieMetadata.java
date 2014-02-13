@@ -11,9 +11,17 @@ import java.util.logging.Level;
 public class MovieMetadata {
     private static final BatchLogger LOG = BatchLogger.getLogger(MovieMetadata.class.getName());
 
-    private String genre;
+    private String encoder;
     private String name;
+    private String artist;
+    private String albumArtist;
+    private String composer;
+    private String albumName;
+    private String grouping;
+    private String genre;
+    private String year;
     private String comments;
+
     private Movie movie;
 
     public MovieMetadata(final Movie movie) {
@@ -42,6 +50,62 @@ public class MovieMetadata {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public String getEncoder() {
+        return encoder;
+    }
+
+    public void setEncoder(String encoder) {
+        this.encoder = encoder;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
+    public String getAlbumArtist() {
+        return albumArtist;
+    }
+
+    public void setAlbumArtist(String albumArtist) {
+        this.albumArtist = albumArtist;
+    }
+
+    public String getComposer() {
+        return composer;
+    }
+
+    public void setComposer(String composer) {
+        this.composer = composer;
+    }
+
+    public String getAlbumName() {
+        return albumName;
+    }
+
+    public void setAlbumName(String albumName) {
+        this.albumName = albumName;
+    }
+
+    public String getGrouping() {
+        return grouping;
+    }
+
+    public void setGrouping(String grouping) {
+        this.grouping = grouping;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 
     @Override
