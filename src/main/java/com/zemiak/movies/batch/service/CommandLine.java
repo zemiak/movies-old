@@ -12,6 +12,13 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 
 /**
@@ -20,31 +27,36 @@ import java.util.logging.Level;
  */
 public class CommandLine {
     private static final BatchLogger LOG = BatchLogger.getLogger(CommandLine.class.getName());
+    private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
 
     public static List<String> execCmd(final String cmd, final List<String> arguments)
             throws IOException, InterruptedException, IllegalStateException {
-        List<String> lines = new ArrayList<>();
-        final List<String> command = new ArrayList<>(arguments);
+        CommandLineResult result = new CommandLineResult();
+        Callable<CommandLineResult> callable = getCallable(cmd, arguments);
 
-        command.add(0, cmd);
-        Process process = Runtime.getRuntime().exec(command.toArray(new String[]{}));
+        try {
+            result = timedCall(callable, 5, TimeUnit.SECONDS);
+        } catch (TimeoutException e) {
+            final List<String> lines = new ArrayList<>();
+            lines.add("Timeout 5 seconds");
 
-        int exitValue = process.waitFor();
-        if (exitValue != 0) {
-            try (InputStream stream = process.getInputStream();) {
-                lines.addAll(Arrays.asList(streamToString(stream).split(System.getProperty("line.separator"))));
-            }
+            result.setExitValue(-1);
+            result.setOutput(lines);
+        } catch (ExecutionException ex) {
+            final List<String> lines = new ArrayList<>();
+            lines.add("Execution: " + ex.getMessage());
 
+            result.setExitValue(-2);
+            result.setOutput(lines);
+        }
+
+        if (result.isError()) {
             LOG.log(Level.SEVERE, "... execCmd: error code is {0}, output is {1}",
-                    new Object[]{exitValue, Joiner.on("|").join(lines)});
-            throw new IllegalStateException("Exit code " + exitValue + " instead of success");
+                    new Object[]{result.getExitValue(), Joiner.on("|").join(result.getOutput())});
+            throw new IllegalStateException("Exit code " + result.getExitValue() + " instead of success");
         }
 
-        try (InputStream stream = process.getInputStream();) {
-            lines.addAll(Arrays.asList(streamToString(stream).split(System.getProperty("line.separator"))));
-        }
-
-        return lines;
+        return result.getOutput();
     }
 
     private static String streamToString(final InputStream stream) throws IOException {
@@ -64,4 +76,38 @@ public class CommandLine {
         return stringWriter.toString();
     }
 
+    private static <T> T timedCall(final Callable<T> c, final long timeout, final TimeUnit timeUnit) throws InterruptedException, ExecutionException, TimeoutException
+    {
+        final FutureTask<T> task = new FutureTask<T>(c);
+        THREAD_POOL.execute(task);
+        return task.get(timeout, timeUnit);
+    }
+
+    private static Callable<CommandLineResult> getCallable(final String cmd, final List<String> arguments) {
+        final List<String> command = new ArrayList<>(arguments);
+        command.add(0, cmd);
+
+        Callable<CommandLineResult> callable = new Callable<CommandLineResult>() {
+            @Override
+            public CommandLineResult call() throws Exception
+                {
+                    Process process = Runtime.getRuntime().exec(command.toArray(new String[]{}));
+
+                    int exitValue = process.waitFor();
+
+                    List<String> lines = new ArrayList<>();
+                    try (InputStream stream = process.getInputStream();) {
+                        lines.addAll(Arrays.asList(streamToString(stream).split(System.getProperty("line.separator"))));
+                    }
+
+                    CommandLineResult result = new CommandLineResult();
+                    result.setExitValue(exitValue);
+                    result.setOutput(lines);
+
+                    return result;
+                }
+        };
+
+        return callable;
+    }
 }

@@ -39,14 +39,15 @@ public class Processor implements ItemProcessor {
         final String fileName = (String) movieName;
         Movie movie = find(fileName.substring(conf.getProperty("path").length()));
         MovieMetadata data = MetadataReader.read(fileName, movie);
-        
+
 
         if (null != movie && null != data) {
             if (! data.isMetadataEqual()) {
+                System.out.println("Metadata: going to update " + fileName);
                 return data;
             }
         }
-        
+
         System.out.println("Metadata: skipping " + fileName);
 
         return null;
