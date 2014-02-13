@@ -45,7 +45,7 @@ public class FilenameItemReader extends AbstractItemReader {
             br.readLine();
         }
 
-        LOG.log(Level.INFO, "Opened file list from record:{0}", recordNumber);
+        System.out.println("Opened file list from record: " + recordNumber);
     }
 
     @Override

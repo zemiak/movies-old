@@ -53,7 +53,7 @@ public class PrepareFileList implements Batchlet {
             throw ex;
         }
 
-        LOG.log(Level.INFO, "Found {0} movies on HDD.", counter);
+        System.out.println("Found " + counter + " movies on HDD.");
 
         return "done";
     }
