@@ -1,4 +1,4 @@
-package com.zemiak.movies.batch.thumbnails;
+package com.zemiak.movies.batch.thumbnail;
 
 import java.io.File;
 import java.util.Properties;

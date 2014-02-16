@@ -1,4 +1,4 @@
-package com.zemiak.movies.servlets;
+package com.zemiak.movies.servlet;
 
 import com.vaadin.cdi.CDIUIProvider;
 import com.vaadin.server.ServiceException;

@@ -1,4 +1,4 @@
-package com.zemiak.movies.batch.thumbnails;
+package com.zemiak.movies.batch.thumbnail;
 
 import com.zemiak.movies.batch.service.CommandLine;
 import java.io.File;
