@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author vasko
  */
 public class FileStreamer {
-    private static final int BUFFER_LENGTH = 1024 * 16;
+    private static final int BUFFER_LENGTH = 1024 * 512;
     private static final long EXPIRE_TIME = 1000 * 60 * 60 * 24;
     private static final Pattern RANGE_PATTERN = Pattern.compile("bytes=(?<start>\\d*)-(?<end>\\d*)");
     
@@ -48,7 +48,7 @@ public class FileStreamer {
         int start = 0;
         int end = length - 1;
 
-        String range = request.getHeader("Range");
+        String range = request.getHeader("range");
         if (null != range) {
             Matcher matcher = RANGE_PATTERN.matcher(range);
 
@@ -67,29 +67,29 @@ public class FileStreamer {
 
         response.reset();
         response.setBufferSize(BUFFER_LENGTH);
-        response.setHeader("Content-Disposition", String.format("inline;filename=\"%s\"", videoFilename));
-        response.setHeader("Accept-Ranges", "bytes");
-        response.setDateHeader("Last-Modified", Files.getLastModifiedTime(video).toMillis());
-        response.setDateHeader("Expires", System.currentTimeMillis() + EXPIRE_TIME);
-        response.setContentType(Files.probeContentType(video));
+        response.setHeader("Accept-Ranges", "0-" + length);
         response.setHeader("Content-Range", String.format("bytes %s-%s/%s", start, end, length));
         response.setHeader("Content-Length", String.format("%s", contentLength));
         response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
+        
+        try {
+            int bytesRead;
+            int bytesLeft = contentLength;
+            ByteBuffer buffer = ByteBuffer.allocate(BUFFER_LENGTH);
 
-        int bytesRead;
-        int bytesLeft = contentLength;
-        ByteBuffer buffer = ByteBuffer.allocate(BUFFER_LENGTH);
+            try (SeekableByteChannel input = Files.newByteChannel(video, StandardOpenOption.READ);
+                    OutputStream output = response.getOutputStream()) {
 
-        try (SeekableByteChannel input = Files.newByteChannel(video, StandardOpenOption.READ);
-                OutputStream output = response.getOutputStream()) {
+                input.position(start);
 
-            input.position(start);
-
-            while ((bytesRead = input.read(buffer)) != -1 && bytesLeft > 0) {
-                buffer.clear();
-                output.write(buffer.array(), 0, bytesLeft < bytesRead ? bytesLeft : bytesRead);
-                bytesLeft -= bytesRead;
+                while ((bytesRead = input.read(buffer)) != -1 && bytesLeft > 0) {
+                    buffer.clear();
+                    output.write(buffer.array(), 0, bytesLeft < bytesRead ? bytesLeft : bytesRead);
+                    bytesLeft -= bytesRead;
+                }
             }
+        } catch (java.io.IOException | java.lang.IllegalArgumentException ex) {
+            // pass, do not care
         }
     }
 }

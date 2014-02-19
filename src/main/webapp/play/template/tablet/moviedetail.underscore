@@ -10,7 +10,7 @@
         <video id="my_video_<%= id %>" class="video-js vjs-default-skin" controls
           preload="auto" poster="http://lenovo-server.local/movies/img/movie/<%= pictureFileName %>"
           data-setup="{}" width="559" height="432">
-          <source src="http://lenovo-server.local/movies/play.php?id=<%= id %>" type='video/mp4'>
+          <source src="/movies/stream?id=<%= id %>" type='video/mp4'>
         </video>
         </center>
 
