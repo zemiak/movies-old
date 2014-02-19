@@ -82,7 +82,7 @@ public class SendLogFile implements Batchlet {
 
         LOG.log(Level.INFO, "Sent LOG file to {0}", conf.getProperty("mailTo"));
 
-        BatchLogger.deleteLogFile();
+        //BatchLogger.deleteLogFile();
     }
 
     @Override
