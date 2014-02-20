@@ -104,20 +104,17 @@ var MovieCollection = Backbone.Collection.extend({
         } else {
             return this.filter(function(item){return item.getSerieId() == id;});
         }
+    }
+});
+
+var MovieSearchCollection = Backbone.Collection.extend({
+    model: MovieModel,
+    
+    initialize : function(models, options){
+        this.query = options.query;
     },
-
-    findBySearch: function(text)
-    {
-        text = $.trim(text).toLowerCase();
-        return this.filter(function(item){
-            var itemText = item.getName() + item.getFileName() + item.getDescription()
-                       + item.getOriginalName();
-
-            if (repository.genres.findById(item.getGenreId()).getProtected() == 1) {
-                return false;
-            }
-
-            return (itemText.toLowerCase().indexOf(text) > -1);
-        });
+    
+    url: function(){
+        return "/movies/rest/movies/search/" + this.query;
     }
 });

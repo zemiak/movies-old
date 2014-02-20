@@ -4,6 +4,7 @@ import com.zemiak.movies.domain.CacheClearEvent;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
+import com.zemiak.movies.strings.Encodings;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -80,12 +81,19 @@ public class MovieService {
         em.getEntityManagerFactory().getCache().evictAll();
     }
 
-    public List<Movie> getByExpression(String text) {
+    public List<Movie> getByExpression(final String text) {
         List<Movie> res = new ArrayList<>();
+        String textAscii = Encodings.toAscii(text.trim().toLowerCase());
+        
+        System.err.println("Searching for:" + textAscii);
         
         for (Movie entry: all()) {
-            if ((null != entry.getDescription() && entry.getDescription().toLowerCase().contains(text.toLowerCase()))
-                    || entry.getName().toLowerCase().contains(text.toLowerCase())) {
+            String desc = (null == entry.getDescription() ? "" 
+                    : Encodings.toAscii(entry.getDescription().trim().toLowerCase()));
+            String name = (null == entry.getName() ? "" 
+                    : Encodings.toAscii(entry.getName().trim().toLowerCase()));
+            
+            if (name.contains(textAscii) || desc.contains(textAscii)) {
                 res.add(entry);
             }
         }

@@ -131,24 +131,37 @@ var MovieRouter = Backbone.Router.extend({
             text = $('#searchBox')[0].value;
         }
 
-        var view = new ListView({el: $('#search')}), items = [], v, i;
+        var view = new ListView({el: $('#search')});
+        var items = []
+        var v;
+        
+        var movies = new MovieSearchCollection([], {query: text});
+        
+        movies.fetch({success: function(){
+            alert("Movies fetch succeeded");
+            movies.each(function(movie){
+                v = new MovieItemView;
+                v.setModel(movie);
+                items.push(v);
+                
+                alert("Pushing movie " + movie.getName());
+            });
+            
+            console.log("Rendering results");
+            
+            view.setName('Search results');
+            view.setItems(items);
 
-        // standalone movies of that genre
-        movies = repository.movies.findBySearch(text);
-        for (i in movies) {
-            v = new MovieItemView;
-            v.setModel(movies[i]);
+            view.render();
 
-            items.push(v);
-        }
-
-        view.setName('Search results');
-        view.setItems(items);
-
-        view.render();
-
-        this.showPage('search');
-        this.navigate('#search/' + text, {trigger: false, replace: true});
+            this.showPage('search');
+            this.navigate('#search/' + text, {trigger: false, replace: true});
+        }, error: function(collection, response, options){
+            console.log(collection);
+            console.log(response);
+            console.log(options);
+            alert("Fetch error");
+        }});
     },
 
     showPage: function(id)
