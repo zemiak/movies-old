@@ -133,35 +133,27 @@ var MovieRouter = Backbone.Router.extend({
 
         var view = new ListView({el: $('#search')});
         var items = []
-        var v;
+        var v, that = this;
         
-        var movies = new MovieSearchCollection([], {query: text});
+        $.ajax("/movies/rest/movies/search/" + text)
+                .fail(function(){alert("Failed to search for " + text);})
+                .done(function(data){
+                    // a back button
+                    v = new BackButtonView;
+                    v.setUrl('#genres');
+                    items.push(v);
         
-        movies.fetch({success: function(){
-            alert("Movies fetch succeeded");
-            movies.each(function(movie){
-                v = new MovieItemView;
-                v.setModel(movie);
-                items.push(v);
-                
-                alert("Pushing movie " + movie.getName());
-            });
-            
-            console.log("Rendering results");
-            
-            view.setName('Search results');
-            view.setItems(items);
-
-            view.render();
-
-            this.showPage('search');
-            this.navigate('#search/' + text, {trigger: false, replace: true});
-        }, error: function(collection, response, options){
-            console.log(collection);
-            console.log(response);
-            console.log(options);
-            alert("Fetch error");
-        }});
+                    _.each(data, function(item){
+                        v = new MovieItemView;
+                        v.setModel(new MovieModel(item));
+                        items.push(v);
+                    });
+                    
+                    view.setItems(items);
+                    view.setName("Search Results for " + text);
+                    view.render();
+                    that.showPage("search");
+                });
     },
 
     showPage: function(id)
