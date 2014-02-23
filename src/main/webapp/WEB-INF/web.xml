@@ -12,6 +12,16 @@
             <param-name>cors.supportedMethods</param-name>
             <param-value>GET, POST, HEAD, PUT, DELETE, OPTIONS</param-value>
         </init-param>
+        
+        <init-param>
+                <param-name>cors.allowOrigin</param-name>
+                <param-value>*</param-value>
+        </init-param>
+        
+        <init-param>
+                <param-name>cors.supportedHeaders</param-name>
+                <param-value>Origin,Accepts</param-value>
+        </init-param>
     </filter>
 
     <filter-mapping>

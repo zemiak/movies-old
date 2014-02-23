@@ -132,28 +132,31 @@ var MovieRouter = Backbone.Router.extend({
         }
 
         var view = new ListView({el: $('#search')});
-        var items = []
-        var v, that = this;
+        var items = [];
+        var v;
         
-        $.ajax("/movies/rest/movies/search/" + text)
-                .fail(function(){alert("Failed to search for " + text);})
-                .done(function(data){
-                    // a back button
-                    v = new BackButtonView;
-                    v.setUrl('#genres');
-                    items.push(v);
+        // a back button
+        var backv = new BackButtonView;
+        backv.setUrl('#genres');
+        items.push(backv);
         
-                    _.each(data, function(item){
-                        v = new MovieItemView;
-                        v.setModel(new MovieModel(item));
-                        items.push(v);
-                    });
-                    
-                    view.setItems(items);
-                    view.setName("Search Results for " + text);
-                    view.render();
-                    that.showPage("search");
-                });
+        // standalone movies of that genre
+        movies = repository.movies.findBySearch(text);
+        for (i in movies) {
+            v = new MovieItemView;
+            v.setModel(movies[i]);
+
+            items.push(v);
+            
+            console.log(movies[i].getName());
+        }
+
+        view.setName('Search results');
+        view.setItems(items);
+
+        view.render();
+        this.showPage('search');
+        this.navigate('#search/' + text, {trigger: false, replace: true});
     },
 
     showPage: function(id)

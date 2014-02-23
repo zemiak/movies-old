@@ -1,6 +1,7 @@
 package com.zemiak.movies.boundary.backbonerest;
 
 import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.strings.Encodings;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,6 +26,7 @@ public class MovieDTO {
     private String originalLanguage;
     private String language;
     private Integer genreId;
+    private String search;
 
     public MovieDTO() {
     }
@@ -49,5 +51,7 @@ public class MovieDTO {
         this.originalLanguage = movie.getOriginalLanguage() == null ? null : movie.getOriginalLanguage().getId();
         this.language = movie.getLanguage() == null ? null : movie.getLanguage().getId();
         this.genreId = movie.getGenreId() == null ? null : movie.getGenreId().getId();
+        this.search = (null == this.name ? "" 
+                    : Encodings.toAscii(this.name.trim().toLowerCase()));
     }
 }

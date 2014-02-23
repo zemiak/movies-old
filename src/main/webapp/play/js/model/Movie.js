@@ -8,6 +8,11 @@ var MovieModel = Backbone.Model.extend({
     {
         return this.get('name');
     },
+    
+    getSearch: function()
+    {
+        return this.get('search');
+    },
 
     getPictureFileName: function()
     {
@@ -104,5 +109,15 @@ var MovieCollection = Backbone.Collection.extend({
         } else {
             return this.filter(function(item){return item.getSerieId() == id;});
         }
+    },
+    
+    findBySearch: function(text)
+    {
+        text = $.trim(text).toLowerCase();
+        return this.filter(function(item){
+            var itemText = item.getSearch();
+            return (itemText.toLowerCase().indexOf(text) > -1);
+        });
     }
+
 });
