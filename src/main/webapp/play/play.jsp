@@ -46,9 +46,11 @@
     <link href="js/vendor/videojs/video-js.css" rel="stylesheet">
     <script src="js/vendor/videojs/video.js"></script>
     
+    <jsp:useBean id="confBean" class="com.zemiak.movies.boundary.models.ConfigBean"> </jsp:useBean>
+    
     <!-- Global Data -->
     <script type="text/javascript">
-        window._BACKEND_URL = "/movies/";
+        window._BACKEND_URL = "<%= confBean.getBackendUrl() %>";
     </script>
 
     <!-- JS custom -->

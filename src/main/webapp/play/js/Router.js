@@ -140,32 +140,41 @@ var MovieRouter = Backbone.Router.extend({
         backv.setUrl('#genres');
         items.push(backv);
 
-        // series
-        series = repository.series.findBySearch(text);
-        for (var i in series) {
-            v = new SerieItemView;
-            v.setModel(series[i]);
+        var srepo = new SerieSearchCollection;
+        var that = this;
+        srepo.setText(text);
+        srepo.fetch({success: function(){
+            srepo.forEach(function(serie){
+                v = new SerieItemView;
+                v.setModel(serie);
 
-            items.push(v);
-        }
+                items.push(v);
+            });
+            
+            var mrepo = new MovieSearchCollection;
+            mrepo.setText(text);
+            mrepo.fetch({success: function(){
+                mrepo.forEach(function(movie){
+                    v = new MovieItemView;
+                    v.setModel(movie);
 
-        // movies
-        movies = repository.movies.findBySearch(text);
-        for (i in movies) {
-            v = new MovieItemView;
-            v.setModel(movies[i]);
+                    items.push(v);
+                });
+                
+                view.setName('Search results');
+                view.setItems(items);
 
-            items.push(v);
-
-            console.log(movies[i].getName());
-        }
-
-        view.setName('Search results');
-        view.setItems(items);
-
-        view.render();
-        this.showPage('search');
-        this.navigate('#search/' + text, {trigger: false, replace: true});
+                view.render();
+                that.showPage('search');
+                that.navigate('#search/' + text, {trigger: false, replace: true});
+            },
+            fail: function(){
+                alert("Search error: movies");
+            }});
+        },
+        fail: function(){
+            alert("Search error: series");
+        }});
     },
 
     showPage: function(id)

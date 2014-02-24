@@ -120,3 +120,16 @@ var MovieCollection = Backbone.Collection.extend({
         });
     }
 });
+
+var MovieSearchCollection = Backbone.Collection.extend({
+    model: MovieModel,
+    text: "",
+    
+    setText: function(searchText) {
+        this.text = searchText;
+    },
+    
+    url: function() {
+        return window._BACKEND_URL + "rest/movies/search/" + this.text;
+    }
+});

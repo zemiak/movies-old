@@ -85,15 +85,11 @@ public class MovieService {
         List<Movie> res = new ArrayList<>();
         String textAscii = Encodings.toAscii(text.trim().toLowerCase());
         
-        System.err.println("Searching for:" + textAscii);
-        
         for (Movie entry: all()) {
-            String desc = (null == entry.getDescription() ? "" 
-                    : Encodings.toAscii(entry.getDescription().trim().toLowerCase()));
             String name = (null == entry.getName() ? "" 
                     : Encodings.toAscii(entry.getName().trim().toLowerCase()));
             
-            if (name.contains(textAscii) || desc.contains(textAscii)) {
+            if (name.contains(textAscii)) {
                 res.add(entry);
             }
         }

@@ -2,6 +2,7 @@ package com.zemiak.movies.boundary;
 
 import com.zemiak.movies.domain.CacheClearEvent;
 import com.zemiak.movies.domain.Serie;
+import com.zemiak.movies.strings.Encodings;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -56,9 +57,13 @@ public class SerieService {
 
     public List<Serie> getByExpression(final String text) {
         List<Serie> res = new ArrayList<>();
+        String textAscii = Encodings.toAscii(text.trim().toLowerCase());
         
         for (Serie entry: all()) {
-            if (entry.getName().toLowerCase().contains(text.toLowerCase())) {
+            String name = (null == entry.getName() ? "" 
+                    : Encodings.toAscii(entry.getName().trim().toLowerCase()));
+            
+            if (name.contains(textAscii)) {
                 res.add(entry);
             }
         }

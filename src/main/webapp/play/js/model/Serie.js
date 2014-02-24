@@ -58,3 +58,16 @@ var SerieCollection = Backbone.Collection.extend({
         });
     }
 });
+
+var SerieSearchCollection = Backbone.Collection.extend({
+    model: SerieModel,
+    text: "",
+    
+    setText: function(searchText) {
+        this.text = searchText;
+    },
+    
+    url: function() {
+        return window._BACKEND_URL + "rest/series/search/" + this.text;
+    }
+});

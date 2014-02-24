@@ -164,11 +164,9 @@ public class MovieListView extends ViewAbstract {
     }
 
     private void addItems(List<Movie> list) {
-        int i = 0;
         for (Movie entry : list) {
             addRow(entry);
         }
-        System.err.println("Done adding " + list.size() + " items.");
     }
     
     void editItem() {
