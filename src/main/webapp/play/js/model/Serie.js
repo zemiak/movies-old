@@ -9,6 +9,11 @@ var SerieModel = Backbone.Model.extend({
         return this.get('name');
     },
 
+    getSearch: function()
+    {
+        return this.get('search');
+    },
+
     getPictureFileName: function()
     {
         return this.get('pictureFileName');
@@ -42,5 +47,14 @@ var SerieCollection = Backbone.Collection.extend({
     findByGenreId: function(id)
     {
         return this.filter(function(item){return item.getGenreId() == id;});
+    },
+
+    findBySearch: function(text)
+    {
+        text = $.trim(text).toLowerCase();
+        return this.filter(function(item){
+            var itemText = item.getSearch();
+            return (itemText.toLowerCase().indexOf(text) > -1);
+        });
     }
 });

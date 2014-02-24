@@ -134,20 +134,29 @@ var MovieRouter = Backbone.Router.extend({
         var view = new ListView({el: $('#search')});
         var items = [];
         var v;
-        
+
         // a back button
         var backv = new BackButtonView;
         backv.setUrl('#genres');
         items.push(backv);
-        
-        // standalone movies of that genre
+
+        // series
+        series = repository.series.findBySearch(text);
+        for (var i in series) {
+            v = new SerieItemView;
+            v.setModel(series[i]);
+
+            items.push(v);
+        }
+
+        // movies
         movies = repository.movies.findBySearch(text);
         for (i in movies) {
             v = new MovieItemView;
             v.setModel(movies[i]);
 
             items.push(v);
-            
+
             console.log(movies[i].getName());
         }
 

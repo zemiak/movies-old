@@ -57,7 +57,7 @@ var repository = _.extend({}, {
     {
         window.localStorage.clear();
     },
-    
+
     copyFromServer: function(callback)
     {
         var distantRepositories = [], that = this;
@@ -76,6 +76,8 @@ var repository = _.extend({}, {
         var loadRepo = function(index) {
             var name = that.tables[index], model;
 
+            console.log("Loading repo " + index + ", name " + name);
+
             distantRepositories[name].fetch({success: function(){
                 distantRepositories[name].each(function(row){
                     model = new repository[name].model(row.toJSON());
@@ -87,6 +89,7 @@ var repository = _.extend({}, {
                 if (index < that.tables.length) {
                     loadRepo(index);
                 } else {
+                    console.log("Finished loading, requesting timestamp " + that.timestampUrl);
                     // set the timestamp after a complete refresh
                     $.ajax(that.timestampUrl, {
                         dataType: 'html',
@@ -106,7 +109,7 @@ var repository = _.extend({}, {
     },
 
     load: function(callback) {
-        var that = this, 
+        var that = this,
         localCallback = function(){
             ViewUtils.hideLoading();
             callback();
@@ -124,9 +127,9 @@ var repository = _.extend({}, {
                     success: function(data)
                     {
                         localTimestamp = window.localStorage.getItem('movies_dataTimestamp');
-                        
+
                         console.log("Timestamps: local: " + localTimestamp + ", remote: " + data);
-                        
+
                         if (localTimestamp != data) {
                             that.clearLocalStorage();
                             window.location.reload();
