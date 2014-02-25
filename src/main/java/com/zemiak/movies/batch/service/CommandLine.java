@@ -1,7 +1,7 @@
 package com.zemiak.movies.batch.service;
 
-import com.google.gwt.thirdparty.guava.common.base.Joiner;
 import com.zemiak.movies.batch.service.log.BatchLogger;
+import com.zemiak.movies.strings.Joiner;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,7 +38,7 @@ public final class CommandLine {
         CommandLineResult result = new CommandLineResult();
         Callable<CommandLineResult> callable = getCallable(cmd, arguments);
 
-        System.out.println("run:" + cmd + " " + (null == arguments ? "" : Joiner.on("|").join(arguments)));
+        System.out.println("run:" + cmd + " " + (null == arguments ? "" : Joiner.join(arguments, "|")));
         //return new ArrayList<>();
 
         try {
@@ -59,7 +59,7 @@ public final class CommandLine {
 
         if (result.isError()) {
             LOG.log(Level.SEVERE, "... execCmd: error code is {0}, output is {1}",
-                    new Object[]{result.getExitValue(), Joiner.on("|").join(result.getOutput())});
+                    new Object[]{result.getExitValue(), Joiner.join(result.getOutput(), "|")});
             throw new IllegalStateException("Exit code " + result.getExitValue() + " instead of success");
         }
 
