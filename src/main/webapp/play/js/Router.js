@@ -168,12 +168,18 @@ var MovieRouter = Backbone.Router.extend({
                 that.showPage('search');
                 that.navigate('#search/' + text, {trigger: false, replace: true});
             },
-            fail: function(){
+            error: function(collection, error, options){
+                console.error("Collection", collection);
+                console.error("Error", error);
+                console.error("Options", options);
                 alert("Search error: movies");
             }});
         },
-        fail: function(){
-            alert("Search error: series");
+        error: function(collection, error, options){
+            console.error("Collection", collection);
+            console.error("Error", error);
+            console.error("Options", options);
+            alert("Search error: series:" + error);
         }});
     },
 
