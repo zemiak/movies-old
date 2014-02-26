@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="GenreCreateDlg" widgetVar="GenreCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateGenreTitle}">
+            <h:form id="GenreCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{genreController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateGenreLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{genreController.selected.id}" title="#{bundle.CreateGenreTitle_id}" required="true" requiredMessage="#{bundle.CreateGenreRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateGenreLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{genreController.selected.name}" title="#{bundle.CreateGenreTitle_name}" required="true" requiredMessage="#{bundle.CreateGenreRequiredMessage_name}"/>
+                        <p:outputLabel value="#{bundle.CreateGenreLabel_pictureFileName}" for="pictureFileName" />
+                        <p:inputText id="pictureFileName" value="#{genreController.selected.pictureFileName}" title="#{bundle.CreateGenreTitle_pictureFileName}" />
+                        <p:outputLabel value="#{bundle.CreateGenreLabel_displayOrder}" for="displayOrder" />
+                        <p:inputText id="displayOrder" value="#{genreController.selected.displayOrder}" title="#{bundle.CreateGenreTitle_displayOrder}" />
+                        <p:outputLabel value="#{bundle.CreateGenreLabel_protected1}" for="protected1" />
+                        <p:inputText id="protected1" value="#{genreController.selected.protected1}" title="#{bundle.CreateGenreTitle_protected1}" required="true" requiredMessage="#{bundle.CreateGenreRequiredMessage_protected1}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{genreController.create}" value="#{bundle.Save}" update="display,:GenreListForm:datalist,:growl" oncomplete="handleSubmit(args,'GenreCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="GenreCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
