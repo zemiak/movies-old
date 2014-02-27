@@ -1,5 +1,7 @@
 package com.zemiak.movies.domain;
 
+import com.zemiak.movies.batch.metadata.description.Csfd;
+import com.zemiak.movies.batch.metadata.description.Imdb;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -256,5 +258,15 @@ public class Movie implements Serializable {
 
     public boolean isUrlEmpty() {
         return null == url || "".equals(url.trim()) || "''".equals(url.trim());
+    }
+    
+    public String getUrlFlag() {
+        if (new Csfd().accepts(this)) {
+            return "CSFD";
+        } else if (new Imdb().accepts(this)) {
+            return "IMDB";
+        }
+        
+        return "";
     }
 }

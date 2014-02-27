@@ -25,7 +25,6 @@ public class GenreController implements Serializable {
 
     @EJB
     private com.zemiak.movies.admin.beans.GenreFacade ejbFacade;
-    private List<Genre> items = null;
     private Genre selected;
 
     public GenreController() {
@@ -57,9 +56,6 @@ public class GenreController implements Serializable {
 
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("GenreCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
     }
 
     public void update() {
@@ -70,15 +66,11 @@ public class GenreController implements Serializable {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("GenreDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public List<Genre> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
-        return items;
+        return getFacade().findAll();
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

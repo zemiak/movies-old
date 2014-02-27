@@ -25,7 +25,6 @@ public class SerieController implements Serializable {
 
     @EJB
     private com.zemiak.movies.admin.beans.SerieFacade ejbFacade;
-    private List<Serie> items = null;
     private Serie selected;
 
     public SerieController() {
@@ -57,9 +56,6 @@ public class SerieController implements Serializable {
 
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SerieCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
     }
 
     public void update() {
@@ -70,15 +66,11 @@ public class SerieController implements Serializable {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("SerieDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public List<Serie> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
-        return items;
+        return getFacade().findAll();
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

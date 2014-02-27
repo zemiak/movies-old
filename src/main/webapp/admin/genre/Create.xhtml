@@ -20,8 +20,6 @@
                         <p:inputText id="pictureFileName" value="#{genreController.selected.pictureFileName}" title="#{bundle.CreateGenreTitle_pictureFileName}" />
                         <p:outputLabel value="#{bundle.CreateGenreLabel_displayOrder}" for="displayOrder" />
                         <p:inputText id="displayOrder" value="#{genreController.selected.displayOrder}" title="#{bundle.CreateGenreTitle_displayOrder}" />
-                        <p:outputLabel value="#{bundle.CreateGenreLabel_protected1}" for="protected1" />
-                        <p:inputText id="protected1" value="#{genreController.selected.protected1}" title="#{bundle.CreateGenreTitle_protected1}" required="true" requiredMessage="#{bundle.CreateGenreRequiredMessage_protected1}"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{genreController.create}" value="#{bundle.Save}" update="display,:GenreListForm:datalist,:growl" oncomplete="handleSubmit(args,'GenreCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="GenreCreateDialog.hide()"/>

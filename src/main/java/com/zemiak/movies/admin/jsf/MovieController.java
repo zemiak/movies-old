@@ -25,7 +25,6 @@ public class MovieController implements Serializable {
 
     @EJB
     private com.zemiak.movies.admin.beans.MovieFacade ejbFacade;
-    private List<Movie> items = null;
     private Movie selected;
 
     public MovieController() {
@@ -57,9 +56,6 @@ public class MovieController implements Serializable {
 
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MovieCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
     }
 
     public void update() {
@@ -70,15 +66,15 @@ public class MovieController implements Serializable {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MovieDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public List<Movie> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
-        return items;
+        return getFacade().findAll();
+    }
+    
+    public List<Movie> getNewItems() {
+        return getFacade().findAllNew();
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

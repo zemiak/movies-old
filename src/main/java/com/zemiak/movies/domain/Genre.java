@@ -166,4 +166,7 @@ public class Genre implements Serializable {
         return getName();
     }
 
+    public boolean isEmpty() {
+        return id == 0;
+    }
 }

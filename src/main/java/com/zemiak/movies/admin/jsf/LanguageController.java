@@ -25,7 +25,6 @@ public class LanguageController implements Serializable {
 
     @EJB
     private com.zemiak.movies.admin.beans.LanguageFacade ejbFacade;
-    private List<Language> items = null;
     private Language selected;
 
     public LanguageController() {
@@ -57,9 +56,6 @@ public class LanguageController implements Serializable {
 
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("LanguageCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
     }
 
     public void update() {
@@ -70,15 +66,11 @@ public class LanguageController implements Serializable {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("LanguageDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public List<Language> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
-        return items;
+        return getFacade().findAll();
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
