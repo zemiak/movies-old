@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE resources PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN" "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
+<resources>
+    <custom-resource res-type="java.util.Properties" jndi-name="com.zemiak.movies" 
+                     factory-class="org.glassfish.resources.custom.factory.PropertiesFactory">
+      <property name="ffmpeg" value="/usr/bin/ffmpeg"></property>
+      <property name="path" value="/mnt/media/Movies/"></property>
+      <property name="imgPath" value="/home/sites/movies/img/movies/"></property>
+      <property name="mp4tags" value="/usr/bin/mp4tags"></property>
+      <property name="mp4info" value="/usr/bin/mp4info"></property>
+      <property name="mailFrom" value="movies@lenovo-server.local"></property>
+      <property name="mailTo" value="zemiak@gmail.com"></property>
+      <property name="mailSubject" value="Movies: Batch Results"></property>
+      <property name="backendUrl" value="http://lenovo-server.local:8080/movies/"></property>
+    </custom-resource>
+    
+    <jdbc-connection-pool 
+        datasource-classname="org.postgresql.ds.PGSimpleDataSource" 
+        res-type="javax.sql.DataSource" name="ZemiakMovies__pool">
+      <property name="portNumber" value="5432"></property>
+      <property name="databaseName" value="movies"></property>
+      <property name="serverName" value="lenovo-server.local"></property>
+      <property name="user" value="movies_user"></property>
+      <property name="password" value="movies/0"></property>
+    </jdbc-connection-pool>
+    
+    <jdbc-resource pool-name="ZemiakMovies__pool" jndi-name="jdbc/ZemiakMovies"></jdbc-resource>
+    
+    <custom-resource res-type="java.util.Properties" jndi-name="com.zemiak.books" 
+                     factory-class="org.glassfish.resources.custom.factory.PropertiesFactory">
+      <property name="path" value="/mnt/media/Books/"></property>
+      <property name="calibrePath" value="/opt/calibre/bin/ebook-convert"></property>
+    </custom-resource>
+    
+    <mail-resource host="lenovo-server.local" jndi-name="mail/connect" 
+                   from="anonymous@zemiak.com" user="anonymous">
+    </mail-resource>
+</resources>
