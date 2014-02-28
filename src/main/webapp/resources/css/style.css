@@ -6,3 +6,13 @@
 .ui-button-text-icon-left {
     margin-top: 0.1em !important;
 }
+
+.movieColumn1 {}
+.movieColumn2 {
+    width: 100%;
+}
+
+.movieColumnValue {
+    width: 100%;
+    padding-right: 0px !important;
+}
