@@ -11,7 +11,7 @@
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
     </h:head>
-    
+
     <h:outputStylesheet library="css" name="style.css" />
 
     <h:body>
@@ -23,16 +23,16 @@
                 <h:form id="menuForm">
                     <p:menubar autoDisplay="false">
                         <p:submenu label="#{bundle.Maintenance}" icon="ui-icon-wrench">
-                            <p:menuitem value="New Movies" outcome="/admin/movie/ListNew.xhtml" icon="ui-icon-document" />
+                            <p:menuitem value="New Movies" outcome="/admin/movienew/List.xhtml" icon="ui-icon-document" />
                             <p:menuitem value="Movies" outcome="/admin/movie/List.xhtml" icon="ui-icon-video" />
                             <p:menuitem value="Series" outcome="/admin/serie/List.xhtml" icon="ui-icon-cart" />
                             <p:menuitem value="Genres" outcome="/admin/genre/List.xhtml" icon="ui-icon-tag" />
                             <p:menuitem value="Languages" outcome="/admin/language/List.xhtml" icon="ui-icon-flag" />
                         </p:submenu>
-                        
+
                         <f:facet name="options">
-                            <p:commandButton value="#{bundle.Home}" 
-                                             onclick="window.location = '/movies/'" 
+                            <p:commandButton value="#{bundle.Home}"
+                                             onclick="window.location = '/movies/'"
                                              icon="ui-icon-home"
                                              />
                         </f:facet>
@@ -43,7 +43,7 @@
             <p:layoutUnit position="center" style="border:0;" gutter="0" collapsible="true">
                 <ui:insert name="body"/>
             </p:layoutUnit>
-            
+
             <p:layoutUnit position="south" style="border:0;" gutter="0" collapsible="true">
                 <ui:insert name="footer"/>
             </p:layoutUnit>

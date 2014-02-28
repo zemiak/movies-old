@@ -17,9 +17,9 @@
                   closeOnEscape="true">
             <h:form id="ChangeGenreForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{!movieController.selectionEmpty}">
+                    <p:panelGrid columns="2" rendered="#{!movieControllerNew.selectionEmpty}">
                         <p:outputLabel value="#{bundle.EditMovieLabel_genreId}" for="genreId" />
-                        <p:selectOneMenu id="genreId" value="#{movieController.genre}" >
+                        <p:selectOneMenu id="genreId" value="#{movieControllerNew.genre}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
 
                             <f:selectItems value="#{genreController.itemsAvailableSelectOne}"
@@ -27,7 +27,7 @@
                                            itemValue="#{genreIdItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{movieController.changeGenre()}"
+                    <p:commandButton actionListener="#{movieControllerNew.changeGenre()}"
                                      value="#{bundle.Save}"
                                      update="display,:MovieListForm:datalist,:growl"
                                      oncomplete="handleSubmit(args, 'ChangeGenreDialog');"/>

@@ -11,16 +11,16 @@
         <p:dialog id="ChangeSerieDlg" widgetVar="ChangeSerieDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ChangeSerieTitle}" closeOnEscape="true">
             <h:form id="ChangeSerieForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{!movieController.selectionEmpty}">
+                    <p:panelGrid columns="2" rendered="#{!movieControllerNew.selectionEmpty}">
                         <p:outputLabel value="#{bundle.EditMovieLabel_serieId}" for="serieId" />
-                        <p:selectOneMenu id="serieId" value="#{movieController.serie}" >
+                        <p:selectOneMenu id="serieId" value="#{movieControllerNew.serie}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{serieController.itemsAvailableSelectOne}"
                                            var="serieIdItem"
                                            itemValue="#{serieIdItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{movieController.changeSerie()}"
+                    <p:commandButton actionListener="#{movieControllerNew.changeSerie()}"
                                      value="#{bundle.Save}"
                                      update="display,:MovieListForm:datalist,:growl"
                                      oncomplete="handleSubmit(args, 'ChangeSerieDialog');"/>

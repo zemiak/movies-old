@@ -56,7 +56,7 @@
                         <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{genreController.prepareCreate}" update=":GenreCreateForm" oncomplete="PF('GenreCreateDialog').show()"/>
                         <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":GenreViewForm" oncomplete="PF('GenreViewDialog').show()" disabled="#{empty genreController.selected}"/>
                         <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":GenreEditForm" oncomplete="PF('GenreEditDialog').show()" disabled="#{empty genreController.selected}"/>
-                        <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{genreController.destroy}" update=":growl,datalist" disabled="#{empty genreController.selected}"/>
+                        <p:commandButton id="deleteAction" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{genreController.destroy}" update=":growl,datalist" disabled="#{empty genreController.selected}"/>
                     </f:facet>
                 </p:dataTable>
             </h:form>

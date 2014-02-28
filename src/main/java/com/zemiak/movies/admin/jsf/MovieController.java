@@ -4,6 +4,9 @@ import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.admin.jsf.util.JsfUtil;
 import com.zemiak.movies.admin.jsf.util.JsfUtil.PersistAction;
 import com.zemiak.movies.admin.beans.MovieFacade;
+import com.zemiak.movies.domain.Genre;
+import com.zemiak.movies.domain.Language;
+import com.zemiak.movies.domain.Serie;
 
 import java.io.Serializable;
 import java.util.List;
@@ -20,9 +23,15 @@ import javax.enterprise.context.SessionScoped;
 public class MovieController implements Serializable {
 
     @EJB
-    private com.zemiak.movies.admin.beans.MovieFacade ejbFacade;
-    private Movie selectedOne;
-    private Movie[] selected;
+    com.zemiak.movies.admin.beans.MovieFacade ejbFacade;
+    Movie selectedOne;
+    Movie[] selected;
+
+    Genre genre;
+    Serie serie;
+    Language language, originalLanguage, subtitles;
+
+    List<Movie> movies = null;
 
     public MovieController() {
     }
@@ -47,7 +56,7 @@ public class MovieController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private MovieFacade getFacade() {
+    protected MovieFacade getFacade() {
         return ejbFacade;
     }
 
@@ -59,6 +68,7 @@ public class MovieController implements Serializable {
 
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MovieCreated"));
+        refresh();
     }
 
     public void update() {
@@ -73,17 +83,16 @@ public class MovieController implements Serializable {
 
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MovieDeleted"));
         if (!JsfUtil.isValidationFailed()) {
-            selectedOne = null; // Remove selection
-            selected = null;
+            refresh();
         }
     }
 
     public List<Movie> getItems() {
-        return getFacade().findAll();
-    }
+        if (null == movies) {
+            movies = getFacade().findAll();
+        }
 
-    public List<Movie> getNewItems() {
-        return getFacade().findAllNew();
+        return movies;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
@@ -134,18 +143,10 @@ public class MovieController implements Serializable {
 
     public void orderUp() {
         adjustOrder(-1, ResourceBundle.getBundle("/Bundle").getString("OrderAdjusted"));
-        if (!JsfUtil.isValidationFailed()) {
-            selectedOne = null; // Remove selection
-            selected = null;
-        }
     }
 
     public void orderDown() {
         adjustOrder(1, ResourceBundle.getBundle("/Bundle").getString("OrderAdjusted"));
-        if (!JsfUtil.isValidationFailed()) {
-            selectedOne = null; // Remove selection
-            selected = null;
-        }
     }
 
     private void adjustOrder(final int offset, String successMessage) {
@@ -170,6 +171,7 @@ public class MovieController implements Serializable {
             }
 
             JsfUtil.addSuccessMessage(successMessage);
+            refresh();
         } catch (EJBException ex) {
             String msg = "";
             Throwable cause = ex.getCause();
@@ -187,7 +189,7 @@ public class MovieController implements Serializable {
         }
     }
 
-    private boolean isSelectionEmpty() {
+    public boolean isSelectionEmpty() {
         return selected == null || selected.length == 0;
     }
 
@@ -239,5 +241,56 @@ public class MovieController implements Serializable {
                 getFacade().edit(movie);
             }
         }, ResourceBundle.getBundle("/Bundle").getString("SubtitlesChanged"));
+    }
+
+    private void refresh() {
+        movies = null;
+
+        clearSelected();
+    }
+
+    public void clearSelected() {
+        selected = null;
+        selectedOne = null;
+    }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
+
+    public Serie getSerie() {
+        return serie;
+    }
+
+    public void setSerie(Serie serie) {
+        this.serie = serie;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
+
+    public Language getOriginalLanguage() {
+        return originalLanguage;
+    }
+
+    public void setOriginalLanguage(Language originalLanguage) {
+        this.originalLanguage = originalLanguage;
+    }
+
+    public Language getSubtitles() {
+        return subtitles;
+    }
+
+    public void setSubtitles(Language subtitles) {
+        this.subtitles = subtitles;
     }
 }

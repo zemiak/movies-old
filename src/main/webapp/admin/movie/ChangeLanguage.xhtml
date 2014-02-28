@@ -11,9 +11,9 @@
         <p:dialog id="ChangeLanguageDlg" widgetVar="ChangeLanguageDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ChangeLanguageTitle}" closeOnEscape="true">
             <h:form id="ChangeLanguageForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{movieController.selectedOne != null}">
+                    <p:panelGrid columns="2" rendered="#{!movieController.selectionEmpty}">
                         <p:outputLabel value="#{bundle.EditMovieLabel_language}" for="language" />
-                        <p:selectOneMenu id="language" value="#{movieController.selectedOne.language}" >
+                        <p:selectOneMenu id="language" value="#{movieController.language}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{languageController.itemsAvailableSelectOne}"
                                            var="languageItem"

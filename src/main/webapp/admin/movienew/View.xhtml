@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MovieViewDlg" widgetVar="MovieViewDialog"
+                  modal="true"
+                  resizable="true"
+                  appendTo="@(body)"
+                  header="#{bundle.ViewMovieTitle}"
+                  width="760"
+                  closeOnEscape="true">
+            <h:form id="MovieViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{movieControllerNew.selectedOne != null}">
+                        <h:outputText value="#{bundle.ViewMovieLabel_id}"/>
+                        <h:outputText value="#{movieControllerNew.selectedOne.id}" title="#{bundle.ViewMovieTitle_id}"/>
+
+                        <h:outputText value="#{bundle.ViewMovieLabel_fileName}"/>
+                        <h:outputText value="#{movieControllerNew.selectedOne.fileName}" title="#{bundle.ViewMovieTitle_fileName}"/>
+
+                        <h:outputText value="#{bundle.ViewMovieLabel_name}"/>
+                        <h:outputText value="#{movieControllerNew.selectedOne.name}" title="#{bundle.ViewMovieTitle_name}"/>
+
+                        <h:outputText value="#{bundle.ViewMovieLabel_originalName}"/>
+                        <h:outputText value="#{movieControllerNew.selectedOne.originalName}" title="#{bundle.ViewMovieTitle_originalName}"/>
+
+                        <h:outputText value="#{bundle.ViewMovieLabel_url}"/>
+                        <h:outputText value="#{movieControllerNew.selectedOne.url}" title="#{bundle.ViewMovieTitle_url}"/>
+
+                        <h:outputText value="#{bundle.ViewMovieLabel_pictureFileName}"/>
+                        <h:outputText value="#{movieControllerNew.selectedOne.pictureFileName}" title="#{bundle.ViewMovieTitle_pictureFileName}"/>
+
+                        <h:outputText value="#{bundle.ViewMovieLabel_displayOrder}"/>
+                        <h:outputText value="#{movieControllerNew.selectedOne.displayOrder}" title="#{bundle.ViewMovieTitle_displayOrder}"/>
+
+                        <h:outputText value="#{bundle.ViewMovieLabel_description}"/>
+                        <h:outputText value="#{movieControllerNew.selectedOne.description}"
+                                      title="#{bundle.ViewMovieTitle_description}"/>
+
+                        <h:outputText value="#{bundle.ViewMovieLabel_serieId}"/>
+                        <h:outputText value="#{movieControllerNew.selectedOne.serieId.name}" title="#{bundle.ViewMovieTitle_serieId}"/>
+
+                        <h:outputText value="#{bundle.ViewMovieLabel_subtitles}"/>
+                        <h:outputText value="#{movieControllerNew.selectedOne.subtitles.name}" title="#{bundle.ViewMovieTitle_subtitles}"/>
+
+                        <h:outputText value="#{bundle.ViewMovieLabel_originalLanguage}"/>
+                        <h:outputText value="#{movieControllerNew.selectedOne.originalLanguage.name}" title="#{bundle.ViewMovieTitle_originalLanguage}"/>
+
+                        <h:outputText value="#{bundle.ViewMovieLabel_language}"/>
+                        <h:outputText value="#{movieControllerNew.selectedOne.language.name}" title="#{bundle.ViewMovieTitle_language}"/>
+
+                        <h:outputText value="#{bundle.ViewMovieLabel_genreId}"/>
+                        <h:outputText value="#{movieControllerNew.selectedOne.genreId.name}" title="#{bundle.ViewMovieTitle_genreId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="MovieViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

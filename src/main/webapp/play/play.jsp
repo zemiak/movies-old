@@ -8,20 +8,20 @@
 
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="img/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="1024x1024" 
+    <link rel="apple-touch-icon-precomposed" sizes="1024x1024"
         href="img/icon-1024.jpg">
-    <link rel="apple-touch-icon-precomposed" sizes="512x512" 
+    <link rel="apple-touch-icon-precomposed" sizes="512x512"
         href="img/icon-512.jpg">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" 
+    <link rel="apple-touch-icon-precomposed" sizes="144x144"
         href="img/icon-144.jpg">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" 
+    <link rel="apple-touch-icon-precomposed" sizes="114x114"
         href="img/icon-114.jpg">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" 
+    <link rel="apple-touch-icon-precomposed" sizes="72x72"
         href="img/icon-72.jpg">
     <link rel="apple-touch-icon-precomposed" href="img/icon-57.jpg">
 
     <!-- desktop == iPad Landscape -->
-    
+
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
       body {
@@ -45,9 +45,9 @@
     <!-- video-js -->
     <link href="js/vendor/videojs/video-js.css" rel="stylesheet">
     <script src="js/vendor/videojs/video.js"></script>
-    
+
     <jsp:useBean id="confBean" class="com.zemiak.movies.boundary.models.ConfigBean"> </jsp:useBean>
-    
+
     <!-- Global Data -->
     <script type="text/javascript">
         window._BACKEND_URL = "<%= confBean.getBackendUrl() %>";
@@ -84,7 +84,7 @@
             <ul class="nav">
               <li class>
                 <form class="navbar-search" action="">
-                    <input class="search-query span2" type="text" 
+                    <input class="search-query span2" type="text"
                       placeholder="Hľadať podľa mena..." id="searchBox"
                       onkeydown="javascript:app.searchKeydown(event);" />
                 </form>
@@ -92,12 +92,12 @@
               <li class="dropdown">
                   <a class="dropdown-toggle" href="#" data-toggle="dropdown">Admin<b class="caret"></b></a>
                   <ul class="dropdown-menu">
-                      <li><a href="/movies/admin/movie/ListNew.xhtml">Nové filmy</a></li>
+                      <li><a href="/movies/admin/movienew/List.xhtml">Nové filmy</a></li>
                       <li><a href="/movies/admin/movie/List.xhtml">Všetky filmy</a></li>
                       <li><a href="/movies/admin/genre/List.xhtml">Žánre</a></li>
                       <li><a href="/movies/admin/serie/List.xhtml">Série</a></li>
                       <li><a href="/movies/admin/language/List.xhtml">Jazyky</a></li>
-                      
+
                       <li><a href="#" onclick="javascript:app.refreshData();">Obnova databázy</a></li>
                   </ul>
               </li>
