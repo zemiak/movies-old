@@ -77,11 +77,18 @@ public class LanguageController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
+                switch (persistAction) {
+                    case CREATE:
+                        getFacade().create(selected);
+                        break;
+                    case UPDATE:
+                        getFacade().edit(selected);
+                        break;
+                    case DELETE:
+                        getFacade().remove(selected);
+                        break;
                 }
+                        
                 JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
                 String msg = "";

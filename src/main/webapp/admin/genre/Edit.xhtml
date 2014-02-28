@@ -29,8 +29,8 @@
                                      title="#{bundle.EditGenreTitle_pictureFileName}" />
 
                         <p:outputLabel value="#{bundle.EditGenreLabel_displayOrder}" for="displayOrder" />
-                        <p:inputText id="displayOrder" value="#{genreController.selected.displayOrder}"
-                                     title="#{bundle.EditGenreTitle_displayOrder}" />
+                        <p:spinner id="displayOrder" value="#{genreController.selected.displayOrder}"
+                                     title="#{bundle.EditGenreTitle_displayOrder}" min="1"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{genreController.update}" value="#{bundle.Save}" update="display,:GenreListForm:datalist,:growl" oncomplete="handleSubmit(args, 'GenreEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="GenreEditDialog.hide()"/>

@@ -49,8 +49,8 @@
                                      styleClass="movieColumnValue"/>
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_displayOrder}" for="displayOrder" />
-                        <p:inputText id="displayOrder" value="#{movieControllerNew.selectedOne.displayOrder}" title="#{bundle.EditMovieTitle_displayOrder}"
-                                     styleClass="movieColumnValue"/>
+                        <p:spinner id="displayOrder" value="#{movieControllerNew.selectedOne.displayOrder}" title="#{bundle.EditMovieTitle_displayOrder}"
+                                     styleClass="movieColumnValue" min="1"/>
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_description}" for="description" />
                         <p:inputTextarea id="description" value="#{movieControllerNew.selectedOne.description}" title="#{bundle.EditMovieTitle_description}"

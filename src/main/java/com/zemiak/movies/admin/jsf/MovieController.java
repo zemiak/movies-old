@@ -99,17 +99,24 @@ public class MovieController implements Serializable {
         if (selectedOne != null || (selected.length > 0 && persistAction == PersistAction.DELETE)) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
-                    getFacade().edit(selectedOne);
-                } else {
-                    if (selectedOne != null) {
-                        getFacade().remove(selectedOne);
-                    } else {
-                        for (Movie movie: selected) {
-                            getFacade().remove(movie);
+                switch (persistAction) {
+                    case CREATE:
+                        getFacade().create(selectedOne);
+                        break;
+                    case UPDATE:
+                        getFacade().edit(selectedOne);
+                        break;
+                    case DELETE:
+                        if (selected != null && selected.length > 0) {
+                            for (Movie movie: selected) {
+                                getFacade().remove(movie);
+                            }
+                        } else if (selectedOne != null) {
+                            getFacade().remove(selectedOne);
                         }
-                    }
+                        break;
                 }
+                        
                 JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
                 String msg = "";

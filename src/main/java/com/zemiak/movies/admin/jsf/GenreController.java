@@ -18,10 +18,13 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 @Named("genreController")
 @SessionScoped
 public class GenreController implements Serializable {
+    private static final Logger LOG = Logger.getLogger(GenreController.class.getName());
 
     @EJB
     private com.zemiak.movies.admin.beans.GenreFacade ejbFacade;
@@ -55,6 +58,14 @@ public class GenreController implements Serializable {
     }
 
     public void create() {
+        int id = -1;
+        for (Genre genre: getFacade().findAll()) {
+           if (genre.getId() > id) {
+               id = genre.getId();
+           }
+        }
+        
+        selected.setId(id + 1);
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("GenreCreated"));
     }
 
@@ -73,29 +84,50 @@ public class GenreController implements Serializable {
         return getFacade().findAll();
     }
 
-    private void persist(PersistAction persistAction, String successMessage) {
+    private void persist(final PersistAction persistAction, final String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
+                switch (persistAction) {
+                    case CREATE:
+                        getFacade().create(selected);
+                        break;
+                    case UPDATE:
+                        getFacade().edit(selected);
+                        break;
+                    case DELETE:
+                        getFacade().remove(selected);
+                        break;
                 }
+                        
                 JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
                 String msg = "";
                 Throwable cause = ex.getCause();
+                
+                if (cause instanceof ConstraintViolationException) {
+                    final ConstraintViolationException e = (ConstraintViolationException) cause;
+                    
+                    for (ConstraintViolation<?> violation: e.getConstraintViolations()) {
+                        System.err.println("Constraint violation: " 
+                                + violation.getPropertyPath() + ": "
+                                + violation.getMessage());
+                    }
+                }
+                
                 if (cause != null) {
                     msg = cause.getLocalizedMessage();
                 }
+                
                 if (msg.length() > 0) {
                     JsfUtil.addErrorMessage(msg);
                 } else {
                     JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
                 }
+                
+                LOG.log(Level.SEVERE, "EJB exception", cause);
             } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+                LOG.log(Level.SEVERE, "General exception", ex);
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             }
         }

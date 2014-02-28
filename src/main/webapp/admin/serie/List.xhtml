@@ -62,7 +62,7 @@
                         <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{serieController.prepareCreate}" update=":SerieCreateForm" oncomplete="PF('SerieCreateDialog').show()"/>
                         <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":SerieViewForm" oncomplete="PF('SerieViewDialog').show()" disabled="#{empty serieController.selected}"/>
                         <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":SerieEditForm" oncomplete="PF('SerieEditDialog').show()" disabled="#{empty serieController.selected}"/>
-                        <p:commandButton id="deleteAction" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{serieController.destroy}" update=":growl,datalist" disabled="#{empty serieController.selected}"/>
+                        <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{serieController.destroy}" update=":growl,datalist" disabled="#{empty serieController.selected}"/>
                     </f:facet>
                 </p:dataTable>
             </h:form>

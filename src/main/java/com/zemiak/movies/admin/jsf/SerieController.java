@@ -55,6 +55,14 @@ public class SerieController implements Serializable {
     }
 
     public void create() {
+        int id = -1;
+        for (Serie serie: getFacade().findAll()) {
+           if (serie.getId() > id) {
+               id = serie.getId();
+           }
+        }
+        selected.setId(id + 1);
+        
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SerieCreated"));
     }
 
@@ -77,11 +85,18 @@ public class SerieController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
+                switch (persistAction) {
+                    case CREATE:
+                        getFacade().create(selected);
+                        break;
+                    case UPDATE:
+                        getFacade().edit(selected);
+                        break;
+                    case DELETE:
+                        getFacade().remove(selected);
+                        break;
                 }
+                        
                 JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
                 String msg = "";

@@ -20,10 +20,14 @@
 
                         <p:outputLabel value="#{bundle.CreateGenreLabel_name}" for="name" />
                         <p:inputText id="name" value="#{genreController.selected.name}" title="#{bundle.CreateGenreTitle_name}" required="true" requiredMessage="#{bundle.CreateGenreRequiredMessage_name}"/>
+                        
                         <p:outputLabel value="#{bundle.CreateGenreLabel_pictureFileName}" for="pictureFileName" />
                         <p:inputText id="pictureFileName" value="#{genreController.selected.pictureFileName}" title="#{bundle.CreateGenreTitle_pictureFileName}" />
+                        
                         <p:outputLabel value="#{bundle.CreateGenreLabel_displayOrder}" for="displayOrder" />
-                        <p:inputText id="displayOrder" value="#{genreController.selected.displayOrder}" title="#{bundle.CreateGenreTitle_displayOrder}" />
+                        <p:spinner id="displayOrder" value="#{genreController.selected.displayOrder}" 
+                                     title="#{bundle.CreateGenreTitle_displayOrder}"
+                                     min="1"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{genreController.create}" value="#{bundle.Save}" update="display,:GenreListForm:datalist,:growl" oncomplete="handleSubmit(args,'GenreCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="GenreCreateDialog.hide()"/>

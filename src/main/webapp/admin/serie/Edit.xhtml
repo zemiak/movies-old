@@ -20,10 +20,14 @@
 
                         <p:outputLabel value="#{bundle.EditSerieLabel_name}" for="name" />
                         <p:inputText id="name" value="#{serieController.selected.name}" title="#{bundle.EditSerieTitle_name}" />
+                        
                         <p:outputLabel value="#{bundle.EditSerieLabel_pictureFileName}" for="pictureFileName" />
                         <p:inputText id="pictureFileName" value="#{serieController.selected.pictureFileName}" title="#{bundle.EditSerieTitle_pictureFileName}" />
+                        
                         <p:outputLabel value="#{bundle.EditSerieLabel_displayOrder}" for="displayOrder" />
-                        <p:inputText id="displayOrder" value="#{serieController.selected.displayOrder}" title="#{bundle.EditSerieTitle_displayOrder}" />
+                        <p:spinner id="displayOrder" value="#{serieController.selected.displayOrder}" 
+                                     title="#{bundle.EditSerieTitle_displayOrder}" min="1" />
+                        
                         <p:outputLabel value="#{bundle.EditSerieLabel_genreId}" for="genreId" />
                         <p:selectOneMenu id="genreId" value="#{serieController.selected.genreId}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
