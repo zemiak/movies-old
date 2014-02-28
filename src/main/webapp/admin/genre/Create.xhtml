@@ -8,12 +8,16 @@
 
     <ui:composition>
 
-        <p:dialog id="GenreCreateDlg" widgetVar="GenreCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateGenreTitle}">
+        <p:dialog id="GenreCreateDlg" widgetVar="GenreCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateGenreTitle}" closeOnEscape="true">
             <h:form id="GenreCreateForm">
+
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{genreController.selected != null}">
                         <p:outputLabel value="#{bundle.CreateGenreLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{genreController.selected.id}" title="#{bundle.CreateGenreTitle_id}" required="true" requiredMessage="#{bundle.CreateGenreRequiredMessage_id}"/>
+                        <p:inputText id="id" value="#{genreController.selected.id}"
+                                     title="#{bundle.CreateGenreTitle_id}"
+                                     disabled="true"/>
+
                         <p:outputLabel value="#{bundle.CreateGenreLabel_name}" for="name" />
                         <p:inputText id="name" value="#{genreController.selected.name}" title="#{bundle.CreateGenreTitle_name}" required="true" requiredMessage="#{bundle.CreateGenreRequiredMessage_name}"/>
                         <p:outputLabel value="#{bundle.CreateGenreLabel_pictureFileName}" for="pictureFileName" />

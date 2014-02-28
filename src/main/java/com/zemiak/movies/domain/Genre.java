@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "genre", schema = "data")
 @NamedQueries({
-    @NamedQuery(name = "Genre.findAll", query = "SELECT g FROM Genre g"),
+    @NamedQuery(name = "Genre.findAll", query = "SELECT g FROM Genre g ORDER BY g.displayOrder"),
     @NamedQuery(name = "Genre.findById", query = "SELECT g FROM Genre g WHERE g.id = :id"),
     @NamedQuery(name = "Genre.findByName", query = "SELECT g FROM Genre g WHERE g.name = :name"),
     @NamedQuery(name = "Genre.findByPictureFileName", query = "SELECT g FROM Genre g WHERE g.pictureFileName = :pictureFileName"),

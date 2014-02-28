@@ -2,6 +2,7 @@ package com.zemiak.movies.admin.beans;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.Order;
 
 /**
  *
@@ -33,9 +34,7 @@ public abstract class AbstractFacade<T> {
     }
 
     public List<T> findAll() {
-        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
-        cq.select(cq.from(entityClass));
-        return getEntityManager().createQuery(cq).getResultList();
+        return getEntityManager().createNamedQuery(entityClass.getSimpleName() + ".findAll").getResultList();
     }
 
     public List<T> findRange(int[] range) {
@@ -54,5 +53,5 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+
 }

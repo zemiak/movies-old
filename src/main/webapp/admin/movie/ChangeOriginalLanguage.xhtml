@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ChangeOriginalLanguageDlg" widgetVar="ChangeOriginalLanguageDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ChangeOriginalLanguageTitle}" closeOnEscape="true">
+            <h:form id="ChangeOriginalLanguageForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{movieController.selectedOne != null}">
+                        <p:outputLabel value="#{bundle.EditMovieLabel_originalLanguage}" for="originalLanguage" />
+                        <p:selectOneMenu id="originalLanguage" value="#{movieController.selectedOne.originalLanguage}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{languageController.itemsAvailableSelectOne}"
+                                           var="originalLanguageItem"
+                                           itemValue="#{originalLanguageItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{movieController.changeOriginalLanguage()}"
+                                     value="#{bundle.Save}"
+                                     update="display,:MovieListForm:datalist,:growl"
+                                     oncomplete="handleSubmit(args, 'ChangeOriginalLanguageDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ChangeOriginalLanguageDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

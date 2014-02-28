@@ -8,12 +8,16 @@
 
     <ui:composition>
 
-        <p:dialog id="LanguageCreateDlg" widgetVar="LanguageCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateLanguageTitle}">
+        <p:dialog id="LanguageCreateDlg" widgetVar="LanguageCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateLanguageTitle}" closeOnEscape="true">
             <h:form id="LanguageCreateForm">
+
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{languageController.selected != null}">
                         <p:outputLabel value="#{bundle.CreateLanguageLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{languageController.selected.id}" title="#{bundle.CreateLanguageTitle_id}" required="true" requiredMessage="#{bundle.CreateLanguageRequiredMessage_id}"/>
+                        <p:inputText id="id" value="#{languageController.selected.id}"
+                                     title="#{bundle.CreateLanguageTitle_id}"
+                                     disabled="true"/>
+
                         <p:outputLabel value="#{bundle.CreateLanguageLabel_name}" for="name" />
                         <p:inputText id="name" value="#{languageController.selected.name}" title="#{bundle.CreateLanguageTitle_name}" required="true" requiredMessage="#{bundle.CreateLanguageRequiredMessage_name}"/>
                         <p:outputLabel value="#{bundle.CreateLanguageLabel_pictureFileName}" for="pictureFileName" />

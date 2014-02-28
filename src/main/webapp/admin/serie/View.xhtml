@@ -8,7 +8,7 @@
 
     <ui:composition>
 
-        <p:dialog id="SerieViewDlg" widgetVar="SerieViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewSerieTitle}">
+        <p:dialog id="SerieViewDlg" widgetVar="SerieViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewSerieTitle}" closeOnEscape="true">
             <h:form id="SerieViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{serieController.selected != null}">
@@ -21,7 +21,7 @@
                         <h:outputText value="#{bundle.ViewSerieLabel_displayOrder}"/>
                         <h:outputText value="#{serieController.selected.displayOrder}" title="#{bundle.ViewSerieTitle_displayOrder}"/>
                         <h:outputText value="#{bundle.ViewSerieLabel_genreId}"/>
-                        <h:outputText value="#{serieController.selected.genreId}" title="#{bundle.ViewSerieTitle_genreId}"/>
+                        <h:outputText value="#{serieController.selected.genreId.name}" title="#{bundle.ViewSerieTitle_genreId}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="SerieViewDialog.hide()"/>
                 </h:panelGroup>

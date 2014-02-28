@@ -8,52 +8,58 @@
 
     <ui:composition>
 
-        <p:dialog id="MovieCreateDlg" widgetVar="MovieCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateMovieTitle}">
+        <p:dialog id="MovieCreateDlg" widgetVar="MovieCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateMovieTitle}" closeOnEscape="true">
             <h:form id="MovieCreateForm">
+
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{movieController.selected != null}">
+                    <p:panelGrid columns="2" rendered="#{movieController.selectedOne != null}">
                         <p:outputLabel value="#{bundle.CreateMovieLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{movieController.selected.id}" title="#{bundle.CreateMovieTitle_id}" required="true" requiredMessage="#{bundle.CreateMovieRequiredMessage_id}"/>
-                        <p:outputLabel value="#{bundle.CreateMovieLabel_fileName}" for="fileName" />
-                        <p:inputText id="fileName" value="#{movieController.selected.fileName}" title="#{bundle.CreateMovieTitle_fileName}" />
+                        <p:inputText id="id" value="#{movieController.selectedOne.id}"
+                                     title="#{bundle.CreateMovieTitle_id}"
+                                     disabled="true"/>
+
                         <p:outputLabel value="#{bundle.CreateMovieLabel_name}" for="name" />
-                        <p:inputText id="name" value="#{movieController.selected.name}" title="#{bundle.CreateMovieTitle_name}" />
+                        <p:inputText id="name" value="#{movieController.selectedOne.name}" title="#{bundle.CreateMovieTitle_name}" />
+
+                        <p:outputLabel value="#{bundle.CreateMovieLabel_fileName}" for="fileName" />
+                        <p:inputText id="fileName" value="#{movieController.selectedOne.fileName}" title="#{bundle.CreateMovieTitle_fileName}" />
+
                         <p:outputLabel value="#{bundle.CreateMovieLabel_originalName}" for="originalName" />
-                        <p:inputText id="originalName" value="#{movieController.selected.originalName}" title="#{bundle.CreateMovieTitle_originalName}" />
+                        <p:inputText id="originalName" value="#{movieController.selectedOne.originalName}" title="#{bundle.CreateMovieTitle_originalName}" />
                         <p:outputLabel value="#{bundle.CreateMovieLabel_url}" for="url" />
-                        <p:inputText id="url" value="#{movieController.selected.url}" title="#{bundle.CreateMovieTitle_url}" />
+                        <p:inputText id="url" value="#{movieController.selectedOne.url}" title="#{bundle.CreateMovieTitle_url}" />
                         <p:outputLabel value="#{bundle.CreateMovieLabel_pictureFileName}" for="pictureFileName" />
-                        <p:inputText id="pictureFileName" value="#{movieController.selected.pictureFileName}" title="#{bundle.CreateMovieTitle_pictureFileName}" />
+                        <p:inputText id="pictureFileName" value="#{movieController.selectedOne.pictureFileName}" title="#{bundle.CreateMovieTitle_pictureFileName}" />
                         <p:outputLabel value="#{bundle.CreateMovieLabel_displayOrder}" for="displayOrder" />
-                        <p:inputText id="displayOrder" value="#{movieController.selected.displayOrder}" title="#{bundle.CreateMovieTitle_displayOrder}" />
+                        <p:inputText id="displayOrder" value="#{movieController.selectedOne.displayOrder}" title="#{bundle.CreateMovieTitle_displayOrder}" />
                         <p:outputLabel value="#{bundle.CreateMovieLabel_description}" for="description" />
-                        <p:inputText id="description" value="#{movieController.selected.description}" title="#{bundle.CreateMovieTitle_description}" />
+                        <p:inputText id="description" value="#{movieController.selectedOne.description}" title="#{bundle.CreateMovieTitle_description}" />
                         <p:outputLabel value="#{bundle.CreateMovieLabel_serieId}" for="serieId" />
-                        <p:selectOneMenu id="serieId" value="#{movieController.selected.serieId}" >
+                        <p:selectOneMenu id="serieId" value="#{movieController.selectedOne.serieId}" >
                             <f:selectItems value="#{serieController.itemsAvailableSelectOne}"
                                            var="serieIdItem"
                                            itemValue="#{serieIdItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateMovieLabel_subtitles}" for="subtitles" />
-                        <p:selectOneMenu id="subtitles" value="#{movieController.selected.subtitles}" >
+                        <p:selectOneMenu id="subtitles" value="#{movieController.selectedOne.subtitles}" >
                             <f:selectItems value="#{languageController.itemsAvailableSelectOne}"
                                            var="subtitlesItem"
                                            itemValue="#{subtitlesItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateMovieLabel_originalLanguage}" for="originalLanguage" />
-                        <p:selectOneMenu id="originalLanguage" value="#{movieController.selected.originalLanguage}" >
+                        <p:selectOneMenu id="originalLanguage" value="#{movieController.selectedOne.originalLanguage}" >
                             <f:selectItems value="#{languageController.itemsAvailableSelectOne}"
                                            var="originalLanguageItem"
                                            itemValue="#{originalLanguageItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateMovieLabel_language}" for="language" />
-                        <p:selectOneMenu id="language" value="#{movieController.selected.language}" >
+                        <p:selectOneMenu id="language" value="#{movieController.selectedOne.language}" >
                             <f:selectItems value="#{languageController.itemsAvailableSelectOne}"
                                            var="languageItem"
                                            itemValue="#{languageItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateMovieLabel_genreId}" for="genreId" />
-                        <p:selectOneMenu id="genreId" value="#{movieController.selected.genreId}" >
+                        <p:selectOneMenu id="genreId" value="#{movieController.selectedOne.genreId}" >
                             <f:selectItems value="#{genreController.itemsAvailableSelectOne}"
                                            var="genreIdItem"
                                            itemValue="#{genreIdItem}"/>

@@ -16,17 +16,18 @@
         <ui:define name="body">
             <h:form id="MovieListForm">
                 <p:dataTable id="datalist" value="#{movieController.newItems}" var="item"
-                             selectionMode="single" selection="#{movieController.selected}"
+                             selectionMode="multiple" selection="#{movieController.selected}"
                              paginator="true"
                              rowKey="#{item.id}"
                              rows="10"
+                             paginatorPosition="bottom"
                              rowsPerPageTemplate="10,20,30,40,50"
                              >
-                    
+
                     <f:facet name="header">#{bundle.ListMovieTitleNew}</f:facet>
 
-                    <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                    <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                    <p:ajax event="rowSelect" update="createButton viewButton editButton orderUpButton orderDownButton changeGenre"/>
+                    <p:ajax event="rowUnselect" update="createButton viewButton editButton orderUpButton orderDownButton changeGenre"/>
 
                     <p:column>
                         <f:facet name="header">
@@ -68,37 +69,104 @@
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListMovieTitle_serieId}"/>
                         </f:facet>
-                        <h:outputText value="#{item.serieId}"/>
+                        <h:outputText value="#{item.serieId.name}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListMovieTitle_subtitles}"/>
                         </f:facet>
-                        <h:outputText value="#{item.subtitles}"/>
+                        <h:outputText value="#{item.subtitles.name}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListMovieTitle_originalLanguage}"/>
                         </f:facet>
-                        <h:outputText value="#{item.originalLanguage}"/>
+                        <h:outputText value="#{item.originalLanguage.name}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListMovieTitle_language}"/>
                         </f:facet>
-                        <h:outputText value="#{item.language}"/>
+                        <h:outputText value="#{item.language.name}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListMovieTitle_genreId}"/>
                         </f:facet>
-                        <h:outputText value="#{item.genreId}"/>
+                        <h:outputText value="#{item.genreId.name}"/>
                     </p:column>
                     <f:facet name="footer">
-                        <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{movieController.prepareCreate}" update=":MovieCreateForm" oncomplete="PF('MovieCreateDialog').show()"/>
-                        <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":MovieViewForm" oncomplete="PF('MovieViewDialog').show()" disabled="#{empty movieController.selected}"/>
-                        <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":MovieEditForm" oncomplete="PF('MovieEditDialog').show()" disabled="#{empty movieController.selected}"/>
-                        <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{movieController.destroy}" update=":growl,datalist" disabled="#{empty movieController.selected}"/>
+                        <p:commandButton id="createButton" icon="ui-icon-plus"
+                                         value="#{bundle.Create}"
+                                         actionListener="#{movieController.prepareCreate}"
+                                         update=":MovieCreateForm"
+                                         oncomplete="PF('MovieCreateDialog').show()"/>
+
+                        <p:commandButton id="viewButton"   icon="ui-icon-search"
+                                         value="#{bundle.View}"
+                                         update=":MovieViewForm"
+                                         oncomplete="PF('MovieViewDialog').show()"
+                                         disabled="#{empty movieController.selectedOne}"/>
+
+                        <p:commandButton id="editButton"   icon="ui-icon-pencil"
+                                         value="#{bundle.Edit}"
+                                         update=":MovieEditForm"
+                                         oncomplete="PF('MovieEditDialog').show()"
+                                         disabled="#{empty movieController.selectedOne}"/>
+
+                        <p:commandButton id="orderUpButton"   icon="ui-icon-triangle-1-n"
+                                         value="#{bundle.OrderUp}"
+                                         actionListener="#{movieController.orderUp}"
+                                         update=":growl,datalist"
+                                         disabled="#{empty movieController.selected}"/>
+
+                        <p:commandButton id="orderDownButton"   icon="ui-icon-triangle-1-s"
+                                         value="#{bundle.OrderDown}"
+                                         actionListener="#{movieController.orderDown}"
+                                         update=":growl,datalist"
+                                         disabled="#{empty movieController.selected}"/>
+
+                        <p:splitButton value="#{bundle.ChangeGenre}" id="changeGenre"
+                                       actionListener="#{movieController.changeGenre}"
+                                       update=":ChangeGenreForm"
+                                       oncomplete="PF('ChangeGenreDialog').show()"
+                                       icon="ui-icon-tag"
+                                       disabled="#{empty movieController.selected}">
+
+                            <p:menuitem value="#{bundle.ChangeSerie}"
+                                        actionListener="#{movieController.changeSerie}"
+                                        update=":ChangeSerieForm"
+                                        oncomplete="PF('ChangeSerieDialog').show()"
+                                        icon="ui-icon-cart"/>
+
+                            <p:separator />
+
+                            <p:menuitem value="#{bundle.ChangeLanguage}"
+                                        actionListener="#{movieController.changeLanguage}"
+                                        update=":ChangeLanguageForm"
+                                        oncomplete="PF('ChangeLanguageDialog').show()"
+                                        icon="ui-icon-flag"/>
+
+                            <p:menuitem value="#{bundle.ChangeOriginalLanguage}"
+                                        actionListener="#{movieController.changeOriginalLanguage}"
+                                        update=":ChangeOriginalLanguageForm"
+                                        oncomplete="PF('ChangeOriginalLanguageDialog').show()"
+                                        icon="ui-icon-flag"/>
+
+                            <p:menuitem value="#{bundle.ChangeSubtitles}"
+                                        actionListener="#{movieController.changeSubtitles}"
+                                        update=":ChangeSubtitlesForm"
+                                        oncomplete="PF('ChangeSubtitlesDialog').show()"
+                                        icon="ui-icon-flag"/>
+
+                            <p:separator />
+
+                            <p:menuitem id="deleteButton" icon="ui-icon-trash"
+                                         value="#{bundle.Delete}"
+                                         actionListener="#{movieController.destroy}"
+                                         update=":growl,datalist"
+                                         disabled="#{empty movieController.selected}"/>
+                        </p:splitButton>
                     </f:facet>
                 </p:dataTable>
             </h:form>
@@ -106,6 +174,11 @@
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>
+            <ui:include src="ChangeGenre.xhtml"/>
+            <ui:include src="ChangeSerie.xhtml"/>
+            <ui:include src="ChangeLanguage.xhtml"/>
+            <ui:include src="ChangeOriginalLanguage.xhtml"/>
+            <ui:include src="ChangeSubtitles.xhtml"/>
         </ui:define>
     </ui:composition>
 

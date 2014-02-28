@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "movie", schema = "data")
 @NamedQueries({
     @NamedQuery(name = "Movie.findByGenreWithoutSerie", query = "SELECT m FROM Movie m WHERE m.genreId = :genre AND (m.serieId IS NULL OR m.serieId.id = 0) ORDER BY m.name"),
-    @NamedQuery(name = "Movie.findAll", query = "SELECT m FROM Movie m"),
+    @NamedQuery(name = "Movie.findAll", query = "SELECT m FROM Movie m ORDER BY m.id"),
     @NamedQuery(name = "Movie.findById", query = "SELECT m FROM Movie m WHERE m.id = :id"),
     @NamedQuery(name = "Movie.findByIdDesc", query = "SELECT m FROM Movie m ORDER BY m.id DESC"),
     @NamedQuery(name = "Movie.findByFileName", query = "SELECT m FROM Movie m WHERE m.fileName = :fileName"),
@@ -259,14 +259,14 @@ public class Movie implements Serializable {
     public boolean isUrlEmpty() {
         return null == url || "".equals(url.trim()) || "''".equals(url.trim());
     }
-    
+
     public String getUrlFlag() {
         if (new Csfd().accepts(this)) {
             return "CSFD";
         } else if (new Imdb().accepts(this)) {
             return "IMDB";
         }
-        
+
         return "";
     }
 }

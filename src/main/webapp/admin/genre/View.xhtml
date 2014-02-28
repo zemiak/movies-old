@@ -8,7 +8,7 @@
 
     <ui:composition>
 
-        <p:dialog id="GenreViewDlg" widgetVar="GenreViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewGenreTitle}">
+        <p:dialog id="GenreViewDlg" widgetVar="GenreViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewGenreTitle}" closeOnEscape="true">
             <h:form id="GenreViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{genreController.selected != null}">

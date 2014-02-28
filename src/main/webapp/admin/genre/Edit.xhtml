@@ -8,18 +8,29 @@
 
     <ui:composition>
 
-        <p:dialog id="GenreEditDlg" widgetVar="GenreEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditGenreTitle}">
+        <p:dialog id="GenreEditDlg" widgetVar="GenreEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditGenreTitle}" closeOnEscape="true">
             <h:form id="GenreEditForm">
+
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{genreController.selected != null}">
                         <p:outputLabel value="#{bundle.EditGenreLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{genreController.selected.id}" title="#{bundle.EditGenreTitle_id}" required="true" requiredMessage="#{bundle.EditGenreRequiredMessage_id}"/>
+                        <p:inputText id="id" value="#{genreController.selected.id}"
+                                     title="#{bundle.EditGenreTitle_id}"
+                                     disabled="true"/>
+
                         <p:outputLabel value="#{bundle.EditGenreLabel_name}" for="name" />
-                        <p:inputText id="name" value="#{genreController.selected.name}" title="#{bundle.EditGenreTitle_name}" required="true" requiredMessage="#{bundle.EditGenreRequiredMessage_name}"/>
+                        <p:inputText id="name" value="#{genreController.selected.name}"
+                                     title="#{bundle.EditGenreTitle_name}"
+                                     required="true"
+                                     requiredMessage="#{bundle.EditGenreRequiredMessage_name}"/>
+
                         <p:outputLabel value="#{bundle.EditGenreLabel_pictureFileName}" for="pictureFileName" />
-                        <p:inputText id="pictureFileName" value="#{genreController.selected.pictureFileName}" title="#{bundle.EditGenreTitle_pictureFileName}" />
+                        <p:inputText id="pictureFileName" value="#{genreController.selected.pictureFileName}"
+                                     title="#{bundle.EditGenreTitle_pictureFileName}" />
+
                         <p:outputLabel value="#{bundle.EditGenreLabel_displayOrder}" for="displayOrder" />
-                        <p:inputText id="displayOrder" value="#{genreController.selected.displayOrder}" title="#{bundle.EditGenreTitle_displayOrder}" />
+                        <p:inputText id="displayOrder" value="#{genreController.selected.displayOrder}"
+                                     title="#{bundle.EditGenreTitle_displayOrder}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{genreController.update}" value="#{bundle.Save}" update="display,:GenreListForm:datalist,:growl" oncomplete="handleSubmit(args, 'GenreEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="GenreEditDialog.hide()"/>

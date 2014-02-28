@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "language", schema = "data")
 @NamedQueries({
-    @NamedQuery(name = "Language.findAll", query = "SELECT l FROM Language l"),
+    @NamedQuery(name = "Language.findAll", query = "SELECT l FROM Language l ORDER BY l.name"),
     @NamedQuery(name = "Language.findById", query = "SELECT l FROM Language l WHERE l.id = :id"),
     @NamedQuery(name = "Language.findByName", query = "SELECT l FROM Language l WHERE l.name = :name"),
     @NamedQuery(name = "Language.findByPictureFileName", query = "SELECT l FROM Language l WHERE l.pictureFileName = :pictureFileName"),
@@ -162,7 +162,7 @@ public class Language implements Serializable {
     public String toString() {
         return getName();
     }
-    
+
     public boolean isNone() {
         return "  ".equals(id);
     }

@@ -8,7 +8,7 @@
 
     <ui:composition>
 
-        <p:dialog id="LanguageViewDlg" widgetVar="LanguageViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewLanguageTitle}">
+        <p:dialog id="LanguageViewDlg" widgetVar="LanguageViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewLanguageTitle}" closeOnEscape="true">
             <h:form id="LanguageViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{languageController.selected != null}">

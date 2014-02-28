@@ -56,7 +56,7 @@
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListSerieTitle_genreId}"/>
                         </f:facet>
-                        <h:outputText value="#{item.genreId}"/>
+                        <h:outputText value="#{item.genreId.name}"/>
                     </p:column>
                     <f:facet name="footer">
                         <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{serieController.prepareCreate}" update=":SerieCreateForm" oncomplete="PF('SerieCreateDialog').show()"/>

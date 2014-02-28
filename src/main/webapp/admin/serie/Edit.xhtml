@@ -8,12 +8,16 @@
 
     <ui:composition>
 
-        <p:dialog id="SerieEditDlg" widgetVar="SerieEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditSerieTitle}">
+        <p:dialog id="SerieEditDlg" widgetVar="SerieEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditSerieTitle}" closeOnEscape="true">
             <h:form id="SerieEditForm">
+
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{serieController.selected != null}">
                         <p:outputLabel value="#{bundle.EditSerieLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{serieController.selected.id}" title="#{bundle.EditSerieTitle_id}" required="true" requiredMessage="#{bundle.EditSerieRequiredMessage_id}"/>
+                        <p:inputText id="id" value="#{serieController.selected.id}"
+                                     title="#{bundle.EditSerieTitle_id}"
+                                     disabled="true"/>
+
                         <p:outputLabel value="#{bundle.EditSerieLabel_name}" for="name" />
                         <p:inputText id="name" value="#{serieController.selected.name}" title="#{bundle.EditSerieTitle_name}" />
                         <p:outputLabel value="#{bundle.EditSerieLabel_pictureFileName}" for="pictureFileName" />
