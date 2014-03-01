@@ -26,12 +26,6 @@
     
     <jdbc-resource pool-name="ZemiakMovies__pool" jndi-name="jdbc/ZemiakMovies"></jdbc-resource>
     
-    <custom-resource res-type="java.util.Properties" jndi-name="com.zemiak.books" 
-                     factory-class="org.glassfish.resources.custom.factory.PropertiesFactory">
-      <property name="path" value="/Volumes/media/Books/"></property>
-      <property name="calibrePath" value="/Applications/calibre.app/Contents/MacOS/ebook-convert"></property>
-    </custom-resource>
-    
     <mail-resource host="lenovo-server.local" jndi-name="mail/connect" 
                    from="anonymous@zemiak.com" user="anonymous">
     </mail-resource>
