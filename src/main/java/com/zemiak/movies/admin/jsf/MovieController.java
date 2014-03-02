@@ -67,6 +67,7 @@ public class MovieController implements Serializable {
     }
 
     public void create() {
+        selectedOne.setId(null);
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MovieCreated"));
         refresh();
     }

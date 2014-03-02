@@ -55,14 +55,7 @@ public class SerieController implements Serializable {
     }
 
     public void create() {
-        int id = -1;
-        for (Serie serie: getFacade().findAll()) {
-           if (serie.getId() > id) {
-               id = serie.getId();
-           }
-        }
-        selected.setId(id + 1);
-        
+        selected.setId(null);
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SerieCreated"));
     }
 

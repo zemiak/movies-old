@@ -58,14 +58,7 @@ public class GenreController implements Serializable {
     }
 
     public void create() {
-        int id = -1;
-        for (Genre genre: getFacade().findAll()) {
-           if (genre.getId() > id) {
-               id = genre.getId();
-           }
-        }
-        
-        selected.setId(id + 1);
+        selected.setId(null);
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("GenreCreated"));
     }
 
