@@ -25,8 +25,8 @@
 
                     <f:facet name="header">#{bundle.ListMovieTitle}</f:facet>
 
-                    <p:ajax event="rowSelect"   update="createButton viewButton editButton orderUpButton orderDownButton massActions"/>
-                    <p:ajax event="rowUnselect" update="createButton viewButton editButton orderUpButton orderDownButton massActions"/>
+                    <p:ajax event="rowSelect"   update="viewButton editButton orderUpButton orderDownButton massActions"/>
+                    <p:ajax event="rowUnselect" update="viewButton editButton orderUpButton orderDownButton massActions"/>
 
                     <p:column>
                         <f:facet name="header">
@@ -95,12 +95,6 @@
                         <h:outputText value="#{item.genreId.name}"/>
                     </p:column>
                     <f:facet name="footer">
-                        <p:commandButton id="createButton" icon="ui-icon-plus"
-                                         value="#{bundle.Create}"
-                                         actionListener="#{movieControllerNew.prepareCreate}"
-                                         update=":MovieCreateForm"
-                                         oncomplete="PF('MovieCreateDialog').show()"/>
-
                         <p:commandButton id="viewButton"   icon="ui-icon-search"
                                          value="#{bundle.View}"
                                          update=":MovieViewForm"
@@ -179,7 +173,6 @@
                 </p:dataTable>
             </h:form>
 
-            <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>
             <ui:include src="ChangeGenre.xhtml"/>

@@ -1,8 +1,9 @@
 package com.zemiak.movies.admin.beans;
 
+import com.zemiak.movies.admin.jsf.util.BeanValidator;
+import com.zemiak.movies.strings.Joiner;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.Order;
 
 /**
  *
@@ -18,10 +19,12 @@ public abstract class AbstractFacade<T> {
     protected abstract EntityManager getEntityManager();
 
     public void create(T entity) {
+        validate(entity);
         getEntityManager().persist(entity);
     }
 
     public void edit(T entity) {
+        validate(entity);
         getEntityManager().merge(entity);
     }
 
@@ -54,4 +57,10 @@ public abstract class AbstractFacade<T> {
         return ((Long) q.getSingleResult()).intValue();
     }
 
+    private void validate(final T entity) {
+        List<String> errors = new BeanValidator<T>().validate(entity);
+        if (null != errors) {
+            throw new IllegalStateException(Joiner.join(errors, ", "));
+        }
+    }
 }

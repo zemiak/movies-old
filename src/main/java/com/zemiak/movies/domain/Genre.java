@@ -50,8 +50,8 @@ public class Genre implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Size(max = 512)
     @Column(name = "picture_file_name")
+    @Size(max = 512)
     private String pictureFileName;
 
     @Column(name = "display_order")
@@ -162,13 +162,13 @@ public class Genre implements Serializable {
         }
         return true;
     }
+    
+    public boolean isEmpty() {
+        return id == 0;
+    }
 
     @Override
     public String toString() {
-        return getName();
-    }
-
-    public boolean isEmpty() {
-        return id == 0;
+        return "Genre{" + "id=" + id + ", name=" + name + ", pictureFileName=" + pictureFileName + ", displayOrder=" + displayOrder + ", protected1=" + protected1 + '}';
     }
 }
