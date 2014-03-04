@@ -198,54 +198,65 @@ public class MovieController implements Serializable {
     }
 
     public boolean isSelectionEmpty() {
+        System.err.println("isSelectionEmpty:" + selected);
         return selected == null || selected.length == 0;
     }
 
     public void changeGenre() {
+        System.err.println("Change genre on " + selected.length + " items...");
+        
         changeMultipleItems(new ChangeMovieItem() {
             @Override
             public void change(final Movie movie, final MovieFacade facade) {
-                movie.setDisplayOrder(-999);
+                movie.setDisplayOrder(-1);
                 getFacade().edit(movie);
             }
         }, ResourceBundle.getBundle("/Bundle").getString("GenreChanged"));
     }
 
     public void changeSerie() {
+        System.err.println("Change serie on " + selected.length + " items...");
+        
         changeMultipleItems(new ChangeMovieItem() {
             @Override
             public void change(final Movie movie, final MovieFacade facade) {
-                movie.setDisplayOrder(-999);
+                movie.setDisplayOrder(-2);
                 getFacade().edit(movie);
             }
         }, ResourceBundle.getBundle("/Bundle").getString("SerieChanged"));
     }
 
     public void changeLanguage() {
+        System.err.println("Change language on " + selected.length + " items...");
+        
         changeMultipleItems(new ChangeMovieItem() {
             @Override
             public void change(final Movie movie, final MovieFacade facade) {
-                movie.setDisplayOrder(-999);
+                movie.setDisplayOrder(-3);
                 getFacade().edit(movie);
             }
         }, ResourceBundle.getBundle("/Bundle").getString("LanguageChanged"));
     }
 
     public void changeOriginalLanguage() {
+        System.err.println("Change original language on " + selected.length + " items...");
+        
         changeMultipleItems(new ChangeMovieItem() {
             @Override
             public void change(final Movie movie, final MovieFacade facade) {
-                movie.setDisplayOrder(-999);
+                movie.setDisplayOrder(-4);
                 getFacade().edit(movie);
             }
         }, ResourceBundle.getBundle("/Bundle").getString("OriginalLanguageChanged"));
     }
 
     public void changeSubtitles() {
+        System.err.println("Change subtitles on " + selected.length + " items...");
+        
         changeMultipleItems(new ChangeMovieItem() {
             @Override
             public void change(final Movie movie, final MovieFacade facade) {
-                movie.setDisplayOrder(-999);
+                movie.setDisplayOrder(-5);
                 getFacade().edit(movie);
             }
         }, ResourceBundle.getBundle("/Bundle").getString("SubtitlesChanged"));

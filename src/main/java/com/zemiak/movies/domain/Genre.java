@@ -169,6 +169,6 @@ public class Genre implements Serializable {
 
     @Override
     public String toString() {
-        return "Genre{" + "id=" + id + ", name=" + name + ", pictureFileName=" + pictureFileName + ", displayOrder=" + displayOrder + ", protected1=" + protected1 + '}';
+        return name;
     }
 }
