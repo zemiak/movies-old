@@ -126,7 +126,6 @@
                                          disabled="#{empty movieController.selected}"/>
 
                         <p:splitButton value="#{bundle.ChangeGenre}"
-                                       actionListener="#{movieController.changeGenre}"
                                        update=":ChangeGenreForm"
                                        oncomplete="PF('ChangeGenreDialog').show()"
                                        disabled="#{movieController.selectionEmpty}"
@@ -134,7 +133,6 @@
                                        icon="ui-icon-tag">
 
                             <p:menuitem value="#{bundle.ChangeSerie}"
-                                        actionListener="#{movieController.changeSerie}"
                                         update=":ChangeSerieForm"
                                         oncomplete="PF('ChangeSerieDialog').show()"
                                         disabled="#{movieController.selectionEmpty}"
@@ -144,7 +142,6 @@
                             <p:separator />
 
                             <p:menuitem value="#{bundle.ChangeLanguage}"
-                                        actionListener="#{movieController.changeLanguage}"
                                         update=":ChangeLanguageForm"
                                         oncomplete="PF('ChangeLanguageDialog').show()"
                                         disabled="#{movieController.selectionEmpty}"
@@ -152,7 +149,6 @@
                                         icon="ui-icon-flag"/>
 
                             <p:menuitem value="#{bundle.ChangeOriginalLanguage}"
-                                        actionListener="#{movieController.changeOriginalLanguage}"
                                         update=":ChangeOriginalLanguageForm"
                                         oncomplete="PF('ChangeOriginalLanguageDialog').show()"
                                         disabled="#{movieController.selectionEmpty}"
@@ -160,7 +156,6 @@
                                         icon="ui-icon-flag"/>
 
                             <p:menuitem value="#{bundle.ChangeSubtitles}"
-                                        actionListener="#{movieController.changeSubtitles}"
                                         update=":ChangeSubtitlesForm"
                                         oncomplete="PF('ChangeSubtitlesDialog').show()"
                                         disabled="#{movieController.selectionEmpty}"

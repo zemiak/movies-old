@@ -11,7 +11,7 @@
         <p:dialog id="ChangeSubtitlesDlg" widgetVar="ChangeSubtitlesDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ChangeSubtitlesTitle}" closeOnEscape="true">
             <h:form id="ChangeSubtitlesForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{!movieController.selectionEmpty}">
+                    <p:panelGrid columns="2">
                         <p:outputLabel value="#{bundle.EditMovieLabel_subtitles}" for="subtitles" />
                         <p:selectOneMenu id="subtitles" value="#{movieController.subtitles}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
@@ -20,7 +20,7 @@
                                            itemValue="#{subtitlesItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{movieController.changeSubtitles()}"
+                    <p:commandButton action="#{movieController.changeSubtitles()}"
                                      value="#{bundle.Save}"
                                      update="display,:MovieListForm:datalist,:growl"
                                         oncomplete="handleSubmit(args, 'ChangeSubtitlesDialog');"/>
