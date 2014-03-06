@@ -4,6 +4,7 @@ import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.admin.jsf.util.JsfUtil;
 import com.zemiak.movies.admin.jsf.util.JsfUtil.PersistAction;
 import com.zemiak.movies.admin.beans.MovieFacade;
+import com.zemiak.movies.batch.metadata.description.DescriptionReader;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Language;
 import com.zemiak.movies.domain.Serie;
@@ -249,6 +250,33 @@ public class MovieController implements Serializable {
                 getFacade().edit(movie);
             }
         }, ResourceBundle.getBundle("/Bundle").getString("SubtitlesChanged"));
+    }
+    
+    public void fetchDescriptions() {
+        final DescriptionReader reader = new DescriptionReader();
+        
+        changeMultipleItems(new ChangeMovieItem() {
+            @Override
+            public void change(final Movie movie, final MovieFacade facade) {
+                final String desc = reader.read(movie);
+                
+                System.err.println("Fetch desc for " + movie.getId() + ": " + desc);
+                
+                if (null != desc && !desc.equals(movie.getDescription())) {
+                    movie.setDescription(desc);
+                    getFacade().edit(movie);
+                }
+            }
+        }, ResourceBundle.getBundle("/Bundle").getString("DescriptionsFetched"));
+    }
+    
+    public void fetchDescription() {
+        final DescriptionReader reader = new DescriptionReader();
+        final String desc = reader.read(selectedOne);
+                
+        if (null != desc && !desc.equals(selectedOne.getDescription())) {
+            selectedOne.setDescription(desc);
+        }
     }
 
     private void refresh() {

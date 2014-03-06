@@ -25,7 +25,7 @@ public class Writer extends AbstractItemWriter {
     private static final BatchLogger LOG = BatchLogger.getLogger(Writer.class.getName());
 
     @Resource(name = "com.zemiak.movies") private Properties conf;
-    @Inject private DescriptionReader descriptions;
+    private final DescriptionReader descriptions = new DescriptionReader();
     @PersistenceContext private EntityManager em;
 
     private static final String GENRE = "-g";

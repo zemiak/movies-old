@@ -1,14 +1,14 @@
 package com.zemiak.movies.batch.metadata.description;
 
 import com.zemiak.movies.domain.Movie;
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
 
-@Dependent
 public class DescriptionReader {
-    @Inject private Csfd csfd;
-    @Inject private Imdb imdb;
-    @Inject private Mash mash;
+    private final Csfd csfd = new Csfd();
+    private final Imdb imdb = new Imdb();
+    private final Mash mash = new Mash();
+    
+    public DescriptionReader() {
+    }
     
     public String read(final Movie movie) {
         if (csfd.accepts(movie)) {

@@ -101,7 +101,13 @@
                                            itemValue="#{genreIdItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{movieController.update}" value="#{bundle.Save}" update="display,:MovieListForm:datalist,:growl" oncomplete="handleSubmit(args, 'MovieEditDialog');"/>
+                    <p:commandButton actionListener="#{movieController.update}" 
+                                     value="#{bundle.Save}" 
+                                     update="display,:MovieListForm:datalist,:growl" 
+                                     oncomplete="handleSubmit(args, 'MovieEditDialog');"/>
+                    <p:commandButton action="#{movieController.fetchDescription()}" 
+                                     value="#{bundle.FetchDescription}" 
+                                     update="display,:MovieListForm:datalist"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="MovieEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

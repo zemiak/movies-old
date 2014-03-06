@@ -4,7 +4,6 @@ import com.zemiak.movies.domain.Movie;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.Dependent;
 import org.jsoup.nodes.Document;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -13,7 +12,6 @@ import org.jsoup.nodes.Element;
  *
  * @author vasko
  */
-@Dependent
 public class Csfd implements IDescriptionReader {
     private static final String URL1 = "www.csfd.cz/";
     private static final String URL2 = "http://" + URL1;

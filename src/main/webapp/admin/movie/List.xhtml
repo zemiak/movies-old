@@ -138,6 +138,13 @@
                                         disabled="#{movieController.selectionEmpty}"
                                         id="serieAction"
                                         icon="ui-icon-cart"/>
+                            
+                            <p:menuitem value="#{bundle.FetchDescription}"
+                                        disabled="#{movieController.selectionEmpty}"
+                                        id="descriptionAction"
+                                        update=":growl,datalist"
+                                        action="#{movieController.fetchDescriptions()}"
+                                        icon="ui-icon-script"/>
 
                             <p:separator />
 

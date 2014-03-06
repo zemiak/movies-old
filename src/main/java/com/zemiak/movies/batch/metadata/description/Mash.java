@@ -5,13 +5,11 @@ import com.zemiak.movies.domain.Serie;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javax.enterprise.context.Dependent;
 
 /**
  *
  * @author vasko
  */
-@Dependent
 public class Mash implements IDescriptionReader {
     Map<Integer, MashDescription> descriptions;
 
