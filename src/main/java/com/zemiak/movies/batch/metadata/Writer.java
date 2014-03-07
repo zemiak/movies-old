@@ -1,7 +1,7 @@
 package com.zemiak.movies.batch.metadata;
 
 import com.zemiak.movies.batch.service.CommandLine;
-import com.zemiak.movies.batch.metadata.description.DescriptionReader;
+import com.zemiak.movies.description.DescriptionReader;
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import java.io.IOException;
 import java.util.ArrayList;

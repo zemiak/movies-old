@@ -1,8 +1,10 @@
-package com.zemiak.movies.batch.metadata.description;
+package com.zemiak.movies.description;
 
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -49,5 +51,10 @@ public class Mash implements IDescriptionReader {
         }
 
         return map;
+    }
+
+    @Override
+    public List<String> getUrlCandidates(String movieName) {
+        return new ArrayList<>();
     }
 }

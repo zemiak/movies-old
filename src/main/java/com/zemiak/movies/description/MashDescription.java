@@ -1,4 +1,4 @@
-package com.zemiak.movies.batch.metadata.description;
+package com.zemiak.movies.description;
 
 /**
  *

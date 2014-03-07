@@ -1,7 +1,8 @@
-package com.zemiak.movies.batch.metadata.description;
+package com.zemiak.movies.description;
 
 import com.zemiak.movies.domain.Movie;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jsoup.nodes.Document;
@@ -41,5 +42,10 @@ public class Csfd implements IDescriptionReader {
         Element description = doc.select("div[data-truncate]").first();
         
         return description.text();
+    }
+
+    @Override
+    public List<String> getUrlCandidates(String movieName) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

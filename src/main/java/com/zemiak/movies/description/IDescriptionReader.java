@@ -1,6 +1,7 @@
-package com.zemiak.movies.batch.metadata.description;
+package com.zemiak.movies.description;
 
 import com.zemiak.movies.domain.Movie;
+import java.util.List;
 
 /**
  *
@@ -9,4 +10,5 @@ import com.zemiak.movies.domain.Movie;
 public interface IDescriptionReader {
     public boolean accepts(final Movie movie);
     public String getDescription(final Movie movie);
+    public List<String> getUrlCandidates(final String movieName);
 }

@@ -1,7 +1,7 @@
 package com.zemiak.movies.domain;
 
-import com.zemiak.movies.batch.metadata.description.Csfd;
-import com.zemiak.movies.batch.metadata.description.Imdb;
+import com.zemiak.movies.description.Csfd;
+import com.zemiak.movies.description.Imdb;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;

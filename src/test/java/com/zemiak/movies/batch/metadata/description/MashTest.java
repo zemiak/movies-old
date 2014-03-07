@@ -1,5 +1,6 @@
 package com.zemiak.movies.batch.metadata.description;
 
+import com.zemiak.movies.description.Mash;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
 import org.junit.Before;

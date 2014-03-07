@@ -1,7 +1,8 @@
-package com.zemiak.movies.batch.metadata.description;
+package com.zemiak.movies.description;
 
 import com.zemiak.movies.domain.Movie;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jsoup.Jsoup;
@@ -39,5 +40,10 @@ public class Imdb implements IDescriptionReader {
         
         Element description = doc.select("meta[name=description]").first();
         return description.attr("content");
+    }
+
+    @Override
+    public List<String> getUrlCandidates(String movieName) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
