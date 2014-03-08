@@ -1,7 +1,7 @@
 package com.zemiak.movies.description;
 
 import com.zemiak.movies.domain.Movie;
-import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -10,5 +10,6 @@ import java.util.List;
 public interface IDescriptionReader {
     public boolean accepts(final Movie movie);
     public String getDescription(final Movie movie);
-    public List<String> getUrlCandidates(final String movieName);
+    public Map<String, String> getUrlCandidates(final String movieName);
+    public String getReaderName();
 }

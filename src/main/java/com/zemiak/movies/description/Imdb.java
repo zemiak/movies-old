@@ -2,7 +2,10 @@ package com.zemiak.movies.description;
 
 import com.zemiak.movies.domain.Movie;
 import java.io.IOException;
-import java.util.List;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jsoup.Jsoup;
@@ -14,6 +17,8 @@ import org.jsoup.nodes.Element;
  * @author vasko
  */
 public class Imdb implements IDescriptionReader {
+    private static final Logger LOG = Logger.getLogger(Imdb.class.getName());
+    
     private static final String URL1 = "www.imdb.com/";
     private static final String URL2 = "http://" + URL1;
     
@@ -28,22 +33,30 @@ public class Imdb implements IDescriptionReader {
 
     @Override
     public String getDescription(final Movie movie) {
-        final String url = movie.getUrl();
+        return getDescription(movie.getUrl());
         
+    }
+    
+    private String getDescription(final String url) {
         Document doc;
         try {
             doc = Jsoup.connect(url).timeout(2000).get();
         } catch (IOException ex) {
-            Logger.getLogger(Imdb.class.getName()).log(Level.SEVERE, "Cannot read " + url, ex);
+            LOG.log(Level.SEVERE, "Cannot read " + url, ex);
             return null;
         }
         
         Element description = doc.select("meta[name=description]").first();
         return description.attr("content");
     }
+    
+    @Override
+    public String getReaderName() {
+        return "IMDB";
+    }
 
     @Override
-    public List<String> getUrlCandidates(String movieName) {
+    public Map<String, String> getUrlCandidates(final String movieName) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
