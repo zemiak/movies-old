@@ -22,6 +22,7 @@ public class Csfd implements IDescriptionReader {
     
     private static final String URL1 = "www.csfd.cz/";
     private static final String URL2 = "http://" + URL1;
+    private static final String SEARCH_URL = URL2 + "hledat/?q=";
     
     public Csfd() {
     }
@@ -64,7 +65,7 @@ public class Csfd implements IDescriptionReader {
         String url;
         
         try {
-            url = "http://www.csfd.cz/hledat/?q=" + URLEncoder.encode(movieName, "UTF-8");
+            url = SEARCH_URL + URLEncoder.encode(movieName, "UTF-8");
         } catch (UnsupportedEncodingException ex) {
             LOG.log(Level.SEVERE, "Unsupported UTF-8 encoding.");
             return res;
@@ -78,10 +79,10 @@ public class Csfd implements IDescriptionReader {
             return res;
         }
 
-        Element list = doc.select("ul[class=ui-image-list").first();
+        Element list = doc.select("ul[class=ui-image-list js-odd-even]").first();
         for (Element li: list.select("li")) {
             final Element desc = li.select("p").first();
-            final Element href = li.select("a[class=film").first();
+            final Element href = li.select("h3").first().select("a").first();
             final String descUrl = href.attr("abs:href");
             res.put(descUrl, href.text() + ": " + desc.text());
         }

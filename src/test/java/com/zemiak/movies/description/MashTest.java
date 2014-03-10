@@ -1,4 +1,4 @@
-package com.zemiak.movies.batch.metadata.description;
+package com.zemiak.movies.description;
 
 import com.zemiak.movies.description.Mash;
 import com.zemiak.movies.domain.Movie;

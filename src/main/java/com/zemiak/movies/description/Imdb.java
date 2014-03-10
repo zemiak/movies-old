@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +22,7 @@ public class Imdb implements IDescriptionReader {
     
     private static final String URL1 = "www.imdb.com/";
     private static final String URL2 = "http://" + URL1;
+    private static final String SEARCH_URL = URL2 + "find?q=";
     
     public Imdb() {
     }
@@ -57,6 +59,29 @@ public class Imdb implements IDescriptionReader {
 
     @Override
     public Map<String, String> getUrlCandidates(final String movieName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Map<String, String> res = new HashMap<>();
+        String url;
+        
+        try {
+            url = SEARCH_URL + URLEncoder.encode(movieName, "UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            LOG.log(Level.SEVERE, "Unsupported UTF-8 encoding.");
+            return res;
+        }
+        
+        Document doc;
+        try {
+            doc = Jsoup.connect(url).timeout(2000).get();
+        } catch (IOException ex) {
+            LOG.log(Level.SEVERE, "Cannot read " + url, ex);
+            return res;
+        }
+        
+        for (Element result: doc.select("td[class=result_text]")) {
+            final Element href = result.select("a").first();
+            res.put(href.attr("abs:href"), href.text() + ": " + result.text());
+        }
+        
+        return res;
     }
 }
