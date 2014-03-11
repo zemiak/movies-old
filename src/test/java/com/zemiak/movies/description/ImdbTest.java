@@ -2,14 +2,17 @@ package com.zemiak.movies.description;
 
 import com.zemiak.movies.domain.Movie;
 import java.util.Map;
+import net.ggtools.junit.categories.Integration;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.experimental.categories.Category;
 
 /**
  *
  * @author vasko
  */
+@Category(value = Integration.class)
 public class ImdbTest {
     private Movie movie;
     private Imdb reader;

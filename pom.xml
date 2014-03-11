@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.zemiak</groupId>
@@ -92,9 +92,54 @@
             <artifactId>isoparser</artifactId>
             <version>1.0-RC-27</version>
         </dependency>
+        
+        <dependency>
+            <!-- It is necessary that the group-interfaces are defined in another project. This already defines some - it's the easiest approch, yet. -->
+            <groupId>net.ggtools.junit</groupId>
+            <artifactId>junit-categories</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+    
+    <profiles>
+        <profile>
+            <id>integration-tests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>pre-integration-test</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                                <configuration>
+                                    <groups>net.ggtools.junit.categories.Slow</groups>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>integration-test</id>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                                <configuration>
+                                    <groups>net.ggtools.junit.categories.Integration</groups>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <build>
+        <defaultGoal>package</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -140,6 +185,35 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.16</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit47</artifactId>
+                        <version>2.16</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>default-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <excludedGroups>net.ggtools.junit.categories.Integration,net.ggtools.junit.categories.Slow</excludedGroups>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.class</include>
+                    </includes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
