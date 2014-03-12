@@ -4,13 +4,18 @@ import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.admin.jsf.util.JsfUtil;
 import com.zemiak.movies.admin.jsf.util.JsfUtil.PersistAction;
 import com.zemiak.movies.admin.beans.MovieFacade;
+import com.zemiak.movies.description.Csfd;
 import com.zemiak.movies.description.DescriptionReader;
+import com.zemiak.movies.description.Imdb;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Language;
 import com.zemiak.movies.domain.Serie;
+import com.zemiak.movies.domain.UrlDTO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +36,8 @@ public class MovieController implements Serializable {
     Genre genre;
     Serie serie;
     Language language, originalLanguage, subtitles;
+    List<UrlDTO> urls;
+    UrlDTO url;
 
     List<Movie> movies = null;
 
@@ -201,7 +208,7 @@ public class MovieController implements Serializable {
     public boolean isSelectionEmpty() {
         return selected == null || selected.length == 0;
     }
-
+    
     public void changeGenre() {
         changeMultipleItems(new ChangeMovieItem() {
             @Override
@@ -328,5 +335,39 @@ public class MovieController implements Serializable {
 
     public void setSubtitles(Language subtitles) {
         this.subtitles = subtitles;
+    }
+    
+    public void prepareUrls() {
+        urls = new ArrayList<>();
+        
+        final Map<String, String> csfd = new Csfd().getUrlCandidates(selectedOne.getName());
+        for (String url: csfd.keySet()) {
+            urls.add(new UrlDTO(url, "CSFD: " + csfd.get(url)));
+        }
+        
+        final Map<String, String> imdb = new Imdb().getUrlCandidates(selectedOne.getName());
+        for (String url: imdb.keySet()) {
+            urls.add(new UrlDTO(url, "IMDB: " + imdb.get(url)));
+        }
+    }
+    
+    public void changeUrl() {
+        selectedOne.setUrl(url.getUrl());
+    }
+
+    public List<UrlDTO> getUrls() {
+        return urls;
+    }
+
+    public void setUrls(final List<UrlDTO> urls) {
+        this.urls = urls;
+    }
+
+    public UrlDTO getUrl() {
+        return url;
+    }
+
+    public void setUrl(final UrlDTO url) {
+        this.url = url;
     }
 }
