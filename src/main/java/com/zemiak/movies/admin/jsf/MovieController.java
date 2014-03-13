@@ -42,6 +42,7 @@ public class MovieController implements Serializable {
     List<Movie> movies = null;
 
     public MovieController() {
+        urls = new ArrayList<>();
     }
 
     public Movie getSelectedOne() {
@@ -267,8 +268,6 @@ public class MovieController implements Serializable {
             public void change(final Movie movie, final MovieFacade facade) {
                 final String desc = reader.read(movie);
                 
-                System.err.println("Fetch desc for " + movie.getId() + ": " + desc);
-                
                 if (null != desc && !desc.equals(movie.getDescription())) {
                     movie.setDescription(desc);
                     getFacade().edit(movie);
@@ -339,15 +338,20 @@ public class MovieController implements Serializable {
     
     public void prepareUrls() {
         urls = new ArrayList<>();
+        if (null == selectedOne) {
+            return;
+        }
         
         final Map<String, String> csfd = new Csfd().getUrlCandidates(selectedOne.getName());
-        for (String url: csfd.keySet()) {
-            urls.add(new UrlDTO(url, "CSFD: " + csfd.get(url)));
+        for (String descriptionUrl: csfd.keySet()) {
+            final UrlDTO dto = new UrlDTO(descriptionUrl, "CSFD: " + csfd.get(descriptionUrl));
+            urls.add(dto);
         }
         
         final Map<String, String> imdb = new Imdb().getUrlCandidates(selectedOne.getName());
-        for (String url: imdb.keySet()) {
-            urls.add(new UrlDTO(url, "IMDB: " + imdb.get(url)));
+        for (String descriptionUrl: imdb.keySet()) {
+            final UrlDTO dto = new UrlDTO(descriptionUrl, "IMDB: " + imdb.get(descriptionUrl));
+            urls.add(dto);
         }
     }
     

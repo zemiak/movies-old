@@ -12,14 +12,17 @@
                   header="#{bundle.ChangeUrlTitle}" closeOnEscape="true">
             <h:form id="ChangeUrlForm">
                 <h:panelGroup id="display">
-                    <p:orderList value="#{movieController.urls}" var="url" itemValue="#{url.url}" 
-                                 rendered="#{not empty movieController.selectedOne}">
-                        <h:outputText value="#{url.desc}" />
-                    </p:orderList>
+                    <p:panel>
+                    <p:selectOneMenu id="subtitles" value="#{movieController.url}" >
+                        <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                        <f:selectItems value="#{movieController.urls}"
+                                       var="url"
+                                       itemValue="#{url}"/>
+                    </p:selectOneMenu>
+                    </p:panel>
                     
                     <p:commandButton action="#{movieController.changeUrl()}"
                                      value="#{bundle.Save}"
-                                     actionListener="#{movieController.prepareUrls()}"
                                      update="display,:MovieEditForm"
                                         oncomplete="handleSubmit(args, 'ChangeUrlDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ChangeUrlDialog.hide()"/>

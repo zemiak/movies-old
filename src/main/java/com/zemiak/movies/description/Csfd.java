@@ -78,7 +78,10 @@ public class Csfd implements IDescriptionReader {
             return res;
         }
 
-        Element list = doc.select("ul[class=ui-image-list js-odd-even]").first();
+        final Element list = doc
+                .select("div[id=search-films]").first()
+                .select("div[class=content]").first()
+                .select("ul[class=ui-image-list js-odd-even]").first();
         for (Element li: list.select("li")) {
             final Element desc = li.select("p").first();
             final Element href = li.select("h3").first().select("a").first();
