@@ -30,11 +30,11 @@
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_name}" for="name" />
                         <p:inputText id="name" value="#{movieControllerNew.selectedOne.name}" title="#{bundle.EditMovieTitle_name}"
-                                     styleClass="movieColumnValue"/>
+                                     styleClass="movieColumnValue" required="true"/>
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_fileName}" for="fileName" />
                         <p:inputText id="fileName" value="#{movieControllerNew.selectedOne.fileName}" title="#{bundle.EditMovieTitle_fileName}"
-                                     styleClass="movieColumnValue"/>
+                                     styleClass="movieColumnValue" required="true"/>
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_originalName}" for="originalName" />
                         <p:inputText id="originalName" value="#{movieControllerNew.selectedOne.originalName}" title="#{bundle.EditMovieTitle_originalName}"
@@ -46,7 +46,7 @@
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_pictureFileName}" for="pictureFileName" />
                         <p:inputText id="pictureFileName" value="#{movieControllerNew.selectedOne.pictureFileName}" title="#{bundle.EditMovieTitle_pictureFileName}"
-                                     styleClass="movieColumnValue"/>
+                                     styleClass="movieColumnValue" required="true"/>
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_displayOrder}" for="displayOrder" />
                         <p:spinner id="displayOrder" value="#{movieControllerNew.selectedOne.displayOrder}" title="#{bundle.EditMovieTitle_displayOrder}"
