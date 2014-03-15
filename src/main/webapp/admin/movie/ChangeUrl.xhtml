@@ -12,20 +12,32 @@
                   header="#{bundle.ChangeUrlTitle}" closeOnEscape="true">
             <h:form id="ChangeUrlForm">
                 <h:panelGroup id="display">
-                    <p:panel>
-                    <p:selectOneMenu id="subtitles" value="#{movieController.url}" >
-                        <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                        <f:selectItems value="#{movieController.urls}"
-                                       var="url"
-                                       itemValue="#{url}"/>
-                    </p:selectOneMenu>
-                    </p:panel>
+                    <p:dataTable id="urllist" value="#{urlController.items}" var="item"
+                             selectionMode="single" selection="#{urlController.selected}"
+                             rowKey="#{item.url}"
+                             >
+                        <p:ajax event="rowSelect"   update="urlSaveButton"/>
+                        <p:ajax event="rowUnselect" update="urlSaveButton"/>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListUrlTitle_desc}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.desc}"/>
+                        </p:column>
+                        
+                        <f:facet name="footer">
+                            <p:commandButton action="#{movieController.changeUrl()}"
+                                         value="#{bundle.Save}"
+                                         id="urlSaveButton"
+                                         update=":MovieEditForm"
+                                         disabled="#{empty urlController.selected}"
+                                         oncomplete="handleSubmit(args, 'ChangeUrlDialog');"/>
+                            <p:commandButton value="#{bundle.Cancel}" onclick="ChangeUrlDialog.hide()"/>
+                        </f:facet>
+                    </p:dataTable>
                     
-                    <p:commandButton action="#{movieController.changeUrl()}"
-                                     value="#{bundle.Save}"
-                                     update="display,:MovieEditForm"
-                                        oncomplete="handleSubmit(args, 'ChangeUrlDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="ChangeUrlDialog.hide()"/>
+                    
                 </h:panelGroup>
             </h:form>
         </p:dialog>

@@ -1,11 +1,12 @@
 package com.zemiak.movies.description;
 
 import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.domain.UrlDTO;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jsoup.nodes.Document;
@@ -59,8 +60,8 @@ public class Csfd implements IDescriptionReader {
     }
 
     @Override
-    public Map<String, String> getUrlCandidates(final String movieName) {
-        Map<String, String> res = new HashMap<>();
+    public List<UrlDTO> getUrlCandidates(final String movieName) {
+        List<UrlDTO> res = new ArrayList<>();
         String url;
         
         try {
@@ -86,7 +87,8 @@ public class Csfd implements IDescriptionReader {
             final Element desc = li.select("p").first();
             final Element href = li.select("h3").first().select("a").first();
             final String descUrl = href.attr("abs:href");
-            res.put(descUrl, href.text() + ": " + desc.text());
+            
+            res.add(new UrlDTO(url, getReaderName(), href.text(), desc.text()));
         }
         
         return res;

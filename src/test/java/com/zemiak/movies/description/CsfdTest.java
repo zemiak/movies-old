@@ -1,7 +1,8 @@
 package com.zemiak.movies.description;
 
 import com.zemiak.movies.domain.Movie;
-import java.util.Map;
+import com.zemiak.movies.domain.UrlDTO;
+import java.util.List;
 import net.ggtools.junit.categories.Integration;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,7 +53,7 @@ public class CsfdTest {
 
     @Test
     public void testGetUrlCandidates() {
-        Map<String, String> urls = reader.getUrlCandidates("Batman");
+        final List<UrlDTO> urls = reader.getUrlCandidates("Batman");
         
         assertTrue(urls.size() > 3);
     }

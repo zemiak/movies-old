@@ -4,18 +4,13 @@ import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.admin.jsf.util.JsfUtil;
 import com.zemiak.movies.admin.jsf.util.JsfUtil.PersistAction;
 import com.zemiak.movies.admin.beans.MovieFacade;
-import com.zemiak.movies.description.Csfd;
 import com.zemiak.movies.description.DescriptionReader;
-import com.zemiak.movies.description.Imdb;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Language;
 import com.zemiak.movies.domain.Serie;
-import com.zemiak.movies.domain.UrlDTO;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +18,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 
 @Named("movieController")
 @SessionScoped
@@ -36,13 +32,13 @@ public class MovieController implements Serializable {
     Genre genre;
     Serie serie;
     Language language, originalLanguage, subtitles;
-    List<UrlDTO> urls;
-    UrlDTO url;
+
+    @Inject private UrlController urls;
 
     List<Movie> movies = null;
 
     public MovieController() {
-        urls = new ArrayList<>();
+        
     }
 
     public Movie getSelectedOne() {
@@ -337,41 +333,12 @@ public class MovieController implements Serializable {
     }
     
     public void prepareUrls() {
-        urls = new ArrayList<>();
-        if (null == selectedOne) {
-            return;
-        }
-        
-        final Map<String, String> csfd = new Csfd().getUrlCandidates(selectedOne.getName());
-        for (String descriptionUrl: csfd.keySet()) {
-            final UrlDTO dto = new UrlDTO(descriptionUrl, "CSFD: " + csfd.get(descriptionUrl));
-            urls.add(dto);
-        }
-        
-        final Map<String, String> imdb = new Imdb().getUrlCandidates(selectedOne.getName());
-        for (String descriptionUrl: imdb.keySet()) {
-            final UrlDTO dto = new UrlDTO(descriptionUrl, "IMDB: " + imdb.get(descriptionUrl));
-            urls.add(dto);
+        if (null != selectedOne) {
+            urls.prepareUrls(selectedOne.getName());
         }
     }
     
     public void changeUrl() {
-        selectedOne.setUrl(url.getUrl());
-    }
-
-    public List<UrlDTO> getUrls() {
-        return urls;
-    }
-
-    public void setUrls(final List<UrlDTO> urls) {
-        this.urls = urls;
-    }
-
-    public UrlDTO getUrl() {
-        return url;
-    }
-
-    public void setUrl(final UrlDTO url) {
-        this.url = url;
+        selectedOne.setUrl(urls.getSelected().getUrl());
     }
 }

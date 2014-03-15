@@ -6,34 +6,49 @@ package com.zemiak.movies.domain;
  */
 public class UrlDTO {
     private String url;
-    private String desc;
+    private String description;
+    private String dbName;
+    private String movieName;
 
     public UrlDTO() {
     }
 
-    public UrlDTO(String url, String desc) {
+    public UrlDTO(final String url, final String dbName, final String movieName, final String description) {
         this.url = url;
-        this.desc = desc;
+        this.dbName = dbName;
+        this.movieName = movieName;
+        this.description = description;
     }
 
     public String getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(final String url) {
         this.url = url;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(final String description) {
+        this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return desc;
+    public String getDbName() {
+        return dbName;
+    }
+
+    public void setDbName(final String dbName) {
+        this.dbName = dbName;
+    }
+
+    public String getMovieName() {
+        return movieName;
+    }
+
+    public void setMovieName(String movieName) {
+        this.movieName = movieName;
     }
 }

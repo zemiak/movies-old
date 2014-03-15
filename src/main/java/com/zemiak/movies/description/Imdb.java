@@ -1,12 +1,12 @@
 package com.zemiak.movies.description;
 
 import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.domain.UrlDTO;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jsoup.Jsoup;
@@ -58,8 +58,8 @@ public class Imdb implements IDescriptionReader {
     }
 
     @Override
-    public Map<String, String> getUrlCandidates(final String movieName) {
-        Map<String, String> res = new HashMap<>();
+    public List<UrlDTO> getUrlCandidates(final String movieName) {
+        List<UrlDTO> res = new ArrayList<>();
         String url;
         
         try {
@@ -79,7 +79,7 @@ public class Imdb implements IDescriptionReader {
         
         for (Element result: doc.select("td[class=result_text]")) {
             final Element href = result.select("a").first();
-            res.put(href.attr("abs:href"), href.text() + ": " + result.text());
+            res.add(new UrlDTO(url, getReaderName(), href.text(), result.text()));
         }
         
         return res;

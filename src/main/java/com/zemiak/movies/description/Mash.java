@@ -2,7 +2,10 @@ package com.zemiak.movies.description;
 
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
+import com.zemiak.movies.domain.UrlDTO;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -52,8 +55,8 @@ public class Mash implements IDescriptionReader {
     }
 
     @Override
-    public Map<String, String> getUrlCandidates(String movieName) {
-        return new HashMap<>();
+    public List<UrlDTO> getUrlCandidates(String movieName) {
+        return new ArrayList<>();
     }
 
     @Override
