@@ -43,7 +43,7 @@ public class Csfd implements IDescriptionReader {
         Document doc;
         
         try {
-            doc = Jsoup.connect(url).timeout(2000).get();
+            doc = Jsoup.connect(url).timeout(5000).get();
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, "Cannot read " + url, ex);
             return null;
@@ -73,7 +73,7 @@ public class Csfd implements IDescriptionReader {
         
         Document doc;
         try {
-            doc = Jsoup.connect(url).timeout(2000).get();
+            doc = Jsoup.connect(url).timeout(5000).get();
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, "Cannot read " + url, ex);
             return res;
@@ -86,9 +86,9 @@ public class Csfd implements IDescriptionReader {
         for (Element li: list.select("li")) {
             final Element desc = li.select("p").first();
             final Element href = li.select("h3").first().select("a").first();
-            final String descUrl = href.attr("abs:href");
+            final String descUrl = href.absUrl("href");
             
-            res.add(new UrlDTO(url, getReaderName(), href.text(), desc.text()));
+            res.add(new UrlDTO(descUrl, getReaderName(), href.text(), desc.text()));
         }
         
         return res;

@@ -105,9 +105,19 @@
                                      value="#{bundle.Save}" 
                                      update="display,:MovieListForm:datalist,:growl" 
                                      oncomplete="handleSubmit(args, 'MovieEditDialog');"/>
+                    
+                    <p:commandButton value="#{bundle.ChangeUrl}"
+                                        update=":ChangeUrlForm"
+                                        actionListener="#{movieControllerNew.prepareUrls()}"
+                                        oncomplete="PF('ChangeUrlDialog').show()"
+                                        disabled="#{empty movieControllerNew.selectedOne}"
+                                        id="urlAction"
+                                        icon="ui-icon-extlink"/>
+                    
                     <p:commandButton action="#{movieControllerNew.fetchDescription()}" 
                                      value="#{bundle.FetchDescription}" 
                                      update="display,:MovieListForm:datalist"/>
+                    
                     <p:commandButton value="#{bundle.Cancel}" onclick="MovieEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

@@ -10,7 +10,7 @@
 
 
         <ui:define name="title">
-            <h:outputText value="#{bundle.ListMovieTitle}"></h:outputText>
+            <h:outputText value="#{bundle.ListMovieTitleNew}"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
@@ -23,7 +23,7 @@
                              rowsPerPageTemplate="10,20,30,40,50"
                              >
 
-                    <f:facet name="header">#{bundle.ListMovieTitle}</f:facet>
+                    <f:facet name="header">#{bundle.ListMovieTitleNew}</f:facet>
 
                     <p:ajax event="rowSelect"   update="viewButton editButton orderUpButton orderDownButton massActions"/>
                     <p:ajax event="rowUnselect" update="viewButton editButton orderUpButton orderDownButton massActions"/>
@@ -182,6 +182,7 @@
             <ui:include src="ChangeLanguage.xhtml"/>
             <ui:include src="ChangeOriginalLanguage.xhtml"/>
             <ui:include src="ChangeSubtitles.xhtml"/>
+            <ui:include src="ChangeUrl.xhtml"/>
         </ui:define>
     </ui:composition>
 

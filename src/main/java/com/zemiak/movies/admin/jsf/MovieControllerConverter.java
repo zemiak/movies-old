@@ -19,7 +19,7 @@ public class MovieControllerConverter implements Converter {
         if (value == null || value.length() == 0) {
             return null;
         }
-        MovieController controller = (MovieController) facesContext.getApplication().getELResolver().
+        AbstractMovieController controller = (AbstractMovieController) facesContext.getApplication().getELResolver().
                 getValue(facesContext.getELContext(), null, "movieController");
         return controller.getMovie(getKey(value));
     }

@@ -42,7 +42,7 @@ public class Imdb implements IDescriptionReader {
     private String getDescription(final String url) {
         Document doc;
         try {
-            doc = Jsoup.connect(url).timeout(2000).get();
+            doc = Jsoup.connect(url).timeout(5000).get();
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, "Cannot read " + url, ex);
             return null;
@@ -71,7 +71,7 @@ public class Imdb implements IDescriptionReader {
         
         Document doc;
         try {
-            doc = Jsoup.connect(url).timeout(2000).get();
+            doc = Jsoup.connect(url).timeout(5000).get();
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, "Cannot read " + url, ex);
             return res;
@@ -79,7 +79,7 @@ public class Imdb implements IDescriptionReader {
         
         for (Element result: doc.select("td[class=result_text]")) {
             final Element href = result.select("a").first();
-            res.add(new UrlDTO(url, getReaderName(), href.text(), result.text()));
+            res.add(new UrlDTO(href.absUrl("href"), getReaderName(), href.text(), result.text()));
         }
         
         return res;

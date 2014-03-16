@@ -9,7 +9,7 @@ import javax.enterprise.context.SessionScoped;
 
 @Named("movieControllerNew")
 @SessionScoped
-public class MovieControllerNew extends MovieController implements Serializable {
+public class MovieControllerNew extends AbstractMovieController implements Serializable {
     @Override
     public List<Movie> getItems() {
         if (null == movies) {
