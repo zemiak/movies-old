@@ -14,6 +14,17 @@
         </ui:define>
 
         <ui:define name="body">
+            <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+                <f:facet name="start">
+                    <h:graphicImage value="/icons/ajax-loader-small.gif" />
+                </f:facet>
+
+                <f:facet name="complete">
+                    <h:outputText value="" />
+                </f:facet>
+            </p:ajaxStatus>
+
+            
             <h:form id="MovieListForm">
                 <p:dataTable id="datalist" value="#{movieControllerAll.items}" var="item"
                              selectionMode="multiple" selection="#{movieControllerAll.selected}"
