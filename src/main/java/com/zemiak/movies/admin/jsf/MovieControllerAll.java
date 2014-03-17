@@ -9,9 +9,9 @@ import javax.inject.Named;
  *
  * @author vasko
  */
-@Named("movieController")
+@Named("movieControllerAll")
 @SessionScoped
-public class MovieController extends AbstractMovieController {
+public class MovieControllerAll extends AbstractMovieController {
     @Override
     public List<Movie> getItems() {
         if (null == movies) {

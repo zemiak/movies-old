@@ -19,45 +19,45 @@
             <h:form id="MovieEditForm">
 
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="movieColumn1,movieColumn2" rendered="#{movieController.selectedOne != null}">
+                    <p:panelGrid columns="2" columnClasses="movieColumn1,movieColumn2" rendered="#{movieControllerAll.selectedOne != null}">
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{movieController.selectedOne.id}"
+                        <p:inputText id="id" value="#{movieControllerAll.selectedOne.id}"
                                      title="#{bundle.EditMovieTitle_id}"
                                      disabled="true"
                                      styleClass="movieColumnValue"
                                      />
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_name}" for="name" />
-                        <p:inputText id="name" value="#{movieController.selectedOne.name}" title="#{bundle.EditMovieTitle_name}"
+                        <p:inputText id="name" value="#{movieControllerAll.selectedOne.name}" title="#{bundle.EditMovieTitle_name}"
                                      styleClass="movieColumnValue" required="true"/>
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_fileName}" for="fileName" />
-                        <p:inputText id="fileName" value="#{movieController.selectedOne.fileName}" title="#{bundle.EditMovieTitle_fileName}"
+                        <p:inputText id="fileName" value="#{movieControllerAll.selectedOne.fileName}" title="#{bundle.EditMovieTitle_fileName}"
                                      styleClass="movieColumnValue" required="true"/>
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_originalName}" for="originalName" />
-                        <p:inputText id="originalName" value="#{movieController.selectedOne.originalName}" title="#{bundle.EditMovieTitle_originalName}"
+                        <p:inputText id="originalName" value="#{movieControllerAll.selectedOne.originalName}" title="#{bundle.EditMovieTitle_originalName}"
                                      styleClass="movieColumnValue"/>
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_url}" for="url" />
-                        <p:inputText id="url" value="#{movieController.selectedOne.url}" title="#{bundle.EditMovieTitle_url}"
+                        <p:inputText id="url" value="#{movieControllerAll.selectedOne.url}" title="#{bundle.EditMovieTitle_url}"
                                      styleClass="movieColumnValue"/>
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_pictureFileName}" for="pictureFileName" />
-                        <p:inputText id="pictureFileName" value="#{movieController.selectedOne.pictureFileName}" title="#{bundle.EditMovieTitle_pictureFileName}"
+                        <p:inputText id="pictureFileName" value="#{movieControllerAll.selectedOne.pictureFileName}" title="#{bundle.EditMovieTitle_pictureFileName}"
                                      styleClass="movieColumnValue" required="true"/>
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_displayOrder}" for="displayOrder" />
-                        <p:spinner id="displayOrder" value="#{movieController.selectedOne.displayOrder}" title="#{bundle.EditMovieTitle_displayOrder}"
+                        <p:spinner id="displayOrder" value="#{movieControllerAll.selectedOne.displayOrder}" title="#{bundle.EditMovieTitle_displayOrder}"
                                      styleClass="movieColumnValue" min="1"/>
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_description}" for="description" />
-                        <p:inputTextarea id="description" value="#{movieController.selectedOne.description}" title="#{bundle.EditMovieTitle_description}"
+                        <p:inputTextarea id="description" value="#{movieControllerAll.selectedOne.description}" title="#{bundle.EditMovieTitle_description}"
                                          styleClass="movieColumnValue" autoResize="false" rows="6"/>
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_serieId}" for="serieId" />
-                        <p:selectOneMenu id="serieId" value="#{movieController.selectedOne.serieId}"
+                        <p:selectOneMenu id="serieId" value="#{movieControllerAll.selectedOne.serieId}"
                                          >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{serieController.itemsAvailableSelectOne}"
@@ -66,7 +66,7 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_subtitles}" for="subtitles" />
-                        <p:selectOneMenu id="subtitles" value="#{movieController.selectedOne.subtitles}"
+                        <p:selectOneMenu id="subtitles" value="#{movieControllerAll.selectedOne.subtitles}"
                                          >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{languageController.itemsAvailableSelectOne}"
@@ -75,7 +75,7 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_originalLanguage}" for="originalLanguage" />
-                        <p:selectOneMenu id="originalLanguage" value="#{movieController.selectedOne.originalLanguage}"
+                        <p:selectOneMenu id="originalLanguage" value="#{movieControllerAll.selectedOne.originalLanguage}"
                                          >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{languageController.itemsAvailableSelectOne}"
@@ -84,7 +84,7 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_language}" for="language" />
-                        <p:selectOneMenu id="language" value="#{movieController.selectedOne.language}"
+                        <p:selectOneMenu id="language" value="#{movieControllerAll.selectedOne.language}"
                                          >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{languageController.itemsAvailableSelectOne}"
@@ -93,7 +93,7 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_genreId}" for="genreId" />
-                        <p:selectOneMenu id="genreId" value="#{movieController.selectedOne.genreId}"
+                        <p:selectOneMenu id="genreId" value="#{movieControllerAll.selectedOne.genreId}"
                                          >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{genreController.itemsAvailableSelectOne}"
@@ -101,20 +101,20 @@
                                            itemValue="#{genreIdItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{movieController.update}" 
+                    <p:commandButton actionListener="#{movieControllerAll.update}" 
                                      value="#{bundle.Save}" 
                                      update="display,:MovieListForm:datalist,:growl" 
                                      oncomplete="handleSubmit(args, 'MovieEditDialog');"/>
 
                     <p:commandButton value="#{bundle.ChangeUrl}"
                                         update=":ChangeUrlForm"
-                                        actionListener="#{movieController.prepareUrls()}"
+                                        actionListener="#{movieControllerAll.prepareUrls()}"
                                         oncomplete="PF('ChangeUrlDialog').show()"
-                                        disabled="#{empty movieController.selectedOne}"
+                                        disabled="#{empty movieControllerAll.selectedOne}"
                                         id="urlAction"
                                         icon="ui-icon-extlink"/>
 
-                    <p:commandButton action="#{movieController.fetchDescription()}" 
+                    <p:commandButton action="#{movieControllerAll.fetchDescription()}" 
                                      value="#{bundle.FetchDescription}" 
                                      update="display,:MovieListForm:datalist"/>
                     

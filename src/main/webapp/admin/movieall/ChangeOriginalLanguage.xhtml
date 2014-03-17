@@ -8,23 +8,23 @@
 
     <ui:composition>
 
-        <p:dialog id="ChangeSubtitlesDlg" widgetVar="ChangeSubtitlesDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ChangeSubtitlesTitle}" closeOnEscape="true">
-            <h:form id="ChangeSubtitlesForm">
+        <p:dialog id="ChangeOriginalLanguageDlg" widgetVar="ChangeOriginalLanguageDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ChangeOriginalLanguageTitle}" closeOnEscape="true">
+            <h:form id="ChangeOriginalLanguageForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2">
-                        <p:outputLabel value="#{bundle.EditMovieLabel_subtitles}" for="subtitles" />
-                        <p:selectOneMenu id="subtitles" value="#{movieController.subtitles}" >
+                        <p:outputLabel value="#{bundle.EditMovieLabel_originalLanguage}" for="originalLanguage" />
+                        <p:selectOneMenu id="originalLanguage" value="#{movieControllerAll.originalLanguage}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{languageController.itemsAvailableSelectOne}"
-                                           var="subtitlesItem"
-                                           itemValue="#{subtitlesItem}"/>
+                                           var="originalLanguageItem"
+                                           itemValue="#{originalLanguageItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton action="#{movieController.changeSubtitles()}"
+                    <p:commandButton action="#{movieControllerAll.changeOriginalLanguage()}"
                                      value="#{bundle.Save}"
                                      update="display,:MovieListForm:datalist,:growl"
-                                        oncomplete="handleSubmit(args, 'ChangeSubtitlesDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="ChangeSubtitlesDialog.hide()"/>
+                                     oncomplete="handleSubmit(args, 'ChangeOriginalLanguageDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ChangeOriginalLanguageDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

@@ -19,7 +19,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2">
                         <p:outputLabel value="#{bundle.EditMovieLabel_genreId}" for="genreId" />
-                        <p:selectOneMenu id="genreId" value="#{movieController.genre}" >
+                        <p:selectOneMenu id="genreId" value="#{movieControllerAll.genre}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
 
                             <f:selectItems value="#{genreController.itemsAvailableSelectOne}"
@@ -27,7 +27,7 @@
                                            itemValue="#{genreIdItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton action="#{movieController.changeGenre()}"
+                    <p:commandButton action="#{movieControllerAll.changeGenre()}"
                                      value="#{bundle.Save}"
                                      oncomplete="handleSubmit(args, 'ChangeGenreDialog');"
                                      update="display,:MovieListForm:datalist,:growl"/>

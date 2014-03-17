@@ -15,8 +15,8 @@
 
         <ui:define name="body">
             <h:form id="MovieListForm">
-                <p:dataTable id="datalist" value="#{movieController.items}" var="item"
-                             selectionMode="multiple" selection="#{movieController.selected}"
+                <p:dataTable id="datalist" value="#{movieControllerAll.items}" var="item"
+                             selectionMode="multiple" selection="#{movieControllerAll.selected}"
                              paginator="true"
                              rowKey="#{item.id}"
                              rows="10"
@@ -97,7 +97,7 @@
                     <f:facet name="footer">
                         <p:commandButton id="createButton" icon="ui-icon-plus"
                                          value="#{bundle.Create}"
-                                         actionListener="#{movieController.prepareCreate}"
+                                         actionListener="#{movieControllerAll.prepareCreate}"
                                          update=":MovieCreateForm"
                                          oncomplete="PF('MovieCreateDialog').show()"/>
 
@@ -105,45 +105,45 @@
                                          value="#{bundle.View}"
                                          update=":MovieViewForm"
                                          oncomplete="PF('MovieViewDialog').show()"
-                                         disabled="#{empty movieController.selectedOne}"/>
+                                         disabled="#{empty movieControllerAll.selectedOne}"/>
 
                         <p:commandButton id="editButton"   icon="ui-icon-pencil"
                                          value="#{bundle.Edit}"
                                          update=":MovieEditForm"
                                          oncomplete="PF('MovieEditDialog').show()"
-                                         disabled="#{empty movieController.selectedOne}"/>
+                                         disabled="#{empty movieControllerAll.selectedOne}"/>
 
                         <p:commandButton id="orderUpButton"   icon="ui-icon-triangle-1-n"
                                          value="#{bundle.OrderUp}"
-                                         actionListener="#{movieController.orderUp}"
+                                         actionListener="#{movieControllerAll.orderUp}"
                                          update=":growl,datalist"
-                                         disabled="#{empty movieController.selected}"/>
+                                         disabled="#{empty movieControllerAll.selected}"/>
 
                         <p:commandButton id="orderDownButton"   icon="ui-icon-triangle-1-s"
                                          value="#{bundle.OrderDown}"
-                                         actionListener="#{movieController.orderDown}"
+                                         actionListener="#{movieControllerAll.orderDown}"
                                          update=":growl,datalist"
-                                         disabled="#{empty movieController.selected}"/>
+                                         disabled="#{empty movieControllerAll.selected}"/>
 
                         <p:splitButton value="#{bundle.ChangeGenre}"
                                        update=":ChangeGenreForm"
                                        oncomplete="PF('ChangeGenreDialog').show()"
-                                       disabled="#{movieController.selectionEmpty}"
+                                       disabled="#{movieControllerAll.selectionEmpty}"
                                        id="massActions"
                                        icon="ui-icon-tag">
 
                             <p:menuitem value="#{bundle.ChangeSerie}"
                                         update=":ChangeSerieForm"
                                         oncomplete="PF('ChangeSerieDialog').show()"
-                                        disabled="#{movieController.selectionEmpty}"
+                                        disabled="#{movieControllerAll.selectionEmpty}"
                                         id="serieAction"
                                         icon="ui-icon-cart"/>
                             
                             <p:menuitem value="#{bundle.FetchDescription}"
-                                        disabled="#{movieController.selectionEmpty}"
+                                        disabled="#{movieControllerAll.selectionEmpty}"
                                         id="descriptionAction"
                                         update=":growl,datalist"
-                                        action="#{movieController.fetchDescriptions()}"
+                                        action="#{movieControllerAll.fetchDescriptions()}"
                                         icon="ui-icon-script"/>
 
                             <p:separator />
@@ -151,21 +151,21 @@
                             <p:menuitem value="#{bundle.ChangeLanguage}"
                                         update=":ChangeLanguageForm"
                                         oncomplete="PF('ChangeLanguageDialog').show()"
-                                        disabled="#{movieController.selectionEmpty}"
+                                        disabled="#{movieControllerAll.selectionEmpty}"
                                         id="languageAction"
                                         icon="ui-icon-flag"/>
 
                             <p:menuitem value="#{bundle.ChangeOriginalLanguage}"
                                         update=":ChangeOriginalLanguageForm"
                                         oncomplete="PF('ChangeOriginalLanguageDialog').show()"
-                                        disabled="#{movieController.selectionEmpty}"
+                                        disabled="#{movieControllerAll.selectionEmpty}"
                                         id="originalLanguageAction"
                                         icon="ui-icon-flag"/>
 
                             <p:menuitem value="#{bundle.ChangeSubtitles}"
                                         update=":ChangeSubtitlesForm"
                                         oncomplete="PF('ChangeSubtitlesDialog').show()"
-                                        disabled="#{movieController.selectionEmpty}"
+                                        disabled="#{movieControllerAll.selectionEmpty}"
                                         id="subtitlesAction"
                                         icon="ui-icon-flag"/>
 
@@ -173,9 +173,9 @@
 
                             <p:menuitem id="deleteAction" icon="ui-icon-trash"
                                          value="#{bundle.Delete}"
-                                         actionListener="#{movieController.destroy}"
+                                         actionListener="#{movieControllerAll.destroy}"
                                          update=":growl,datalist"
-                                         disabled="#{movieController.selectionEmpty}"/>
+                                         disabled="#{movieControllerAll.selectionEmpty}"/>
                         </p:splitButton>
                     </f:facet>
                 </p:dataTable>

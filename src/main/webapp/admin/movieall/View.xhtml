@@ -17,46 +17,46 @@
                   closeOnEscape="true">
             <h:form id="MovieViewForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{movieController.selectedOne != null}">
+                    <p:panelGrid columns="2" rendered="#{movieControllerAll.selectedOne != null}">
                         <h:outputText value="#{bundle.ViewMovieLabel_id}"/>
-                        <h:outputText value="#{movieController.selectedOne.id}" title="#{bundle.ViewMovieTitle_id}"/>
+                        <h:outputText value="#{movieControllerAll.selectedOne.id}" title="#{bundle.ViewMovieTitle_id}"/>
 
                         <h:outputText value="#{bundle.ViewMovieLabel_fileName}"/>
-                        <h:outputText value="#{movieController.selectedOne.fileName}" title="#{bundle.ViewMovieTitle_fileName}"/>
+                        <h:outputText value="#{movieControllerAll.selectedOne.fileName}" title="#{bundle.ViewMovieTitle_fileName}"/>
 
                         <h:outputText value="#{bundle.ViewMovieLabel_name}"/>
-                        <h:outputText value="#{movieController.selectedOne.name}" title="#{bundle.ViewMovieTitle_name}"/>
+                        <h:outputText value="#{movieControllerAll.selectedOne.name}" title="#{bundle.ViewMovieTitle_name}"/>
 
                         <h:outputText value="#{bundle.ViewMovieLabel_originalName}"/>
-                        <h:outputText value="#{movieController.selectedOne.originalName}" title="#{bundle.ViewMovieTitle_originalName}"/>
+                        <h:outputText value="#{movieControllerAll.selectedOne.originalName}" title="#{bundle.ViewMovieTitle_originalName}"/>
 
                         <h:outputText value="#{bundle.ViewMovieLabel_url}"/>
-                        <h:outputText value="#{movieController.selectedOne.url}" title="#{bundle.ViewMovieTitle_url}"/>
+                        <h:outputText value="#{movieControllerAll.selectedOne.url}" title="#{bundle.ViewMovieTitle_url}"/>
 
                         <h:outputText value="#{bundle.ViewMovieLabel_pictureFileName}"/>
-                        <h:outputText value="#{movieController.selectedOne.pictureFileName}" title="#{bundle.ViewMovieTitle_pictureFileName}"/>
+                        <h:outputText value="#{movieControllerAll.selectedOne.pictureFileName}" title="#{bundle.ViewMovieTitle_pictureFileName}"/>
 
                         <h:outputText value="#{bundle.ViewMovieLabel_displayOrder}"/>
-                        <h:outputText value="#{movieController.selectedOne.displayOrder}" title="#{bundle.ViewMovieTitle_displayOrder}"/>
+                        <h:outputText value="#{movieControllerAll.selectedOne.displayOrder}" title="#{bundle.ViewMovieTitle_displayOrder}"/>
 
                         <h:outputText value="#{bundle.ViewMovieLabel_description}"/>
-                        <h:outputText value="#{movieController.selectedOne.description}"
+                        <h:outputText value="#{movieControllerAll.selectedOne.description}"
                                       title="#{bundle.ViewMovieTitle_description}"/>
 
                         <h:outputText value="#{bundle.ViewMovieLabel_serieId}"/>
-                        <h:outputText value="#{movieController.selectedOne.serieId.name}" title="#{bundle.ViewMovieTitle_serieId}"/>
+                        <h:outputText value="#{movieControllerAll.selectedOne.serieId.name}" title="#{bundle.ViewMovieTitle_serieId}"/>
 
                         <h:outputText value="#{bundle.ViewMovieLabel_subtitles}"/>
-                        <h:outputText value="#{movieController.selectedOne.subtitles.name}" title="#{bundle.ViewMovieTitle_subtitles}"/>
+                        <h:outputText value="#{movieControllerAll.selectedOne.subtitles.name}" title="#{bundle.ViewMovieTitle_subtitles}"/>
 
                         <h:outputText value="#{bundle.ViewMovieLabel_originalLanguage}"/>
-                        <h:outputText value="#{movieController.selectedOne.originalLanguage.name}" title="#{bundle.ViewMovieTitle_originalLanguage}"/>
+                        <h:outputText value="#{movieControllerAll.selectedOne.originalLanguage.name}" title="#{bundle.ViewMovieTitle_originalLanguage}"/>
 
                         <h:outputText value="#{bundle.ViewMovieLabel_language}"/>
-                        <h:outputText value="#{movieController.selectedOne.language.name}" title="#{bundle.ViewMovieTitle_language}"/>
+                        <h:outputText value="#{movieControllerAll.selectedOne.language.name}" title="#{bundle.ViewMovieTitle_language}"/>
 
                         <h:outputText value="#{bundle.ViewMovieLabel_genreId}"/>
-                        <h:outputText value="#{movieController.selectedOne.genreId.name}" title="#{bundle.ViewMovieTitle_genreId}"/>
+                        <h:outputText value="#{movieControllerAll.selectedOne.genreId.name}" title="#{bundle.ViewMovieTitle_genreId}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="MovieViewDialog.hide()"/>
                 </h:panelGroup>

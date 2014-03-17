@@ -93,7 +93,7 @@
                   <a class="dropdown-toggle" href="#" data-toggle="dropdown">Admin<b class="caret"></b></a>
                   <ul class="dropdown-menu">
                       <li><a href="/movies/admin/movienew/List.xhtml">Nové filmy</a></li>
-                      <li><a href="/movies/admin/movie/List.xhtml">Všetky filmy</a></li>
+                      <li><a href="/movies/admin/movieall/List.xhtml">Všetky filmy</a></li>
                       <li><a href="/movies/admin/genre/List.xhtml">Žánre</a></li>
                       <li><a href="/movies/admin/serie/List.xhtml">Série</a></li>
                       <li><a href="/movies/admin/language/List.xhtml">Jazyky</a></li>
