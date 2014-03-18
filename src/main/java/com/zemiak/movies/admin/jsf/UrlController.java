@@ -2,36 +2,36 @@ package com.zemiak.movies.admin.jsf;
 
 import com.zemiak.movies.description.Csfd;
 import com.zemiak.movies.description.Imdb;
+import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.UrlDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
+import javax.enterprise.context.Dependent;
 
 /**
  *
  * @author vasko
  */
-@Named("urlController")
-@SessionScoped
+@Dependent
 public class UrlController implements Serializable {
     private List<UrlDTO> items;
     private UrlDTO selected;
+
+    private Movie forMovie;
+    private AbstractMovieController movieController;
     
     public UrlController() {
-        items = new ArrayList<>();
+        items = null;
         selected = null;
     }
     
-    public void prepareUrls(final String movieName, final String originalMovieName) {
-        items = new ArrayList<>();
-        items.addAll(new Csfd().getUrlCandidates(movieName));
-        
-        items.addAll(new Imdb().getUrlCandidates(null == originalMovieName ? movieName : originalMovieName));
+    public void setMovieController(final AbstractMovieController movieController) {
+        this.movieController = movieController;
     }
     
     public List<UrlDTO> getItems() {
+        reloadItems();
         return items;
     }
 
@@ -41,5 +41,36 @@ public class UrlController implements Serializable {
 
     public void setSelected(final UrlDTO url) {
         this.selected = url;
+    }
+
+    public void reloadItems() {
+        if (null != items) {
+            if (null == forMovie) {
+                items = null;
+                forMovie = movieController.getSelectedOne();
+            } else {
+                if (null != movieController.getSelectedOne()) {
+                    if (!forMovie.getId().equals(movieController.getSelectedOne().getId())) {
+                        items = null;
+                        forMovie = movieController.getSelectedOne();
+                    }
+                } else {
+                    forMovie = null;
+                }
+            }
+        } else {
+            if (null != movieController.getSelectedOne()) {
+                forMovie = movieController.getSelectedOne();
+            }
+        }
+        
+        if (null == items && null != forMovie) {
+            items = new ArrayList<>();
+            items.addAll(new Csfd().getUrlCandidates(movieController.getSelectedOne().getName()));
+            items.addAll(new Imdb().getUrlCandidates(null == movieController.getSelectedOne().getOriginalName() 
+                    ? movieController.getSelectedOne().getName() 
+                    : movieController.getSelectedOne().getOriginalName()));
+            selected = null;
+        }
     }
 }

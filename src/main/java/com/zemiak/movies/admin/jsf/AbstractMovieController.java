@@ -321,14 +321,16 @@ abstract public class AbstractMovieController implements Serializable {
         this.subtitles = subtitles;
     }
     
-    public void prepareUrls() {
-        if (null != selectedOne) {
-            System.err.println("Preparing for " + selectedOne.getName());
-            urls.prepareUrls(selectedOne.getName(), selectedOne.getOriginalName());
-        }
-    }
-    
     public void changeUrl() {
+        System.err.println("changeUrl()");
         selectedOne.setUrl(urls.getSelected().getUrl());
+    }
+
+    public UrlController getUrls() {
+        return urls;
+    }
+
+    public void setUrls(UrlController urls) {
+        this.urls = urls;
     }
 }

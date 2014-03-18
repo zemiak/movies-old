@@ -12,10 +12,10 @@
                   header="#{bundle.ChangeUrlTitle}" closeOnEscape="true">
             <h:form id="ChangeUrlForm">
                 <h:panelGroup id="display">
-                    <p:dataTable id="urllist" value="#{urlController.items}" var="item"
-                             selectionMode="single" selection="#{urlController.selected}"
+                    <p:dataTable id="urllist" value="#{movieControllerAll.urls.items}" var="item"
+                             selectionMode="single" selection="#{movieControllerAll.urls.selected}"
                              rowKey="#{item.url}"
-                             paginator="true" paginatorPosition="top" rows="20"
+                             paginator="true" paginatorPosition="top" rows="15"
                              >
                         <p:ajax event="rowSelect"   update="urlSaveButton"/>
                         <p:ajax event="rowUnselect" update="urlSaveButton"/>
@@ -46,7 +46,7 @@
                                          value="#{bundle.Save}"
                                          id="urlSaveButton"
                                          update=":MovieEditForm"
-                                         disabled="#{empty urlController.selected}"
+                                         disabled="#{empty movieControllerAll.selectedOne}"
                                          oncomplete="handleSubmit(args, 'ChangeUrlDialog');"/>
                             <p:commandButton value="#{bundle.Cancel}" onclick="ChangeUrlDialog.hide()"/>
                         </f:facet>

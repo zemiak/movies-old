@@ -12,8 +12,8 @@
                   header="#{bundle.ChangeUrlTitle}" closeOnEscape="true">
             <h:form id="ChangeUrlForm">
                 <h:panelGroup id="display">
-                    <p:dataTable id="urllist" value="#{urlController.items}" var="item"
-                             selectionMode="single" selection="#{urlController.selected}"
+                    <p:dataTable id="urllist" value="#{movieControllerNew.urls.items}" var="item"
+                                 selectionMode="single" selection="#{movieControllerNew.urls.selected}"
                              rowKey="#{item.url}"
                              paginator="true" paginatorPosition="top" rows="20"
                              >
@@ -46,7 +46,7 @@
                                          value="#{bundle.Save}"
                                          id="urlSaveButton"
                                          update=":MovieEditForm"
-                                         disabled="#{empty urlController.selected}"
+                                         disabled="#{empty movieControllerNew.selectedOne}"
                                          oncomplete="handleSubmit(args, 'ChangeUrlDialog');"/>
                             <p:commandButton value="#{bundle.Cancel}" onclick="ChangeUrlDialog.hide()"/>
                         </f:facet>

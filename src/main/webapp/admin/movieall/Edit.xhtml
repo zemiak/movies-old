@@ -108,7 +108,6 @@
 
                     <p:commandButton value="#{bundle.ChangeUrl}"
                                         update=":ChangeUrlForm"
-                                        actionListener="#{movieControllerAll.prepareUrls()}"
                                         oncomplete="PF('ChangeUrlDialog').show()"
                                         disabled="#{empty movieControllerAll.selectedOne}"
                                         id="urlAction"
