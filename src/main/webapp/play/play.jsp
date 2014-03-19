@@ -97,6 +97,7 @@
                       <li><a href="/movies/admin/genre/List.xhtml">Žánre</a></li>
                       <li><a href="/movies/admin/serie/List.xhtml">Série</a></li>
                       <li><a href="/movies/admin/language/List.xhtml">Jazyky</a></li>
+                      <li><a href="/movies/admin/about/About.xhtml">O programe</a></li>
 
                       <li><a href="#" onclick="javascript:app.refreshData();">Obnova databázy</a></li>
                   </ul>
