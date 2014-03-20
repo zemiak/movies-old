@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAC=/Applications/NetBeans.app/glassfish-4.0/glassfish/bin/asadmin
+MAC=/Applications/NetBeans/glassfish-4.0/glassfish/bin/asadmin
 LINUX=/home/glassfish/glassfish4/glassfish/bin/asadmin
 
 if [ -f "$MAC" ]

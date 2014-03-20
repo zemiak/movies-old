@@ -104,4 +104,16 @@ public class MovieService {
         
         return query.getResultList();
     }
+    
+    public List<Movie> findAllNew() {
+        List<Movie> res = new ArrayList<>();
+        
+        for (Movie movie: all()) {
+            if (null == movie.getGenreId() || movie.getGenreId().isEmpty()) {
+                res.add(movie);
+            }
+        }
+        
+        return res;
+    }
 }

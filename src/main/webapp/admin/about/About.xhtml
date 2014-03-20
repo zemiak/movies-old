@@ -14,9 +14,30 @@
         </ui:define>
 
         <ui:define name="body">
-            <p:dataTable>
-                
-            </p:dataTable>
+            <h:form>
+                <p:dataTable id="aboutData" value="#{aboutController.items}" var="item">
+                    <f:facet name="header">#{bundle.ListAboutTitle}</f:facet>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.AboutSerieTitle_title}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.title}"/>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.AboutSerieTitle_value}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.value}"/>
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <p:commandButton id="clearButton" icon="ui-icon-close"   value="#{bundle.Clear}" actionListener="#{aboutController.clearCache()}" update=":growl" />
+                        <p:commandButton id="runButton"   icon="ui-icon-play" value="#{bundle.Run}" actionListener="#{aboutController.runImport()}" update=":growl" />
+                    </f:facet>
+                </p:dataTable>
+            </h:form>
         </ui:define>
     </ui:composition>
 
