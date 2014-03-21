@@ -60,7 +60,8 @@ public final class CommandLine {
         if (result.isError()) {
             LOG.log(Level.SEVERE, "... execCmd: error code is {0}, output is {1}",
                     new Object[]{result.getExitValue(), Joiner.join(result.getOutput(), "|")});
-            throw new IllegalStateException("Exit code " + result.getExitValue() + " instead of success");
+            IllegalStateException ex = new IllegalStateException("Exit code " + result.getExitValue() + " instead of success");
+            throw ex;
         }
 
         return result.getOutput();

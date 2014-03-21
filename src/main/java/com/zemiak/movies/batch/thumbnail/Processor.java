@@ -24,7 +24,12 @@ public class Processor implements ItemProcessor {
         final File file = new File((String) movie);
         String imageName = conf.getProperty("imgPath") + file.getName();
         imageName = imageName.substring(0, imageName.lastIndexOf(".")) + ".jpg";
+        boolean exists = (new File(imageName).exists());
         
-        return ((new File(imageName).exists()) ? null : movie);
+        if (! exists) {
+            LOG.log(Level.INFO, "Will generate thumbnail for {0}", movie);
+        }
+        
+        return (exists ? null : movie);
     }
 }

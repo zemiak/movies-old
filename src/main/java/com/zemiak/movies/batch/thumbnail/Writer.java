@@ -1,13 +1,14 @@
 package com.zemiak.movies.batch.thumbnail;
 
 import com.zemiak.movies.batch.service.CommandLine;
+import com.zemiak.movies.batch.service.log.BatchLogger;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.batch.api.chunk.AbstractItemWriter;
 import javax.inject.Named;
@@ -18,7 +19,7 @@ import javax.inject.Named;
  */
 @Named("ThumbnailsWriter")
 public class Writer extends AbstractItemWriter {
-    private static final Logger LOG = Logger.getLogger(Writer.class.getName());
+    private static final BatchLogger LOG = BatchLogger.getLogger(Writer.class.getName());
 
     @Resource(name = "com.zemiak.movies")
     private Properties conf;
@@ -35,24 +36,17 @@ public class Writer extends AbstractItemWriter {
 
             imageFileName = imageFileName.substring(0, pos) + ".jpg";
 
-            final List<String> params = new ArrayList<>();
-
-            params.add("-i");
-            params.add(movieFileName);
-
-            params.add("-ss");
-            params.add(String.valueOf(offset));
-
-            params.add("-vf");
-            params.add("scale=220x160");
-
-            params.add("-frames:v");
-            params.add("1");
-
-            params.add(imageFileName);
-
-            LOG.log(Level.INFO, "Generating thumbnail {0} ...", imageFileName);
-            CommandLine.execCmd(conf.getProperty("ffmpeg"), params);
+            final List<String> params = Arrays.asList(new String[]{
+                "-s", "220", "-i", movieFileName, "-o", imageFileName
+            });
+            
+            try {
+                CommandLine.execCmd(conf.getProperty("ffmpeg"), params);
+                LOG.log(Level.INFO, "Generated thumbnail {0} ...", imageFileName);
+            } catch (IllegalStateException ex) {
+                LOG.log(Level.SEVERE, "DID NOT generate thumbnail {0}: {1} ...", 
+                        new Object[]{imageFileName, ex.getMessage()});
+            }            
         }
     }
 }

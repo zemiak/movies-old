@@ -3,7 +3,7 @@
 <resources>
     <custom-resource res-type="java.util.Properties" jndi-name="com.zemiak.movies" 
                      factory-class="org.glassfish.resources.custom.factory.PropertiesFactory">
-      <property name="ffmpeg" value="/usr/bin/ffmpeg"></property>
+      <property name="ffmpeg" value="/usr/bin/ffmpegthumbnailer"></property>
       <property name="path" value="/mnt/media/Movies/"></property>
       <property name="imgPath" value="/home/sites/movies/img/movies/"></property>
       <property name="mp4tags" value="/usr/bin/mp4tags"></property>

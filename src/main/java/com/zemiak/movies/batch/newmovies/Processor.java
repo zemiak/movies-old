@@ -39,8 +39,8 @@ public class Processor implements ItemProcessor {
 
     @Override
     public Object processItem(final Object movie) throws Exception {
-        final String fileName = (String) movie;
-        if (! exists(getRelativeFilename(fileName))) {
+        final String fileName = getRelativeFilename((String) movie);
+        if (! exists(fileName)) {
             LOG.log(Level.INFO, "Found a new file: {0}", fileName);
             return fileName;
         }
@@ -49,11 +49,11 @@ public class Processor implements ItemProcessor {
     }
 
     private String getRelativeFilename(final String absoluteFilename) {
-        String absoluteWithSlashes = absoluteFilename.replaceAll("\\" + RemoveFileList.PATH_SEPARATOR, "/");
+        String absoluteWithSlashes = absoluteFilename.replaceAll(RemoveFileList.PATH_SEPARATOR, "/");
         if (absoluteWithSlashes.startsWith(prefix)) {
             absoluteWithSlashes = absoluteWithSlashes.substring(prefix.length());
         }
-
+        
         return absoluteWithSlashes;
     }
 
