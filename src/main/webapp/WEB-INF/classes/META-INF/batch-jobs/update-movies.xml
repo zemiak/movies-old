@@ -102,6 +102,10 @@
             <batchlet ref="BatchRefreshStorage"></batchlet>
         </step>
         
+        <step id="saveLog">
+            <batchlet ref="PersistLogFile"></batchlet>
+        </step>
+        
         <step id="sendLog">
             <batchlet ref="SendLogFile"></batchlet>
         </step>
