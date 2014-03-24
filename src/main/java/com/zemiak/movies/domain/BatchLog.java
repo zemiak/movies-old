@@ -2,6 +2,7 @@ package com.zemiak.movies.domain;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -15,6 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -24,9 +26,12 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name="batch_log", schema="data")
 @NamedQueries({
-    @NamedQuery(name = "BatchLog.findAll", query = "SELECT b FROM BatchLog b ORDER BY b.created")
+    @NamedQuery(name = "BatchLog.findAll", query = "SELECT b FROM BatchLog b ORDER BY b.created DESC")
 })
 public class BatchLog implements Serializable {
+    @Transient
+    static final private int SHORTENED_LENGTH = 64;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -39,7 +44,7 @@ public class BatchLog implements Serializable {
     
     @Temporal(TemporalType.TIMESTAMP)
     @NotNull
-    private Timestamp created;
+    private Date created;
 
     public BatchLog() {
         created = new Timestamp(new Date().getTime());
@@ -49,23 +54,32 @@ public class BatchLog implements Serializable {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getText() {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText(final String text) {
         this.text = text;
     }
 
-    public Timestamp getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(Timestamp created) {
+    public void setCreated(final Date created) {
         this.created = created;
+    }
+    
+    public String getShortenedText() {
+        String text = this.text;
+        if (text.length() > SHORTENED_LENGTH) {
+            text = text.substring(0, SHORTENED_LENGTH) + " ...";
+        }
+        
+        return text;
+    }
+    
+    public String getFormattedCreated() {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(created);
     }
 }

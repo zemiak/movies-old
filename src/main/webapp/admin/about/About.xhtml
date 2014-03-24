@@ -14,30 +14,73 @@
         </ui:define>
 
         <ui:define name="body">
+            <p:spacer height="20" />
+            
             <h:form>
                 <p:dataTable id="aboutData" value="#{aboutController.items}" var="item">
                     <f:facet name="header">#{bundle.ListAboutTitle}</f:facet>
 
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="#{bundle.AboutSerieTitle_title}"/>
+                            <h:outputText value="#{bundle.AboutTitle_title}"/>
                         </f:facet>
                         <h:outputText value="#{item.title}"/>
                     </p:column>
 
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="#{bundle.AboutSerieTitle_value}"/>
+                            <h:outputText value="#{bundle.AboutTitle_value}"/>
                         </f:facet>
                         <h:outputText value="#{item.value}"/>
                     </p:column>
+                </p:dataTable>
+            </h:form>
+            
+            <p:spacer height="60" />
+            
+            <h:form>    
+                <p:dataTable id="logData" value="#{batchLogController.items}" var="item"
+                             selectionMode="single" selection="#{batchLogController.selected}"
+                             paginator="true"
+                             paginatorPosition="bottom"
+                             rowKey="#{item.id}"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50">
+                    <f:facet name="header">#{bundle.ListLogTitle}</f:facet>
+                    
+                    <p:ajax event="rowSelect"   update="viewButton"/>
+                    <p:ajax event="rowUnselect" update="viewButton"/>
+                    
+                    <p:column width="50">
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.AboutBatchLogTitle_id}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.id}"/>
+                    </p:column>
+
+                    <p:column width="100">
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.AboutBatchLogTitle_date}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.formattedCreated}"/>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.AboutBatchLogTitle_text}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.shortenedText}"/>
+                    </p:column>
 
                     <f:facet name="footer">
+                        <p:commandButton id="viewButton" icon="ui-icon-search" value="#{bundle.View}" update=":BatchLogViewForm" oncomplete="PF('BatchLogViewDialog').show()" disabled="#{empty batchLogController.selected}"/>
                         <p:commandButton id="clearButton" icon="ui-icon-close"   value="#{bundle.Clear}" actionListener="#{aboutController.clearCache()}" update=":growl" />
                         <p:commandButton id="runButton"   icon="ui-icon-play" value="#{bundle.Run}" actionListener="#{aboutController.runImport()}" update=":growl" />
                     </f:facet>
                 </p:dataTable>
             </h:form>
+            
+            <ui:include src="View.xhtml"/>
         </ui:define>
     </ui:composition>
 

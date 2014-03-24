@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BatchLogViewDlg" widgetVar="BatchLogViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewBatchLogTitle}" closeOnEscape="true">
+            <h:form id="BatchLogViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{not empty batchLogController.selected}">
+                        <h:outputText value="#{bundle.ViewBatchLogLabel_id}"/>
+                        <h:outputText value="#{batchLogController.selected.id}" title="#{bundle.ViewBatchLogTitle_id}"/>
+                        
+                        <h:outputText value="#{bundle.ViewBatchLogLabel_date}"/>
+                        <h:outputText value="#{batchLogController.selected.formattedCreated}" title="#{bundle.ViewBatchLogTitle_date}"/>
+                        
+                        <h:outputText value="#{bundle.ViewBatchLogLabel_text}"/>
+                        <p:inputTextarea readonly="true" cols="80" rows="20" autoResize="false"
+                                         value="#{batchLogController.selected.text}" 
+                                         title="#{bundle.ViewBatchLogTitle_text}"/>
+                    </p:panelGrid>
+                    
+                    <p:commandButton value="#{bundle.Close}" onclick="BatchLogViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
