@@ -13,14 +13,14 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2">
                         <p:outputLabel value="#{bundle.EditMovieLabel_subtitles}" for="subtitles" />
-                        <p:selectOneMenu id="subtitles" value="#{movieControllerNew.subtitles}" >
+                        <p:selectOneMenu id="subtitles" value="#{movieControllerNew.mass.subtitles}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{languageController.itemsAvailableSelectOne}"
                                            var="subtitlesItem"
                                            itemValue="#{subtitlesItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton action="#{movieControllerNew.changeSubtitles()}"
+                    <p:commandButton action="#{movieControllerNew.mass.changeSubtitles()}"
                                      value="#{bundle.Save}"
                                      update="display,:MovieListForm:datalist,:growl"
                                         oncomplete="handleSubmit(args, 'ChangeSubtitlesDialog');"/>

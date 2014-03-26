@@ -13,14 +13,14 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2">
                         <p:outputLabel value="#{bundle.EditMovieLabel_serieId}" for="serieId" />
-                        <p:selectOneMenu id="serieId" value="#{movieControllerAll.serie}" >
+                        <p:selectOneMenu id="serieId" value="#{movieControllerAll.mass.serie}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{serieController.itemsAvailableSelectOne}"
                                            var="serieIdItem"
                                            itemValue="#{serieIdItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton action="#{movieControllerAll.changeSerie()}"
+                    <p:commandButton action="#{movieControllerAll.mass.changeSerie()}"
                                      value="#{bundle.Save}"
                                      update="display,:MovieListForm:datalist,:growl"
                                      oncomplete="handleSubmit(args, 'ChangeSerieDialog');"/>

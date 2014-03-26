@@ -1,4 +1,4 @@
-package com.zemiak.movies.admin.jsf;
+package com.zemiak.movies.admin.jsf.movie;
 
 import com.zemiak.movies.domain.Movie;
 

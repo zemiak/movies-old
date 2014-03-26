@@ -126,13 +126,13 @@
 
                         <p:commandButton id="orderUpButton"   icon="ui-icon-triangle-1-n"
                                          value="#{bundle.OrderUp}"
-                                         actionListener="#{movieControllerAll.orderUp}"
+                                         actionListener="#{movieControllerAll.mass.orderUp}"
                                          update=":growl,datalist"
                                          disabled="#{empty movieControllerAll.selected}"/>
 
                         <p:commandButton id="orderDownButton"   icon="ui-icon-triangle-1-s"
                                          value="#{bundle.OrderDown}"
-                                         actionListener="#{movieControllerAll.orderDown}"
+                                         actionListener="#{movieControllerAll.mass.orderDown}"
                                          update=":growl,datalist"
                                          disabled="#{empty movieControllerAll.selected}"/>
 
@@ -154,7 +154,7 @@
                                         disabled="#{movieControllerAll.selectionEmpty}"
                                         id="descriptionAction"
                                         update=":growl,datalist"
-                                        action="#{movieControllerAll.fetchDescriptions()}"
+                                        action="#{movieControllerAll.mass.fetchDescriptions()}"
                                         icon="ui-icon-script"/>
 
                             <p:separator />

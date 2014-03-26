@@ -13,14 +13,14 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2">
                         <p:outputLabel value="#{bundle.EditMovieLabel_originalLanguage}" for="originalLanguage" />
-                        <p:selectOneMenu id="originalLanguage" value="#{movieControllerAll.originalLanguage}" >
+                        <p:selectOneMenu id="originalLanguage" value="#{movieControllerAll.mass.originalLanguage}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{languageController.itemsAvailableSelectOne}"
                                            var="originalLanguageItem"
                                            itemValue="#{originalLanguageItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton action="#{movieControllerAll.changeOriginalLanguage()}"
+                    <p:commandButton action="#{movieControllerAll.mass.changeOriginalLanguage()}"
                                      value="#{bundle.Save}"
                                      update="display,:MovieListForm:datalist,:growl"
                                      oncomplete="handleSubmit(args, 'ChangeOriginalLanguageDialog');"/>
