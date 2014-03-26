@@ -35,17 +35,17 @@ public class Writer extends AbstractItemWriter {
 
             imageFileName = imageFileName.substring(0, pos) + ".jpg";
 
-            final List<String> params = Arrays.asList(new String[]{
+            final List<String> params = Arrays.asList(
                 "-s", "220", "-i", movieFileName, "-o", imageFileName
-            });
-            
+            );
+
             try {
                 CommandLine.execCmd(conf.getProperty("ffmpeg"), params);
                 LOG.log(Level.INFO, "Generated thumbnail {0} ...", imageFileName);
             } catch (IllegalStateException ex) {
-                LOG.log(Level.SEVERE, "DID NOT generate thumbnail {0}: {1} ...", 
+                LOG.log(Level.SEVERE, "DID NOT generate thumbnail {0}: {1} ...",
                         new Object[]{imageFileName, ex.getMessage()});
-            }            
+            }
         }
     }
 }
