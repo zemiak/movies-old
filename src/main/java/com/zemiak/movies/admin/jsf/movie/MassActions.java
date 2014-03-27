@@ -43,11 +43,9 @@ public class MassActions {
             @Override
             public void change(final Movie movie, final MovieFacade facade) {
                 Integer order = movie.getDisplayOrder() == null ? 2 : movie.getDisplayOrder();
-
-                if (order + offset > 0) {
-                    movie.setDisplayOrder(order + offset);
-                    getFacade().edit(movie);
-                }
+                
+                movie.setDisplayOrder((order + offset > 0) ? (order + offset) : 1);
+                getFacade().edit(movie);
             }
         }, successMessage);
     }
