@@ -1,0 +1,9 @@
+connect
+/subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql,driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
+data-source add \
+    --name=ZemiakMovies \
+    --driver-name=postgresql \
+    --jndi-name=java:jboss/datasources/ZemiakMovies \
+    --user-name=movies_user \
+    --password=movies/0 \
+    --connection-url=jdbc:postgresql://localhost:5432

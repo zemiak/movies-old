@@ -10,14 +10,18 @@ else
     export JBOSS_HOME="$LINUX"
 fi
 
-if [ ! -d "$JBOSS_HOME" ]
+CLI="${JBOSS_HOME}bin/jboss-cli.sh"
+
+if [ ! -x "$CLI" ]
 then
-    echo "Wildfly home directory $JBOSS_HOME not found"
+    echo "Wildfly command line $JBOSS_HOME not found"
     exit 1
 fi
 
 if [ -z "$1" ]
 then
-    echo "$0 wildfly-resources-file.xml"
+    echo "Provide configuration CLI file"
+    exit 2
 fi
 
+$CLI --file="$1"
