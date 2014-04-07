@@ -1,0 +1,34 @@
+#!/bin/bash
+
+## ffmpeg params:
+# -i movieFileName -ss offset -vf scale=220x160 -frames:v 1 imageFileName
+
+## sent by upstream:
+# -s 220 -i movieFileName -o imageFileName
+
+while getopts s:i:o: OPT; do
+    case "$OPT" in
+    	s) echo ignoring size >/dev/null
+	;;
+	i) input="$OPTARG"
+	;;
+	o) output="$OPTARG"
+	;;
+	*) exit 1;;
+    esac
+done
+
+shift $((OPTIND-1))
+[ "$1" = "--" ] && shift
+
+if [ -z "$input" ] ; then
+    echo "Input file missing"
+    exit 2
+fi
+
+if [ -z "$output" ] ; then
+    echo "Output file missing"
+    exit 3
+fi
+
+ffmpeg -i "$input" -ss "$(((RANDOM%40)+50))" -vf scale=220x160 -frames:v 1 "$output"
