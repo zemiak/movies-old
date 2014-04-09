@@ -68,6 +68,7 @@ abstract public class AbstractMovieController implements Serializable {
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MovieUpdated"));
+        refresh();
     }
 
     public void destroy() {
