@@ -33,7 +33,7 @@ public class BatchLog implements Serializable {
     static final private int SHORTENED_LENGTH = 64;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id")
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;

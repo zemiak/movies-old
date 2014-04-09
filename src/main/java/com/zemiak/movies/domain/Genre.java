@@ -39,7 +39,7 @@ public class Genre implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id")
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;

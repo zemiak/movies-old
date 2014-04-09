@@ -38,7 +38,7 @@ public class Serie implements Serializable {
 
     @Id
     @Basic(optional = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id")
     @Column(name = "id")
     private Integer id;
 

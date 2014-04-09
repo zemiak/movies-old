@@ -40,7 +40,7 @@ public class Movie implements Serializable {
     private static final long serialVersionUID = 3L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id")
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
