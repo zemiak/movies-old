@@ -38,14 +38,16 @@ public class Writer extends AbstractItemWriter {
     }
 
     private Movie createMovie(final String newFile) {
-        final Movie m = new Movie();
-        final String name = new File(newFile).getName();
+        final Movie movie = new Movie();
+        final String baseFileName = new File(newFile).getName();
+        final String name = baseFileName.substring(0, baseFileName.lastIndexOf("."));
 
-        m.setFileName(newFile);
-        m.setGenreId(em.getReference(Genre.class, 0));
-        m.setSerieId(em.getReference(Serie.class, 0));
-        m.setName(name.substring(0, name.lastIndexOf(".")));
+        movie.setFileName(newFile);
+        movie.setGenreId(em.getReference(Genre.class, 0));
+        movie.setSerieId(em.getReference(Serie.class, 0));
+        movie.setName(name);
+        movie.setPictureFileName(name + ".jpg");
 
-        return m;
+        return movie;
     }
 }
