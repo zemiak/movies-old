@@ -155,8 +155,11 @@ abstract public class AbstractMovieController implements Serializable {
     }
 
     public void changeUrl() {
-        System.err.println("changeUrl()");
         selectedOne.setUrl(urls.getSelected().getUrl());
+        
+        if (null == selectedOne.getDescription() || selectedOne.getDescription().trim().isEmpty()) {
+            fetchDescription();
+        }
     }
 
     public UrlController getUrls() {
