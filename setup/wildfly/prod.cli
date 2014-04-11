@@ -1,0 +1,23 @@
+connect
+
+###
+# Setup DB connection
+###
+
+/subsystem=datasources/data-source=ZemiakMovies/:add(jndi-name=java\:jboss\/datasources\/ZemiakMovies,driver-name=postgresql,connection-url=jdbc\:postgresql\:\/\/lenovo-server.local\:5432\/movies,password=movies\/0,user-name=movies_user)
+/subsystem=datasources/data-source=ZemiakMovies/:enable
+reload
+
+###
+# Add JNDI String Configuration
+###
+
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies\/ffmpeg:add(value="\/usr\/bin\/ffmpegthumbnailer",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies\/path:add(value="\/mnt\/media\/Movies\/",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies\/imgPath:add(value="\/home\/sites\/movies\/img\/movie\/",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies\/mp4tags:add(value="\/usr\/bin\/mp4tags",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies\/mp4info:add(value="\/usr\/bin\/mp4info",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies\/mailFrom:add(value="movies\@lenovo-server\.local",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies\/mailTo:add(value="zemiak\@gmail\.com",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies\/mailSubject:add(value="Movies\: Batch Results",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies\/backendUrl:add(value="http\:\/\/lenovo-server\.local\:8080\/movies\/",binding-type=simple)
