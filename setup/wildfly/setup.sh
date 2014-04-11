@@ -18,11 +18,11 @@ then
     exit 1
 fi
 
-if [ -z "$1".cli ]
+if [ -z "$1.cli" ]
 then
-    echo "Provide configuration CLI file base name (dev, prod...)"
+    echo "Provide environment name (dev, prod...)"
     exit 2
 fi
 
 $CLI --file=common.cli
-$CLI --file="$1".cli
+$CLI --file="$1.cli"

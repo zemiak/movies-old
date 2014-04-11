@@ -16,9 +16,9 @@ then
     exit 1
 fi
 
-if [ -z "$1" ]
+if [ ! -f "$1.xml" ]
 then
-    echo "$0 glassfish-resources-file.xml"
+    echo "$0 environment"
 fi
 
-$COMMAND add-resources --port 4848 "$1"
+$COMMAND add-resources --port 4848 "$1.xml"
