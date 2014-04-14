@@ -2,12 +2,16 @@
 
 MAC=/Applications/NetBeans/glassfish-4.0/glassfish/bin/asadmin
 LINUX=/home/glassfish/glassfish4/glassfish/bin/asadmin
+WINDOWS=/e/Java/glassfish4/bin/asadmin
 
 if [ -f "$MAC" ]
 then
     COMMAND="$MAC"
-else
+elif [ -f "$LINUX" ]
+then
     COMMAND="$LINUX"
+else
+    COMMAND="$WINDOWS"
 fi
 
 if [ ! -f "$COMMAND" ]

@@ -2,13 +2,19 @@
 
 MAC=/Users/vasko/bin/wildfly8/
 LINUX=/home/wildfly/wildfly8/
+WINDOWS=/e/Java/wildfly/
 
 if [ -d "$MAC" ]
 then
     export JBOSS_HOME="$MAC"
-else
+elif [ -d "$LINUX" ]
+then
     export JBOSS_HOME="$LINUX"
+else
+    export JBOSS_HOME="$WINDOWS"
 fi
+
+
 
 CLI="${JBOSS_HOME}bin/jboss-cli.sh"
 
