@@ -1,4 +1,4 @@
-package com.zemiak.movies.boundary;
+package com.zemiak.movies.service;
 
 import com.zemiak.movies.domain.BatchLog;
 import com.zemiak.movies.domain.CacheClearEvent;

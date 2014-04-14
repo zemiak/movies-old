@@ -1,7 +1,7 @@
 package com.zemiak.movies.admin.jsf;
 
 import com.zemiak.movies.admin.jsf.util.JsfUtil;
-import com.zemiak.movies.boundary.BatchLogService;
+import com.zemiak.movies.service.BatchLogService;
 import com.zemiak.movies.domain.BatchLog;
 import com.zemiak.movies.domain.CacheClearEvent;
 import java.io.Serializable;

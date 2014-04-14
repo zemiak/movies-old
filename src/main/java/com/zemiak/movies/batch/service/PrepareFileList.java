@@ -1,14 +1,13 @@
 package com.zemiak.movies.batch.service;
 
 import com.zemiak.movies.batch.service.log.BatchLogger;
+import com.zemiak.movies.service.ConfigService;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.logging.Level;
-import javax.annotation.Resource;
 import javax.batch.api.Batchlet;
 import javax.batch.runtime.context.JobContext;
 import javax.inject.Inject;
@@ -23,8 +22,7 @@ public class PrepareFileList implements Batchlet {
     @Inject
     JobContext jobCtx;
 
-    @Resource(name = "com.zemiak.movies")
-    private Properties conf;
+    @Inject private ConfigService conf;
 
     List<String> files = new ArrayList<>();
 
@@ -38,7 +36,7 @@ public class PrepareFileList implements Batchlet {
         String fileList = getFileListName();
         long counter = 0;
 
-        File mainDir = new File(conf.getProperty("path"));
+        File mainDir = new File(conf.getPath());
         try (FileWriter stream = new FileWriter(fileList)) {
             final String newLine = System.getProperty("line.separator");
 

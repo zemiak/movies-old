@@ -1,6 +1,6 @@
 package com.zemiak.movies.boundary.backbonerest;
 
-import com.zemiak.movies.boundary.MovieService;
+import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.domain.Movie;
 import java.util.ArrayList;
 import java.util.List;

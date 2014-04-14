@@ -1,6 +1,6 @@
 package com.zemiak.movies.servlet;
 
-import com.zemiak.movies.boundary.FileStreamer;
+import com.zemiak.movies.service.FileStreamer;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

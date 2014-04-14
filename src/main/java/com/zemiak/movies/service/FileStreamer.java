@@ -1,8 +1,8 @@
-package com.zemiak.movies.boundary;
+package com.zemiak.movies.service;
 
+import com.zemiak.movies.boundary.models.ConfigBean;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.lookup.CDILookup;
-import com.zemiak.movies.lookup.CustomResourceLookup;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
@@ -13,9 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.Collection;
 import java.util.Enumeration;
-import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
@@ -29,32 +27,31 @@ public class FileStreamer {
     private static final int BUFFER_LENGTH = 1024 * 512;
     private static final long EXPIRE_TIME = 1000 * 60 * 60 * 24;
     private static final Pattern RANGE_PATTERN = Pattern.compile("bytes=(?<start>\\d*)-(?<end>\\d*)");
-    
+
     private final String videoPath;
     private final MovieService service;
 
     public FileStreamer() {
-        final Properties conf = new CustomResourceLookup().lookup("com.zemiak.movies");
-        videoPath = conf.getProperty("path");
+        videoPath = new ConfigBean().getPath();
         service = new CDILookup().lookup(MovieService.class);
     }
-    
-    public void serveFileRange(final HttpServletRequest request, final HttpServletResponse response) 
+
+    public void serveFileRange(final HttpServletRequest request, final HttpServletResponse response)
              {
         final Integer videoId;
-        
+
         logRequest(request);
-        
+
         try {
             videoId = Integer.valueOf(URLDecoder.decode(request.getParameter("id"), "UTF-8"));
         } catch (UnsupportedEncodingException ex) {
             System.err.println("Decoding exception: " + ex.getMessage());
             return;
         }
-        
+
         final Movie movie = service.find(videoId);
         final String videoFilename = movie.getFileName();
-        
+
         Path video = Paths.get(videoPath, videoFilename);
 
         int length;
@@ -64,7 +61,7 @@ public class FileStreamer {
             System.err.println("Cannot ger file size: " + ex.getMessage());
             return;
         }
-        
+
         int start = 0;
         int end = length - 1;
 
@@ -91,7 +88,7 @@ public class FileStreamer {
         response.setHeader("Content-Range", String.format("bytes %s-%s/%s", start, end, length));
         response.setHeader("Content-Length", String.format("%s", contentLength));
         response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
-        
+
         int bytesRead;
         int bytesLeft = contentLength;
 
@@ -104,7 +101,7 @@ public class FileStreamer {
             System.err.println("Cannot open video file: " + ex.getMessage());
             return;
         }
-        
+
         OutputStream output;
         try {
             output = response.getOutputStream();
@@ -112,7 +109,7 @@ public class FileStreamer {
             System.err.println("Cannot open streaming output stream: " + ex.getMessage());
             return;
         }
-        
+
         try {
             input.position(start);
 
@@ -130,37 +127,37 @@ public class FileStreamer {
             } catch (IOException ex) {
                 System.err.println("Cannot close video file: " + ex.getMessage());
             }
-            
+
             try {
                 output.close();
             } catch (IOException ex) {
                 System.err.println("Cannot close output stream: " + ex.getMessage());
             }
         }
-        
+
         logResponse(response);
     }
 
     private void logRequest(final HttpServletRequest request) {
         System.out.println("===");
         System.out.println("Request: " + request.getMethod());
-        
+
         Enumeration<String> headers = request.getHeaderNames();
         while (headers.hasMoreElements()) {
             String header = headers.nextElement();
             System.out.println(header + ": " + request.getHeader(header));
         }
-        
+
         System.out.println("---");
     }
 
     private void logResponse(final HttpServletResponse response) {
         System.out.println("Response: " + response.getStatus());
-        
+
         for (String header: response.getHeaderNames()) {
             System.out.println(header + ": " + response.getHeader(header));
         }
-        
+
         System.out.println("===");
     }
 }

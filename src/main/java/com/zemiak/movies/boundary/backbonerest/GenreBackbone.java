@@ -1,6 +1,6 @@
 package com.zemiak.movies.boundary.backbonerest;
 
-import com.zemiak.movies.boundary.GenreService;
+import com.zemiak.movies.service.GenreService;
 import com.zemiak.movies.domain.Genre;
 import java.util.List;
 import javax.ejb.Stateless;

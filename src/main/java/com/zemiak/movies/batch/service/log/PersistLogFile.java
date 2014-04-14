@@ -6,10 +6,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Resource;
 import javax.batch.api.Batchlet;
 import javax.batch.runtime.context.JobContext;
 import javax.inject.Inject;
@@ -31,9 +29,6 @@ public class PersistLogFile implements Batchlet {
     @PersistenceContext
     EntityManager em;
 
-    @Resource(name = "com.zemiak.movies")
-    private Properties conf;
-
     public PersistLogFile() {
     }
 
@@ -54,8 +49,8 @@ public class PersistLogFile implements Batchlet {
         final Path filePath = Paths.get(BatchLogger.getLogFileName());
         final byte[] content = Files.readAllBytes(filePath);
         final String text = new String(content, "UTF-8");
-        
-        final BatchLog entry = new BatchLog();        
+
+        final BatchLog entry = new BatchLog();
         entry.setText(text);
         em.persist(entry);
     }

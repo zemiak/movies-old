@@ -3,11 +3,11 @@ package com.zemiak.movies.batch.newmovies;
 import com.zemiak.movies.batch.service.RemoveFileList;
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.domain.Movie;
-import java.util.Properties;
+import com.zemiak.movies.service.ConfigService;
 import java.util.logging.Level;
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.batch.api.chunk.ItemProcessor;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -25,15 +25,14 @@ public class Processor implements ItemProcessor {
     @PersistenceContext
     private EntityManager em;
 
-    @Resource(name = "com.zemiak.movies")
-    private Properties conf;
+    @Inject private ConfigService conf;
 
     private String prefix;
     private Query query;
 
     @PostConstruct
     public void init() {
-        prefix = conf.getProperty("path");
+        prefix = conf.getPath();
         query = em.createNamedQuery("Movie.findByFileName");
     }
 
@@ -53,7 +52,7 @@ public class Processor implements ItemProcessor {
         if (absoluteWithSlashes.startsWith(prefix)) {
             absoluteWithSlashes = absoluteWithSlashes.substring(prefix.length());
         }
-        
+
         return absoluteWithSlashes;
     }
 

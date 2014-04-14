@@ -12,12 +12,12 @@ reload
 # Add JNDI String Configuration
 ###
 
-/subsystem=naming/binding=java\:jboss\/com.zemiak.movies\/ffmpeg:add(value="\/Users\/vasko\/bin\/ffmpegthumbnailer",binding-type=simple)
-/subsystem=naming/binding=java\:jboss\/com.zemiak.movies\/path:add(value="\/Volumes\/media\/Movies\/",binding-type=simple)
-/subsystem=naming/binding=java\:jboss\/com.zemiak.movies\/imgPath:add(value="\/Users\/vasko\/Pictures\/movies\/",binding-type=simple)
-/subsystem=naming/binding=java\:jboss\/com.zemiak.movies\/mp4tags:add(value="\/Users\/vasko\/bin\/mp4tags",binding-type=simple)
-/subsystem=naming/binding=java\:jboss\/com.zemiak.movies\/mp4info:add(value="\/Users\/vasko\/bin\/mp4info",binding-type=simple)
-/subsystem=naming/binding=java\:jboss\/com.zemiak.movies\/mailFrom:add(value="movies\@lenovo-server\.local",binding-type=simple)
-/subsystem=naming/binding=java\:jboss\/com.zemiak.movies\/mailTo:add(value="zemiak\@gmail\.com",binding-type=simple)
-/subsystem=naming/binding=java\:jboss\/com.zemiak.movies\/mailSubject:add(value="Movies\: Batch Results",binding-type=simple)
-/subsystem=naming/binding=java\:jboss\/com.zemiak.movies\/backendUrl:add(value="http\:\/\/lenovo-server\.local\:8080\/movies\/",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies.ffmpeg:add(value="\/Users\/vasko\/bin\/ffmpegthumbnailer",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies.path:add(value="\/Volumes\/media\/Movies\/",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies.imgPath:add(value="\/Users\/vasko\/Pictures\/movies\/",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies.mp4tags:add(value="\/Users\/vasko\/bin\/mp4tags",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies.mp4info:add(value="\/Users\/vasko\/bin\/mp4info",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies.mailFrom:add(value="movies\@lenovo-server\.local",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies.mailTo:add(value="zemiak\@gmail\.com",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies.mailSubject:add(value="Movies\: Batch Results",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies.backendUrl:add(value="http\:\/\/lenovo-server.local\/movies\/play\.php",binding-type=simple)

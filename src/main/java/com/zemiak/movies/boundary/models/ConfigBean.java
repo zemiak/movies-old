@@ -1,16 +1,20 @@
 package com.zemiak.movies.boundary.models;
 
-import com.zemiak.movies.lookup.CustomResourceLookup;
-import java.util.Properties;
+import com.zemiak.movies.lookup.CDILookup;
+import com.zemiak.movies.service.ConfigService;
 
 public class ConfigBean {
-    private Properties conf;
-    
+    private ConfigService conf;
+
     public ConfigBean() {
-        conf = new CustomResourceLookup().lookup("com.zemiak.movies");
+        conf = new CDILookup().lookup(ConfigService.class);
     }
-    
+
     public String getBackendUrl() {
-        return conf.getProperty("backendUrl");
+        return conf.getBackendUrl();
+    }
+
+    public String getPath() {
+        return conf.getPath();
     }
 }

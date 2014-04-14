@@ -1,11 +1,11 @@
 package com.zemiak.movies.admin.jsf;
 
 import com.zemiak.movies.admin.jsf.util.JsfUtil;
-import com.zemiak.movies.boundary.BatchRunner;
-import com.zemiak.movies.boundary.GenreService;
-import com.zemiak.movies.boundary.LanguageService;
-import com.zemiak.movies.boundary.MovieService;
-import com.zemiak.movies.boundary.SerieService;
+import com.zemiak.movies.service.BatchRunner;
+import com.zemiak.movies.service.GenreService;
+import com.zemiak.movies.service.LanguageService;
+import com.zemiak.movies.service.MovieService;
+import com.zemiak.movies.service.SerieService;
 import com.zemiak.movies.domain.AboutItem;
 import com.zemiak.movies.domain.CacheClearEvent;
 import java.io.Serializable;

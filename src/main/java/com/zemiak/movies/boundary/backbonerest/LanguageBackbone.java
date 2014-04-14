@@ -1,6 +1,6 @@
 package com.zemiak.movies.boundary.backbonerest;
 
-import com.zemiak.movies.boundary.LanguageService;
+import com.zemiak.movies.service.LanguageService;
 import com.zemiak.movies.domain.Language;
 import java.util.List;
 import javax.ejb.Stateless;

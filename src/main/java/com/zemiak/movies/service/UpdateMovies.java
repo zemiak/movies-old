@@ -1,4 +1,4 @@
-package com.zemiak.movies.boundary;
+package com.zemiak.movies.service;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

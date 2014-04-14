@@ -2,10 +2,10 @@ package com.zemiak.movies.batch.metadata;
 
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.domain.Movie;
-import java.util.Properties;
+import com.zemiak.movies.service.ConfigService;
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.batch.api.chunk.ItemProcessor;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -23,8 +23,7 @@ public class Processor implements ItemProcessor {
     @PersistenceContext
     private EntityManager em;
 
-    @Resource(name = "com.zemiak.movies")
-    private Properties conf;
+    @Inject private ConfigService conf;
 
     private Query query;
 
@@ -36,7 +35,7 @@ public class Processor implements ItemProcessor {
     @Override
     public Object processItem(final Object movieName) throws Exception {
         final String fileName = (String) movieName;
-        Movie movie = find(fileName.substring(conf.getProperty("path").length()));
+        Movie movie = find(fileName.substring(conf.getPath().length()));
         MovieMetadata data = new MetadataReader(fileName, movie).get();
 
 

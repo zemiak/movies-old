@@ -3,13 +3,12 @@ package com.zemiak.movies.batch.metadata;
 import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.description.DescriptionReader;
 import com.zemiak.movies.batch.service.log.BatchLogger;
+import com.zemiak.movies.service.ConfigService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Resource;
 import javax.batch.api.chunk.AbstractItemWriter;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,7 +23,7 @@ import javax.persistence.PersistenceContext;
 public class Writer extends AbstractItemWriter {
     private static final BatchLogger LOG = BatchLogger.getLogger(Writer.class.getName());
 
-    @Resource(name = "com.zemiak.movies") private Properties conf;
+    @Inject private ConfigService conf;
     private final DescriptionReader descriptions = new DescriptionReader();
     @PersistenceContext private EntityManager em;
 
@@ -38,7 +37,7 @@ public class Writer extends AbstractItemWriter {
             MovieMetadata data = (MovieMetadata) obj;
 
             if (null != data) {
-                String fileName = conf.getProperty("path") + data.getMovie().getFileName();
+                String fileName = conf.getPath() + data.getMovie().getFileName();
                 updateName(fileName, data);
                 updateGenre(fileName, data);
                 updateComment(fileName, data);
@@ -54,7 +53,7 @@ public class Writer extends AbstractItemWriter {
         params.add(fileName);
 
         try {
-            CommandLine.execCmd(conf.getProperty("mp4tags"), params);
+            CommandLine.execCmd(conf.getMp4info(), params);
             LOG.info(String.format("Updated %s with %s on %s", commandLineSwitch, value, fileName));
         } catch (IOException | InterruptedException | IllegalStateException ex) {
             Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, "Cannot update " + commandLineSwitch + " for " + fileName, ex);

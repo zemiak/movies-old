@@ -2,7 +2,6 @@ package com.zemiak.movies.batch.service.log;
 
 import java.io.File;
 import java.util.Date;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.activation.DataHandler;
@@ -22,6 +21,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import com.zemiak.movies.service.ConfigService;
 
 /**
  *
@@ -37,8 +37,8 @@ public class SendLogFile implements Batchlet {
     @Resource(name = "mail/connect")
     private Session mailSession;
 
-    @Resource(name = "com.zemiak.movies")
-    private Properties conf;
+    @Inject
+    private ConfigService conf;
 
     public SendLogFile() {
     }
@@ -63,9 +63,9 @@ public class SendLogFile implements Batchlet {
 
     private void sendLogFile() throws MessagingException {
         final Message message = new MimeMessage(mailSession);
-        message.setFrom(new InternetAddress(conf.getProperty("mailFrom")));
-        message.setRecipient(Message.RecipientType.TO, new InternetAddress(conf.getProperty("mailTo")));
-        message.setSubject(conf.getProperty("mailSubject"));
+        message.setFrom(new InternetAddress(conf.getMailFrom()));
+        message.setRecipient(Message.RecipientType.TO, new InternetAddress(conf.getMailTo()));
+        message.setSubject(conf.getMailSubject());
         message.setText("Batch run ended on " + new Date());
 
         MimeBodyPart messageBodyPart = new MimeBodyPart();
@@ -80,7 +80,7 @@ public class SendLogFile implements Batchlet {
 
         Transport.send(message);
 
-        LOG.log(Level.INFO, "Sent LOG file to {0}", conf.getProperty("mailTo"));
+        LOG.log(Level.INFO, "Sent LOG file to {0}", conf.getMailTo());
 
         //BatchLogger.deleteLogFile();
     }

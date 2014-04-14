@@ -2,14 +2,14 @@ package com.zemiak.movies.batch.thumbnail;
 
 import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.batch.service.log.BatchLogger;
+import com.zemiak.movies.service.ConfigService;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 import java.util.Random;
 import java.util.logging.Level;
-import javax.annotation.Resource;
 import javax.batch.api.chunk.AbstractItemWriter;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -20,8 +20,8 @@ import javax.inject.Named;
 public class Writer extends AbstractItemWriter {
     private static final BatchLogger LOG = BatchLogger.getLogger(Writer.class.getName());
 
-    @Resource(name = "com.zemiak.movies")
-    private Properties conf;
+    @Inject
+    private ConfigService conf;
 
     @Override
     public void writeItems(List list) throws Exception {
@@ -30,7 +30,7 @@ public class Writer extends AbstractItemWriter {
             final String movieFileName = file.getAbsolutePath();
             final int offset = new Random().nextInt(200) + 300;
 
-            String imageFileName = conf.getProperty("imgPath") + file.getName();
+            String imageFileName = conf.getImgPath() + file.getName();
             final int pos = imageFileName.lastIndexOf(".");
 
             imageFileName = imageFileName.substring(0, pos) + ".jpg";
@@ -40,7 +40,7 @@ public class Writer extends AbstractItemWriter {
             );
 
             try {
-                CommandLine.execCmd(conf.getProperty("ffmpeg"), params);
+                CommandLine.execCmd(conf.getImgPath(), params);
                 LOG.log(Level.INFO, "Generated thumbnail {0} ...", imageFileName);
             } catch (IllegalStateException ex) {
                 LOG.log(Level.SEVERE, "DID NOT generate thumbnail {0}: {1} ...",
