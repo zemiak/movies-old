@@ -27,20 +27,20 @@ import javax.inject.Inject;
 @SessionScoped
 public class AboutController implements Serializable {
     private static final Logger LOG = Logger.getLogger(AboutController.class.getName());
-    
+
     @Inject private GenreService genres;
     @Inject private SerieService series;
     @Inject private LanguageService languages;
     @Inject private MovieService movies;
     @Inject private Event<CacheClearEvent> clearCacheEvents;
     @Inject private BatchRunner runner;
-    
+
     private List<AboutItem> items;
 
     public AboutController() {
         items = new ArrayList<>();
     }
-    
+
     @PostConstruct
     public void init() {
         items.add(new AboutItem(1, "Languages", String.valueOf(languages.all().size())));
@@ -48,34 +48,35 @@ public class AboutController implements Serializable {
         items.add(new AboutItem(3, "Series", String.valueOf(series.all().size())));
         items.add(new AboutItem(4, "Movies", String.valueOf(movies.all().size())));
         items.add(new AboutItem(5, "New Movies", String.valueOf(movies.findAllNew().size())));
-        
+
     }
 
     public List<AboutItem> getItems() {
         return items;
     }
-    
+
     public void clearCache() {
         clearCacheEvents.fire(new CacheClearEvent());
         showMessage("Data Cache Cleared");
     }
-    
+
     public void runImport() {
         if (runner.isUpdateMoviesRunning()) {
             showMessage("Job is still running");
         } else {
             runner.runUpdateCollection();
+            showMessage(String.format("Submitted a job with id %d", runner.getUpdateMoviesJob()));
         }
     }
 
     private void showMessage(final String message) {
         JsfUtil.addSuccessMessage(message);
     }
-    
+
     public AboutItem getAboutItem(final Integer id) {
         return items.get(id - 1);
     }
-    
+
     @FacesConverter(forClass = AboutItem.class)
     public static class AboutItemControllerConverter implements Converter {
 

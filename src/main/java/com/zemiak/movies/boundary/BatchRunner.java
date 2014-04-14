@@ -15,24 +15,24 @@ import javax.ejb.Stateless;
 @Stateless
 public class BatchRunner {
     private static final Logger LOG = Logger.getLogger(BatchRunner.class.getName());
-    
+
     JobOperator operator;
     Long updateMoviesJob = null;
-    
+
     public BatchRunner() {
     }
-    
+
     @PostConstruct
     public void init() {
         operator = BatchRuntime.getJobOperator();
     }
-    
+
     public void runUpdateCollection() {
         if (isRunning(updateMoviesJob)) {
             LOG.log(Level.INFO, "Job update-movies is still running");
             return;
         }
-        
+
         updateMoviesJob = operator.start("update-movies", null);
         LOG.log(Level.INFO, "Submitted update-movies {0}", updateMoviesJob);
     }
@@ -46,8 +46,12 @@ public class BatchRunner {
         return (status == BatchStatus.STARTING || status == BatchStatus.STOPPING
                 || status == BatchStatus.STARTED);
     }
-    
+
     public boolean isUpdateMoviesRunning() {
         return isRunning(updateMoviesJob);
+    }
+
+    public Long getUpdateMoviesJob() {
+        return updateMoviesJob;
     }
 }
