@@ -34,7 +34,7 @@ public class SendLogFile implements Batchlet {
     @Inject
     JobContext jobCtx;
 
-    @Resource(name = "mail/connect")
+    @Resource(name = "mail/default")
     private Session mailSession;
 
     @Inject
