@@ -21,7 +21,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import com.zemiak.movies.service.ConfigService;
+import com.zemiak.movies.service.config.ConfigService;
 
 /**
  *

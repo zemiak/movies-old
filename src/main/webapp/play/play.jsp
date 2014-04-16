@@ -46,7 +46,7 @@
     <link href="js/vendor/videojs/video-js.css" rel="stylesheet">
     <script src="js/vendor/videojs/video.js"></script>
 
-    <jsp:useBean id="confBean" class="com.zemiak.movies.boundary.models.ConfigBean"> </jsp:useBean>
+    <jsp:useBean id="confBean" class="com.zemiak.movies.service.config.ConfigBean"> </jsp:useBean>
 
     <!-- Global Data -->
     <script type="text/javascript">

@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.batch.api.chunk.ItemProcessor;
-import com.zemiak.movies.service.ConfigService;
+import com.zemiak.movies.service.config.ConfigService;
 import javax.inject.Inject;
 import javax.inject.Named;
 

@@ -1,4 +1,4 @@
-package com.zemiak.movies.boundary.backbonerest;
+package com.zemiak.movies.service.backbonerest;
 
 import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.strings.Encodings;

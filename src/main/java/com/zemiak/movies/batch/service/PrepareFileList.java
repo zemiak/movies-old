@@ -1,7 +1,7 @@
 package com.zemiak.movies.batch.service;
 
 import com.zemiak.movies.batch.service.log.BatchLogger;
-import com.zemiak.movies.service.ConfigService;
+import com.zemiak.movies.service.config.ConfigService;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

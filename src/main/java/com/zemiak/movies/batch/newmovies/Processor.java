@@ -3,7 +3,7 @@ package com.zemiak.movies.batch.newmovies;
 import com.zemiak.movies.batch.service.RemoveFileList;
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.domain.Movie;
-import com.zemiak.movies.service.ConfigService;
+import com.zemiak.movies.service.config.ConfigService;
 import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.batch.api.chunk.ItemProcessor;

@@ -1,7 +1,7 @@
-package com.zemiak.movies.boundary.backbonerest;
+package com.zemiak.movies.service.backbonerest;
 
-import com.zemiak.movies.service.GenreService;
-import com.zemiak.movies.domain.Genre;
+import com.zemiak.movies.service.LanguageService;
+import com.zemiak.movies.domain.Language;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -19,32 +19,32 @@ import javax.ws.rs.core.MediaType;
  *
  * @author vasko
  */
-@Path("/genres")
+@Path("/languages")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
 @Stateless
-public class GenreBackbone {
-    @Inject GenreService service;
+public class LanguageBackbone {
+    @Inject LanguageService service;
     
     @GET
-    public List<Genre> all() {
+    public List<Language> all() {
         return service.all();
     }
     
     @GET
     @Path("search/{query}")
-    public List<Genre> search(@PathParam("query") final String query) {
+    public List<Language> search(@PathParam("query") final String query) {
         return service.getByExpression(query);
     }
     
     @GET
     @Path("{id}")
-    public Genre find(@PathParam("id") final String id) {
-        return service.find(Integer.valueOf(id));
+    public Language find(@PathParam("id") final String id) {
+        return service.find(id);
     }
     
     @POST
-    public Genre create(final Genre item) {
+    public Language create(final Language item) {
         item.setId(null);
         
         service.save(item);
@@ -53,7 +53,7 @@ public class GenreBackbone {
     
     @PUT
     @Path("{id}")
-    public Genre update(final Genre item) {
+    public Language update(final Language item) {
         service.save(item);
         return item;
     }
@@ -61,6 +61,6 @@ public class GenreBackbone {
     @DELETE
     @Path("{id}")
     public void delete(@PathParam("id") final String id) {
-        service.remove(Integer.valueOf(id));
+        service.remove(id);
     }
 }

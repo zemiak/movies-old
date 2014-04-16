@@ -1,7 +1,6 @@
-package com.zemiak.movies.boundary.models;
+package com.zemiak.movies.service.config;
 
 import com.zemiak.movies.lookup.CDILookup;
-import com.zemiak.movies.service.ConfigService;
 
 public class ConfigBean {
     private ConfigService conf;

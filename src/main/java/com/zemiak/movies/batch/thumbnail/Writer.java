@@ -2,7 +2,7 @@ package com.zemiak.movies.batch.thumbnail;
 
 import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.batch.service.log.BatchLogger;
-import com.zemiak.movies.service.ConfigService;
+import com.zemiak.movies.service.config.ConfigService;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
