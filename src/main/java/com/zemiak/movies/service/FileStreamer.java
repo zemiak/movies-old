@@ -1,6 +1,6 @@
 package com.zemiak.movies.service;
 
-import com.zemiak.movies.service.config.ConfigBean;
+import com.zemiak.movies.service.configuration.ConfigBean;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.lookup.CDILookup;
 import java.io.IOException;

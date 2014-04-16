@@ -21,7 +21,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import com.zemiak.movies.service.config.ConfigService;
+import com.zemiak.movies.service.configuration.Configuration;
 
 /**
  *
@@ -38,7 +38,7 @@ public class SendLogFile implements Batchlet {
     private Session mailSession;
 
     @Inject
-    private ConfigService conf;
+    private Configuration conf;
 
     public SendLogFile() {
     }

@@ -3,7 +3,7 @@ package com.zemiak.movies.batch.metadata;
 import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.description.DescriptionReader;
 import com.zemiak.movies.batch.service.log.BatchLogger;
-import com.zemiak.movies.service.config.ConfigService;
+import com.zemiak.movies.service.configuration.Configuration;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import javax.persistence.PersistenceContext;
 public class Writer extends AbstractItemWriter {
     private static final BatchLogger LOG = BatchLogger.getLogger(Writer.class.getName());
 
-    @Inject private ConfigService conf;
+    @Inject private Configuration conf;
     private final DescriptionReader descriptions = new DescriptionReader();
     @PersistenceContext private EntityManager em;
 

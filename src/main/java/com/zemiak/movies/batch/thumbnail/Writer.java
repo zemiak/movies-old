@@ -2,7 +2,7 @@ package com.zemiak.movies.batch.thumbnail;
 
 import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.batch.service.log.BatchLogger;
-import com.zemiak.movies.service.config.ConfigService;
+import com.zemiak.movies.service.configuration.Configuration;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +21,7 @@ public class Writer extends AbstractItemWriter {
     private static final BatchLogger LOG = BatchLogger.getLogger(Writer.class.getName());
 
     @Inject
-    private ConfigService conf;
+    private Configuration conf;
 
     @Override
     public void writeItems(List list) throws Exception {

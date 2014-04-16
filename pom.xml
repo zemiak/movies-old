@@ -139,6 +139,7 @@
     </profiles>
 
     <build>
+        <finalName>movies</finalName>
         <defaultGoal>package</defaultGoal>
         <plugins>
             <plugin>
@@ -159,6 +160,7 @@
                 <version>2.1.1</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <warName>movies</warName>
                 </configuration>
             </plugin>
             <plugin>

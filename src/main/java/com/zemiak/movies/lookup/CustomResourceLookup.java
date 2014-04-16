@@ -12,7 +12,7 @@ public class CustomResourceLookup {
         try {
             return doLookup(jndiName);
         } catch (NamingException e) {
-            throw new RuntimeException(e);
+            return null;
         }
     }
 }

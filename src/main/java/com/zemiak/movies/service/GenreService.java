@@ -10,8 +10,6 @@ import javax.enterprise.event.Observes;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.eclipse.persistence.config.HintValues;
-import org.eclipse.persistence.config.QueryHints;
 
 /**
  *
@@ -24,7 +22,6 @@ public class GenreService {
     
     public List<Genre> all() {
         Query query = em.createQuery("SELECT l FROM Genre l ORDER by l.displayOrder");
-        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         
         return query.getResultList();
     }
@@ -71,7 +68,6 @@ public class GenreService {
         Query query = em.createNamedQuery("Movie.findByGenreWithoutSerie");
         query.setParameter("genre", genre);
         
-        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         return query.getResultList();
     }
 }

@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,7 +34,8 @@ public class BatchLog implements Serializable {
     static final private int SHORTENED_LENGTH = 64;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id")
+    @SequenceGenerator(name="my_gen", sequenceName="seq_id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_gen")
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;

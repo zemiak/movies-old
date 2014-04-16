@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.batch.api.chunk.ItemProcessor;
-import com.zemiak.movies.service.config.ConfigService;
+import com.zemiak.movies.service.configuration.Configuration;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -17,7 +17,7 @@ public class Processor implements ItemProcessor {
     private static final Logger LOG = Logger.getLogger(Processor.class.getName());
 
     @Inject
-    private ConfigService conf;
+    private Configuration conf;
 
     @Override
     public Object processItem(final Object movie) throws Exception {

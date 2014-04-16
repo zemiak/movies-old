@@ -2,7 +2,7 @@ package com.zemiak.movies.batch.metadata;
 
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.domain.Movie;
-import com.zemiak.movies.service.config.ConfigService;
+import com.zemiak.movies.service.configuration.Configuration;
 import javax.annotation.PostConstruct;
 import javax.batch.api.chunk.ItemProcessor;
 import javax.inject.Inject;
@@ -23,7 +23,7 @@ public class Processor implements ItemProcessor {
     @PersistenceContext
     private EntityManager em;
 
-    @Inject private ConfigService conf;
+    @Inject private Configuration conf;
 
     private Query query;
 

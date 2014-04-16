@@ -1,12 +1,12 @@
-package com.zemiak.movies.service.config;
+package com.zemiak.movies.service.configuration;
 
 import com.zemiak.movies.lookup.CDILookup;
 
 public class ConfigBean {
-    private ConfigService conf;
+    private Configuration conf;
 
     public ConfigBean() {
-        conf = new CDILookup().lookup(ConfigService.class);
+        conf = new CDILookup().lookup(Configuration.class);
     }
 
     public String getBackendUrl() {

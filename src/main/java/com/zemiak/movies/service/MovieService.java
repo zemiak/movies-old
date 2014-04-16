@@ -12,8 +12,6 @@ import javax.enterprise.event.Observes;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.eclipse.persistence.config.HintValues;
-import org.eclipse.persistence.config.QueryHints;
 
 /**
  *
@@ -26,7 +24,6 @@ public class MovieService {
     
     public List<Movie> all() {
         Query query = em.createQuery("SELECT l FROM Movie l ORDER BY l.genreId, l.serieId, l.displayOrder");
-        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         
         return query.getResultList();
     }
@@ -34,7 +31,6 @@ public class MovieService {
     public List<Movie> getNewMovies() {
         Query query = em.createQuery("SELECT l FROM Movie l WHERE (l.genreId = :genreNew1 OR l.genreId IS NULL) ORDER BY l.genreId, l.serieId, l.displayOrder");
         query.setParameter("genreNew1", em.find(Genre.class, 0));
-        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         
         return query.getResultList();
     }
@@ -42,7 +38,6 @@ public class MovieService {
     public List<Movie> getSerieMovies(Serie serie) {
         Query query = em.createQuery("SELECT l FROM Movie l WHERE l.serieId IS NULL OR l.serieId = :serie ORDER BY l.genreId, l.serieId, l.displayOrder");
         query.setParameter("serie", serie);
-        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         
         return query.getResultList();
     }
@@ -50,7 +45,6 @@ public class MovieService {
     public List<Movie> getGenreMovies(Genre genre) {
         Query query = em.createQuery("SELECT l FROM Movie l WHERE l.genreId IS NULL OR l.genreId = :genre ORDER by l.genreId, l.serieId, l.displayOrder");
         query.setParameter("genre", genre);
-        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         
         return query.getResultList();
     }
@@ -100,7 +94,6 @@ public class MovieService {
     public List<Movie> getLastMovies(int count) {
         Query query = em.createQuery("SELECT l FROM Movie l ORDER BY l.id DESC");
         query.setMaxResults(count);
-        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         
         return query.getResultList();
     }

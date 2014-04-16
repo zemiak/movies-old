@@ -9,8 +9,6 @@ import javax.enterprise.event.Observes;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.eclipse.persistence.config.HintValues;
-import org.eclipse.persistence.config.QueryHints;
 
 /**
  *
@@ -23,7 +21,6 @@ public class LanguageService {
     
     public List<Language> all() {
         Query query = em.createQuery("SELECT l FROM Language l ORDER by l.displayOrder");
-        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         
         return query.getResultList();
     }

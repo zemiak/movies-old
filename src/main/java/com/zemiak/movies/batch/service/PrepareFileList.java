@@ -1,7 +1,7 @@
 package com.zemiak.movies.batch.service;
 
 import com.zemiak.movies.batch.service.log.BatchLogger;
-import com.zemiak.movies.service.config.ConfigService;
+import com.zemiak.movies.service.configuration.Configuration;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class PrepareFileList implements Batchlet {
     @Inject
     JobContext jobCtx;
 
-    @Inject private ConfigService conf;
+    @Inject private Configuration conf;
 
     List<String> files = new ArrayList<>();
 

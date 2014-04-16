@@ -8,8 +8,6 @@ import javax.enterprise.event.Observes;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.eclipse.persistence.config.HintValues;
-import org.eclipse.persistence.config.QueryHints;
 
 /**
  *
@@ -22,7 +20,6 @@ public class BatchLogService {
     
     public List<BatchLog> all() {
         Query query = em.createNamedQuery("BatchLog.findAll");
-        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         
         return query.getResultList();
     }

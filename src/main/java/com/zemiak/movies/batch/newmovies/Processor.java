@@ -3,7 +3,7 @@ package com.zemiak.movies.batch.newmovies;
 import com.zemiak.movies.batch.service.RemoveFileList;
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.domain.Movie;
-import com.zemiak.movies.service.config.ConfigService;
+import com.zemiak.movies.service.configuration.Configuration;
 import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.batch.api.chunk.ItemProcessor;
@@ -25,7 +25,7 @@ public class Processor implements ItemProcessor {
     @PersistenceContext
     private EntityManager em;
 
-    @Inject private ConfigService conf;
+    @Inject private Configuration conf;
 
     private String prefix;
     private Query query;
