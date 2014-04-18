@@ -3,8 +3,5 @@
   <persistence-unit name="ZemiakMovies" transaction-type="JTA">
     <jta-data-source>java:/jboss/datasources/ZemiakMovies</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties>
-      <property name="eclipselink.ddl-generation" value="create-tables"/>
-    </properties>
   </persistence-unit>
 </persistence>
