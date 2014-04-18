@@ -13,7 +13,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class MovieFacade extends AbstractFacade<Movie> {
-    @PersistenceContext(unitName = "ZemiakMovies")
+    @PersistenceContext
     private EntityManager em;
 
     @Override

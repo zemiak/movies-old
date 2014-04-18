@@ -76,6 +76,14 @@ public class AboutController implements Serializable {
     public AboutItem getAboutItem(final Integer id) {
         return items.get(id - 1);
     }
+    
+    public boolean isBatchRunning() {
+        return runner.isUpdateMoviesRunning();
+    }
+    
+    public Long getBatchJobNumber() {
+        return runner.getUpdateMoviesJob();
+    }
 
     @FacesConverter(forClass = AboutItem.class)
     public static class AboutItemControllerConverter implements Converter {

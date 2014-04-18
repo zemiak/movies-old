@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class LanguageFacade extends AbstractFacade<Language> {
-    @PersistenceContext(unitName = "ZemiakMovies")
+    @PersistenceContext
     private EntityManager em;
 
     @Override

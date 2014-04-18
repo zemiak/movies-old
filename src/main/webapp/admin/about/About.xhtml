@@ -7,8 +7,6 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-
-
         <ui:define name="title">
             <h:outputText value="#{bundle.AboutTitle}"></h:outputText>
         </ui:define>
@@ -74,10 +72,29 @@
 
                     <f:facet name="footer">
                         <p:commandButton id="viewButton" icon="ui-icon-search" value="#{bundle.View}" update=":BatchLogViewForm" oncomplete="PF('BatchLogViewDialog').show()" disabled="#{empty batchLogController.selected}"/>
-                        <p:commandButton id="clearButton" icon="ui-icon-close"   value="#{bundle.Clear}" actionListener="#{aboutController.clearCache()}" update=":growl" />
-                        <p:commandButton id="runButton"   icon="ui-icon-play" value="#{bundle.Run}" actionListener="#{aboutController.runImport()}" update=":growl" />
                     </f:facet>
                 </p:dataTable>
+            </h:form>
+            
+            <p:spacer height="60" />
+            
+            <h:form>
+                <p:commandButton id="clearButton" icon="ui-icon-close"   value="#{bundle.Clear}" actionListener="#{aboutController.clearCache()}" update=":growl" />
+            </h:form>
+            
+            <p:spacer height="5" />
+
+            <h:form>
+                <p:commandButton id="runButton"   icon="ui-icon-play" value="#{bundle.Run}" actionListener="#{aboutController.runImport()}" update=":growl,batchPanel" />
+                <p:spacer width="10" />
+                <h:panelGroup id="batchPanel">
+                    <h:outputText id="batchJobNumber"
+                                title="Actually running batch job number." 
+                                value="Batch job is running: #{aboutController.batchRunning ? aboutController.batchJobNumber : 'None'}" 
+                                />
+
+                    <p:poll interval="5" update="batchJobNumber" /> 
+                </h:panelGroup>
             </h:form>
             
             <ui:include src="View.xhtml"/>

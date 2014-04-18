@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class SerieFacade extends AbstractFacade<Serie> {
-    @PersistenceContext(unitName = "ZemiakMovies")
+    @PersistenceContext
     private EntityManager em;
 
     @Override

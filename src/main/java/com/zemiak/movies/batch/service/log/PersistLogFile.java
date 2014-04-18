@@ -39,8 +39,12 @@ public class PersistLogFile implements Batchlet {
             LOG.log(Level.INFO, "Log file does not exist, not saving...");
             return "does-not-exist";
         }
+        
+        LOG.log(Level.INFO, "Going to persist log file");
 
         persistLogFile();
+        
+        LOG.log(Level.INFO, "Persisted log file");
 
         return "saved";
     }
