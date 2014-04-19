@@ -41,6 +41,7 @@ public class BatchLogService {
 
     public BatchLog create() {
         BatchLog res = new BatchLog();
+        res.setText("");
         em.persist(res);
         
         return res;

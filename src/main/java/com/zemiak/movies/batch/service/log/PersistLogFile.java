@@ -1,6 +1,7 @@
 package com.zemiak.movies.batch.service.log;
 
-import com.zemiak.movies.domain.BatchLog;
+import com.zemiak.movies.domain.CacheClearEvent;
+import com.zemiak.movies.service.BatchLogService;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,10 +11,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.batch.api.Batchlet;
 import javax.batch.runtime.context.JobContext;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -26,8 +26,11 @@ public class PersistLogFile implements Batchlet {
     @Inject
     JobContext jobCtx;
 
-    @PersistenceContext
-    EntityManager em;
+    @Inject
+    BatchLogService service;
+    
+    @Inject
+    Event<CacheClearEvent> events;
 
     public PersistLogFile() {
     }
@@ -40,9 +43,8 @@ public class PersistLogFile implements Batchlet {
             return "does-not-exist";
         }
         
-        LOG.log(Level.INFO, "Going to persist log file");
-
         persistLogFile();
+        events.fire(new CacheClearEvent());
         
         LOG.log(Level.INFO, "Persisted log file");
 
@@ -54,9 +56,7 @@ public class PersistLogFile implements Batchlet {
         final byte[] content = Files.readAllBytes(filePath);
         final String text = new String(content, "UTF-8");
 
-        final BatchLog entry = new BatchLog();
-        entry.setText(text);
-        em.persist(entry);
+        service.create(text);
     }
 
     @Override

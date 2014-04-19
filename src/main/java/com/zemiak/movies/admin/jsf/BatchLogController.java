@@ -3,16 +3,12 @@ package com.zemiak.movies.admin.jsf;
 import com.zemiak.movies.admin.jsf.util.JsfUtil;
 import com.zemiak.movies.service.BatchLogService;
 import com.zemiak.movies.domain.BatchLog;
-import com.zemiak.movies.domain.CacheClearEvent;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
-import javax.enterprise.event.Event;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -26,21 +22,14 @@ public class BatchLogController implements Serializable {
     
     @Inject private BatchLogService service;
     
-    private List<BatchLog> items;
     private BatchLog selected;
 
     public BatchLogController() {
-        items = new ArrayList<>();
         selected = null;
     }
     
-    @PostConstruct
-    public void init() {
-        items = service.all();
-    }
-
     public List<BatchLog> getItems() {
-        return items;
+        return service.all();
     }
 
     public BatchLog getSelected() {
