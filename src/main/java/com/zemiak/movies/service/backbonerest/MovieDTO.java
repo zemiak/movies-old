@@ -27,6 +27,12 @@ public class MovieDTO {
     private String language;
     private Integer genreId;
     private String search;
+    
+    private String genreName;
+    private String serieName;
+    private String originalLanguageName;
+    private String languageName;
+    private String subtitlesName;
 
     public MovieDTO() {
     }
@@ -53,5 +59,11 @@ public class MovieDTO {
         this.genreId = movie.getGenreId() == null ? null : movie.getGenreId().getId();
         this.search = (null == this.name ? "" 
                     : Encodings.toAscii(this.name.trim().toLowerCase()));
+        
+        this.subtitlesName = movie.getSubtitles() == null ? "" : movie.getSubtitles().getName();
+        this.originalLanguageName = movie.getOriginalLanguage() == null ? "" : movie.getOriginalLanguage().getName();
+        this.languageName = movie.getLanguage() == null ? "" : movie.getLanguage().getName();
+        this.genreName = movie.getGenreId() == null ? "" : movie.getGenreId().getName();
+        this.serieName = movie.getSerieId() == null ? "" : movie.getSerieId().getName();
     }
 }

@@ -33,6 +33,16 @@ var MovieModel = Backbone.Model.extend({
     {
         return this.get('serieId');
     },
+    
+    getGenreName: function()
+    {
+        return this.get('genreName');
+    },
+
+    getSerieName: function()
+    {
+        return this.get('serieName');
+    },
 
     getLanguage: function()
     {
@@ -43,6 +53,16 @@ var MovieModel = Backbone.Model.extend({
     {
         return this.get('subtitles');
     },
+    
+    getLanguageName: function()
+    {
+        return this.get('languageName');
+    },
+
+    getSubtitlesName: function()
+    {
+        return this.get('subtitlesName');
+    },
 
     getOriginalName: function()
     {
@@ -52,6 +72,11 @@ var MovieModel = Backbone.Model.extend({
     getOriginalLanguage: function()
     {
         return this.get('originalLanguage');
+    },
+    
+    getOriginalLanguageName: function()
+    {
+        return this.get('originalLanguageName');
     },
 
     getUrl: function()

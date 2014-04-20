@@ -112,6 +112,9 @@ var MovieRouter = Backbone.Router.extend({
         var view = new MovieDetailView({el: $('#movie')}), movieModel;
 
         movieModel = repository.movies.findById(id);
+        
+        console.log("Movie: ", movieModel);
+        
         view.setModel(movieModel);
         view.render();
 
