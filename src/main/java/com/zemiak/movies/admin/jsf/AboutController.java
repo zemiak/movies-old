@@ -28,12 +28,12 @@ import javax.inject.Inject;
 public class AboutController implements Serializable {
     private static final Logger LOG = Logger.getLogger(AboutController.class.getName());
 
-    @Inject private GenreService genres;
-    @Inject private SerieService series;
-    @Inject private LanguageService languages;
-    @Inject private MovieService movies;
-    @Inject private Event<CacheClearEvent> clearCacheEvents;
-    @Inject private BatchRunner runner;
+    @Inject GenreService genres;
+    @Inject SerieService series;
+    @Inject LanguageService languages;
+    @Inject MovieService movies;
+    @Inject Event<CacheClearEvent> clearCacheEvents;
+    @Inject BatchRunner runner;
 
     private List<AboutItem> items;
 

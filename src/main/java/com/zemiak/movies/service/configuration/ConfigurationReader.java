@@ -15,7 +15,7 @@ public class ConfigurationReader {
     final CustomResourceLookup lookupService = new CustomResourceLookup();
     private String prefix;
     
-    @Inject private Configuration config;
+    @Inject Configuration config;
     
     @PostConstruct
     public void init() {

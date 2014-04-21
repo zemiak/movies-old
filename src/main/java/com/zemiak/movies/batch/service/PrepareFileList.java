@@ -22,7 +22,7 @@ public class PrepareFileList implements Batchlet {
     @Inject
     JobContext jobCtx;
 
-    @Inject private Configuration conf;
+    @Inject Configuration conf;
 
     List<String> files = new ArrayList<>();
 

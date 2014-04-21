@@ -3,6 +3,7 @@ package com.zemiak.movies.batch.metadata;
 import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.description.DescriptionReader;
 import com.zemiak.movies.batch.service.log.BatchLogger;
+import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.configuration.Configuration;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,8 +13,6 @@ import java.util.logging.Logger;
 import javax.batch.api.chunk.AbstractItemWriter;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -23,9 +22,9 @@ import javax.persistence.PersistenceContext;
 public class Writer extends AbstractItemWriter {
     private static final BatchLogger LOG = BatchLogger.getLogger(Writer.class.getName());
 
-    @Inject private Configuration conf;
+    @Inject Configuration conf;
     private final DescriptionReader descriptions = new DescriptionReader();
-    @PersistenceContext private EntityManager em;
+    @Inject MovieService service;
 
     private static final String GENRE = "-g";
     private static final String NAME = "-s";
@@ -80,8 +79,7 @@ public class Writer extends AbstractItemWriter {
                 update(fileName, COMMENTS, desc);
 
                 data.getMovie().setDescription(desc);
-                em.merge(data.getMovie());
-                em.flush();
+                service.mergeAndSave(data.getMovie());
             }
         }
     }

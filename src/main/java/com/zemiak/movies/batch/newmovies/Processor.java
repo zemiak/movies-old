@@ -2,17 +2,13 @@ package com.zemiak.movies.batch.newmovies;
 
 import com.zemiak.movies.batch.service.RemoveFileList;
 import com.zemiak.movies.batch.service.log.BatchLogger;
-import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.configuration.Configuration;
 import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.batch.api.chunk.ItemProcessor;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
@@ -22,24 +18,20 @@ import javax.persistence.Query;
 public class Processor implements ItemProcessor {
     private static final BatchLogger LOG = BatchLogger.getLogger(Processor.class.getName());
 
-    @PersistenceContext
-    private EntityManager em;
-
-    @Inject private Configuration conf;
+    @Inject MovieService service;
+    @Inject Configuration conf;
 
     private String prefix;
-    private Query query;
 
     @PostConstruct
     public void init() {
         prefix = conf.getPath();
-        query = em.createNamedQuery("Movie.findByFileName");
     }
 
     @Override
     public Object processItem(final Object movie) throws Exception {
         final String fileName = getRelativeFilename((String) movie);
-        if (! exists(fileName)) {
+        if (null != service.findByFilename(fileName)) {
             LOG.log(Level.INFO, "Found a new file: {0}", fileName);
             return fileName;
         }
@@ -54,19 +46,5 @@ public class Processor implements ItemProcessor {
         }
 
         return absoluteWithSlashes;
-    }
-
-    private boolean exists(final String relativeFilename) {
-        Movie movie;
-
-        query.setParameter("fileName", relativeFilename);
-
-        try {
-            movie = (Movie) query.getSingleResult();
-        } catch (NoResultException ex) {
-            return false;
-        }
-
-        return (null != movie);
     }
 }

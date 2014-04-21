@@ -5,11 +5,14 @@ import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.strings.Encodings;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -108,5 +111,37 @@ public class MovieService {
         }
         
         return res;
+    }
+
+    public Movie findByFilename(String fileName) {
+        Query query = em.createNamedQuery("Movie.findByFileName");
+        query.setParameter("fileName", fileName);
+        Movie movie;
+        
+        try {
+            movie = (Movie) query.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException ex) {
+            movie = null;
+        }
+        
+        return movie;
+    }
+
+    public Movie create(String newFile) {
+        final Movie movie = new Movie();
+        final String baseFileName = new File(newFile).getName();
+        final String name = baseFileName.substring(0, baseFileName.lastIndexOf("."));
+
+        movie.setFileName(newFile);
+        movie.setGenreId(em.getReference(Genre.class, 0));
+        movie.setSerieId(em.getReference(Serie.class, 0));
+        movie.setName(name);
+        movie.setPictureFileName(name + ".jpg");
+        
+        return movie;
+    }
+
+    public void mergeAndSave(Movie movie) {
+        em.merge(movie);
     }
 }

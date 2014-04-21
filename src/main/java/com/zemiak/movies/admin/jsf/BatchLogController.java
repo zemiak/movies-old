@@ -20,7 +20,7 @@ import javax.inject.Inject;
 public class BatchLogController implements Serializable {
     private static final Logger LOG = Logger.getLogger(BatchLogController.class.getName());
     
-    @Inject private BatchLogService service;
+    @Inject BatchLogService service;
     
     private BatchLog selected;
 
