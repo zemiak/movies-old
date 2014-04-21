@@ -113,9 +113,7 @@ var MovieCollection = Backbone.Collection.extend({
     {
         id = parseInt(id, 10);
         if (id == 0) {
-            console.log('by genre', id);
             return this.filter(function(item){
-                console.log(parseInt(item.getGenreId()));
                 return item.getGenreId() == null || parseInt(item.getGenreId()) == 0;
             });
         } else {

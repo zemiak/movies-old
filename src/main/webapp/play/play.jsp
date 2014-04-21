@@ -67,6 +67,7 @@
     <script type="text/javascript" src="js/model/Language.js"></script>
     <script type="text/javascript" src="js/model/DataSync.js"></script>
     <script type="text/javascript" src="js/Router.js"></script>
+    <script type="text/javascript" src="js/fullscreen.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
   </head>
 

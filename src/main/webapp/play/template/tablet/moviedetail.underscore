@@ -65,3 +65,7 @@
         <input type="text" class="form-control" value="<%= originalName %>" disabled />
     </div>
 </div>
+
+<script>
+    fullScreenVideo("my_video_<%= id %>");
+</script>
