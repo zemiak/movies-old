@@ -1,15 +1,22 @@
 function fullScreenVideoInit(id) {
     var element = document.getElementById(id);
-    element.addEventListener("play", fullScreenVideoTrigger, false);
+    element.addEventListener("click", fullScreenVideoTrigger, false);
 }
 
 function fullScreenVideoTrigger(event) {
-    var element = event.target;
-    var classToAdd = 'fullscreen-video';
+    var elem = event.target;
 
-    if ((' '+element.className+' ').indexOf(' '+classToAdd+' ') == -1) {
-        element.className = element.className === '' ? classToAdd : element.className + ' ' + classToAdd;
+    if (! elem.playing) {
+        elem.play();
+
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+        }
     }
-
-    document.documentElement.webkitRequestFullscreen();
 }

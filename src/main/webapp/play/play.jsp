@@ -42,10 +42,6 @@
     <script type="text/javascript" src="js/vendor/backbone.localStorage.js"></script>
     <script type="text/javascript" src="js/vendor/bootstrap.js"></script>
 
-    <!-- video-js -->
-    <link href="js/vendor/videojs/video-js.css" rel="stylesheet">
-    <script src="js/vendor/videojs/video.js"></script>
-
     <jsp:useBean id="confBean" class="com.zemiak.movies.service.configuration.ConfigBean"> </jsp:useBean>
 
     <!-- Global Data -->
