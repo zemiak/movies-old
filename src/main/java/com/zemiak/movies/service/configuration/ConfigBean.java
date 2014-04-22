@@ -1,20 +1,32 @@
 package com.zemiak.movies.service.configuration;
 
 import com.zemiak.movies.lookup.CDILookup;
+import com.zemiak.movies.lookup.CustomResourceLookup;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Named;
 
+@Named("configBean")
 public class ConfigBean implements Serializable {
-    private final Configuration conf;
+    CustomResourceLookup lookup;
+    @Inject Configuration conf;
 
     public ConfigBean() {
-        conf = new CDILookup().lookup(Configuration.class);
+        conf = new CDILookup().lookup(com.zemiak.movies.service.configuration.Configuration.class);
+        lookup = new CustomResourceLookup();
+    }
+    
+    @PostConstruct
+    public void init() {
+        System.err.println("init(): Configuration: '" + conf + "'");
     }
 
     public String getBackendUrl() {
-        return conf.getBackendUrl();
+        return null == conf ? (String) lookup.lookup("com.zemiak.movies.backendUrl") : conf.getBackendUrl();
     }
 
     public String getPath() {
-        return conf.getPath();
+        return null == conf ? (String) lookup.lookup("com.zemiak.movies.path") : conf.getPath();
     }
 }

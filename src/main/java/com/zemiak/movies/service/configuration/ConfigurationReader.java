@@ -21,9 +21,13 @@ public class ConfigurationReader {
     public void init() {
         String path = new CustomResourceLookup().lookup("java:/jboss/com.zemiak.movies.path");
         
+        System.err.println("JBoss Path: '" + path + "'");
+        
         if (null != path) {
             read("java:/jboss/");
         } else {
+            path = new CustomResourceLookup().lookup("com.zemiak.movies.path");
+            System.err.println("Glassfish Path: '" + path + "'");
             read("");
         }
     }
