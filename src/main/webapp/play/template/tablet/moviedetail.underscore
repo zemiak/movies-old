@@ -10,7 +10,7 @@
     </div>
 
     <div class="span3">
-        <button onclick="javascript:window.open('<%= url %>');" 
+        <button onclick="javascript:window.open('<%= url %>');"
             class="btn btn-lg btn-primary" id="url" name="url">
             Movie Info (New Window)
         </button>
@@ -67,5 +67,5 @@
 </div>
 
 <script>
-    fullScreenVideo("my_video_<%= id %>");
+    fullScreenVideoInit("my_video_<%= id %>");
 </script>
