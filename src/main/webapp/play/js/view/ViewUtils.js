@@ -6,17 +6,17 @@ var ViewUtils = _.extend({}, {
         }
 
         $.blockUI({
-            css: { 
-                border: 'none', 
-                padding: '15px', 
-                backgroundColor: '#000', 
-                '-webkit-border-radius': '10px', 
-                '-moz-border-radius': '10px', 
-                opacity: .5, 
-                color: '#fff' 
+            css: {
+                border: 'none',
+                padding: '15px',
+                backgroundColor: '#000',
+                '-webkit-border-radius': '10px',
+                '-moz-border-radius': '10px',
+                opacity: .5,
+                color: '#fff'
             },
             message: messageText
-        }); 
+        });
     },
 
     hideLoading: function()
@@ -27,17 +27,17 @@ var ViewUtils = _.extend({}, {
     templates: {
         // Hash of preloaded templates for the app
         templates: {},
-     
+
         // Recursively pre-load all the templates for the app.
         // This implementation should be changed in a production environment:
         // All the template files should be concatenated in a single file.
         load: function(subdir, callback) {
             var that = this, names = ['genre', 'list', 'moviedetail', 'movieitem',
                 'serie', 'backbutton'];;
-     
+
             var loadTemplate = function(index) {
                 var name = names[index];
-                $.get('template/' + subdir + '/' + name + '.underscore', function(data) {
+                $.get('template/' + subdir + '/' + name + '.html', function(data) {
                     that.templates[name] = data;
                     index++;
                     if (index < names.length) {
@@ -47,10 +47,10 @@ var ViewUtils = _.extend({}, {
                     }
                 });
             }
-     
+
             loadTemplate(0);
         },
-     
+
         // Get template by name from hash of preloaded templates
         get: function(name) {
             return this.templates[name];

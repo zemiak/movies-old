@@ -5,30 +5,32 @@
         </a>
     </div>
 
-    <div class="span5">
+    <div class="span8">
         <span class="movie-title"><%= name %></span>
-    </div>
-
-    <div class="span3">
-        <button onclick="javascript:window.open('<%= url %>');"
-            class="btn btn-lg btn-primary" id="url" name="url">
-            Movie Info (New Window)
-        </button>
     </div>
 </div>
 
 <div class="row-fluid">
     <div class="span12">
         <center>
-        <video id="my_video_<%= id %>" class="video-js vjs-default-skin" controls
+        <video id="my_video_<%= id %>" controls
           preload="auto" poster="http://lenovo-server.local/movies/img/movie/<%= pictureFileName %>"
-          data-setup="{}" width="559" height="432">
+          width="240" height="186">
           <!-- <source src="/movies/stream?id=<%= id %>" type='video/mp4'> -->
           <source src="http://lenovo-server.local/movies/play.php?id=<%= id %>" type='video/mp4'>
         </video>
         </center>
 
         <div class="movie-description"><%= description %></div>
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span12">
+        <button onclick="javascript:window.open('<%= url %>');"
+            class="btn btn-lg btn-primary" id="url" name="url">
+            Movie Info (New Window)
+        </button>
     </div>
 </div>
 
@@ -39,17 +41,24 @@
     </div>
 
     <div class="span4">
+        <label>Original Name</label>
+        <input type="text" class="form-control" value="<%= originalName %>" disabled />
+    </div>
+
+    <div class="span4">
         <label>Serie</label>
         <input type="text" class="form-control" value="<%= serieName %>" disabled />
     </div>
 
+
+</div>
+
+<div class="row-fluid">
     <div class="span4">
         <label>Language</label>
         <input type="text" class="form-control" value="<%= languageName %>" disabled />
     </div>
-</div>
 
-<div class="row-fluid">
     <div class="span4">
         <label>Original Language</label>
         <input type="text" class="form-control" value="<%= originalLanguageName %>" disabled />
@@ -58,11 +67,6 @@
     <div class="span4">
         <label>Subtitles</label>
         <input type="text" class="form-control" value="<%= subtitlesName %>" disabled />
-    </div>
-
-    <div class="span4">
-        <label>Original Name</label>
-        <input type="text" class="form-control" value="<%= originalName %>" disabled />
     </div>
 </div>
 
