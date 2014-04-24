@@ -25,8 +25,8 @@ public class Writer extends AbstractItemWriter {
 
             Movie m = service.create(newFile);
 
-            LOG.log(Level.INFO, "Created a new movie ''{0}''/''{1}''...",
-                    new Object[]{m.getFileName(), m.getName()});
+            LOG.log(Level.INFO, "Created a new movie ''{0}''/''{1}'', id {2}...",
+                    new Object[]{m.getFileName(), m.getName(), m.getId()});
         }
     }
 }

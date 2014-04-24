@@ -3,6 +3,7 @@ package com.zemiak.movies.domain;
 import com.zemiak.movies.description.Csfd;
 import com.zemiak.movies.description.Imdb;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -93,11 +97,25 @@ public class Movie implements Serializable {
     @JoinColumn(name = "genre_id", referencedColumnName = "id")
     @ManyToOne
     private Genre genreId;
+    
+    @Column(name = "created")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
 
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+    
     public Movie() {
+        this.created = new Date();
     }
 
     public Movie(Integer id) {
+        this();
         this.id = id;
     }
 

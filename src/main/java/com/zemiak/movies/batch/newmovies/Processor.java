@@ -31,7 +31,7 @@ public class Processor implements ItemProcessor {
     @Override
     public Object processItem(final Object movie) throws Exception {
         final String fileName = getRelativeFilename((String) movie);
-        if (null != service.findByFilename(fileName)) {
+        if (null == service.findByFilename(fileName)) {
             LOG.log(Level.INFO, "Found a new file: {0}", fileName);
             return fileName;
         }

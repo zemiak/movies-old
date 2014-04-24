@@ -137,6 +137,7 @@ public class MovieService {
         movie.setSerieId(em.getReference(Serie.class, 0));
         movie.setName(name);
         movie.setPictureFileName(name + ".jpg");
+        em.persist(name);
         
         return movie;
     }
