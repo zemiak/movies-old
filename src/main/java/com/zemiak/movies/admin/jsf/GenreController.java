@@ -102,7 +102,7 @@ public class GenreController implements Serializable {
                     final ConstraintViolationException e = (ConstraintViolationException) cause;
                     
                     for (ConstraintViolation<?> violation: e.getConstraintViolations()) {
-                        System.err.println("Constraint violation: " 
+                        LOG.log(Level.SEVERE, "Constraint violation: " 
                                 + violation.getPropertyPath() + ": "
                                 + violation.getMessage());
                     }

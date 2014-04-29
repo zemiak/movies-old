@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.batch.api.chunk.AbstractItemReader;
 import javax.batch.runtime.context.JobContext;
 import javax.inject.Inject;
@@ -19,6 +20,7 @@ import javax.inject.Named;
 @Named("FilenameItemReader")
 public class FilenameItemReader extends AbstractItemReader {
     private static final BatchLogger LOG = BatchLogger.getLogger(FilenameItemReader.class.getName());
+    private static final Logger LOG1 = Logger.getLogger(FilenameItemReader.class.getName());
 
     @Inject
     JobContext jobCtx;
@@ -45,7 +47,7 @@ public class FilenameItemReader extends AbstractItemReader {
             br.readLine();
         }
 
-        System.out.println("Opened file list from record: " + recordNumber);
+        LOG1.log(Level.INFO, "Opened file list from record: {0}", recordNumber);
     }
 
     @Override

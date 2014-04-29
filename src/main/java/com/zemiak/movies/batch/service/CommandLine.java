@@ -20,6 +20,7 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,6 +28,7 @@ import java.util.logging.Level;
  */
 public final class CommandLine {
     private static final BatchLogger LOG = BatchLogger.getLogger(CommandLine.class.getName());
+    private static final Logger LOG1 = Logger.getLogger(CommandLine.class.getName());
     private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
     private static final Integer TIMEOUT = 300; // 5 minutes
     
@@ -38,7 +40,7 @@ public final class CommandLine {
         CommandLineResult result = new CommandLineResult();
         Callable<CommandLineResult> callable = getCallable(cmd, arguments);
 
-        System.out.println("run:" + cmd + " " + (null == arguments ? "" : Joiner.join(arguments, "|")));
+        LOG1.log(Level.INFO, "run:{0} {1}", new Object[]{cmd, null == arguments ? "" : Joiner.join(arguments, "|")});
         //return new ArrayList<>();
 
         try {

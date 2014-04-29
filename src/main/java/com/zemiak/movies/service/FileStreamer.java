@@ -14,6 +14,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Enumeration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +26,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author vasko
  */
 public class FileStreamer {
+    private static final Logger LOG = Logger.getLogger(FileStreamer.class.getName());
+    
     private static final int BUFFER_LENGTH = 1024 * 512;
     private static final long EXPIRE_TIME = 1000 * 60 * 60 * 24;
     private static final Pattern RANGE_PATTERN = Pattern.compile("bytes=(?<start>\\d*)-(?<end>\\d*)");
@@ -45,7 +49,7 @@ public class FileStreamer {
         try {
             videoId = Integer.valueOf(URLDecoder.decode(request.getParameter("id"), "UTF-8"));
         } catch (UnsupportedEncodingException ex) {
-            System.err.println("Decoding exception: " + ex.getMessage());
+            LOG.log(Level.SEVERE, "Decoding exception: {0}", ex.getMessage());
             return;
         }
 
@@ -58,7 +62,7 @@ public class FileStreamer {
         try {
             length = (int) Files.size(video);
         } catch (IOException ex) {
-            System.err.println("Cannot ger file size: " + ex.getMessage());
+            LOG.log(Level.SEVERE, "Cannot get file size: {0}", ex.getMessage());
             return;
         }
 
@@ -98,7 +102,7 @@ public class FileStreamer {
         try {
             input = Files.newByteChannel(video, StandardOpenOption.READ);
         } catch (IOException ex) {
-            System.err.println("Cannot open video file: " + ex.getMessage());
+            LOG.log(Level.SEVERE, "Cannot open video file: {0}", ex.getMessage());
             return;
         }
 
@@ -106,7 +110,7 @@ public class FileStreamer {
         try {
             output = response.getOutputStream();
         } catch (IOException ex) {
-            System.err.println("Cannot open streaming output stream: " + ex.getMessage());
+            LOG.log(Level.SEVERE, "Cannot open streaming output stream: {0}", ex.getMessage());
             return;
         }
 
@@ -120,18 +124,18 @@ public class FileStreamer {
             }
         } catch (java.io.IOException | java.lang.IllegalArgumentException ex) {
             // pass, do not care
-            System.err.println("Streaming exception: " + ex.getMessage());
+            LOG.log(Level.SEVERE, "Streaming exception: {0}", ex.getMessage());
         } finally {
             try {
                 input.close();
             } catch (IOException ex) {
-                System.err.println("Cannot close video file: " + ex.getMessage());
+                LOG.log(Level.SEVERE, "Cannot close video file: {0}", ex.getMessage());
             }
 
             try {
                 output.close();
             } catch (IOException ex) {
-                System.err.println("Cannot close output stream: " + ex.getMessage());
+                LOG.log(Level.SEVERE, "Cannot close output stream: {0}", ex.getMessage());
             }
         }
 
@@ -139,25 +143,25 @@ public class FileStreamer {
     }
 
     private void logRequest(final HttpServletRequest request) {
-        System.out.println("===");
-        System.out.println("Request: " + request.getMethod());
+        LOG.log(Level.INFO, "===");
+        LOG.log(Level.INFO, "Request: {0}", request.getMethod());
 
         Enumeration<String> headers = request.getHeaderNames();
         while (headers.hasMoreElements()) {
             String header = headers.nextElement();
-            System.out.println(header + ": " + request.getHeader(header));
+            LOG.log(Level.INFO, "{0}: {1}", new Object[]{header, request.getHeader(header)});
         }
 
-        System.out.println("---");
+        LOG.log(Level.INFO, "---");
     }
 
     private void logResponse(final HttpServletResponse response) {
-        System.out.println("Response: " + response.getStatus());
+        LOG.log(Level.INFO, "Response: {0}", response.getStatus());
 
         for (String header: response.getHeaderNames()) {
-            System.out.println(header + ": " + response.getHeader(header));
+            LOG.log(Level.INFO, "{0}{1}: ", new Object[]{response.getHeader(header), header});
         }
 
-        System.out.println("===");
+        LOG.log(Level.INFO, "===");
     }
 }

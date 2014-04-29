@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.batch.api.Batchlet;
 import javax.batch.runtime.context.JobContext;
 import javax.inject.Inject;
@@ -27,6 +28,8 @@ public class PrepareFileList implements Batchlet {
     List<String> files = new ArrayList<>();
 
     private static final BatchLogger LOG = BatchLogger.getLogger(PrepareFileList.class.getName());
+    private static final Logger LOG1 = Logger.getLogger(PrepareFileList.class.getName());
+    
 
     public PrepareFileList() {
     }
@@ -51,7 +54,7 @@ public class PrepareFileList implements Batchlet {
             throw ex;
         }
 
-        System.out.println("Found " + counter + " movies on HDD.");
+        LOG1.log(Level.INFO, "Found {0} movies on HDD.", counter);
 
         return "done";
     }
