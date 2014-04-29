@@ -43,7 +43,7 @@
 
     <custom-resource res-type="java.lang.String" jndi-name="com.zemiak.movies.backendUrl"
                      factory-class="org.glassfish.resources.custom.factory.PrimitivesAndStringFactory">
-        <property name="value" value="http://lenovo-server.local:8080/movies/"></property>
+        <property name="value" value="http://lenovo-server.local/movies-backend/"></property>
     </custom-resource>
 
     <jdbc-connection-pool
