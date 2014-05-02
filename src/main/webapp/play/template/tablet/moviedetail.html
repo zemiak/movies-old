@@ -21,10 +21,10 @@
     <div class="span12">
         <center>
         <video id="my_video_<%= id %>" controls
-          preload="auto" poster="http://lenovo-server.local/movies/img/movie/<%= pictureFileName %>"
+          preload="auto" poster="http://lenovo-server.local:8081/movies/img/movie/<%= pictureFileName %>"
           width="559" height="432">
           <!-- <source src="/movies/stream?id=<%= id %>" type='video/mp4'> -->
-          <source src="http://lenovo-server.local/movies/play.php?id=<%= id %>" type='video/mp4'>
+          <source src="http://lenovo-server.local:8081/movies/play.php?id=<%= id %>" type='video/mp4'>
         </video>
         </center>
 
