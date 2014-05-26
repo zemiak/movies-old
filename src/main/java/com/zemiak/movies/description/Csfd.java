@@ -13,10 +13,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 
-/**
- *
- * @author vasko
- */
 public class Csfd implements IDescriptionReader {
     private static final Logger LOG = Logger.getLogger(Csfd.class.getName());
     

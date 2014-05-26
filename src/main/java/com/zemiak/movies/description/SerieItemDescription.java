@@ -1,19 +1,15 @@
 package com.zemiak.movies.description;
 
-/**
- *
- * @author vasko
- */
-public class MashDescription {
+public class SerieItemDescription {
     private String title;
     private String description;
 
-    public MashDescription(String title, String description) {
+    public SerieItemDescription(String title, String description) {
         this.title = title;
         this.description = description;
     }
 
-    public MashDescription() {
+    public SerieItemDescription() {
     }
 
     public String getTitle() {

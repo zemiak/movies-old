@@ -4,7 +4,10 @@ import com.zemiak.movies.domain.Movie;
 
 public class DescriptionReader {
     private final IDescriptionReader[] readers = new IDescriptionReader[]{
-        new Csfd(), new Imdb(), new Mash()
+        new Mash(), 
+        new GameOfThrones(), 
+        new Csfd(), 
+        new Imdb()
     };
     
     public DescriptionReader() {
