@@ -3,7 +3,6 @@ package com.zemiak.movies.description;
 import com.zemiak.movies.domain.Serie;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 class GameOfThrones extends AbstractSeriesDescriptionReader {
     public GameOfThrones() {
