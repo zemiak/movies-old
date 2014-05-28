@@ -40,7 +40,7 @@ public class Writer extends AbstractItemWriter {
             );
 
             try {
-                CommandLine.execCmd(conf.getImgPath(), params);
+                CommandLine.execCmd(conf.getFfmpeg(), params);
                 LOG.log(Level.INFO, "Generated thumbnail {0} ...", imageFileName);
             } catch (IllegalStateException ex) {
                 LOG.log(Level.SEVERE, "DID NOT generate thumbnail {0}: {1} ...",

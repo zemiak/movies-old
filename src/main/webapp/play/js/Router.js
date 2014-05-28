@@ -170,17 +170,19 @@ var MovieRouter = Backbone.Router.extend({
                 that.navigate('#search/' + text, {trigger: false, replace: true});
             },
             error: function(collection, error, options){
-                console.error("Collection", collection);
-                console.error("Error", error);
-                console.error("Options", options);
-                alert("Search error: movies");
+                console.error("Movies.Collection", collection);
+                console.error("Movies.Error", error);
+                console.error("Movies.Options", options);
+                that.showPage('search');
+                that.navigate('#searchERRORmovies/' + text, {trigger: false, replace: true});
             }});
         },
         error: function(collection, error, options){
-            console.error("Collection", collection);
-            console.error("Error", error);
-            console.error("Options", options);
-            alert("Search error: series:" + error);
+            console.error("Series.Collection", collection);
+            console.error("Series.Error", error);
+            console.error("Series.Options", options);
+            that.showPage('search');
+            that.navigate('#searchERRORseries/' + text, {trigger: false, replace: true});
         }});
     },
 
