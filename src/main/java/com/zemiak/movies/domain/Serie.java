@@ -45,7 +45,7 @@ public class Serie implements Serializable {
 
     @Id
     @Basic(optional = false)
-    @SequenceGenerator(name="my_gen", sequenceName="seq_id")
+    @SequenceGenerator(name="my_gen", sequenceName="data.seq_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_gen")
     @Column(name = "id")
     private Integer id;
