@@ -63,6 +63,8 @@
                             <f:selectItems value="#{serieController.itemsAvailableSelectOne}"
                                            var="serieIdItem"
                                            itemValue="#{serieIdItem}"/>
+                            
+                            <p:ajax listener="#{movieControllerAll.serieValueChange}" update="genreId" />
                         </p:selectOneMenu>
 
                         <p:outputLabel value="#{bundle.EditMovieLabel_subtitles}" for="subtitles" />

@@ -91,6 +91,11 @@ public class MassActions {
             @Override
             public void change(final Movie movie, final MovieFacade facade) {
                 movie.setSerieId(serie);
+                
+                if (null == movie.getGenreId() || movie.getGenreId().isEmpty()) {
+                    movie.setGenreId(serie.getGenreId());
+                }
+                
                 getFacade().edit(movie);
             }
         }, ResourceBundle.getBundle("/Bundle").getString("SerieChanged"));

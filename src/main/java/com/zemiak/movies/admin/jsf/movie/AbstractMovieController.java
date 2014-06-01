@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJBException;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 
 abstract public class AbstractMovieController implements Serializable {
@@ -172,5 +173,11 @@ abstract public class AbstractMovieController implements Serializable {
     
     public MassActions getMass() {
         return mass;
+    }
+    
+    public void serieValueChange(final AjaxBehaviorEvent event) {
+        if (null == selectedOne.getGenreId() || selectedOne.getGenreId().isEmpty()) {
+            selectedOne.setGenreId(selectedOne.getSerieId().getGenreId());
+        }
     }
 }
