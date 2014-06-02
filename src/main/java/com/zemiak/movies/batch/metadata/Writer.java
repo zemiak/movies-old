@@ -52,7 +52,7 @@ public class Writer extends AbstractItemWriter {
         params.add(fileName);
 
         try {
-            CommandLine.execCmd(conf.getMp4info(), params);
+            CommandLine.execCmd(conf.getMp4tags(), params);
             LOG.info(String.format("Updated %s with %s on %s", commandLineSwitch, value, fileName));
         } catch (IOException | InterruptedException | IllegalStateException ex) {
             Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, "Cannot update " + commandLineSwitch + " for " + fileName, ex);
