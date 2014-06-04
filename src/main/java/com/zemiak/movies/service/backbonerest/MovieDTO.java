@@ -1,5 +1,6 @@
 package com.zemiak.movies.service.backbonerest;
 
+import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.strings.Encodings;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -65,5 +66,10 @@ public class MovieDTO {
         this.languageName = movie.getLanguage() == null ? "" : movie.getLanguage().getName();
         this.genreName = movie.getGenreId() == null ? "" : movie.getGenreId().getName();
         this.serieName = movie.getSerieId() == null ? "" : movie.getSerieId().getName();
+    }
+    
+    public void setGenre(Genre genre) {
+        this.genreId = genre.getId();
+        this.genreName = genre.getName();
     }
 }

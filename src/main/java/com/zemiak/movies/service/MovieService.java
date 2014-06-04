@@ -145,4 +145,8 @@ public class MovieService {
     public void mergeAndSave(Movie movie) {
         em.merge(movie);
     }
+
+    public void detach(Movie movie) {
+        em.detach(movie);
+    }
 }

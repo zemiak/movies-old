@@ -2,7 +2,10 @@ package com.zemiak.movies.service.backbonerest;
 
 import com.zemiak.movies.service.GenreService;
 import com.zemiak.movies.domain.Genre;
+import com.zemiak.movies.service.backbonerest.specialmovie.Last6MonthsGenre;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -25,10 +28,26 @@ import javax.ws.rs.core.MediaType;
 @Stateless
 public class GenreBackbone {
     @Inject GenreService service;
+    @Inject MovieBackbone movies;
     
     @GET
     public List<Genre> all() {
-        return service.all();
+        List<Genre> genres = new ArrayList<>();
+        Genre empty = null;
+        
+        genres.add(getLast6Months());
+        
+        for (Genre genre: service.all()) {
+            if (! genre.isEmpty()) {
+                genres.add(genre);
+            } else {
+                empty = genre;
+            }
+        }
+        
+        genres.add(empty);
+        
+        return genres;
     }
     
     @GET
@@ -39,8 +58,13 @@ public class GenreBackbone {
     
     @GET
     @Path("{id}")
-    public Genre find(@PathParam("id") final String id) {
-        return service.find(Integer.valueOf(id));
+    public Genre find(@PathParam("id") final String idText) {
+        Integer id = Integer.valueOf(idText);
+        if (Objects.equals(Last6MonthsGenre.ID, id)) {
+            return getLast6Months();
+        }
+        
+        return service.find(id);
     }
     
     @POST
@@ -62,5 +86,11 @@ public class GenreBackbone {
     @Path("{id}")
     public void delete(@PathParam("id") final String id) {
         service.remove(Integer.valueOf(id));
+    }
+
+    private Genre getLast6Months() {
+        Genre res = new Last6MonthsGenre();
+        
+        return res;
     }
 }

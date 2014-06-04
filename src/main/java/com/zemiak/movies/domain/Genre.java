@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Genre.findByName", query = "SELECT g FROM Genre g WHERE g.name = :name"),
     @NamedQuery(name = "Genre.findByPictureFileName", query = "SELECT g FROM Genre g WHERE g.pictureFileName = :pictureFileName"),
     @NamedQuery(name = "Genre.findByDisplayOrder", query = "SELECT g FROM Genre g WHERE g.displayOrder = :displayOrder"),
-    @NamedQuery(name = "Genre.findByProtected1", query = "SELECT g FROM Genre g WHERE g.protected1 = :protected1")})
+})
 @XmlRootElement
 public class Genre implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -57,11 +57,6 @@ public class Genre implements Serializable {
 
     @Column(name = "display_order")
     private Integer displayOrder;
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "protected")
-    private int protected1;
 
     @OneToMany(mappedBy = "genreId")
     private List<Serie> serieList;
@@ -90,10 +85,9 @@ public class Genre implements Serializable {
         this.id = id;
     }
 
-    public Genre(Integer id, String name, int protected1) {
+    public Genre(Integer id, String name) {
         this.id = id;
         this.name = name;
-        this.protected1 = protected1;
     }
 
     public void copyFrom(Genre entity) {
@@ -101,7 +95,6 @@ public class Genre implements Serializable {
         this.setName(entity.getName());
         this.setDisplayOrder(entity.getDisplayOrder());
         this.setPictureFileName(entity.getPictureFileName());
-        this.setProtected1(entity.getProtected1());
     }
 
     public Integer getId() {
@@ -139,14 +132,6 @@ public class Genre implements Serializable {
 
     public void setDisplayOrder(Integer displayOrder) {
         this.displayOrder = displayOrder;
-    }
-
-    public int getProtected1() {
-        return protected1;
-    }
-
-    public void setProtected1(int protected1) {
-        this.protected1 = protected1;
     }
 
     @XmlTransient
