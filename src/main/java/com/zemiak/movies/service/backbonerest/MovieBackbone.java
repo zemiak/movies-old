@@ -35,8 +35,9 @@ public class MovieBackbone {
     @GET
     public List<MovieDTO> all() {
         final List<MovieDTO> list = new ArrayList<>();
-        list.addAll(getLast12MonthsMovies());
+        
         list.addAll(convertList(service.all()));
+        list.addAll(getLast12MonthsMovies());
         
         return list;
     }

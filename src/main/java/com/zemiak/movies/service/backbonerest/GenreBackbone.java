@@ -35,8 +35,6 @@ public class GenreBackbone {
         List<Genre> genres = new ArrayList<>();
         Genre empty = null;
         
-        genres.add(getLast6Months());
-        
         for (Genre genre: service.all()) {
             if (! genre.isEmpty()) {
                 genres.add(genre);
@@ -45,6 +43,7 @@ public class GenreBackbone {
             }
         }
         
+        genres.add(getLast6Months());
         genres.add(empty);
         
         return genres;
