@@ -6,6 +6,8 @@ import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.service.backbonerest.specialmovie.Last6MonthsGenre;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -37,7 +39,7 @@ public class MovieBackbone {
         final List<MovieDTO> list = new ArrayList<>();
         
         list.addAll(convertList(service.all()));
-        list.addAll(getLast12MonthsMovies());
+        list.addAll(getLastNMonthsMovies(6));
         
         return list;
     }
@@ -99,12 +101,12 @@ public class MovieBackbone {
         return dtoList;
     }
     
-    public List<MovieDTO> getLast12MonthsMovies() {
+    public List<MovieDTO> getLastNMonthsMovies(int months) {
         Genre genre = new Last6MonthsGenre();
         
         Calendar cal = new GregorianCalendar();
         cal.setTime(new Date());
-        cal.add(Calendar.MONTH, -6);
+        cal.add(Calendar.MONTH, months);
         
         List<MovieDTO> res = new ArrayList<>();
         for (Movie movie: service.all()) {
@@ -115,6 +117,13 @@ public class MovieBackbone {
             }
             
         }
+        
+        Collections.sort(res, new Comparator<MovieDTO>() {
+            @Override
+            public int compare(MovieDTO o1, MovieDTO o2) {
+                return o1.getCreated().compareTo(o2.getCreated()) * -1; // descending
+            }
+        });
         
         return res;
     }

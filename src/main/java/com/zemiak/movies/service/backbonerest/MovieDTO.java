@@ -3,6 +3,7 @@ package com.zemiak.movies.service.backbonerest;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.strings.Encodings;
+import java.util.Date;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -34,6 +35,8 @@ public class MovieDTO {
     private String originalLanguageName;
     private String languageName;
     private String subtitlesName;
+    
+    private Date created;
 
     public MovieDTO() {
     }
@@ -66,10 +69,16 @@ public class MovieDTO {
         this.languageName = movie.getLanguage() == null ? "" : movie.getLanguage().getName();
         this.genreName = movie.getGenreId() == null ? "" : movie.getGenreId().getName();
         this.serieName = movie.getSerieId() == null ? "" : movie.getSerieId().getName();
+        
+        this.created = movie.getCreated();
     }
     
     public void setGenre(Genre genre) {
         this.genreId = genre.getId();
         this.genreName = genre.getName();
+    }
+    
+    public Date getCreated() {
+        return created;
     }
 }
