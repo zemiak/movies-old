@@ -115,7 +115,6 @@ public class MovieBackbone {
                 newMovie.setGenre(genre);
                 res.add(newMovie);
             }
-            
         }
         
         Collections.sort(res, new Comparator<MovieDTO>() {

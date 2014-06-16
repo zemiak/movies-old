@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author vasko
  */
 @Entity
-@Table(name = "language", schema = "data")
+@Table(name = "language", schema="data")
 @NamedQueries({
     @NamedQuery(name = "Language.findAll", query = "SELECT l FROM Language l ORDER BY l.name"),
     @NamedQuery(name = "Language.findById", query = "SELECT l FROM Language l WHERE l.id = :id"),

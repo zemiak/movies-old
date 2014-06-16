@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author vasko
  */
 @Entity
-@Table(name = "genre", schema = "data")
+@Table(name = "genre", schema="data")
 @NamedQueries({
     @NamedQuery(name = "Genre.findAll", query = "SELECT g FROM Genre g ORDER BY g.displayOrder"),
     @NamedQuery(name = "Genre.findById", query = "SELECT g FROM Genre g WHERE g.id = :id"),

@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author vasko
  */
 @Entity
-@Table(name = "movie", schema = "data")
+@Table(name = "movie", schema="data")
 @NamedQueries({
     @NamedQuery(name = "Movie.findByGenreWithoutSerie", query = "SELECT m FROM Movie m WHERE m.genreId = :genre AND (m.serieId IS NULL OR m.serieId.id = 0) ORDER BY m.name"),
     @NamedQuery(name = "Movie.findAll", query = "SELECT m FROM Movie m ORDER BY m.id"),

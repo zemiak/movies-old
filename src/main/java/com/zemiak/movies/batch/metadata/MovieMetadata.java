@@ -118,25 +118,9 @@ public class MovieMetadata {
                 || comments.trim().isEmpty()
                 || "''".equals(comments));
 
-        if (commentsAreEmpty && !movie.isDescriptionEmpty()) {
-            if (debug) {
-                LOG.log(Level.INFO, "{0}: metadata comments empty, movie comments not", movie.getFileName());
-            }
-
-            return true;
-        }
-
         if (commentsAreEmpty && movie.isDescriptionEmpty() && !movie.isUrlEmpty()) {
             if (debug) {
-                LOG.log(Level.INFO, "{0}: metadata and movie comments empty, comments URL not", movie.getFileName());
-            }
-
-            return true;
-        }
-
-        if (!commentsAreEmpty && !movie.isDescriptionEmpty() && !comments.equals(movie.getDescription())) {
-            if (debug) {
-                LOG.log(Level.INFO, "{0}: metadata and comments not empty, but not equal", movie.getFileName());
+                LOG.log(Level.INFO, "{0}: metadata and movie comments empty, comments URL not. Updating.", movie.getFileName());
             }
 
             return true;

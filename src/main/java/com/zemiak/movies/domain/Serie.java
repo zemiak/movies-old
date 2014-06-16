@@ -18,7 +18,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -28,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author vasko
  */
 @Entity
-@Table(name = "serie", schema = "data")
+@Table(name = "serie", schema="data")
 @NamedQueries({
     @NamedQuery(name = "Serie.findAll", query = "SELECT s FROM Serie s ORDER BY s.genreId, s.displayOrder"),
     @NamedQuery(name = "Serie.findById", query = "SELECT s FROM Serie s WHERE s.id = :id"),

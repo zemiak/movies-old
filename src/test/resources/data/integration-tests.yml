@@ -1,0 +1,10 @@
+Genre:
+    - id: 0
+      name: None
+      display_order: 0
+    - id: 1
+      name: Documentary
+      display_order: 6
+    - id: 2
+      name: Horror
+      display_order: 7
