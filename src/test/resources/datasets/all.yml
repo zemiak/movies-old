@@ -1,4 +1,4 @@
-Genre:
+data.genre:
     - id: 0
       name: None
       display_order: 0

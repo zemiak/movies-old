@@ -1,0 +1,7 @@
+data.genre:
+    - id: 10283
+      name: Horror
+      display_order: 3
+      created: 2014-01-01
+      picture_file_name: genres/horror.png
+
