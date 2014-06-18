@@ -238,6 +238,14 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.17</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.apache.maven.surefire</groupId>
+                                <artifactId>surefire-junit47</artifactId>
+                                <version>2.17</version>
+                            </dependency>
+                        </dependencies>
                         <executions>
                             <execution>
                                 <id>pre-integration-test</id>
@@ -246,17 +254,7 @@
                                     <goal>test</goal>
                                 </goals>
                                 <configuration>
-                                    <groups>net.ggtools.junit.categories.Slow</groups>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>integration-test</id>
-                                <phase>integration-test</phase>
-                                <goals>
-                                    <goal>test</goal>
-                                </goals>
-                                <configuration>
-                                    <groups>net.ggtools.junit.categories.Integration</groups>
+                                    <groups>net.ggtools.junit.categories.Slow,net.ggtools.junit.categories.Integration</groups>
                                 </configuration>
                             </execution>
                         </executions>

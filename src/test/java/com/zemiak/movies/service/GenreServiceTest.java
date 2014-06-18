@@ -22,7 +22,7 @@ import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
-//@Category(value = Slow.class)
+@Category(value = Slow.class)
 public class GenreServiceTest {
     
     public GenreServiceTest() {
