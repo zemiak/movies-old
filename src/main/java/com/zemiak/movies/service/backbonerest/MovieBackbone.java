@@ -106,7 +106,7 @@ public class MovieBackbone {
         
         Calendar cal = new GregorianCalendar();
         cal.setTime(new Date());
-        cal.add(Calendar.MONTH, months);
+        cal.add(Calendar.MONTH, -months);
         
         List<MovieDTO> res = new ArrayList<>();
         for (Movie movie: service.all()) {

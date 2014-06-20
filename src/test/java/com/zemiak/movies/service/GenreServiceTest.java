@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
-@RunWith(Arquillian.class)
+    @RunWith(Arquillian.class)
 //@Category(value = Slow.class)
 public class GenreServiceTest {
     

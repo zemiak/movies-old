@@ -81,4 +81,8 @@ public class MovieDTO {
     public Date getCreated() {
         return created;
     }
+
+    public String getName() {
+        return name;
+    }
 }
