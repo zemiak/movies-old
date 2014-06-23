@@ -34,13 +34,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Genre.findByPictureFileName", query = "SELECT g FROM Genre g WHERE g.pictureFileName = :pictureFileName"),
     @NamedQuery(name = "Genre.findByDisplayOrder", query = "SELECT g FROM Genre g WHERE g.displayOrder = :displayOrder"),
 })
+@SequenceGenerator(name="seq_genre", initialValue=21000, allocationSize=10)
 @XmlRootElement
 public class Genre implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name="my_gen", sequenceName="data.seq_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_gen")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_genre")
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;

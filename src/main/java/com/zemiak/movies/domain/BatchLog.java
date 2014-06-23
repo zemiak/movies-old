@@ -29,13 +29,13 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name = "BatchLog.findAll", query = "SELECT b FROM BatchLog b ORDER BY b.created DESC")
 })
+@SequenceGenerator(name="seq_batchlog", initialValue=21000, allocationSize=10)
 public class BatchLog implements Serializable {
     @Transient
     static final private int SHORTENED_LENGTH = 64;
     
     @Id
-    @SequenceGenerator(name="my_gen", sequenceName="data.seq_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_gen")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_batchlog")
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
