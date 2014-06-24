@@ -24,7 +24,7 @@
                 </f:facet>
             </p:ajaxStatus>
 
-            
+
             <h:form id="MovieListForm">
                 <p:dataTable id="datalist" value="#{movieControllerAll.items}" var="item"
                              selectionMode="multiple" selection="#{movieControllerAll.selected}"
@@ -38,6 +38,7 @@
 
                     <p:ajax event="rowSelect"   update="createButton viewButton editButton orderUpButton orderDownButton massActions"/>
                     <p:ajax event="rowUnselect" update="createButton viewButton editButton orderUpButton orderDownButton massActions"/>
+                    <p:ajax event="rowDblselect" update=":MovieEditForm" oncomplete="PF('MovieEditDialog').show()" />
 
                     <p:column>
                         <f:facet name="header">
@@ -149,7 +150,7 @@
                                         disabled="#{movieControllerAll.selectionEmpty}"
                                         id="serieAction"
                                         icon="ui-icon-cart"/>
-                            
+
                             <p:menuitem value="#{bundle.FetchDescription}"
                                         disabled="#{movieControllerAll.selectionEmpty}"
                                         id="descriptionAction"
