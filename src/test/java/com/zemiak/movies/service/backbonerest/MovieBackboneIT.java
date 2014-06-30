@@ -1,6 +1,5 @@
 package com.zemiak.movies.service.backbonerest;
 
-import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.backbonerest.specialmovie.Last6MonthsGenre;
 import com.zemiak.movies.strings.Encodings;
@@ -23,22 +22,21 @@ import org.junit.runner.RunWith;
  * @author vasko
  */
 @RunWith(Arquillian.class)
-//@Category(value = Slow.class)
-public class MovieBackboneTest {
+public class MovieBackboneIT {
     @Inject
     MovieBackbone backboneMovies;
     
     @Inject
     MovieService movies;
     
-    public MovieBackboneTest() {
+    public MovieBackboneIT() {
     }
     
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap
                 .create(JavaArchive.class)
-                .addClasses(MovieBackboneTest.class, Last6MonthsGenre.class, Encodings.class)
+                .addClasses(MovieBackboneIT.class, Last6MonthsGenre.class, Encodings.class)
                 .addPackage("com.zemiak.movies.domain")
                 .addPackage("com.zemiak.movies.service")
                 .addPackage("com.zemiak.movies.service.backbonerest")

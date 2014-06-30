@@ -3,22 +3,19 @@ package com.zemiak.movies.description;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.UrlDTO;
 import java.util.List;
-import net.ggtools.junit.categories.Integration;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.experimental.categories.Category;
 
 /**
  *
  * @author vasko
  */
-@Category(value = Integration.class)
-public class ImdbTest {
+public class ImdbIT {
     private Movie movie;
     private Imdb reader;
     
-    public ImdbTest() {
+    public ImdbIT() {
     }
     
     @Before

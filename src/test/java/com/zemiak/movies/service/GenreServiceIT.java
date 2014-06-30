@@ -6,7 +6,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import net.ggtools.junit.categories.Slow;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.persistence.ShouldMatchDataSet;
@@ -18,21 +17,19 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
-    @RunWith(Arquillian.class)
-//@Category(value = Slow.class)
-public class GenreServiceTest {
+@RunWith(Arquillian.class)
+public class GenreServiceIT {
     
-    public GenreServiceTest() {
+    public GenreServiceIT() {
     }
     
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap
                 .create(JavaArchive.class)
-                .addClasses(GenreService.class, GenreServiceTest.class)
+                .addClasses(GenreService.class, GenreServiceIT.class)
                 .addPackage("com.zemiak.movies.domain")
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/create-script-source.sql", "create-script-source.sql")
