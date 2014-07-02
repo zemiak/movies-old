@@ -18,7 +18,7 @@ abstract class AbstractSeriesDescriptionReader implements IDescriptionReader {
     @Override
     abstract public String getReaderName();
 
-    public AbstractSeriesDescriptionReader() {
+    AbstractSeriesDescriptionReader() {
         descriptions = readDescriptions();
     }
 

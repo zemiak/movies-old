@@ -39,14 +39,11 @@ public class MassActions {
     }
 
     private void adjustOrder(final int offset, String successMessage) {
-        changeMultipleItems(new ChangeMovieItem() {
-            @Override
-            public void change(final Movie movie, final MovieFacade facade) {
-                Integer order = movie.getDisplayOrder() == null ? 2 : movie.getDisplayOrder();
-                
-                movie.setDisplayOrder((order + offset > 0) ? (order + offset) : 1);
-                getFacade().edit(movie);
-            }
+        changeMultipleItems((final Movie movie) -> {
+            Integer order = movie.getDisplayOrder() == null ? 2 : movie.getDisplayOrder();
+            
+            movie.setDisplayOrder((order + offset > 0) ? (order + offset) : 1);
+            getFacade().edit(movie);
         }, successMessage);
     }
 
@@ -54,7 +51,7 @@ public class MassActions {
         controller.setEmbeddableKeys();
         try {
             for (Movie movie: controller.selected) {
-                changer.change(movie, controller.ejbFacade);
+                changer.change(movie);
             }
 
             JsfUtil.addSuccessMessage(successMessage);
@@ -77,72 +74,54 @@ public class MassActions {
     }
     
     public void changeGenre() {
-        changeMultipleItems(new ChangeMovieItem() {
-            @Override
-            public void change(final Movie movie, final MovieFacade facade) {
-                movie.setGenreId(genre);
-                getFacade().edit(movie);
-            }
+        changeMultipleItems((final Movie movie) -> {
+            movie.setGenreId(genre);
+            getFacade().edit(movie);
         }, ResourceBundle.getBundle("/Bundle").getString("GenreChanged"));
     }
 
     public void changeSerie() {
-        changeMultipleItems(new ChangeMovieItem() {
-            @Override
-            public void change(final Movie movie, final MovieFacade facade) {
-                movie.setSerieId(serie);
-                
-                if (null == movie.getGenreId() || movie.getGenreId().isEmpty()) {
-                    movie.setGenreId(serie.getGenreId());
-                }
-                
-                getFacade().edit(movie);
+        changeMultipleItems((final Movie movie) -> {
+            movie.setSerieId(serie);
+            
+            if (null == movie.getGenreId() || movie.getGenreId().isEmpty()) {
+                movie.setGenreId(serie.getGenreId());
             }
+            
+            getFacade().edit(movie);
         }, ResourceBundle.getBundle("/Bundle").getString("SerieChanged"));
     }
 
     public void changeLanguage() {
-        changeMultipleItems(new ChangeMovieItem() {
-            @Override
-            public void change(final Movie movie, final MovieFacade facade) {
-                movie.setLanguage(language);
-                getFacade().edit(movie);
-            }
+        changeMultipleItems((final Movie movie) -> {
+            movie.setLanguage(language);
+            getFacade().edit(movie);
         }, ResourceBundle.getBundle("/Bundle").getString("LanguageChanged"));
     }
 
     public void changeOriginalLanguage() {
-        changeMultipleItems(new ChangeMovieItem() {
-            @Override
-            public void change(final Movie movie, final MovieFacade facade) {
-                movie.setOriginalLanguage(originalLanguage);
-                getFacade().edit(movie);
-            }
+        changeMultipleItems((final Movie movie) -> {
+            movie.setOriginalLanguage(originalLanguage);
+            getFacade().edit(movie);
         }, ResourceBundle.getBundle("/Bundle").getString("OriginalLanguageChanged"));
     }
 
     public void changeSubtitles() {
-        changeMultipleItems(new ChangeMovieItem() {
-            @Override
-            public void change(final Movie movie, final MovieFacade facade) {
-                movie.setSubtitles(subtitles);
-                getFacade().edit(movie);
-            }
+        changeMultipleItems((final Movie movie) -> {
+            movie.setSubtitles(subtitles);
+            getFacade().edit(movie);
         }, ResourceBundle.getBundle("/Bundle").getString("SubtitlesChanged"));
     }
     
     public void fetchDescriptions() {
         final DescriptionReader reader = new DescriptionReader();
         
-        changeMultipleItems(new ChangeMovieItem() {
-            @Override
-            public void change(final Movie movie, final MovieFacade facade) {
-                final String desc = reader.read(movie);
-                
-                if (null != desc && !desc.equals(movie.getDescription())) {
-                    movie.setDescription(desc);
-                    getFacade().edit(movie);
-                }
+        changeMultipleItems((final Movie movie) -> {
+            final String desc = reader.read(movie);
+            
+            if (null != desc && !desc.equals(movie.getDescription())) {
+                movie.setDescription(desc);
+                getFacade().edit(movie);
             }
         }, ResourceBundle.getBundle("/Bundle").getString("DescriptionsFetched"));
     }

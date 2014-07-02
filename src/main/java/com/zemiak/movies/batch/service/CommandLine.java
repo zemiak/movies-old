@@ -88,7 +88,7 @@ public final class CommandLine {
 
     private static <T> T timedCall(final Callable<T> c, final long timeout, final TimeUnit timeUnit) throws InterruptedException, ExecutionException, TimeoutException
     {
-        final FutureTask<T> task = new FutureTask<T>(c);
+        final FutureTask<T> task = new FutureTask<>(c);
         THREAD_POOL.execute(task);
         return task.get(timeout, timeUnit);
     }
@@ -97,25 +97,21 @@ public final class CommandLine {
         final List<String> command = new ArrayList<>(arguments);
         command.add(0, cmd);
 
-        Callable<CommandLineResult> callable = new Callable<CommandLineResult>() {
-            @Override
-            public CommandLineResult call() throws Exception
-                {
-                    Process process = Runtime.getRuntime().exec(command.toArray(new String[]{}));
-
-                    int exitValue = process.waitFor();
-
-                    List<String> lines = new ArrayList<>();
-                    try (InputStream stream = process.getInputStream();) {
-                        lines.addAll(Arrays.asList(streamToString(stream).split(System.getProperty("line.separator"))));
-                    }
-
-                    CommandLineResult result = new CommandLineResult();
-                    result.setExitValue(exitValue);
-                    result.setOutput(lines);
-
-                    return result;
-                }
+        Callable<CommandLineResult> callable = () -> {
+            Process process = Runtime.getRuntime().exec(command.toArray(new String[]{}));
+            
+            int exitValue = process.waitFor();
+            
+            List<String> lines = new ArrayList<>();
+            try (InputStream stream = process.getInputStream();) {
+                lines.addAll(Arrays.asList(streamToString(stream).split(System.getProperty("line.separator"))));
+            }
+            
+            CommandLineResult result = new CommandLineResult();
+            result.setExitValue(exitValue);
+            result.setOutput(lines);
+            
+            return result;
         };
 
         return callable;

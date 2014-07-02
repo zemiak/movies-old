@@ -8,5 +8,5 @@ import com.zemiak.movies.domain.Movie;
  * @author vasko
  */
 public interface ChangeMovieItem {
-    void change(final Movie movie, final MovieFacade facade);
+    void change(final Movie movie);
 }

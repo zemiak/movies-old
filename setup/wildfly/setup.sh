@@ -30,5 +30,6 @@ then
     exit 2
 fi
 
+$CLI --file=driver-install.cli
 $CLI --file=common.cli
 $CLI --file="$1.cli"

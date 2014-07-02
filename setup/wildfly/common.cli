@@ -1,14 +1,6 @@
 connect
 
 ###
-# Install database driver only if needed
-###
-if (outcome != success) of /subsystem=datasources/:get-installed-driver(driver-name=postgresql)
-    deploy ./postgresql-9.3-1101.jdbc41.jar
-end-if
-
-
-###
 # Remove Database Connection
 ###
 if (outcome == success) of /subsystem=datasources/data-source=ZemiakMovies/:read-resource

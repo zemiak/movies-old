@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class GameOfThrones extends AbstractSeriesDescriptionReader {
-    public GameOfThrones() {
+    GameOfThrones() {
     }
 
     @Override
