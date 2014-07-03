@@ -2,7 +2,7 @@
 
 MAC=/Users/vasko/bin/wildfly8/
 LINUX=/home/wildfly/wildfly8/
-WINDOWS=/e/Java/wildfly/
+WINDOWS=/e/Java/wildfly8/
 
 if [ -d "$MAC" ]
 then
@@ -32,4 +32,5 @@ fi
 
 $CLI --file=driver-install.cli
 $CLI --file=common.cli
-$CLI --file="$1.cli"
+$CLI --file="$1-properties.cli"
+$CLI --file="$1-ds.cli"

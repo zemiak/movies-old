@@ -1,14 +1,6 @@
 connect
 
 ###
-# Setup DB connection
-###
-
-/subsystem=datasources/data-source=ZemiakMovies/:add(jndi-name=java\:jboss\/datasources\/ZemiakMovies,driver-name=postgresql,connection-url=jdbc\:postgresql\:\/\/lenovo-server.local\:5432\/movies,password=movies\/0,user-name=movies_user)
-/subsystem=datasources/data-source=ZemiakMovies/:enable
-reload
-
-###
 # Add JNDI String Configuration
 ###
 
