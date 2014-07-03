@@ -36,7 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Serie.findByDisplayOrder", query = "SELECT s FROM Serie s WHERE s.displayOrder = :displayOrder"),
     @NamedQuery(name = "Serie.findByGenreId", query = "SELECT s FROM Serie s WHERE s.genreId = :genreId")})
 @XmlRootElement
-@SequenceGenerator(name="seq_serie", initialValue=21000, allocationSize=10)
 public class Serie implements Serializable {
     private static final long serialVersionUID = 4L;
     
@@ -45,7 +44,8 @@ public class Serie implements Serializable {
 
     @Id
     @Basic(optional = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_serie")
+    @SequenceGenerator(name="pk_sequence",sequenceName="data.entity_id_seq", allocationSize=1, initialValue = 30000)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
     @Column(name = "id")
     private Integer id;
 

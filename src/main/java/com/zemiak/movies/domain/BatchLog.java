@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
@@ -29,18 +28,18 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name = "BatchLog.findAll", query = "SELECT b FROM BatchLog b ORDER BY b.created DESC")
 })
-@SequenceGenerator(name="seq_batchlog", initialValue=21000, allocationSize=10)
 public class BatchLog implements Serializable {
     @Transient
     static final private int SHORTENED_LENGTH = 64;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_batchlog")
+    @SequenceGenerator(name="pk_sequence",sequenceName="data.entity_id_seq", allocationSize=1, initialValue = 30000)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
     
-    @Lob
+    @Column(name = "text", columnDefinition = "TEXT")
     @NotNull
     private String text;
     

@@ -40,12 +40,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Movie.findByDisplayOrder", query = "SELECT m FROM Movie m WHERE m.displayOrder = :displayOrder"),
     @NamedQuery(name = "Movie.findByDescription", query = "SELECT m FROM Movie m WHERE m.description = :description")})
 @XmlRootElement
-@SequenceGenerator(name="seq_movie", initialValue=21000, allocationSize=10)
 public class Movie implements Serializable {
     private static final long serialVersionUID = 3L;
 
     @Id
-    @GeneratedValue(generator = "seq_movie", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name="pk_sequence",sequenceName="data.entity_id_seq", allocationSize=1, initialValue = 30000)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
