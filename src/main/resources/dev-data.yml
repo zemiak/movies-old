@@ -1,0 +1,14 @@
+## Base movies data for development
+---
+projects:
+    - !!com.cargopartner.loaddata.domain.Project &project-spot
+        name: SPOTTWO
+
+users:
+    - !!com.cargopartner.loaddata.domain.User
+        username: vasko miroslav
+        projects: [*project-spot]
+
+    - !!com.cargopartner.loaddata.domain.User
+        username: macura pavol
+        projects: [*project-spot]

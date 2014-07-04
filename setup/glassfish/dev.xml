@@ -26,6 +26,11 @@
         <property name="value" value="/Users/vasko/bin/mp4tags"></property>
     </custom-resource>
 
+    <custom-resource res-type="java.lang.String" jndi-name="com.zemiak.movies.development-system"
+                     factory-class="org.glassfish.resources.custom.factory.PrimitivesAndStringFactory">
+        <property name="value" value="true"></property>
+    </custom-resource>
+
     <custom-resource res-type="java.lang.String" jndi-name="com.zemiak.movies.mailFrom"
                      factory-class="org.glassfish.resources.custom.factory.PrimitivesAndStringFactory">
         <property name="value" value="movies@zemiak-retina-macbook.local"></property>

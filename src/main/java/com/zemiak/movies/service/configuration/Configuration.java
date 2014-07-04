@@ -10,6 +10,7 @@ import javax.inject.Singleton;
 public class Configuration {
     private String backendUrl, ffmpeg, imgPath, mailFrom, mailSubject,
             mp4info, mp4tags, path, mailTo;
+    private boolean developmentSystem;
 
     public Configuration() {
     }
@@ -81,8 +82,16 @@ public class Configuration {
     public String getMailTo() {
         return mailTo;
     }
-    
+
     public void setMailTo(String mailTo) {
         this.mailTo = mailTo;
+    }
+
+    public boolean isDevelopmentSystem() {
+        return developmentSystem;
+    }
+
+    public void setDevelopmentSystem(boolean developmentSystem) {
+        this.developmentSystem = developmentSystem;
     }
 }

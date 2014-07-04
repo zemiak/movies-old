@@ -14,13 +14,13 @@ import javax.inject.Inject;
 public class ConfigurationReader {
     final CustomResourceLookup lookupService = new CustomResourceLookup();
     private String prefix;
-    
+
     @Inject Configuration config;
-    
+
     @PostConstruct
     public void init() {
         String path = new CustomResourceLookup().lookup("java:/jboss/com.zemiak.movies.path");
-        
+
         if (null != path) {
             read("java:/jboss/");
         } else {
@@ -30,7 +30,7 @@ public class ConfigurationReader {
 
     private void read(String prefix) {
         this.prefix = prefix + "com.zemiak.movies.";
-        
+
         config.setBackendUrl(readStringProperty("backendUrl"));
         config.setFfmpeg(readStringProperty("ffmpeg"));
         config.setImgPath(readStringProperty("imgPath"));
@@ -40,8 +40,9 @@ public class ConfigurationReader {
         config.setMp4info(readStringProperty("mp4info"));
         config.setMp4tags(readStringProperty("mp4tags"));
         config.setPath(readStringProperty("path"));
+        config.setDevelopmentSystem(readStringProperty("development-system").trim().toLowerCase().equals("true"));
     }
-    
+
     private String readStringProperty(String name) {
         return lookupService.lookup(prefix + name);
     }
