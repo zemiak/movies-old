@@ -13,7 +13,7 @@
 
     <custom-resource res-type="java.lang.String" jndi-name="com.zemiak.movies.imgPath"
                      factory-class="org.glassfish.resources.custom.factory.PrimitivesAndStringFactory">
-        <property name="value" value="/home/sites/movies/img/movies/"></property>
+        <property name="value" value="/home/sites/movies/img/movie/"></property>
     </custom-resource>
 
     <custom-resource res-type="java.lang.String" jndi-name="com.zemiak.movies.mp4info"
@@ -28,12 +28,12 @@
 
     <custom-resource res-type="java.lang.String" jndi-name="com.zemiak.movies.mailFrom"
                      factory-class="org.glassfish.resources.custom.factory.PrimitivesAndStringFactory">
-        <property name="value" value="noreply@zemiak.com"></property>
+        <property name="value" value="movies@lenovo-server.local"></property>
     </custom-resource>
 
     <custom-resource res-type="java.lang.String" jndi-name="com.zemiak.movies.mailTo"
                      factory-class="org.glassfish.resources.custom.factory.PrimitivesAndStringFactory">
-        <property name="value" value="movies@lenovo-server.local"></property>
+        <property name="value" value="zemiak@zemiak.com"></property>
     </custom-resource>
 
     <custom-resource res-type="java.lang.String" jndi-name="com.zemiak.movies.mailSubject"
