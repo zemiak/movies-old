@@ -40,7 +40,14 @@ public class ConfigurationReader {
         config.setMp4info(readStringProperty("mp4info"));
         config.setMp4tags(readStringProperty("mp4tags"));
         config.setPath(readStringProperty("path"));
-        config.setDevelopmentSystem(readStringProperty("development-system").trim().toLowerCase().equals("true"));
+        
+        final String developmentSystem = readStringProperty("development-system");
+        if (null != developmentSystem) {
+            config.setDevelopmentSystem(developmentSystem.trim().toLowerCase().equals("true"));
+        } else {
+            config.setDevelopmentSystem(false);
+        }
+        
     }
 
     private String readStringProperty(String name) {

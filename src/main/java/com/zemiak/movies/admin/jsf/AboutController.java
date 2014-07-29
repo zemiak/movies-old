@@ -8,6 +8,7 @@ import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.SerieService;
 import com.zemiak.movies.domain.AboutItem;
 import com.zemiak.movies.domain.CacheClearEvent;
+import com.zemiak.movies.service.yaml.Dumper;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class AboutController implements Serializable {
     @Inject MovieService movies;
     @Inject Event<CacheClearEvent> clearCacheEvents;
     @Inject BatchRunner runner;
+    @Inject Dumper dumper;
 
     private List<AboutItem> items;
 
@@ -67,6 +69,11 @@ public class AboutController implements Serializable {
             runner.runUpdateCollection();
             showMessage(String.format("Submitted a job with id %d", runner.getUpdateMoviesJob()));
         }
+    }
+    
+    public void runDataDump() {
+        dumper.dump();
+        showMessage("Dumped a copy of data in YAML format");
     }
 
     private void showMessage(final String message) {

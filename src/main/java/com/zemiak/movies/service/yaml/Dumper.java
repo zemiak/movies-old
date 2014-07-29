@@ -11,23 +11,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
-import javax.ejb.Startup;
-import javax.inject.Singleton;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
-@Startup
-@Singleton
+@Stateless
 public class Dumper {
     private static final Logger LOG = Logger.getLogger(Dumper.class.getName());
+    private static final String FILE_NAME = "/tmp/dev-data.yml";
 
     @PersistenceContext
     EntityManager em;
+    
 
-    @PostConstruct
     public void dump() {
         List<Object> entities = new ArrayList<>();
 
@@ -42,8 +40,10 @@ public class Dumper {
         final Yaml yaml = new Yaml(options);
         final String dumped = yaml.dump(entities);
 
-        try (OutputStream os = new FileOutputStream("/dev-data.yml")) {
+        try (OutputStream os = new FileOutputStream(FILE_NAME)) {
+            System.err.println("Dumped data to: " + os.toString());
             os.write(dumped.getBytes());
+            os.close();
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, "File save problem", ex);
         }

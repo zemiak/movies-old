@@ -85,7 +85,7 @@
             <p:spacer height="5" />
 
             <h:form>
-                <p:commandButton id="runButton"   icon="ui-icon-play" value="#{bundle.Run}" actionListener="#{aboutController.runImport()}" update=":growl,batchPanel" />
+                <p:commandButton id="runButton" icon="ui-icon-play" value="#{bundle.Run}" actionListener="#{aboutController.runImport()}" update=":growl,batchPanel" />
                 <p:spacer width="10" />
                 <h:panelGroup id="batchPanel">
                     <h:outputText id="batchJobNumber"
@@ -95,6 +95,10 @@
 
                     <p:poll interval="5" update="batchJobNumber" /> 
                 </h:panelGroup>
+            </h:form>
+            
+            <h:form>
+                <p:commandButton id="dumpButton" icon="ui-icon-play" value="#{bundle.Dump}" actionListener="#{aboutController.runDataDump()}" update=":growl" title="#{bundle.DumpTooltip}" />
             </h:form>
             
             <ui:include src="View.xhtml"/>
