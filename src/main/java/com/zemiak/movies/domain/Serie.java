@@ -38,9 +38,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 public class Serie implements Serializable {
     private static final long serialVersionUID = 4L;
-    
-    public static final Integer MASH_ID = 1;
-    public static final Integer GAME_OF_THRONES_ID = 1000;
 
     @Id
     @Basic(optional = false)
@@ -66,7 +63,7 @@ public class Serie implements Serializable {
 
     @OneToMany(mappedBy = "serieId")
     private List<Movie> movieList;
-    
+
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;

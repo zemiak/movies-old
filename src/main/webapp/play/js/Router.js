@@ -112,7 +112,7 @@ var MovieRouter = Backbone.Router.extend({
         var view = new MovieDetailView({el: $('#movie')}), movieModel;
 
         movieModel = repository.movies.findById(id);
-        
+
         view.setModel(movieModel);
         view.render();
 
@@ -122,68 +122,9 @@ var MovieRouter = Backbone.Router.extend({
     searchKeydown: function(event)
     {
         if (event.keyCode == 13) {
-            this.search($('#searchBox')[0].value);
-        }
-    },
-
-    search: function(text)
-    {
-        if (! text) {
             text = $('#searchBox')[0].value;
+            window.location = "/play/search.jsp?query=" + encodeURIComponent(text);
         }
-
-        var view = new ListView({el: $('#search')});
-        var items = [];
-        var v;
-
-        // a back button
-        var backv = new BackButtonView;
-        backv.setUrl('#genres');
-        items.push(backv);
-
-        var srepo = new SerieSearchCollection;
-        var that = this;
-        srepo.setText(text);
-        srepo.fetch({success: function(){
-            srepo.forEach(function(serie){
-                v = new SerieItemView;
-                v.setModel(serie);
-
-                items.push(v);
-            });
-            
-            var mrepo = new MovieSearchCollection;
-            mrepo.setText(text);
-            mrepo.fetch({success: function(){
-                mrepo.forEach(function(movie){
-                    v = new MovieItemView;
-                    v.setModel(movie);
-
-                    items.push(v);
-                });
-                
-                view.setName('Search results');
-                view.setItems(items);
-
-                view.render();
-                that.showPage('search');
-                that.navigate('#search/' + text, {trigger: false, replace: true});
-            },
-            error: function(collection, error, options){
-                console.error("Movies.Collection", collection);
-                console.error("Movies.Error", error);
-                console.error("Movies.Options", options);
-                that.showPage('search');
-                that.navigate('#searchERRORmovies/' + text, {trigger: false, replace: true});
-            }});
-        },
-        error: function(collection, error, options){
-            console.error("Series.Collection", collection);
-            console.error("Series.Error", error);
-            console.error("Series.Options", options);
-            that.showPage('search');
-            that.navigate('#searchERRORseries/' + text, {trigger: false, replace: true});
-        }});
     },
 
     showPage: function(id)
