@@ -123,7 +123,7 @@ var MovieRouter = Backbone.Router.extend({
     {
         if (event.keyCode == 13) {
             text = $('#searchBox')[0].value;
-            window.location = "/play/search.jsp?query=" + encodeURIComponent(text);
+            window.location = "play/search.jsp?query=" + encodeURIComponent(text);
         }
     },
 

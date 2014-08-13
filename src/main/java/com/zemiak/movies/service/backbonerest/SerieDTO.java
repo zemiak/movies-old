@@ -2,6 +2,7 @@ package com.zemiak.movies.service.backbonerest;
 
 import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.strings.Encodings;
+import java.util.Date;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -19,6 +20,7 @@ public class SerieDTO {
     private Integer displayOrder;
     private Integer genreId;
     private String search;
+    private Date created;
 
     public SerieDTO() {
     }
@@ -37,5 +39,10 @@ public class SerieDTO {
         this.genreId = serie.getGenreId() == null ? null : serie.getGenreId().getId();
         this.search = (null == this.name ? ""
                     : Encodings.toAscii(this.name.trim().toLowerCase()));
+        this.created = serie.getCreated();
+    }
+    
+    public Date getCreated() {
+        return created;
     }
 }

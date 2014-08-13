@@ -73,11 +73,6 @@ public class MovieDTO {
         this.created = movie.getCreated();
     }
     
-    public void setGenre(Genre genre) {
-        this.genreId = genre.getId();
-        this.genreName = genre.getName();
-    }
-    
     public Date getCreated() {
         return created;
     }

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,6 +44,7 @@
     <script type="text/javascript" src="js/vendor/bootstrap.js"></script>
 
     <jsp:useBean id="confBean" class="com.zemiak.movies.service.configuration.ConfigBean"> </jsp:useBean>
+    <jsp:useBean id="searchService" class="com.zemiak.movies.service.jsp.SearchService" scope="request"> </jsp:useBean>
 
     <!-- Global Data -->
     <script type="text/javascript">
@@ -106,12 +108,25 @@
     </div>
 
     <div class="container-fluid">
-        <div class="page" id="genres"></div>
-        <div class="page" style="display:none;" id="genre"></div>
-        <div class="page" style="display:none;" id="serie"></div>
-        <div class="page" style="display:none;" id="movie"></div>
-        <div class="page" style="display:none;" id="about"></div>
-        <div class="page" style="display:none;" id="search"></div>
+        <div class="page" id="search">
+            <% searchService.search(request); %>
+            
+            <c:forEach var="item" items="${searchService.series}">
+                <a href="#serie/${item.id}">
+                    <img class="movie-thumbnail"
+                        src="http://lenovo-server.local:8081/movies/img/serie/${item.pictureFileName}" />
+                    <p class="movie-label">${item.name}</p>
+                </a>
+            </c:forEach>
+            
+            <c:forEach var="item" items="${searchService.movies}">
+                <a href="#serie/${item.id}">
+                    <img class="movie-thumbnail"
+                        src="http://lenovo-server.local:8081/movies/img/movie/${item.pictureFileName}" />
+                    <p class="movie-label">${item.name}</p>
+                </a>
+            </c:forEach>
+        </div>
     </div>
   </body>
 </html>

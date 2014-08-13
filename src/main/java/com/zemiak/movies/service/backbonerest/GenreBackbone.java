@@ -2,10 +2,8 @@ package com.zemiak.movies.service.backbonerest;
 
 import com.zemiak.movies.service.GenreService;
 import com.zemiak.movies.domain.Genre;
-import com.zemiak.movies.service.backbonerest.specialmovie.Last6MonthsGenre;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -43,7 +41,6 @@ public class GenreBackbone {
             }
         }
         
-        genres.add(getLast6Months());
         genres.add(empty);
         
         return genres;
@@ -59,10 +56,6 @@ public class GenreBackbone {
     @Path("{id}")
     public Genre find(@PathParam("id") final String idText) {
         Integer id = Integer.valueOf(idText);
-        if (Objects.equals(Last6MonthsGenre.ID, id)) {
-            return getLast6Months();
-        }
-        
         return service.find(id);
     }
     
@@ -85,11 +78,5 @@ public class GenreBackbone {
     @Path("{id}")
     public void delete(@PathParam("id") final String id) {
         service.remove(Integer.valueOf(id));
-    }
-
-    private Genre getLast6Months() {
-        Genre res = new Last6MonthsGenre();
-        
-        return res;
     }
 }

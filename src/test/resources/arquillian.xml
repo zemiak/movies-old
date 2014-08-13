@@ -5,7 +5,7 @@
         <configuration>
             <property name="javaVmArguments">-Djboss.socket.binding.port-offset=9</property>
             <property name="managementPort">9999</property>
-            <property name="outputToConsole">false</property>
+            <property name="outputToConsole">true</property>
             <property name="javaHome">/opt/java/jdk1.8.0_05</property>
         </configuration>
     </container>
