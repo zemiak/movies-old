@@ -20,12 +20,12 @@ public class SearchService implements Serializable {
     private final List<SerieDTO> series = new ArrayList<>();
     private final List<MovieDTO> movies = new ArrayList<>();
     
-    private final MovieService service;
+    private final MovieService movieService;
     private final SerieService serieService;
 
     public SearchService() {
         CDILookup lookup = new CDILookup();
-        service = lookup.lookup(MovieService.class);
+        movieService = lookup.lookup(MovieService.class);
         serieService = lookup.lookup(SerieService.class);
     }
     
@@ -40,17 +40,15 @@ public class SearchService implements Serializable {
     }
 
     private void searchByQuery(String query) {
-        List<SerieDTO> serieResults = new ArrayList<>();
+        series.clear();
         serieService.getByExpression(query).stream().forEach((serie) -> {
-            serieResults.add(new SerieDTO(serie));
+            series.add(new SerieDTO(serie));
         });
-        serieResults.addAll(serieResults);
         
-        List<MovieDTO> movieResults = new ArrayList<>();
-        service.getByExpression(query).stream().forEach((movie) -> {
-            movieResults.add(new MovieDTO(movie));
+        movies.clear();
+        movieService.getByExpression(query).stream().forEach((movie) -> {
+            movies.add(new MovieDTO(movie));
         });
-        movieResults.addAll(movieResults);
     }
 
     private void searchByMonths(Integer months) {
@@ -66,7 +64,7 @@ public class SearchService implements Serializable {
         series.addAll(serieResults);
         
         List<MovieDTO> movieResults = new ArrayList<>();
-        service.all().stream().filter((movie) -> (null != movie.getCreated() && movie.getCreated().after(cal.getTime()))).forEach((movie) -> {
+        movieService.all().stream().filter((movie) -> (null != movie.getCreated() && movie.getCreated().after(cal.getTime()))).forEach((movie) -> {
             movieResults.add(new MovieDTO(movie));
         });
         Collections.sort(movieResults, (MovieDTO o1, MovieDTO o2) -> o1.getCreated().compareTo(o2.getCreated()) * -1);

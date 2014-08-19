@@ -80,10 +80,11 @@
           <div class="nav-collapse">
             <ul class="nav">
               <li class>
-                <form class="navbar-search" action="">
-                    <input class="search-query span2" type="text"
-                      placeholder="Hľadať podľa mena..." id="searchBox"
-                      onkeydown="javascript:app.searchKeydown(event);" />
+                  <form class="navbar-search" action="search.jsp" method="get">
+                    <input class="search-query span2" type="text" name="query"
+                      placeholder="Hľadať podľa mena..." id="query"
+                      />
+                    <input type="submit" value="Search" class="btn-mini" />
                 </form>
               </li>
               <li class="dropdown">
@@ -111,7 +112,6 @@
         <div class="page" style="display:none;" id="serie"></div>
         <div class="page" style="display:none;" id="movie"></div>
         <div class="page" style="display:none;" id="about"></div>
-        <div class="page" style="display:none;" id="search"></div>
     </div>
   </body>
 </html>

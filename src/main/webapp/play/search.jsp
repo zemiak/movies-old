@@ -64,9 +64,9 @@
     <script type="text/javascript" src="js/model/Serie.js"></script>
     <script type="text/javascript" src="js/model/Language.js"></script>
     <script type="text/javascript" src="js/model/DataSync.js"></script>
-    <script type="text/javascript" src="js/Router.js"></script>
+<!--    <script type="text/javascript" src="js/Router.js"></script>
     <script type="text/javascript" src="js/video.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>-->
   </head>
 
   <body>
@@ -78,16 +78,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#genres">Videotéka</a>
+          <a class="brand" href="play.jsp">Videotéka</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class>
-                <form class="navbar-search" action="">
-                    <input class="search-query span2" type="text"
-                      placeholder="Hľadať podľa mena..." id="searchBox"
-                      onkeydown="javascript:app.searchKeydown(event);" />
-                </form>
-              </li>
               <li class="dropdown">
                   <a class="dropdown-toggle" href="#" data-toggle="dropdown">Admin<b class="caret"></b></a>
                   <ul class="dropdown-menu">
@@ -112,19 +105,23 @@
             <% searchService.search(request); %>
             
             <c:forEach var="item" items="${searchService.series}">
-                <a href="#serie/${item.id}">
-                    <img class="movie-thumbnail"
-                        src="http://lenovo-server.local:8081/movies/img/serie/${item.pictureFileName}" />
-                    <p class="movie-label">${item.name}</p>
-                </a>
+                <div class="span2 movie-box">
+                    <a href="play.jsp#serie/${item.id}">
+                        <img class="movie-thumbnail"
+                            src="http://lenovo-server.local:8081/movies/img/serie/${item.pictureFileName}" />
+                        <p class="movie-label">${item.name}</p>
+                    </a>
+                </div>
             </c:forEach>
             
             <c:forEach var="item" items="${searchService.movies}">
-                <a href="#serie/${item.id}">
-                    <img class="movie-thumbnail"
-                        src="http://lenovo-server.local:8081/movies/img/movie/${item.pictureFileName}" />
-                    <p class="movie-label">${item.name}</p>
-                </a>
+                <div class="span2 movie-box">
+                    <a href="play.jsp#movie/${item.id}">
+                        <img class="movie-thumbnail"
+                            src="http://lenovo-server.local:8081/movies/img/movie/${item.pictureFileName}" />
+                        <p class="movie-label">${item.name}</p>
+                    </a>
+                </div>
             </c:forEach>
         </div>
     </div>

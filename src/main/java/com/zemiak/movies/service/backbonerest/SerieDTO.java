@@ -45,4 +45,30 @@ public class SerieDTO {
     public Date getCreated() {
         return created;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPictureFileName() {
+        return pictureFileName;
+    }
+
+    public Integer getDisplayOrder() {
+        return displayOrder;
+    }
+
+    public Integer getGenreId() {
+        return genreId;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+    
+    
 }

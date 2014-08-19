@@ -80,4 +80,78 @@ public class MovieDTO {
     public String getName() {
         return name;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getPictureFileName() {
+        return pictureFileName;
+    }
+
+    public Integer getDisplayOrder() {
+        return displayOrder;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Integer getSerieId() {
+        return serieId;
+    }
+
+    public String getSubtitles() {
+        return subtitles;
+    }
+
+    public String getOriginalLanguage() {
+        return originalLanguage;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public Integer getGenreId() {
+        return genreId;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public String getGenreName() {
+        return genreName;
+    }
+
+    public String getSerieName() {
+        return serieName;
+    }
+
+    public String getOriginalLanguageName() {
+        return originalLanguageName;
+    }
+
+    public String getLanguageName() {
+        return languageName;
+    }
+
+    public String getSubtitlesName() {
+        return subtitlesName;
+    }
+    
+    
 }
