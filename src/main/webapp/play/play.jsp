@@ -79,15 +79,7 @@
           <a class="brand" href="#genres">Videotéka</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class>
-                  <form class="navbar-search" action="search.jsp" method="get">
-                    <input class="search-query span2" type="text" name="query"
-                      placeholder="Hľadať podľa mena..." id="query"
-                      />
-                    <input type="submit" value="Search" class="btn-mini" />
-                </form>
-              </li>
-              <li class="dropdown">
+                <li class="dropdown">
                   <a class="dropdown-toggle" href="#" data-toggle="dropdown">Admin<b class="caret"></b></a>
                   <ul class="dropdown-menu">
                       <li><a href="/movies/admin/movienew/List.xhtml">Nové filmy</a></li>
@@ -99,6 +91,14 @@
 
                       <li><a href="#" onclick="javascript:app.refreshData();">Obnova databázy</a></li>
                   </ul>
+                </li>
+              <li class>
+                  <form class="navbar-search" action="search.jsp" method="get">
+                    <input class="search-query span2" type="text" name="query"
+                      placeholder="Hľadať podľa mena..." id="query"
+                      />
+                    <input type="submit" value="Search" class="btn-mini" style="display:none" />
+                </form>
               </li>
             </ul>
           </div> <!--/.nav-collapse -->
