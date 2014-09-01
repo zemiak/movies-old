@@ -33,18 +33,14 @@
         <div class="toolbar">
             <h1 id="pageTitle"></h1>
             <a id="backButton" class="button" href="#"></a>
+            
+            <a class="button blueButton" 
+                href="javascript:window.location='searchResults.jsp?query='+encodeURIComponent(document.getElementById('query').value)">
+                 Search
+            </a>
         </div>
         
         <form id="search" title="Search" name="formname" action="" method="GET" selected="true">
-            <div class="toolbar">
-                <h1>Search</h1>
-                <a class="button leftButton" href="javascript:window.history.back()">Back</a>
-                
-                <a class="button blueButton" 
-                   href="javascript:window.location='searchResults.jsp?query='+encodeURIComponent(document.getElementById('query').value)">
-                    Search
-                </a>
-            </div>
             <fieldset>
                <div class="row">
                     <label for="keyword">Search:</label>

@@ -34,7 +34,7 @@
 
         <div class="toolbar">
             <h1 id="pageTitle"></h1>
-            <a class="button leftButton" href="javascript:window.history.back()">Back</a>
+            <a class="button leftButton" href="index.jsp">Back</a>
         </div>
 
         <ul id="main" title="Hľadať" selected="true">
