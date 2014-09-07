@@ -53,7 +53,7 @@
                 <a href="searchResults.jsp?months=6" target="_self">Recent</a>
             </li>
             
-            <li><a href="../ipad/play.jsp">Full GUI</a></li>
+            <li><a href="../ipad/index.jsp">Full GUI</a></li>
         </ul>
     </body>
 </html>
