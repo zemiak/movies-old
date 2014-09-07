@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,37 +35,10 @@
     <link href="css/movies.css" rel="stylesheet" type="text/css">
 
     <!-- JS libraries, DEV versions -->
-    <script type="text/javascript" src="js/vendor/json2.js"></script>
     <script type="text/javascript" src="js/vendor/jquery.js"></script>
-    <script type="text/javascript" src="js/vendor/jquery.blockUI.js"></script>
-    <script type="text/javascript" src="js/vendor/underscore.js"></script>
-    <script type="text/javascript" src="js/vendor/backbone.js"></script>
-    <script type="text/javascript" src="js/vendor/backbone.localStorage.js"></script>
     <script type="text/javascript" src="js/vendor/bootstrap.js"></script>
-
-    <jsp:useBean id="confBean" class="com.zemiak.movies.service.configuration.ConfigBean"> </jsp:useBean>
-
-    <!-- Global Data -->
-    <script type="text/javascript">
-        window._BACKEND_URL = "<%= confBean.getBackendUrl() %>";
-    </script>
-
-    <!-- JS custom -->
-    <script type="text/javascript" src="js/view/GenreItem.js"></script>
-    <script type="text/javascript" src="js/view/List.js"></script>
-    <script type="text/javascript" src="js/view/MovieDetail.js"></script>
-    <script type="text/javascript" src="js/view/MovieItem.js"></script>
-    <script type="text/javascript" src="js/view/SerieItem.js"></script>
-    <script type="text/javascript" src="js/view/ViewUtils.js"></script>
-    <script type="text/javascript" src="js/view/BackButton.js"></script>
-    <script type="text/javascript" src="js/model/Genre.js"></script>
-    <script type="text/javascript" src="js/model/Movie.js"></script>
-    <script type="text/javascript" src="js/model/Serie.js"></script>
-    <script type="text/javascript" src="js/model/Language.js"></script>
-    <script type="text/javascript" src="js/model/DataSync.js"></script>
-    <script type="text/javascript" src="js/Router.js"></script>
-    <script type="text/javascript" src="js/video.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
+    
+    <jsp:useBean id="service" class="com.zemiak.movies.service.jsp.MovieService" scope="request"> </jsp:useBean>
   </head>
 
   <body>
@@ -88,12 +62,10 @@
                       <li><a href="/movies/admin/serie/List.xhtml">Série</a></li>
                       <li><a href="/movies/admin/language/List.xhtml">Jazyky</a></li>
                       <li><a href="/movies/admin/about/About.xhtml">O programe</a></li>
-
-                      <li><a href="#" onclick="javascript:app.refreshData();">Obnova databázy</a></li>
                   </ul>
                 </li>
               <li class>
-                  <form class="navbar-search" action="search.jsp" method="get">
+                  <form class="navbar-search" action="searchResults.jsp" method="get">
                     <input class="search-query span2" type="text" name="query"
                       placeholder="Hľadať podľa mena..." id="query"
                       />
@@ -105,13 +77,80 @@
         </div>
       </div>
     </div>
+      
+    <% 
+        service.setMovieId(request);
+    %>
 
-    <div class="container-fluid">
-        <div class="page" id="genres"></div>
-        <div class="page" style="display:none;" id="genre"></div>
-        <div class="page" style="display:none;" id="serie"></div>
-        <div class="page" style="display:none;" id="movie"></div>
-        <div class="page" style="display:none;" id="about"></div>
+    <div class="row-fluid">
+        <div class="span4">
+            <a href="javascript:window.history.back(-1);" class="back">
+                <img src="img/arrow-back.jpg" style="width:48px; height:48px;" />
+            </a>
+        </div>
+
+        <div class="span5">
+            <span class="movie-title">${service.movie.name}</span>
+        </div>
+
+        <div class="span3">
+            <button onclick="javascript:window.open('wtf?');"
+                class="btn btn-lg btn-primary" id="url" name="url">
+                Movie Info (New Window)
+            </button>
+        </div>
     </div>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <center>
+            <video id="my_video_${service.movie.id}" controls
+                   preload="auto" poster="http://lenovo-server.local:8081/movies/img/movie/${service.movie.pictureFileName}"
+              width="559" height="432">
+              <source src="http://lenovo-server.local:8081/movies/play.php?id=${service.movie.id}" type='video/mp4'>
+            </video>
+            </center>
+
+            <div class="movie-description">${service.movie.description}</div>
+        </div>
+    </div>
+
+    <div class="row-fluid" style="padding-top: 2em;">
+        <div class="span4">
+            <label>Genre</label>
+            <input type="text" class="form-control" value="${service.movie.genreId.name}" disabled />
+        </div>
+
+        <div class="span4">
+            <label>Serie</label>
+            <input type="text" class="form-control" value="${service.movie.serieName}" disabled />
+        </div>
+
+        <div class="span4">
+            <label>Language</label>
+            <input type="text" class="form-control" value="${service.movie.languageName}" disabled />
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span4">
+            <label>Original Language</label>
+            <input type="text" class="form-control" value="${service.movie.originalLanguageName}" disabled />
+        </div>
+
+        <div class="span4">
+            <label>Subtitles</label>
+            <input type="text" class="form-control" value="${service.movie.subtitlesName}" disabled />
+        </div>
+
+        <div class="span4">
+            <label>Original Name</label>
+            <input type="text" class="form-control" value="${service.movie.originalName}" disabled />
+        </div>
+    </div>
+
+    <script>
+        fullScreenVideoInit("my_video_${service.movie.id}");
+    </script>
   </body>
 </html>

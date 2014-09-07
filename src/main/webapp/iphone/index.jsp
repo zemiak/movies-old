@@ -11,19 +11,19 @@
         <link rel="stylesheet" href="iui/iui.css" type="text/css" />
         <script type="application/x-javascript" src="iui/iui.js"></script>
 
-        <link href="movies-iphone.css" rel="stylesheet" type="text/css">
+        <link href="css/movies-iphone.css" rel="stylesheet" type="text/css">
 
         <link rel="shortcut icon" href="img/favicon.ico">
         <link rel="apple-touch-icon-precomposed" sizes="1024x1024"
-              href="../play/img/icon-1024.jpg">
+              href="../ipad/img/icon-1024.jpg">
         <link rel="apple-touch-icon-precomposed" sizes="512x512"
-              href="../play/img/icon-512.jpg">
+              href="../ipad/img/icon-512.jpg">
         <link rel="apple-touch-icon-precomposed" sizes="144x144"
-              href="../play/img/icon-144.jpg">
+              href="../ipad/img/icon-144.jpg">
         <link rel="apple-touch-icon-precomposed" sizes="114x114"
-              href="../play/img/icon-114.jpg">
+              href="../ipad/img/icon-114.jpg">
         <link rel="apple-touch-icon-precomposed" sizes="72x72"
-              href="../play/img/icon-72.jpg">
+              href="../ipad/img/icon-72.jpg">
         <link rel="apple-touch-icon-precomposed" href="img/icon-57.jpg">
         
         <jsp:useBean id="service" class="com.zemiak.movies.service.jsp.GenreService" scope="request"> </jsp:useBean>
@@ -53,7 +53,7 @@
                 <a href="searchResults.jsp?months=6" target="_self">Recent</a>
             </li>
             
-            <li><a href="../play/play.jsp">Full GUI</a></li>
+            <li><a href="../ipad/play.jsp">Full GUI</a></li>
         </ul>
     </body>
 </html>

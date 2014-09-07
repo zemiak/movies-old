@@ -4,20 +4,7 @@ import com.zemiak.movies.description.Csfd;
 import com.zemiak.movies.description.Imdb;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -96,7 +83,7 @@ public class Movie implements Serializable {
     @JoinColumn(name = "genre_id", referencedColumnName = "id")
     @ManyToOne
     private Genre genreId;
-    
+
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
@@ -108,7 +95,7 @@ public class Movie implements Serializable {
     public void setCreated(Date created) {
         this.created = created;
     }
-    
+
     public Movie() {
         this.created = new Date();
     }
@@ -287,5 +274,21 @@ public class Movie implements Serializable {
         }
 
         return "";
+    }
+
+    public String getSerieName() {
+        return null == serieId ? "<None>" : serieId.getName();
+    }
+
+    public String getLanguageName() {
+        return null == language ? "<None>" : language.getName();
+    }
+
+    public String getOriginalLanguageName() {
+        return null == originalLanguage ? "<None>" : originalLanguage.getName();
+    }
+
+    public String getSubtitlesName() {
+        return null == subtitles ? "<None>" : subtitles.getName();
     }
 }

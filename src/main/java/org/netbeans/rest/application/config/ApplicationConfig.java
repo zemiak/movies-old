@@ -24,10 +24,6 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(com.zemiak.movies.service.backbonerest.GenreBackbone.class);
-        resources.add(com.zemiak.movies.service.backbonerest.LanguageBackbone.class);
-        resources.add(com.zemiak.movies.service.backbonerest.MovieBackbone.class);
-        resources.add(com.zemiak.movies.service.backbonerest.SerieBackbone.class);
     }
     
 }

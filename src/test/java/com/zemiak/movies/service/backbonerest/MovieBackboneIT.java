@@ -1,5 +1,6 @@
 package com.zemiak.movies.service.backbonerest;
 
+import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.jsp.SearchService;
 import com.zemiak.movies.strings.Encodings;
@@ -7,26 +8,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import javax.inject.Inject;
-import javax.servlet.AsyncContext;
-import javax.servlet.DispatcherType;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpUpgradeHandler;
-import javax.servlet.http.Part;
+import javax.servlet.*;
+import javax.servlet.http.*;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.persistence.UsingDataSet;
@@ -40,21 +25,17 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-/**
- *
- * @author vasko
- */
 @RunWith(Arquillian.class)
 public class MovieBackboneIT {
     @Inject
     SearchService search;
-    
+
     @Inject
     MovieService movies;
-    
+
     public MovieBackboneIT() {
     }
-    
+
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap
@@ -67,11 +48,11 @@ public class MovieBackboneIT {
                 .addAsManifestResource("META-INF/create-script-source.sql", "create-script-source.sql")
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -80,36 +61,36 @@ public class MovieBackboneIT {
     @UsingDataSet("6months.yml")
     public void testGetLastNMonthsMovies() throws Exception {
         assertEquals(5, movies.all().size());
-        
+
         search.search(new Last6MoviesRequest());
-        List<MovieDTO> dtos = search.getMovies();
-        
-        assertEquals(2, dtos.size());
-        assertTrue(dtos.get(0).getName().equals("May2") || dtos.get(1).getName().equals("May2"));
-        assertTrue(dtos.get(0).getName().equals("July16") || dtos.get(1).getName().equals("July16"));
+        List<Movie> movies = search.getMovies();
+
+        assertEquals(2, movies.size());
+        assertTrue(movies.get(0).getName().equals("May2") || movies.get(1).getName().equals("May2"));
+        assertTrue(movies.get(0).getName().equals("July16") || movies.get(1).getName().equals("July16"));
     }
-    
+
     @Test
     @UsingDataSet("6months.yml")
     @Ignore
     public void testQuerySearch() throws Exception {
         assertEquals(5, movies.all().size());
-        
+
         search.search(new QueryMoviesRequest());
-        List<MovieDTO> dtos = search.getMovies();
-        
-        assertEquals("Looking for " + new QueryMoviesRequest().getParameter("query"), 2, dtos.size());
-        assertTrue("LastYear must be present", dtos.get(0).getName().equals("LastYear") || dtos.get(1).getName().equals("LastYear"));
-        assertTrue("LastNull must be present", dtos.get(0).getName().equals("LastNull") || dtos.get(1).getName().equals("LastNull"));
+        List<Movie> movies = search.getMovies();
+
+        assertEquals("Looking for " + new QueryMoviesRequest().getParameter("query"), 2, movies.size());
+        assertTrue("LastYear must be present", movies.get(0).getName().equals("LastYear") || movies.get(1).getName().equals("LastYear"));
+        assertTrue("LastNull must be present", movies.get(0).getName().equals("LastNull") || movies.get(1).getName().equals("LastNull"));
     }
-    
+
     private static class QueryMoviesRequest extends Last6MoviesRequest {
         @Override
         public String getParameter(String name) {
             if ("query".equals(name)) {
                 return "last";
             }
-            
+
             return null;
         }
     }
@@ -323,7 +304,7 @@ public class MovieBackboneIT {
             if ("months".equals(name)) {
                 return "6";
             }
-            
+
             return null;
         }
 
@@ -467,5 +448,5 @@ public class MovieBackboneIT {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
-    
+
 }

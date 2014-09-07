@@ -1,7 +1,7 @@
 package com.zemiak.movies.service.jsp;
 
+import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.lookup.CDILookup;
-import com.zemiak.movies.service.backbonerest.SerieDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,15 +18,15 @@ public class SerieService implements Serializable {
         service = lookup.lookup(com.zemiak.movies.service.SerieService.class);
     }
 
-    public List<SerieDTO> getByGenreId() {
-        List<SerieDTO> results = new ArrayList<>();
+    public List<Serie> getByGenreId() {
+        List<Serie> results = new ArrayList<>();
         service.all().stream().filter(serie -> genreId.equals(serie.getGenreId().getId())).forEach((serie) -> {
-            results.add(new SerieDTO(serie));
+            results.add(serie);
         });
-        
+
         return results;
     }
-    
+
     public void setGenreId(HttpServletRequest request) {
         if (null != request.getParameter("id")) {
             genreId = Integer.valueOf(request.getParameter("id"));
