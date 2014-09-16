@@ -78,8 +78,8 @@
         </div>
       </div>
     </div>
-      
-    <% 
+
+    <%
         series.setGenreId(request);
         movies.setGenreId(request);
     %>
@@ -87,16 +87,15 @@
     <div class="container-fluid">
         <div class="page">
             <div class="span2 movie-box">
-                <a href="javascript:window.history.back(-1);" class="back">
-                    <img src="img/arrow-back.jpg" style="width:48px; height:48px;" />
+                <a href="javascript:window.history.back(-1);">
+                    <img src="img/arrow-back.jpg" alt="Back" />
                 </a>
             </div>
-            
-            
+
             <c:forEach var="item" items="${series.byGenreId}">
                 <div class="span2 movie-box">
                     <a href="serie.jsp?id=${item.id}">
-                        <img class="movie-thumbnail"
+                        <img class="movie-thumbnail" alt="${item.name} Thumbnail"
                             src="http://lenovo-server.local:8081/movies/img/serie/${item.pictureFileName}" />
                         <p class="movie-label">${item.name}</p>
                     </a>
@@ -106,7 +105,7 @@
             <c:forEach var="item" items="${movies.byGenreId}">
                 <div class="span2 movie-box">
                     <a href="movie.jsp?id=${item.id}">
-                        <img class="movie-thumbnail"
+                        <img class="movie-thumbnail" alt="${item.name} Thumbnail"
                             src="http://lenovo-server.local:8081/movies/img/movie/${item.pictureFileName}" />
                         <p class="movie-label">${item.name}</p>
                     </a>

@@ -79,21 +79,27 @@
     <div class="container-fluid">
         <div class="page" id="search">
             <% service.search(request); %>
-            
+
+            <div class="span2 movie-box">
+                <a href="javascript:window.history.back(-1);">
+                    <img src="img/arrow-back.jpg" alt="Back" />
+                </a>
+            </div>
+
             <c:forEach var="item" items="${service.series}">
                 <div class="span2 movie-box">
                     <a href="serie.jsp?id=${item.id}">
-                        <img class="movie-thumbnail"
+                        <img class="movie-thumbnail" alt="${item.name} Thumbnail"
                             src="http://lenovo-server.local:8081/movies/img/serie/${item.pictureFileName}" />
                         <p class="movie-label">${item.name}</p>
                     </a>
                 </div>
             </c:forEach>
-            
+
             <c:forEach var="item" items="${service.movies}">
                 <div class="span2 movie-box">
                     <a href="movie.jsp?id=${item.id}">
-                        <img class="movie-thumbnail"
+                        <img class="movie-thumbnail" alt="${item.name} Thumbnail"
                             src="http://lenovo-server.local:8081/movies/img/movie/${item.pictureFileName}" />
                         <p class="movie-label">${item.name}</p>
                     </a>

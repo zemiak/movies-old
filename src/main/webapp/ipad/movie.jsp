@@ -37,7 +37,7 @@
     <!-- JS libraries, DEV versions -->
     <script type="text/javascript" src="js/vendor/jquery.js"></script>
     <script type="text/javascript" src="js/vendor/bootstrap.js"></script>
-    
+
     <jsp:useBean id="service" class="com.zemiak.movies.service.jsp.MovieService" scope="request"> </jsp:useBean>
   </head>
 
@@ -77,15 +77,15 @@
         </div>
       </div>
     </div>
-      
-    <% 
+
+    <%
         service.setMovieId(request);
     %>
 
     <div class="row-fluid">
         <div class="span4">
-            <a href="javascript:window.history.back(-1);" class="back">
-                <img src="img/arrow-back.jpg" style="width:48px; height:48px;" />
+            <a href="javascript:window.history.back(-1);">
+                <img src="img/arrow-back.jpg" alt="Back" />
             </a>
         </div>
 
@@ -94,7 +94,7 @@
         </div>
 
         <div class="span3">
-            <button onclick="javascript:window.open('wtf?');"
+            <button onclick="javascript:window.open('${service.movie.url}');"
                 class="btn btn-lg btn-primary" id="url" name="url">
                 Movie Info (New Window)
             </button>
@@ -104,11 +104,11 @@
     <div class="row-fluid">
         <div class="span12">
             <center>
-            <video id="my_video_${service.movie.id}" controls
-                   preload="auto" poster="http://lenovo-server.local:8081/movies/img/movie/${service.movie.pictureFileName}"
-              width="559" height="432">
-              <source src="http://lenovo-server.local:8081/movies/play.php?id=${service.movie.id}" type='video/mp4'>
-            </video>
+                <video id="my_video" controls
+                       preload="auto" poster="http://lenovo-server.local:8081/movies/img/movie/${service.movie.pictureFileName}"
+                  width="559" height="432">
+                  <source src="http://lenovo-server.local:8081/movies/play.php?id=${service.movie.id}" type='video/mp4'>
+                </video>
             </center>
 
             <div class="movie-description">${service.movie.description}</div>
@@ -150,7 +150,7 @@
     </div>
 
     <script>
-        fullScreenVideoInit("my_video_${service.movie.id}");
+        fullScreenVideoInit("my_video");
     </script>
   </body>
 </html>

@@ -77,22 +77,22 @@
         </div>
       </div>
     </div>
-      
-    <% 
+
+    <%
         movies.setSerieId(request);
     %>
 
     <div class="container-fluid">
         <div class="span2 movie-box">
-            <a href="javascript:window.history.back(-1);" class="back">
-                <img src="img/arrow-back.jpg" style="width:48px; height:48px;" />
-            </a>
-        </div>
-        
+                <a href="javascript:window.history.back(-1);">
+                    <img src="img/arrow-back.jpg" alt="Back" />
+                </a>
+            </div>
+
         <c:forEach var="item" items="${movies.bySerieId}">
             <div class="span2 movie-box">
                 <a href="movie.jsp?id=${item.id}">
-                    <img class="movie-thumbnail"
+                    <img class="movie-thumbnail" alt="${item.name} Thumbnail"
                         src="http://lenovo-server.local:8081/movies/img/movie/${item.pictureFileName}" />
                     <p class="movie-label">${item.name}</p>
                 </a>
