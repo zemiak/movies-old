@@ -85,7 +85,7 @@
     <div class="container-fluid">
         <div class="span2 movie-box">
                 <a href="javascript:window.history.back(-1);">
-                    <img src="img/arrow-back.jpg" alt="Back" />
+                    <img src="img/arrow-back.jpg" alt="Back" class="back-image" />
                 </a>
             </div>
 

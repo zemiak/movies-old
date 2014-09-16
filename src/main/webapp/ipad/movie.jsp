@@ -85,7 +85,7 @@
     <div class="row-fluid">
         <div class="span4">
             <a href="javascript:window.history.back(-1);">
-                <img src="img/arrow-back.jpg" alt="Back" />
+                <img src="img/arrow-back.jpg" alt="Back" class="back-image" />
             </a>
         </div>
 
@@ -93,12 +93,14 @@
             <span class="movie-title">${service.movie.name}</span>
         </div>
 
-        <div class="span3">
-            <button onclick="javascript:window.open('${service.movie.url}');"
-                class="btn btn-lg btn-primary" id="url" name="url">
-                Movie Info (New Window)
-            </button>
-        </div>
+        <c:if test="${!service.movie.urlEmpty}">
+            <div class="span3">
+                <button onclick="javascript:window.open('${service.movie.url}');"
+                    class="btn btn-lg btn-primary" id="url" name="url">
+                    Movie Info (New Window)
+                </button>
+            </div>
+        </c:if>
     </div>
 
     <div class="row-fluid">
