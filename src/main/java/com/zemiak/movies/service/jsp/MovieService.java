@@ -23,13 +23,15 @@ public class MovieService implements Serializable {
 
     public List<Movie> getByGenreId() {
         return service.all().stream()
-                .filter(movie -> genreId.equals(movie.getGenreId().getId()) && null == movie.getSerieId())
+                .filter(entry -> genreId.equals(entry.getGenreId().getId()) && entry.isEmptySerie())
+                .sorted()
                 .collect(Collectors.toList());
     }
 
     public List<Movie> getBySerieId() {
         return service.all().stream()
                 .filter(movie -> null != movie.getSerieId() && serieId.equals(movie.getSerieId().getId()))
+                .sorted()
                 .collect(Collectors.toList());
     }
 

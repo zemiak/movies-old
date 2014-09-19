@@ -3,8 +3,8 @@ package com.zemiak.movies.service.jsp;
 import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.lookup.CDILookup;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,12 +19,12 @@ public class SerieService implements Serializable {
     }
 
     public List<Serie> getByGenreId() {
-        List<Serie> results = new ArrayList<>();
-        service.all().stream().filter(serie -> genreId.equals(serie.getGenreId().getId())).forEach((serie) -> {
-            results.add(serie);
-        });
-
-        return results;
+        return service
+                .all()
+                .stream()
+                .filter(serie -> genreId.equals(serie.getGenreId().getId()))
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     public void setGenreId(HttpServletRequest request) {

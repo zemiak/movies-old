@@ -14,14 +14,14 @@
     <jsp:body>
         <div class="container-fluid">
             <div class="page">
-                <div class="span2 movie-box">
+                <div class="span2 serie-box">
                     <a href="javascript:window.history.back(-1);">
                         <img src="img/arrow-back.jpg" alt="Back" class="back-image" />
                     </a>
                 </div>
 
                 <c:forEach var="item" items="${series.byGenreId}">
-                    <div class="span2 movie-box">
+                    <div class="span2 serie-box">
                         <a href="serie.jsp?id=${item.id}">
                             <img class="movie-thumbnail" alt="${item.name} Thumbnail"
                                 src="http://lenovo-server.local:8081/movies/img/serie/${item.pictureFileName}" />

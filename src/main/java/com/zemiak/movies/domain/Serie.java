@@ -3,21 +3,7 @@ package com.zemiak.movies.domain;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -36,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Serie.findByDisplayOrder", query = "SELECT s FROM Serie s WHERE s.displayOrder = :displayOrder"),
     @NamedQuery(name = "Serie.findByGenreId", query = "SELECT s FROM Serie s WHERE s.genreId = :genreId")})
 @XmlRootElement
-public class Serie implements Serializable {
+public class Serie implements Serializable, Comparable<Serie> {
     private static final long serialVersionUID = 4L;
 
     @Id
@@ -167,4 +153,20 @@ public class Serie implements Serializable {
         return getName();
     }
 
+    @Override
+    public int compareTo(Serie o) {
+        if (null == displayOrder && null != o.getDisplayOrder()) {
+            return -1;
+        }
+
+        if (null != displayOrder && null == o.getDisplayOrder()) {
+            return 1;
+        }
+
+        if (null == displayOrder && null == o.getDisplayOrder()) {
+            return 0;
+        }
+
+        return displayOrder.compareTo(o.getDisplayOrder());
+    }
 }

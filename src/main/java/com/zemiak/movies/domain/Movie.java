@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Movie.findByDisplayOrder", query = "SELECT m FROM Movie m WHERE m.displayOrder = :displayOrder"),
     @NamedQuery(name = "Movie.findByDescription", query = "SELECT m FROM Movie m WHERE m.description = :description")})
 @XmlRootElement
-public class Movie implements Serializable {
+public class Movie implements Serializable, Comparable<Movie> {
     private static final long serialVersionUID = 3L;
 
     @Id
@@ -290,5 +290,26 @@ public class Movie implements Serializable {
 
     public String getSubtitlesName() {
         return null == subtitles ? "<None>" : subtitles.getName();
+    }
+
+    public boolean isEmptySerie() {
+        return null == serieId || serieId.getId() == 0;
+    }
+
+    @Override
+    public int compareTo(Movie o) {
+        if (null == displayOrder && null != o.getDisplayOrder()) {
+            return -1;
+        }
+
+        if (null != displayOrder && null == o.getDisplayOrder()) {
+            return 1;
+        }
+
+        if (null == displayOrder && null == o.getDisplayOrder()) {
+            return 0;
+        }
+        
+        return displayOrder.compareTo(o.getDisplayOrder());
     }
 }
