@@ -9,7 +9,7 @@
         <div class="container-fluid">
             <div class="page">
                 <c:forEach var="item" items="${service.all}">
-                    <div class="span2 genre-box">
+                    <div class="span2 movie-box genre-box">
                         <a href="genre.jsp?id=${item.id}">
                             <img class="movie-thumbnail" alt="Genre Thumbnail"
                                 src="http://lenovo-server.local:8081/movies/img/genre/${item.pictureFileName}" />

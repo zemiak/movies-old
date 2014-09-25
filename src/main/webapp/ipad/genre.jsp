@@ -21,7 +21,7 @@
                 </div>
 
                 <c:forEach var="item" items="${series.byGenreId}">
-                    <div class="span2 serie-box">
+                    <div class="span2 movie-box serie-box">
                         <a href="serie.jsp?id=${item.id}">
                             <img class="movie-thumbnail" alt="${item.name} Thumbnail"
                                 src="http://lenovo-server.local:8081/movies/img/serie/${item.pictureFileName}" />
