@@ -10,13 +10,12 @@ then
 elif [ -d "$LINUX" ]
 then
     export JBOSS_HOME="$LINUX"
-else
+elif [ -d "$WINDOWS" ]
     export JBOSS_HOME="$WINDOWS"
 fi
 
 
-
-CLI="${JBOSS_HOME}bin/jboss-cli.sh"
+CLI="${JBOSS_HOME%%/}bin/jboss-cli.sh"
 
 if [ ! -x "$CLI" ]
 then
