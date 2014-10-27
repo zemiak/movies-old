@@ -21,7 +21,7 @@ else
     exit 3
 fi
 
-CLI="${JBOSS_HOME%%/}/bin/jboss-cli.sh"
+CLI="${JBOSS_HOME}/bin/jboss-cli.sh"
 
 if [ ! -x "$CLI" ]
 then
