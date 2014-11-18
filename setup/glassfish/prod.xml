@@ -56,7 +56,7 @@
         res-type="javax.sql.DataSource" name="ZemiakMovies__pool">
       <property name="portNumber" value="5432"></property>
       <property name="databaseName" value="movies"></property>
-      <property name="serverName" value="lenovo-server.local"></property>
+      <property name="serverName" value="movies-db"></property>
       <property name="user" value="movies_user"></property>
       <property name="password" value="movies/0"></property>
     </jdbc-connection-pool>
