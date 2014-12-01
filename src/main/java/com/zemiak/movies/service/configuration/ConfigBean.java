@@ -16,7 +16,7 @@ public class ConfigBean implements Serializable {
         conf = new CDILookup().lookup(com.zemiak.movies.service.configuration.Configuration.class);
         lookup = new CustomResourceLookup();
     }
-    
+
     @PostConstruct
     public void init() {
         System.err.println("init(): Configuration: '" + conf + "'");
@@ -24,6 +24,14 @@ public class ConfigBean implements Serializable {
 
     public String getBackendUrl() {
         return null == conf ? (String) lookup.lookup("com.zemiak.movies.backendUrl") : conf.getBackendUrl();
+    }
+
+    public String getImgServer() {
+        return null == conf ? (String) lookup.lookup("com.zemiak.movies.imgServer") : conf.getImgServer();
+    }
+
+    public String getPlayServer() {
+        return null == conf ? (String) lookup.lookup("com.zemiak.movies.playServer") : conf.getPlayServer();
     }
 
     public String getPath() {

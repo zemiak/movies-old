@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="service" class="com.zemiak.movies.service.jsp.SearchService" scope="request"> </jsp:useBean>
+<jsp:useBean id="conf" class="com.zemiak.movies.service.jsp.ConfigService" scope="request"> </jsp:useBean>
 <% service.search(request);%>
 
 <t:iphone>
@@ -15,15 +16,15 @@
         <ul id="main" title="Hľadať" selected="true">
             <c:forEach var="item" items="${service.series}">
                 <li>
-                    <img src="http://lenovo-server.local:8081/movies/img/serie/${item.pictureFileName}" align="left" class="movies-thumbnail" />
+                    <img src="${conf.imgServer}serie/${item.pictureFileName}" align="left" class="movies-thumbnail" />
                     <a href="serie.jsp?id=${item.id}" target="_self">*${item.name}</a>
                 </li>
             </c:forEach>
 
             <c:forEach var="item" items="${service.movies}">
                 <li>
-                    <img src="http://lenovo-server.local:8081/movies/img/movie/${item.pictureFileName}" align="left" class="movies-thumbnail" />
-                    <a href="http://lenovo-server.local:8081/movies/play.php?id=${item.id}" target="_self">${item.name}</a>
+                    <img src="${conf.imgServer}movie/${item.pictureFileName}" align="left" class="movies-thumbnail" />
+                    <a href="${conf.playServer}?id=${item.id}" target="_self">${item.name}</a>
                 </li>
             </c:forEach>
         </ul>

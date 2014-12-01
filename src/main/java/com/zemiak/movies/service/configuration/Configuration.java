@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 @Singleton
 public class Configuration {
     private String backendUrl, ffmpeg, imgPath, mailFrom, mailSubject,
-            mp4info, mp4tags, path, mailTo;
+            mp4info, mp4tags, path, mailTo, imgServer, playServer;
     private boolean developmentSystem;
 
     public Configuration() {
@@ -93,5 +93,21 @@ public class Configuration {
 
     public void setDevelopmentSystem(boolean developmentSystem) {
         this.developmentSystem = developmentSystem;
+    }
+
+    public String getImgServer() {
+        return imgServer;
+    }
+
+    public void setImgServer(String imgServer) {
+        this.imgServer = imgServer;
+    }
+
+    public String getPlayServer() {
+        return playServer;
+    }
+
+    public void setPlayServer(String playServer) {
+        this.playServer = playServer;
     }
 }

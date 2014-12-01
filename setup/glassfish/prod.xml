@@ -50,6 +50,16 @@
                      factory-class="org.glassfish.resources.custom.factory.PrimitivesAndStringFactory">
         <property name="value" value="false"></property>
     </custom-resource>
+    
+    <custom-resource res-type="java.lang.String" jndi-name="com.zemiak.movies.imgServer"
+                     factory-class="org.glassfish.resources.custom.factory.PrimitivesAndStringFactory">
+        <property name="value" value="http://lenovo-server.local:8081/movies/img/"></property>
+    </custom-resource>
+    
+    <custom-resource res-type="java.lang.String" jndi-name="com.zemiak.movies.playServer"
+                     factory-class="org.glassfish.resources.custom.factory.PrimitivesAndStringFactory">
+        <property name="value" value="http://lenovo-server.local:8081/movies/play.php"></property>
+    </custom-resource>
 
     <jdbc-connection-pool
         datasource-classname="org.postgresql.ds.PGSimpleDataSource"

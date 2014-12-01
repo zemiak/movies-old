@@ -14,3 +14,5 @@ connect
 /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.mailSubject:add(value="Movies\: Batch Results",binding-type=simple)
 /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.backendUrl:add(value="http\:\/\/zemiak-retina-macbook\.local\:8080\/movies\/",binding-type=simple)
 /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.development-system:add(value="true",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies.imgServer:add(value="http\:\/\/lenovo-server\.local\:8081\/movies\/img\/",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies.playServer:add(value="http\:\/\/lenovo-server\.local\:8081\/movies\/play\.php",binding-type=simple)

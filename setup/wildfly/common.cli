@@ -48,4 +48,12 @@ if (outcome == success) of /subsystem=naming/binding=java\:jboss\/com.zemiak.mov
     /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.backendUrl:remove
 end-if
 
+if (outcome == success) of /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.imgServer:read-attribute(name=value)
+    /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.imgServer:remove
+end-if
+
+if (outcome == success) of /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.playServer:read-attribute(name=value)
+    /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.playServer:remove
+end-if
+
 reload

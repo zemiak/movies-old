@@ -4,6 +4,7 @@
 
 <jsp:useBean id="series" class="com.zemiak.movies.service.jsp.SerieService" scope="request"> </jsp:useBean>
 <jsp:useBean id="movies" class="com.zemiak.movies.service.jsp.MovieService" scope="request"> </jsp:useBean>
+<jsp:useBean id="conf" class="com.zemiak.movies.service.jsp.ConfigService" scope="request"> </jsp:useBean>
 
 <% 
     series.setGenreId(request);
@@ -20,15 +21,15 @@
         <ul id="main" title="Žáner" selected="true">
             <c:forEach var="item" items="${series.byGenreId}">
                 <li>
-                    <img src="http://lenovo-server.local:8081/movies/img/serie/${item.pictureFileName}" align="left" class="movies-thumbnail" />
+                    <img src="${conf.imgServer}serie/${item.pictureFileName}" align="left" class="movies-thumbnail" />
                     <a href="serie.jsp?id=${item.id}" target="_self">*${item.name}</a>
                 </li>
             </c:forEach>
                 
             <c:forEach var="item" items="${movies.byGenreId}">
                 <li>
-                    <img src="http://lenovo-server.local:8081/movies/img/movie/${item.pictureFileName}" align="left" class="movies-thumbnail" />
-                    <a href="http://lenovo-server.local:8081/movies/play.php?id=${item.id}" target="_self">${item.name}</a>
+                    <img src="${conf.imgServer}movie/${item.pictureFileName}" align="left" class="movies-thumbnail" />
+                    <a href="${conf.playServer}?id=${item.id}" target="_self">${item.name}</a>
                 </li>
             </c:forEach>
         </ul>

@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="movies" class="com.zemiak.movies.service.jsp.MovieService" scope="request"> </jsp:useBean>
+<jsp:useBean id="conf" class="com.zemiak.movies.service.jsp.ConfigService" scope="request"> </jsp:useBean>
 
 <% movies.setSerieId(request); %>
 
@@ -16,8 +17,8 @@
         <ul id="main" title="Séria" selected="true">
             <c:forEach var="item" items="${movies.bySerieId}">
                 <li>
-                    <img src="http://lenovo-server.local:8081/movies/img/movie/${item.pictureFileName}" align="left" class="movies-thumbnail" />
-                    <a href="http://lenovo-server.local:8081/movies/play.php?id=${item.id}" target="_self">${item.name}</a>
+                    <img src="${conf.imgServer}movie/${item.pictureFileName}" align="left" class="movies-thumbnail" />
+                    <a href="${conf.playServer}?id=${item.id}" target="_self">${item.name}</a>
                 </li>
             </c:forEach>
         </ul>

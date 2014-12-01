@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="movies" class="com.zemiak.movies.service.jsp.MovieService" scope="request"> </jsp:useBean>
+    <jsp:useBean id="conf" class="com.zemiak.movies.service.jsp.ConfigService" scope="request"> </jsp:useBean>
 <% movies.setSerieId(request); %>
 
 <t:ipad>
@@ -18,7 +19,7 @@
                 <div class="span2 movie-box">
                     <a href="movie.jsp?id=${item.id}">
                         <img class="movie-thumbnail" alt="${item.name} Thumbnail"
-                            src="http://lenovo-server.local:8081/movies/img/movie/${item.pictureFileName}" />
+                            src="${conf.imgServer}movie/${item.pictureFileName}" />
                         <p class="movie-label">${item.name}</p>
                     </a>
                 </div>

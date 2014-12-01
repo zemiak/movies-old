@@ -4,6 +4,7 @@
 
 <jsp:useBean id="series" class="com.zemiak.movies.service.jsp.SerieService" scope="request"> </jsp:useBean>
 <jsp:useBean id="movies" class="com.zemiak.movies.service.jsp.MovieService" scope="request"> </jsp:useBean>
+<jsp:useBean id="conf" class="com.zemiak.movies.service.jsp.ConfigService" scope="request"> </jsp:useBean>
 
 <%
     series.setGenreId(request);
@@ -24,7 +25,7 @@
                     <div class="span2 movie-box serie-box">
                         <a href="serie.jsp?id=${item.id}">
                             <img class="movie-thumbnail" alt="${item.name} Thumbnail"
-                                src="http://lenovo-server.local:8081/movies/img/serie/${item.pictureFileName}" />
+                                src="${conf.imgServer}serie/${item.pictureFileName}" />
                             <p class="movie-label">${item.name}</p>
                         </a>
                     </div>
@@ -34,7 +35,7 @@
                     <div class="span2 movie-box">
                         <a href="movie.jsp?id=${item.id}">
                             <img class="movie-thumbnail" alt="${item.name} Thumbnail"
-                                src="http://lenovo-server.local:8081/movies/img/movie/${item.pictureFileName}" />
+                                src="${conf.imgServer}movie/${item.pictureFileName}" />
                             <p class="movie-label">${item.name}</p>
                         </a>
                     </div>

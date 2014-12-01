@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="service" class="com.zemiak.movies.service.jsp.GenreService" scope="request"> </jsp:useBean>
+<jsp:useBean id="conf" class="com.zemiak.movies.service.jsp.ConfigService" scope="request"> </jsp:useBean>
 
 <t:iphone>
     <jsp:body>
@@ -14,7 +15,7 @@
         <ul id="main" title="Videotéka" selected="true">
             <c:forEach var="item" items="${service.all}">
                 <li>
-                    <img src="http://lenovo-server.local:8081/movies/img/genre/${item.pictureFileName}" align="left" class="movies-thumbnail" />
+                    <img src="${conf.imgServer}genre/${item.pictureFileName}" align="left" class="movies-thumbnail" />
                     <a href="genre.jsp?id=${item.id}" target="_self">${item.name}</a>
                 </li>
             </c:forEach>
