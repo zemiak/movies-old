@@ -9,14 +9,14 @@ import javax.enterprise.context.RequestScoped;
 import javax.servlet.http.HttpServletRequest;
 
 @RequestScoped
-public class MovieService implements Serializable {
+public class MovieWebService implements Serializable {
     private final com.zemiak.movies.service.MovieService service;
     private Integer genreId;
     private Integer serieId;
     private Integer id;
     private Movie movie;
 
-    public MovieService() {
+    public MovieWebService() {
         CDILookup lookup = new CDILookup();
         service = lookup.lookup(com.zemiak.movies.service.MovieService.class);
     }

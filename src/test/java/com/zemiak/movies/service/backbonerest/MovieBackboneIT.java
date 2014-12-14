@@ -2,7 +2,7 @@ package com.zemiak.movies.service.backbonerest;
 
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.service.MovieService;
-import com.zemiak.movies.service.jsp.SearchService;
+import com.zemiak.movies.service.jsp.SearchWebService;
 import com.zemiak.movies.strings.Encodings;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class MovieBackboneIT {
     @Inject
-    SearchService search;
+    SearchWebService search;
 
     @Inject
     MovieService movies;
@@ -40,7 +40,7 @@ public class MovieBackboneIT {
     public static JavaArchive createDeployment() {
         return ShrinkWrap
                 .create(JavaArchive.class)
-                .addClasses(MovieBackboneIT.class, Encodings.class, SearchService.class, MovieService.class, HttpServletRequest.class)
+                .addClasses(MovieBackboneIT.class, Encodings.class, SearchWebService.class, MovieService.class, HttpServletRequest.class)
                 .addPackage("com.zemiak.movies.domain")
                 .addPackage("com.zemiak.movies.service")
                 .addPackage("com.zemiak.movies.service.backbonerest")

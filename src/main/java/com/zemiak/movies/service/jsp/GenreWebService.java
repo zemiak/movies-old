@@ -7,10 +7,10 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 
 @RequestScoped
-public class GenreService implements Serializable {
+public class GenreWebService implements Serializable {
     private final com.zemiak.movies.service.GenreService service;
 
-    public GenreService() {
+    public GenreWebService() {
         CDILookup lookup = new CDILookup();
         service = lookup.lookup(com.zemiak.movies.service.GenreService.class);
     }

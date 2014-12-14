@@ -11,14 +11,14 @@ import javax.enterprise.context.RequestScoped;
 import javax.servlet.http.HttpServletRequest;
 
 @RequestScoped
-public class SearchService implements Serializable {
+public class SearchWebService implements Serializable {
     private final List<Serie> series = new ArrayList<>();
     private final List<Movie> movies = new ArrayList<>();
 
     private final MovieService movieService;
     private final SerieService serieService;
 
-    public SearchService() {
+    public SearchWebService() {
         CDILookup lookup = new CDILookup();
         movieService = lookup.lookup(MovieService.class);
         serieService = lookup.lookup(SerieService.class);

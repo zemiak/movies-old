@@ -9,11 +9,11 @@ import javax.enterprise.context.RequestScoped;
 import javax.servlet.http.HttpServletRequest;
 
 @RequestScoped
-public class SerieService implements Serializable {
+public class SerieWebService implements Serializable {
     private final com.zemiak.movies.service.SerieService service;
     private Integer genreId;
 
-    public SerieService() {
+    public SerieWebService() {
         CDILookup lookup = new CDILookup();
         service = lookup.lookup(com.zemiak.movies.service.SerieService.class);
     }

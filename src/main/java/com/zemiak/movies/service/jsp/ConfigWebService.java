@@ -3,10 +3,10 @@ package com.zemiak.movies.service.jsp;
 import com.zemiak.movies.lookup.CDILookup;
 import com.zemiak.movies.service.configuration.ConfigBean;
 
-public class ConfigService {
+public class ConfigWebService {
     private final ConfigBean service;
 
-    public ConfigService() {
+    public ConfigWebService() {
         CDILookup lookup = new CDILookup();
         service = lookup.lookup(com.zemiak.movies.service.configuration.ConfigBean.class);
     }
