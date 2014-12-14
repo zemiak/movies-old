@@ -13,7 +13,7 @@
 
     <custom-resource res-type="java.lang.String" jndi-name="com.zemiak.movies.imgPath"
                      factory-class="org.glassfish.resources.custom.factory.PrimitivesAndStringFactory">
-        <property name="value" value="/home/sites/movies/img/movie/"></property>
+        <property name="value" value="/var/www/movies/img/movie/"></property>
     </custom-resource>
 
     <custom-resource res-type="java.lang.String" jndi-name="com.zemiak.movies.mp4info"

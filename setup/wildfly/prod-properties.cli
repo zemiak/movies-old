@@ -6,7 +6,7 @@ connect
 
 /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.ffmpeg:add(value="\/usr\/bin\/ffmpegthumbnailer",binding-type=simple)
 /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.path:add(value="\/mnt\/media\/Movies\/",binding-type=simple)
-/subsystem=naming/binding=java\:jboss\/com.zemiak.movies.imgPath:add(value="\/home\/sites\/movies\/img\/movie\/",binding-type=simple)
+/subsystem=naming/binding=java\:jboss\/com.zemiak.movies.imgPath:add(value="\/var\/www\/movies\/img\/movie\/",binding-type=simple)
 /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.mp4tags:add(value="\/usr\/bin\/mp4tags",binding-type=simple)
 /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.mp4info:add(value="\/usr\/bin\/mp4info",binding-type=simple)
 /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.mailFrom:add(value="movies\@lenovo-server\.local",binding-type=simple)

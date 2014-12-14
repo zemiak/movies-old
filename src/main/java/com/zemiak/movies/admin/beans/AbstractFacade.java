@@ -5,12 +5,8 @@ import com.zemiak.movies.strings.Joiner;
 import java.util.List;
 import javax.persistence.EntityManager;
 
-/**
- *
- * @author vasko
- */
 public abstract class AbstractFacade<T> {
-    private Class<T> entityClass;
+    private final Class<T> entityClass;
 
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
@@ -54,7 +50,7 @@ public abstract class AbstractFacade<T> {
         javax.persistence.criteria.Root<T> rt = cq.from(entityClass);
         cq.select(getEntityManager().getCriteriaBuilder().count(rt));
         javax.persistence.Query q = getEntityManager().createQuery(cq);
-        return ((Long) q.getSingleResult()).intValue();
+        return ((Number) q.getSingleResult()).intValue();
     }
 
     private void validate(final T entity) {
