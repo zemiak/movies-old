@@ -4,6 +4,6 @@ connect
 # Setup DB connection
 ###
 
-/subsystem=datasources/data-source=ZemiakMovies/:add(jndi-name=java\:jboss\/datasources\/ZemiakMovies,driver-name=postgresql_org.postgresql.Driver_9_3,connection-url=jdbc\:postgresql\:\/\/movies-db\:5432\/movies,password=movies\/0,user-name=movies_user)
+/subsystem=datasources/data-source=ZemiakMovies/:add(jndi-name=java\:jboss\/datasources\/ZemiakMovies,driver-name=postgresql_org.postgresql.Driver_9_3,connection-url=jdbc\:postgresql\:\/\/localhost\:5432\/movies,password=movies\/0,user-name=movies_user)
 ##/subsystem=datasources/data-source=ZemiakMovies/:enable
 reload
