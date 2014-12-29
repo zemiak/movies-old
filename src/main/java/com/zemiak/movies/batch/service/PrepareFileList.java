@@ -29,7 +29,7 @@ public class PrepareFileList implements Batchlet {
 
     private static final BatchLogger LOG = BatchLogger.getLogger(PrepareFileList.class.getName());
     private static final Logger LOG1 = Logger.getLogger(PrepareFileList.class.getName());
-    
+
 
     public PrepareFileList() {
     }
@@ -40,6 +40,14 @@ public class PrepareFileList implements Batchlet {
         long counter = 0;
 
         File mainDir = new File(conf.getPath());
+        if (! mainDir.isDirectory()) {
+            throw new IOException(conf.getPath() + " is not a directory");
+        }
+
+        if (! mainDir.canExecute() || ! mainDir.canRead()) {
+            throw new IOException(conf.getPath() + " is not readable");
+        }
+
         try (FileWriter stream = new FileWriter(fileList)) {
             final String newLine = System.getProperty("line.separator");
 
