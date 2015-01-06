@@ -1,8 +1,8 @@
 package com.zemiak.movies.batch.metadata;
 
 import com.zemiak.movies.batch.service.CommandLine;
-import com.zemiak.movies.description.DescriptionReader;
 import com.zemiak.movies.batch.service.log.BatchLogger;
+import com.zemiak.movies.description.DescriptionReader;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.configuration.Configuration;
 import java.io.IOException;

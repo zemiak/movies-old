@@ -15,7 +15,7 @@ import javax.inject.Named;
 @Named("MetadataProcessor")
 public class Processor implements ItemProcessor {
     private static final BatchLogger LOG = BatchLogger.getLogger(Processor.class.getName());
-    
+
     @Inject MovieService service;
     @Inject Configuration conf;
 
