@@ -56,4 +56,9 @@ if (outcome == success) of /subsystem=naming/binding=java\:jboss\/com.zemiak.mov
     /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.playServer:remove
 end-if
 
+if (outcome == success) of /subsystem=mail/mail-session=MoviesMail/:read-attribute(name=jndi-name)
+    /subsystem=mail/mail-session=MoviesMail/:remove
+    reload
+end-if
+
 reload

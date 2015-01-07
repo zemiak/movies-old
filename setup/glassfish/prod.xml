@@ -73,7 +73,7 @@
 
     <jdbc-resource pool-name="ZemiakMovies__pool" jndi-name="jdbc/ZemiakMovies"></jdbc-resource>
 
-    <mail-resource host="lenovo-server.local" jndi-name="mail/default"
+    <mail-resource host="lenovo-server.local" jndi-name="java:/movies/mail/default"
                    from="anonymous@zemiak.com" user="anonymous">
     </mail-resource>
 </resources>

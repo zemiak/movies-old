@@ -1,5 +1,6 @@
 package com.zemiak.movies.batch.service.log;
 
+import com.zemiak.movies.service.configuration.Configuration;
 import java.io.File;
 import java.util.Date;
 import java.util.logging.Level;
@@ -21,7 +22,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import com.zemiak.movies.service.configuration.Configuration;
 
 /**
  *
@@ -34,7 +34,7 @@ public class SendLogFile implements Batchlet {
     @Inject
     JobContext jobCtx;
 
-    @Resource(name = "mail/default")
+    @Resource(name = "java:/movies/mail/default")
     private Session mailSession;
 
     @Inject

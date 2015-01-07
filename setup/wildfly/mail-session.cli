@@ -1,0 +1,4 @@
+connect
+/subsystem=mail/mail-session=MoviesMail:add(jndi-name="java\:\/movies\/mail\/default")
+/subsystem=mail/mail-session=MoviesMail/server=smtp:add(outbound-socket-binding-ref=mail-smtp)
+reload
