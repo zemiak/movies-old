@@ -14,4 +14,8 @@ public class ConfigWebService {
     public String getImgServer() {
         return service.getImgServer();
     }
+
+    public String getPlayServer() {
+        return service.getPlayServer();
+    }
 }
