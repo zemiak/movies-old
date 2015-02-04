@@ -40,67 +40,67 @@
                     <p:ajax event="rowUnselect" update="createButton viewButton editButton orderUpButton orderDownButton massActions"/>
                     <p:ajax event="rowDblselect" update=":MovieEditForm" oncomplete="PF('MovieEditDialog').show()" />
 
-                    <p:column>
+                    <p:column filterBy="#{item.id}" filterMatchMode="contains">
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListMovieTitle_id}"/>
                         </f:facet>
                         <h:outputText value="#{item.id}"/>
                     </p:column>
-                    <p:column>
+                    <p:column filterBy="#{item.fileName}" filterMatchMode="contains">
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListMovieTitle_fileName}"/>
                         </f:facet>
                         <h:outputText value="#{item.fileName}"/>
                     </p:column>
-                    <p:column>
+                    <p:column filterBy="#{item.name}" filterMatchMode="contains">
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListMovieTitle_name}"/>
                         </f:facet>
                         <h:outputText value="#{item.name}"/>
                     </p:column>
-                    <p:column>
+                    <p:column filterBy="#{item.originalName}" filterMatchMode="contains">
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListMovieTitle_originalName}"/>
                         </f:facet>
                         <h:outputText value="#{item.originalName}"/>
                     </p:column>
-                    <p:column>
+                    <p:column filterBy="#{item.urlFlag}" filterMatchMode="contains">
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListMovieTitle_url}"/>
                         </f:facet>
                         <h:outputText value="#{item.urlFlag}"/>
                     </p:column>
-                    <p:column>
+                    <p:column filterBy="#{item.displayOrder}" filterMatchMode="contains">
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListMovieTitle_displayOrder}"/>
                         </f:facet>
                         <h:outputText value="#{item.displayOrder}"/>
                     </p:column>
-                    <p:column>
+                    <p:column filterBy="#{item.serieId.name}" filterMatchMode="contains">
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListMovieTitle_serieId}"/>
                         </f:facet>
                         <h:outputText value="#{item.serieId.name}"/>
                     </p:column>
-                    <p:column>
+                    <p:column filterBy="#{item.subtitles.name}" filterMatchMode="contains">
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListMovieTitle_subtitles}"/>
                         </f:facet>
                         <h:outputText value="#{item.subtitles.name}"/>
                     </p:column>
-                    <p:column>
+                    <p:column filterBy="#{item.originalLanguage.name}" filterMatchMode="contains">
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListMovieTitle_originalLanguage}"/>
                         </f:facet>
                         <h:outputText value="#{item.originalLanguage.name}"/>
                     </p:column>
-                    <p:column>
+                    <p:column filterBy="#{item.language.name}" filterMatchMode="contains">
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListMovieTitle_language}"/>
                         </f:facet>
                         <h:outputText value="#{item.language.name}"/>
                     </p:column>
-                    <p:column>
+                    <p:column filterBy="#{item.genreId.name}" filterMatchMode="contains">
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListMovieTitle_genreId}"/>
                         </f:facet>

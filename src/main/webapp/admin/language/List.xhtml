@@ -29,25 +29,25 @@
                     <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
                     <p:ajax event="rowDblselect" update=":LanguageEditForm" oncomplete="PF('LanguageEditDialog').show()" />
 
-                    <p:column>
+                    <p:column filterBy="#{item.id}">
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListLanguageTitle_id}"/>
                         </f:facet>
                         <h:outputText value="#{item.id}"/>
                     </p:column>
-                    <p:column>
+                    <p:column filterBy="#{item.name}">
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListLanguageTitle_name}"/>
                         </f:facet>
                         <h:outputText value="#{item.name}"/>
                     </p:column>
-                    <p:column>
+                    <p:column filterBy="#{item.pictureFileName}">
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListLanguageTitle_pictureFileName}"/>
                         </f:facet>
                         <h:outputText value="#{item.pictureFileName}"/>
                     </p:column>
-                    <p:column>
+                    <p:column filterBy="#{item.displayOrder}">
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListLanguageTitle_displayOrder}"/>
                         </f:facet>
