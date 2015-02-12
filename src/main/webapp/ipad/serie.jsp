@@ -8,23 +8,21 @@
 
 <t:ipad>
     <jsp:body>
-        <div class="container-fluid">
-            <div class="movie-box">
-                    <a href="javascript:window.history.back(-1);">
-                        <img src="img/arrow-back.jpg" alt="Back" class="back-image" />
-                    </a>
-                </div>
-
-            <c:forEach var="item" items="${movies.bySerieId}">
-                <div class="movie-box">
-                    <a href="movie.jsp?id=${item.id}">
-                        <img class="movie-thumbnail" alt="${item.name} Thumbnail"
-                            src="${conf.imgServer}movie/${item.pictureFileName}" />
-                        <p class="movie-label">${item.name}</p>
-                    </a>
-                </div>
-            </c:forEach>
+        <div class="movie-box">
+            <a href="javascript:window.history.back(-1);">
+                <img src="img/arrow-back.jpg" alt="Back" class="back-image" />
+            </a>
         </div>
+
+        <c:forEach var="item" items="${movies.bySerieId}">
+            <div class="movie-box">
+                <a href="movie.jsp?id=${item.id}">
+                    <img class="movie-thumbnail" alt="${item.name} Thumbnail"
+                        src="${conf.imgServer}movie/${item.pictureFileName}" />
+                    <p class="movie-label">${item.name}</p>
+                </a>
+            </div>
+        </c:forEach>
     </jsp:body>
 </t:ipad>
 

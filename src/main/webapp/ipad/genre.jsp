@@ -13,34 +13,32 @@
 
 <t:ipad>
     <jsp:body>
-        <div class="container-fluid">
-            <div class="page">
-                <div class="span2 serie-box">
-                    <a href="javascript:window.history.back(-1);">
-                        <img src="img/arrow-back.jpg" alt="Back" class="back-image" />
+        <div class="page">
+            <div class="span2 serie-box">
+                <a href="javascript:window.history.back(-1);">
+                    <img src="img/arrow-back.jpg" alt="Back" class="back-image" />
+                </a>
+            </div>
+
+            <c:forEach var="item" items="${series.byGenreId}">
+                <div class="movie-box serie-box">
+                    <a href="serie.jsp?id=${item.id}">
+                        <img class="movie-thumbnail" alt="${item.name} Thumbnail"
+                            src="${conf.imgServer}serie/${item.pictureFileName}" />
+                        <p class="movie-label">${item.name}</p>
                     </a>
                 </div>
+            </c:forEach>
 
-                <c:forEach var="item" items="${series.byGenreId}">
-                    <div class="movie-box serie-box">
-                        <a href="serie.jsp?id=${item.id}">
-                            <img class="movie-thumbnail" alt="${item.name} Thumbnail"
-                                src="${conf.imgServer}serie/${item.pictureFileName}" />
-                            <p class="movie-label">${item.name}</p>
-                        </a>
-                    </div>
-                </c:forEach>
-
-                <c:forEach var="item" items="${movies.byGenreId}">
-                    <div class="movie-box">
-                        <a href="movie.jsp?id=${item.id}">
-                            <img class="movie-thumbnail" alt="${item.name} Thumbnail"
-                                src="${conf.imgServer}movie/${item.pictureFileName}" />
-                            <p class="movie-label">${item.name}</p>
-                        </a>
-                    </div>
-                </c:forEach>
-            </div>
+            <c:forEach var="item" items="${movies.byGenreId}">
+                <div class="movie-box">
+                    <a href="movie.jsp?id=${item.id}">
+                        <img class="movie-thumbnail" alt="${item.name} Thumbnail"
+                            src="${conf.imgServer}movie/${item.pictureFileName}" />
+                        <p class="movie-label">${item.name}</p>
+                    </a>
+                </div>
+            </c:forEach>
         </div>
     </jsp:body>
 </t:ipad>
