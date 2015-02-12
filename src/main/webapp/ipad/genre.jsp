@@ -22,7 +22,7 @@
                 </div>
 
                 <c:forEach var="item" items="${series.byGenreId}">
-                    <div class="span2 movie-box serie-box">
+                    <div class="movie-box serie-box">
                         <a href="serie.jsp?id=${item.id}">
                             <img class="movie-thumbnail" alt="${item.name} Thumbnail"
                                 src="${conf.imgServer}serie/${item.pictureFileName}" />
@@ -32,7 +32,7 @@
                 </c:forEach>
 
                 <c:forEach var="item" items="${movies.byGenreId}">
-                    <div class="span2 movie-box">
+                    <div class="movie-box">
                         <a href="movie.jsp?id=${item.id}">
                             <img class="movie-thumbnail" alt="${item.name} Thumbnail"
                                 src="${conf.imgServer}movie/${item.pictureFileName}" />
