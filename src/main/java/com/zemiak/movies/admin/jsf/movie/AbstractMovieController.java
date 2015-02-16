@@ -4,7 +4,7 @@ import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.admin.jsf.util.JsfUtil;
 import com.zemiak.movies.admin.jsf.util.JsfUtil.PersistAction;
 import com.zemiak.movies.admin.beans.MovieFacade;
-import com.zemiak.movies.description.DescriptionReader;
+import com.zemiak.movies.service.description.DescriptionReader;
 
 import java.io.Serializable;
 import java.util.List;

@@ -2,7 +2,7 @@ package com.zemiak.movies.admin.jsf.movie;
 
 import com.zemiak.movies.admin.beans.MovieFacade;
 import com.zemiak.movies.admin.jsf.util.JsfUtil;
-import com.zemiak.movies.description.DescriptionReader;
+import com.zemiak.movies.service.description.DescriptionReader;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Language;
 import com.zemiak.movies.domain.Movie;

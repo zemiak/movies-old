@@ -1,4 +1,4 @@
-package com.zemiak.movies.description;
+package com.zemiak.movies.service.description;
 
 import com.zemiak.movies.domain.Movie;
 

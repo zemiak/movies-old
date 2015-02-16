@@ -1,4 +1,4 @@
-package com.zemiak.movies.description;
+package com.zemiak.movies.service.description;
 
 import java.util.Objects;
 import java.util.ResourceBundle;

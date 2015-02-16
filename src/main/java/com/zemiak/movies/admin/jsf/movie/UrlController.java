@@ -1,7 +1,7 @@
 package com.zemiak.movies.admin.jsf.movie;
 
-import com.zemiak.movies.description.Csfd;
-import com.zemiak.movies.description.Imdb;
+import com.zemiak.movies.service.description.Csfd;
+import com.zemiak.movies.service.description.Imdb;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.UrlDTO;
 import java.io.Serializable;

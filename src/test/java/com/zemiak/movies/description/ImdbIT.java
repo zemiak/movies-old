@@ -1,5 +1,6 @@
 package com.zemiak.movies.description;
 
+import com.zemiak.movies.service.description.Imdb;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.UrlDTO;
 import java.util.List;

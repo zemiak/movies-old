@@ -1,4 +1,4 @@
-package com.zemiak.movies.description;
+package com.zemiak.movies.service.description;
 
 public class SerieItemDescription {
     private String title;
