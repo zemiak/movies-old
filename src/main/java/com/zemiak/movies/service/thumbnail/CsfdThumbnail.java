@@ -11,7 +11,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-class CsfdThumbnail implements IThumbnailReader {
+public class CsfdThumbnail implements IThumbnailReader {
     private final Csfd csfd = new Csfd();
     private static final BatchLogger LOG = BatchLogger.getLogger(CsfdThumbnail.class.getName());
     private String imageFileName;

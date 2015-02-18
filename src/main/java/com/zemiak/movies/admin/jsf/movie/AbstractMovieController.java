@@ -1,11 +1,12 @@
 package com.zemiak.movies.admin.jsf.movie;
 
-import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.admin.beans.MovieFacade;
 import com.zemiak.movies.admin.jsf.util.JsfUtil;
 import com.zemiak.movies.admin.jsf.util.JsfUtil.PersistAction;
-import com.zemiak.movies.admin.beans.MovieFacade;
+import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.service.configuration.Configuration;
 import com.zemiak.movies.service.description.DescriptionReader;
-
+import com.zemiak.movies.service.thumbnail.ThumbnailReader;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -23,6 +24,7 @@ abstract public class AbstractMovieController implements Serializable {
     Movie[] selected;
     MassActions mass;
 
+    @Inject Configuration conf;
     @Inject UrlController urls;
 
     List<Movie> movies = null;
@@ -107,7 +109,7 @@ abstract public class AbstractMovieController implements Serializable {
                         }
                         break;
                 }
-                        
+
                 JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
                 String msg = "";
@@ -134,13 +136,15 @@ abstract public class AbstractMovieController implements Serializable {
     public boolean isSelectionEmpty() {
         return selected == null || selected.length == 0;
     }
-    
+
     public void fetchDescription() {
         final DescriptionReader reader = new DescriptionReader();
+        final ThumbnailReader thumbnail = new ThumbnailReader(conf);
         final String desc = reader.read(selectedOne);
-                
+
         if (null != desc && !desc.equals(selectedOne.getDescription())) {
             selectedOne.setDescription(desc);
+            thumbnail.process(selectedOne);
         }
     }
 
@@ -157,7 +161,7 @@ abstract public class AbstractMovieController implements Serializable {
 
     public void changeUrl() {
         selectedOne.setUrl(urls.getSelected().getUrl());
-        
+
         if (null == selectedOne.getDescription() || selectedOne.getDescription().trim().isEmpty()) {
             fetchDescription();
         }
@@ -170,11 +174,11 @@ abstract public class AbstractMovieController implements Serializable {
     public void setUrls(UrlController urls) {
         this.urls = urls;
     }
-    
+
     public MassActions getMass() {
         return mass;
     }
-    
+
     public void serieValueChange(final AjaxBehaviorEvent event) {
         if (null == selectedOne.getGenreId() || selectedOne.getGenreId().isEmpty()) {
             selectedOne.setGenreId(selectedOne.getSerieId().getGenreId());

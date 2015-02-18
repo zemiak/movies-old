@@ -9,7 +9,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-class ImdbThumbnail implements IThumbnailReader {
+public class ImdbThumbnail implements IThumbnailReader {
     private final Imdb imdb = new Imdb();
     private static final BatchLogger LOG = BatchLogger.getLogger(ImdbThumbnail.class.getName());
     private String imageFileName;
