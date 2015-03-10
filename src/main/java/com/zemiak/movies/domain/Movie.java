@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Movie.findByDisplayOrder", query = "SELECT m FROM Movie m WHERE m.displayOrder = :displayOrder"),
     @NamedQuery(name = "Movie.findByDescription", query = "SELECT m FROM Movie m WHERE m.description = :description")})
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Movie implements Serializable, Comparable<Movie> {
     private static final long serialVersionUID = 3L;
 
@@ -277,7 +280,7 @@ public class Movie implements Serializable, Comparable<Movie> {
     }
 
     public String getSerieName() {
-        return null == serieId ? "<None>" : serieId.getName();
+        return null == serieId ? "<None>" : (serieId.isEmpty() ? "<None>" : serieId.getName());
     }
 
     public String getLanguageName() {
@@ -309,7 +312,11 @@ public class Movie implements Serializable, Comparable<Movie> {
         if (null == displayOrder && null == o.getDisplayOrder()) {
             return 0;
         }
-        
+
         return displayOrder.compareTo(o.getDisplayOrder());
+    }
+
+    public String getGenreName() {
+        return null == genreId ? "<None>" : (genreId.isEmpty() ? "<None>" : genreId.getName());
     }
 }

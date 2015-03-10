@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -22,6 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Serie.findByDisplayOrder", query = "SELECT s FROM Serie s WHERE s.displayOrder = :displayOrder"),
     @NamedQuery(name = "Serie.findByGenreId", query = "SELECT s FROM Serie s WHERE s.genreId = :genreId")})
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Serie implements Serializable, Comparable<Serie> {
     private static final long serialVersionUID = 4L;
 
@@ -48,6 +51,7 @@ public class Serie implements Serializable, Comparable<Serie> {
     private Genre genreId;
 
     @OneToMany(mappedBy = "serieId")
+    @XmlTransient
     private List<Movie> movieList;
 
     @Column(name = "created")
@@ -168,5 +172,13 @@ public class Serie implements Serializable, Comparable<Serie> {
         }
 
         return displayOrder.compareTo(o.getDisplayOrder());
+    }
+
+    public boolean isEmpty() {
+        return 0 == id;
+    }
+
+    public String getGenreName() {
+        return null == genreId ? "<None>" : (genreId.isEmpty() ? "<None>" : genreId.getName());
     }
 }

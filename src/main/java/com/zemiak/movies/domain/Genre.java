@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -23,6 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Genre.findByDisplayOrder", query = "SELECT g FROM Genre g WHERE g.displayOrder = :displayOrder"),
 })
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Genre implements Serializable, Comparable<Genre> {
     private static final long serialVersionUID = 1L;
 
@@ -47,9 +50,11 @@ public class Genre implements Serializable, Comparable<Genre> {
     private Integer displayOrder;
 
     @OneToMany(mappedBy = "genreId")
+    @XmlTransient
     private List<Serie> serieList;
 
     @OneToMany(mappedBy = "genreId")
+    @XmlTransient
     private List<Movie> movieList;
 
     @Column(name = "created")
