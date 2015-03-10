@@ -2,7 +2,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<t:admin-grid>
+<t:grid>
     <jsp:body>
         <h3>System</h3>
             
@@ -24,4 +24,4 @@
 
         <script type="text/javascript" src="index.js"></script>
     </jsp:body>
-</t:admin-grid>
+</t:grid>

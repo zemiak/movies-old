@@ -30,7 +30,7 @@
         <a class="item" role="button" tabindex="0" aria-label="home" href="/movies/ipad/index.jsp">
             <i class="fi-home"></i>
         </a>
-        <a class="item" role="button" tabindex="0" aria-label="new" href="/movies/admin2/new/index.jsp">
+        <a class="item" role="button" tabindex="0" aria-label="new" href="/movies/admin2/movie/new.jsp">
             <i class="fi-page-add"></i>
         </a>
         <a class="item" role="button" tabindex="0" aria-label="all" href="/movies/admin2/movie/index.jsp">

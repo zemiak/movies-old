@@ -2,7 +2,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<t:admin-grid>
+<t:grid>
     <jsp:body>
         <h3>New Movies</h3>
             
@@ -21,6 +21,6 @@
             <li><a href="javascript:editClick();" class="small button">Edit</a></li>
         </ul>
 
-        <script type="text/javascript" src="index.js"></script>
+        <script type="text/javascript" src="new.js"></script>
     </jsp:body>
-</t:admin-grid>
+</t:grid>
