@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/templates/edit.xhtml">
+        <f:metadata>
+            <f:viewParam name="id" value="#{genreEditForm.id}" />
+        </f:metadata>
+        
         <ui:define name="title">
             <h:outputText value="Edit Genre"></h:outputText>
         </ui:define>
@@ -19,11 +23,14 @@
             </div>
 
             <form method="post" action="/movies/rest/movies">
-                <input type="hidden" id="id" name="id" value="${genreWeb.find(param["id"]).getId()}" />
+                <input type="hidden" id="id" name="id" value="${genreEditForm.id}" />
+                
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="${genreEditForm.bean.name}" />
 
                 <ul class="button-group" style="padding-left: 1em;">
                     <li><a href="javascript:closeClick();" class="small button">Close</a></li>
-                    <li><input type="submit" class="small button" value="Save & Close" /></li>
+                    <li><input type="submit" class="small button" value="Save &amp; Close" /></li>
                 </ul>
             </form>
 
