@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://java.sun.com/jsf">
+
+    <head jsf:id="head">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+        
+        <link href="/movies/js/libs/foundation/css/normalize.css" rel="stylesheet" />
+        <link href="/movies/js/libs/foundation/css/foundation.css" rel="stylesheet" />
+        <link href="/movies/js/libs/foundation/icons/foundation-icons.css" rel="stylesheet" />
+
+        <script type="text/javascript" src="/movies/js/libs/foundation/js/vendor/modernizr.js"></script>
+        <script type="text/javascript" src="/movies/js/libs/foundation/js/vendor/jquery.js"></script>
+        <script type="text/javascript" src="/movies/js/libs/foundation/js/vendor/fastclick.js"></script>
+        <script type="text/javascript" src="/movies/js/libs/foundation/js/foundation.min.js"></script>
+        <script type="text/javascript" src="/movies/js/libs/foundation/js/confirm_with_reveal.js"></script>
+        <script type="text/javascript" src="/movies/js/foundation.alert.js"></script>
+    </head>
+
+    <body jsf:id="body">
+        <ui:insert name="body"/>
+
+        <script>
+            $(document).foundation();
+            $(document).confirmWithReveal();
+        </script>
+    </body>
+</html>

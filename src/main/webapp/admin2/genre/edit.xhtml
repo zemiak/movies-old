@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/templates/edit.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Edit Genre"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h3>Edit Genre</h3>
+            
+            <div id="select-one" data-alert="" class="alert-box alert" style="display: none;">
+                Please, select exactly one row.
+                <a href="#" class="close">&times;</a>
+            </div>
+
+            <form method="post" action="/movies/rest/movies">
+                <input type="hidden" id="id" name="id" value="${genreWeb.find(param["id"]).getId()}" />
+
+                <ul class="button-group" style="padding-left: 1em;">
+                    <li><a href="javascript:closeClick();" class="small button">Close</a></li>
+                    <li><input type="submit" class="small button" value="Save & Close" /></li>
+                </ul>
+            </form>
+
+            <script type="text/javascript" src="edit.js"></script>
+        </ui:define>
+    </ui:composition>
+</html>
