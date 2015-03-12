@@ -18,32 +18,12 @@ import javax.ws.rs.core.Response;
 @Produces(value = MediaType.APPLICATION_JSON)
 @Consumes(value = MediaType.APPLICATION_JSON)
 public class GenresResource {
-    private static final String EDIT = "/movies/admin2/movie/edit.jsp?id=";
-
     @Inject
     GenreService genres;
 
     @GET
     public DataTablesAjaxData<GenreDTO> getAllMovies() {
         return new DataTablesAjaxData<>(genres.all().stream().map(movie -> new GenreDTO(movie)).collect(Collectors.toList()));
-    }
-
-    @POST
-    @PUT
-    @Consumes("application/x-www-form-urlencoded")
-    public Response save(MultivaluedMap<String, String> values) {
-        if (values.isEmpty()) {
-            return Response.status(Response.Status.NOT_ACCEPTABLE).entity("No parameters specfied").build();
-        }
-
-        if (null == values.getFirst("id") || values.getFirst("id").trim().isEmpty()) {
-            // create
-            Integer id = -1;
-            return Response.seeOther(URI.create(EDIT + id)).build();
-        }
-
-        // save
-        return Response.seeOther(URI.create(EDIT + values.getFirst("id"))).build();
     }
 
     @DELETE

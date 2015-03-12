@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/templates/edit.xhtml">
@@ -22,11 +23,9 @@
                 <a href="#" class="close">&times;</a>
             </div>
 
-            <form method="post" action="/movies/rest/movies">
-                <input type="hidden" id="id" name="id" value="${genreEditForm.id}" />
-                
+            <form method="post" jsf:id="genreEditForm" jsf:prependId="false">
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name" value="${genreEditForm.bean.name}" />
+                <input type="text" id="name" name="name" jsf:id="name" jsf:value="#{genreEditForm.bean.name}" placeholder="Enter Genre Name" />
 
                 <ul class="button-group" style="padding-left: 1em;">
                     <li><a href="javascript:closeClick();" class="small button">Close</a></li>

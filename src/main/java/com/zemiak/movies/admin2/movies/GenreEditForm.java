@@ -2,12 +2,12 @@ package com.zemiak.movies.admin2.movies;
 
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.service.GenreService;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.NotFoundException;
 
-@RequestScoped
+@ViewScoped
 @Named
 public class GenreEditForm {
     private Integer id;
