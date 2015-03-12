@@ -1,6 +1,7 @@
 package com.zemiak.movies.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
@@ -60,6 +61,16 @@ public class Genre implements Serializable, Comparable<Genre> {
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
+
+    public static Genre create() {
+        Genre genre = new Genre();
+        genre.setCreated(new Date());
+        genre.serieList = new ArrayList<>();
+        genre.movieList = new ArrayList<>();
+        genre.setDisplayOrder(9000);
+        
+        return genre;
+    }
 
     public Date getCreated() {
         return created;

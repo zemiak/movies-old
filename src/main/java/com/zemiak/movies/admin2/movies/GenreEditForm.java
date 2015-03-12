@@ -2,14 +2,15 @@ package com.zemiak.movies.admin2.movies;
 
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.service.GenreService;
-import javax.faces.bean.ViewScoped;
+import java.io.Serializable;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.NotFoundException;
 
-@ViewScoped
-@Named
-public class GenreEditForm {
+@SessionScoped
+@Named("genreEditForm")
+public class GenreEditForm implements Serializable {
     private Integer id;
     private Genre bean;
 
@@ -39,5 +40,24 @@ public class GenreEditForm {
 
     public Genre getBean() {
         return bean;
+    }
+
+    public void create() {
+        bean = Genre.create();
+    }
+
+    public String save() {
+        service.save(bean);
+
+        return "index";
+    }
+
+    public String remove() {
+        if (null == bean || null == bean.getId()) {
+            throw new NotFoundException();
+        }
+
+        service.remove(bean.getId());
+        return "index";
     }
 }

@@ -8,5 +8,7 @@
             <base-name>/Bundle</base-name>
             <var>bundle</var>
         </resource-bundle>
+        
+        <message-bundle>ApplicationMessages</message-bundle>
     </application>
 </faces-config>

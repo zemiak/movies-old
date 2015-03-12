@@ -16,21 +16,63 @@
         </ui:define>
 
         <ui:define name="body">
-            <h3>Edit Genre</h3>
+            <div class="panel">
+                <div class="row">
+                    <div class="small-12 columns">
+                        <h3>Edit Genre</h3>
+                    </div>
+                </div>
+            </div>
             
             <div id="select-one" data-alert="" class="alert-box alert" style="display: none;">
-                Please, select exactly one row.
+
                 <a href="#" class="close">&times;</a>
             </div>
+            
+            <div class="row">&nbsp;</div>
 
             <form method="post" jsf:id="genreEditForm" jsf:prependId="false">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" jsf:id="name" jsf:value="#{genreEditForm.bean.name}" placeholder="Enter Genre Name" />
+                <div class="row">
+                    <div class="small-8 columns">
+                        <label>Name:
+                            <input type="text" id="name" name="name" jsf:id="name" 
+                                   jsf:value="${genreEditForm.bean.name}" 
+                                   placeholder="Enter Genre Name" jsf:required="true" />
+                        </label>
+                    </div>
 
-                <ul class="button-group" style="padding-left: 1em;">
-                    <li><a href="javascript:closeClick();" class="small button">Close</a></li>
-                    <li><input type="submit" class="small button" value="Save &amp; Close" /></li>
-                </ul>
+                    <div class="small-4 columns">
+                        <label>Display Order:
+                            <input type="number" id="displayOrder" name="displayOrder" 
+                                   jsf:id="displayOrder" 
+                                   jsf:value="#{genreEditForm.bean.displayOrder}" 
+                                   placeholder="Enter Display Order" />
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="small-12 columns">
+                        <label>Picture Filename:
+                            <input type="text" id="pictureFileName" name="pictureFileName" 
+                                   jsf:id="pictureFileName" 
+                                   jsf:value="#{genreEditForm.bean.pictureFileName}" 
+                                   placeholder="Enter Picture Filename" />
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="row">&nbsp;</div>
+                
+                <div class="row">
+                    <div class="small-12 columns">
+                        <ul class="button-group">
+                            <li><a href="javascript:closeClick();" class="small button secondary">Close</a></li>
+                            <li><input type="submit" class="small button" jsf:value="Save &amp; Close" jsf:action="#{genreEditForm.save()}" /></li>
+                            <li><input type="button" class="small button alert" data-confirm="" jsf:value="Remove" jsf:action="#{genreEditForm.remove()}" /></li>
+                        </ul>
+                    </div>
+                </div>
             </form>
 
             <script type="text/javascript" src="edit.js"></script>
