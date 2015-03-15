@@ -15,6 +15,8 @@
         <link href="/movies/js/libs/foundation/css/normalize.css" rel="stylesheet" />
         <link href="/movies/js/libs/foundation/css/foundation.css" rel="stylesheet" />
         <link href="/movies/js/libs/foundation/icons/foundation-icons.css" rel="stylesheet" />
+        
+        <link href="/movies/css/edit.css" rel="stylesheet" />
 
         <script type="text/javascript" src="/movies/js/libs/foundation/js/vendor/modernizr.js"></script>
         <script type="text/javascript" src="/movies/js/libs/foundation/js/vendor/jquery.js"></script>
@@ -26,6 +28,9 @@
 
     <body jsf:id="body">
         <ui:insert name="body"/>
+        
+        <h:messages styleClass="jsf_errorMessages" infoStyle="hide" />
+        <h:messages styleClass="jsf_infoMessages" errorStyle="hide" />
 
         <script>
             $(document).foundation();

@@ -74,6 +74,6 @@ public class GenreEditForm implements Serializable {
     }
 
     public String getActionTitle() {
-        return -1 == id ? "Create" : "Edit";
+        return (null == id || -1 == id) ? "Create" : "Edit";
     }
 }

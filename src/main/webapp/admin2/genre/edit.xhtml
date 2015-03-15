@@ -15,7 +15,6 @@
             <h:outputText value="#{genreEditForm.actionTitle} Genre"></h:outputText>
         </ui:define>
         
-        <h:messages />
 
         <ui:define name="body">
             <div class="panel">
@@ -38,7 +37,7 @@
                     <div class="small-8 columns">
                         <label>Name:
                             <input type="text" id="name" name="name" jsf:id="name" 
-                                   jsf:value="${genreEditForm.bean.name}" 
+                                   jsf:value="${genreEditForm.bean.name}" label="Name"
                                    placeholder="Enter Genre Name" jsf:required="true" />
                         </label>
                     </div>
@@ -46,7 +45,7 @@
                     <div class="small-4 columns">
                         <label>Display Order:
                             <input type="number" id="displayOrder" name="displayOrder" 
-                                   jsf:id="displayOrder" 
+                                   jsf:id="displayOrder" label="Display Order"
                                    jsf:value="#{genreEditForm.bean.displayOrder}" 
                                    placeholder="Enter Display Order" />
                         </label>
@@ -57,7 +56,7 @@
                     <div class="small-12 columns">
                         <label>Picture Filename:
                             <input type="text" id="pictureFileName" name="pictureFileName" 
-                                   jsf:id="pictureFileName" 
+                                   jsf:id="pictureFileName" label="Picture Filename"
                                    jsf:value="#{genreEditForm.bean.pictureFileName}" 
                                    placeholder="Enter Picture Filename" />
                         </label>
