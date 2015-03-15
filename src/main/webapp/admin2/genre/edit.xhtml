@@ -12,14 +12,16 @@
         </f:metadata>
         
         <ui:define name="title">
-            <h:outputText value="Edit Genre"></h:outputText>
+            <h:outputText value="#{genreEditForm.actionTitle} Genre"></h:outputText>
         </ui:define>
+        
+        <h:messages />
 
         <ui:define name="body">
             <div class="panel">
                 <div class="row">
                     <div class="small-12 columns">
-                        <h3>Edit Genre</h3>
+                        <h3>#{genreEditForm.actionTitle} Genre</h3>
                     </div>
                 </div>
             </div>

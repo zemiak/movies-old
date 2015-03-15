@@ -25,3 +25,7 @@ function editClick() {
         window.location = "edit.xhtml?id=" + id;
     }
 };
+
+function createClick() {
+    window.location = "edit.xhtml?id=-1";
+};

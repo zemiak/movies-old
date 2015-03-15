@@ -27,7 +27,11 @@ public class GenreEditForm implements Serializable {
     public void setId(Integer id) {
         this.id = id;
 
-        refresh();
+        if (-1 == id) {
+            create();
+        } else {
+            refresh();
+        }
     }
 
     private void refresh() {
@@ -42,7 +46,7 @@ public class GenreEditForm implements Serializable {
         return bean;
     }
 
-    public void create() {
+    private void create() {
         bean = Genre.create();
     }
 
@@ -53,11 +57,23 @@ public class GenreEditForm implements Serializable {
     }
 
     public String remove() {
-        if (null == bean || null == bean.getId()) {
+        if (-1 == id) {
             throw new NotFoundException();
+        }
+
+        if (! bean.getSerieList().isEmpty()) {
+            throw new IllegalStateException("They are series existing with this genre.");
+        }
+
+        if (! bean.getMovieList().isEmpty()) {
+            throw new IllegalStateException("They are movies existing with this genre.");
         }
 
         service.remove(bean.getId());
         return "index";
+    }
+
+    public String getActionTitle() {
+        return -1 == id ? "Create" : "Edit";
     }
 }
