@@ -23,17 +23,6 @@ function editClick() {
     if (null === id) {
         $("#select-one").show();
     } else {
-        alert("Going to edit: " + id);
-    }
-};
-
-function removeClick() {
-    var id = DataTablesExt.getSelectedId("grid");
-
-    $(".reveal-modal").foundation('reveal', 'close');
-    if (null === id) {
-        $("#select-one").show();
-    } else {
-        alert("Going to remove: " + id);
+        window.location = "edit.xhtml?id=" + id;
     }
 };

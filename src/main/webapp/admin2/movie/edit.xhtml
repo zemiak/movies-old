@@ -8,11 +8,11 @@
 
     <ui:composition template="/templates/edit.xhtml">
         <f:metadata>
-            <f:viewParam name="id" value="#{genreEditForm.id}" />
+            <f:viewParam name="id" value="#{movieEditForm.id}" />
         </f:metadata>
         
         <ui:define name="title">
-            <h:outputText value="#{genreEditForm.actionTitle} Genre"></h:outputText>
+            <h:outputText value="#{movieEditForm.actionTitle} Movie"></h:outputText>
         </ui:define>
         
 
@@ -20,20 +20,20 @@
             <div class="panel">
                 <div class="row">
                     <div class="small-12 columns">
-                        <h3>#{genreEditForm.actionTitle} Genre</h3>
+                        <h3>#{movieEditForm.actionTitle} Movie</h3>
                     </div>
                 </div>
             </div>
             
             <div class="row">&nbsp;</div>
 
-            <form method="post" jsf:id="genreEditForm" jsf:prependId="false">
+            <form method="post" jsf:id="movieEditForm" jsf:prependId="false">
                 <div class="row">
                     <div class="small-8 columns">
                         <label>Name:
                             <input type="text" id="name" name="name" jsf:id="name" 
-                                   jsf:value="${genreEditForm.bean.name}" label="Name"
-                                   placeholder="Enter Genre Name" jsf:required="true" />
+                                   jsf:value="${movieEditForm.bean.name}" label="Name"
+                                   placeholder="Enter Movie Name" jsf:required="true" />
                         </label>
                         <h:message for="name" class="error" />
                     </div>
@@ -42,7 +42,7 @@
                         <label>Display Order:
                             <input type="number" id="displayOrder" name="displayOrder" 
                                    jsf:id="displayOrder" label="Display Order"
-                                   jsf:value="#{genreEditForm.bean.displayOrder}" 
+                                   jsf:value="#{movieEditForm.bean.displayOrder}" 
                                    placeholder="Enter Display Order" />
                         </label>
                         <h:message for="number" class="error" />
@@ -54,10 +54,21 @@
                         <label>Picture Filename:
                             <input type="text" id="pictureFileName" name="pictureFileName" 
                                    jsf:id="pictureFileName" label="Picture Filename"
-                                   jsf:value="#{genreEditForm.bean.pictureFileName}" 
+                                   jsf:value="#{movieEditForm.bean.pictureFileName}" 
                                    placeholder="Enter Picture Filename" />
                         </label>
                         <h:message for="pictureFileName" class="error" />
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="small-12 columns">
+                        <label>Genre:
+                            <select jsf:id="genre" id="genre" jsf:value="#{movieEditForm.bean.genreId}" size="1">
+                                <f:selectItems value="#{movieEditForm.genres}" var="genre" itemLabel="#{genre.name}" />
+                            </select>
+                        </label>
+                        <h:message for="genre" class="error" />
                     </div>
                 </div>
                 
@@ -67,13 +78,13 @@
                     <div class="small-12 columns">
                         <ul class="button-group">
                             <li><a href="index.xhtml" class="small button secondary">Close</a></li>
-                            <li><input type="submit" class="small button" jsf:value="Save &amp; Close" jsf:action="#{genreEditForm.save()}" /></li>
+                            <li><input type="submit" class="small button" jsf:value="Save &amp; Close" jsf:action="#{movieEditForm.save()}" /></li>
                             <li><a class="small button alert" href="javascript:$('#removeButton').click();" data-confirm="" type="button">Remove</a></li>
                         </ul>
                     </div>
                 </div>
                 
-                <button jsf:id="removeButton" id="removeButton" jsf:action="#{genreEditForm.remove()}" style="display:none;" />
+                <button jsf:id="removeButton" id="removeButton" jsf:action="#{movieEditForm.remove()}" style="display:none;" />
             </form>
         </ui:define>
     </ui:composition>

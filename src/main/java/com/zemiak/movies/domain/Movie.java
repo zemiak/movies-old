@@ -5,6 +5,7 @@ import com.zemiak.movies.service.description.Imdb;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -38,14 +39,16 @@ public class Movie implements Serializable, Comparable<Movie> {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
     @Basic(optional = false)
     @Column(name = "id")
+    @NotNull
     private Integer id;
 
     @Size(max = 512)
     @Column(name = "file_name")
     private String fileName;
 
-    @Size(max = 128)
+    @Size(max = 128, min = 1)
     @Column(name = "name")
+    @NotNull
     private String name;
 
     @Size(max = 128)
@@ -61,6 +64,7 @@ public class Movie implements Serializable, Comparable<Movie> {
     private String pictureFileName;
 
     @Column(name = "display_order")
+    @NotNull
     private Integer displayOrder;
 
     @Size(max = 2147483647)
@@ -84,7 +88,8 @@ public class Movie implements Serializable, Comparable<Movie> {
     private Language language;
 
     @JoinColumn(name = "genre_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     private Genre genreId;
 
     @Column(name = "created")
@@ -318,5 +323,12 @@ public class Movie implements Serializable, Comparable<Movie> {
 
     public String getGenreName() {
         return null == genreId ? "<None>" : (genreId.isEmpty() ? "<None>" : genreId.getName());
+    }
+
+    public static Movie create() {
+        Movie movie = new Movie();
+        movie.setCreated(new Date());
+
+        return movie;
     }
 }

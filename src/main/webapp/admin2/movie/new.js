@@ -21,6 +21,6 @@ function editClick() {
     if (null === id) {
         $("#select-one").show();
     } else {
-        alert("Going to edit: " + id);
+        window.location = "edit.xhtml?id=" + id;
     }
 };

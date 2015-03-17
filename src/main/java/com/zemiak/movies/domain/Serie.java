@@ -1,9 +1,11 @@
 package com.zemiak.movies.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -33,10 +35,12 @@ public class Serie implements Serializable, Comparable<Serie> {
     @SequenceGenerator(name="pk_sequence",sequenceName="data.entity_id_seq", allocationSize=1, initialValue = 30000)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
     @Column(name = "id")
+    @NotNull
     private Integer id;
 
-    @Size(max = 128)
+    @Size(max = 128, min = 1)
     @Column(name = "name")
+    @NotNull
     private String name;
 
     @Size(max = 512)
@@ -44,10 +48,12 @@ public class Serie implements Serializable, Comparable<Serie> {
     private String pictureFileName;
 
     @Column(name = "display_order")
+    @NotNull
     private Integer displayOrder;
 
     @JoinColumn(name = "genre_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     private Genre genreId;
 
     @OneToMany(mappedBy = "serieId")
@@ -180,5 +186,14 @@ public class Serie implements Serializable, Comparable<Serie> {
 
     public String getGenreName() {
         return null == genreId ? "<None>" : (genreId.isEmpty() ? "<None>" : genreId.getName());
+    }
+
+    public static Serie create() {
+        Serie serie = new Serie();
+        serie.setCreated(new Date());
+        serie.setMovieList(new ArrayList<>());
+        serie.setDisplayOrder(9000);
+
+        return serie;
     }
 }
