@@ -1,13 +1,10 @@
 package com.zemiak.movies.service.configuration;
 
+import java.io.Serializable;
 import javax.inject.Singleton;
 
-/**
- *
- * @author vasko
- */
 @Singleton
-public class Configuration {
+public class Configuration implements Serializable {
     private String backendUrl, ffmpeg, imgPath, mailFrom, mailSubject,
             mp4info, mp4tags, path, mailTo, imgServer, playServer;
     private boolean developmentSystem;

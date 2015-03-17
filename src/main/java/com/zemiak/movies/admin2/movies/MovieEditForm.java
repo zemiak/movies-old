@@ -1,15 +1,19 @@
 package com.zemiak.movies.admin2.movies;
 
-import com.zemiak.movies.domain.Genre;
-import com.zemiak.movies.domain.Movie;
-import com.zemiak.movies.domain.Serie;
+import com.zemiak.movies.domain.*;
+import com.zemiak.movies.lookup.CDILookup;
 import com.zemiak.movies.service.GenreService;
+import com.zemiak.movies.service.LanguageService;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.SerieService;
+import com.zemiak.movies.service.configuration.Configuration;
+import com.zemiak.movies.service.description.DescriptionReader;
+import com.zemiak.movies.service.thumbnail.ThumbnailReader;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -18,6 +22,8 @@ import javax.inject.Named;
 public class MovieEditForm implements Serializable {
     private Integer id;
     private Movie bean;
+    private String selectedUrl;
+    private final UrlController urlControl;
 
     @Inject
     private MovieService service;
@@ -28,7 +34,12 @@ public class MovieEditForm implements Serializable {
     @Inject
     private SerieService series;
 
+    @Inject
+    private LanguageService languages;
+
     public MovieEditForm() {
+        urlControl = new UrlController();
+        urlControl.setMovieForm(this);
     }
 
     public Integer getId() {
@@ -109,5 +120,54 @@ public class MovieEditForm implements Serializable {
         }
 
         return bean.getGenreId().getSerieList();
+    }
+
+    public List<Language> getLanguages() {
+        return languages.all();
+    }
+
+    public void setGenreAccordingToSerie(AjaxBehaviorEvent event) {
+        if (null == bean.getGenreId() || bean.getGenreId().isEmpty()) {
+            if (null != bean.getSerieId() && !bean.getSerieId().isEmpty()) {
+                bean.setGenreId(bean.getSerieId().getGenreId());
+            }
+        }
+    }
+
+    public List<UrlDTO> getUrls() {
+        return urlControl.getItems();
+    }
+
+    public String getSelectedUrl() {
+        return selectedUrl;
+    }
+
+    public void setSelectedUrl(String selectedUrl) {
+        this.selectedUrl = selectedUrl;
+    }
+
+    public void changeUrlFromSelection(AjaxBehaviorEvent event) {
+        if (null == bean.getUrl() || bean.getUrl().isEmpty()) {
+            bean.setUrl(selectedUrl);
+
+            if (null == bean.getDescription() || bean.getDescription().trim().isEmpty()) {
+                fetchDescription();
+            }
+        }
+    }
+
+    public void refreshUrlSelection(AjaxBehaviorEvent event) {
+        urlControl.reloadItems();
+    }
+
+    public void fetchDescription() {
+        final DescriptionReader reader = new DescriptionReader();
+        final ThumbnailReader thumbnail = new ThumbnailReader(new CDILookup().lookup(Configuration.class));
+        final String desc = reader.read(bean);
+
+        if (null != desc && !desc.equals(bean.getDescription())) {
+            bean.setDescription(desc);
+            thumbnail.process(bean);
+        }
     }
 }

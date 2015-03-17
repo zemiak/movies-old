@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/templates/edit.xhtml">
+        <f:metadata>
+            <f:viewParam name="id" value="#{languageEditForm.id}" />
+        </f:metadata>
+        
+        <ui:define name="title">
+            <h:outputText value="#{languageEditForm.actionTitle} Language"></h:outputText>
+        </ui:define>
+        
+
+        <ui:define name="body">
+            <div class="panel">
+                <div class="row">
+                    <div class="small-12 columns">
+                        <h3>#{languageEditForm.actionTitle} Language</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">&nbsp;</div>
+
+            <form method="post" jsf:id="languageEditForm" jsf:prependId="false">
+                <div class="row">
+                    <div class="small-2 columns">
+                        <label>Code:
+                            <input type="text" id="id" name="id" 
+                                   jsf:id="id" label="Language Code"
+                                   jsf:value="#{languageEditForm.bean.id}" 
+                                   placeholder="Language Code" />
+                        </label>
+                        <h:message for="id" class="error" />
+                    </div>
+                    
+                    <div class="small-8 columns">
+                        <label>Name:
+                            <input type="text" id="name" name="name" jsf:id="name" 
+                                   jsf:value="${languageEditForm.bean.name}" label="Name"
+                                   placeholder="Enter Language Name" jsf:required="true" />
+                        </label>
+                        <h:message for="name" class="error" />
+                    </div>
+
+                    <div class="small-2 columns">
+                        <label>Display Order:
+                            <input type="number" id="displayOrder" name="displayOrder" 
+                                   jsf:id="displayOrder" label="Display Order"
+                                   jsf:value="#{languageEditForm.bean.displayOrder}" 
+                                   placeholder="Enter Display Order" />
+                        </label>
+                        <h:message for="number" class="error" />
+                    </div>
+                </div>
+                
+                <div class="row">&nbsp;</div>
+                
+                <div class="row">
+                    <div class="small-12 columns">
+                        <ul class="button-group">
+                            <li><a href="index.xhtml" class="small button secondary">Close</a></li>
+                            <li><input type="submit" class="small button" jsf:value="Save &amp; Close" jsf:action="#{languageEditForm.save()}" /></li>
+                            <li><a class="small button alert" href="javascript:$('#removeButton').click();" data-confirm="" type="button">Remove</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <button jsf:id="removeButton" id="removeButton" jsf:action="#{languageEditForm.remove()}" style="display:none;" />
+            </form>
+        </ui:define>
+    </ui:composition>
+</html>

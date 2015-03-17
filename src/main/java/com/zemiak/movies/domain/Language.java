@@ -3,16 +3,7 @@ package com.zemiak.movies.domain;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -62,7 +53,7 @@ public class Language implements Serializable {
 
     @OneToMany(mappedBy = "language")
     private List<Movie> movieList2;
-    
+
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
@@ -182,5 +173,13 @@ public class Language implements Serializable {
 
     public boolean isNone() {
         return "  ".equals(id);
+    }
+
+    public static Language create() {
+        Language lang = new Language();
+        lang.setCreated(new Date());
+        lang.setDisplayOrder(9000);
+
+        return lang;
     }
 }

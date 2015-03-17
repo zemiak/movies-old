@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/templates/edit.xhtml">
         <f:metadata>
@@ -15,7 +16,6 @@
             <h:outputText value="#{movieEditForm.actionTitle} Movie"></h:outputText>
         </ui:define>
         
-
         <ui:define name="body">
             <div class="panel">
                 <div class="row">
@@ -29,16 +29,101 @@
 
             <form method="post" jsf:id="movieEditForm" jsf:prependId="false">
                 <div class="row">
-                    <div class="small-8 columns">
+                    <div class="small-6 columns">
                         <label>Name:
                             <input type="text" id="name" name="name" jsf:id="name" 
                                    jsf:value="${movieEditForm.bean.name}" label="Name"
-                                   placeholder="Enter Movie Name" jsf:required="true" />
+                                   placeholder="Enter Movie Name" jsf:required="true">
+                                <f:ajax listener="#{movieEditForm.refreshUrlSelection}" render="urls" />
+                            </input>
                         </label>
                         <h:message for="name" class="error" />
                     </div>
-
-                    <div class="small-4 columns">
+                    
+                    <div class="small-6 columns">
+                        <label>Original Name:
+                            <input type="text" id="originalName" name="originalName" jsf:id="originalName" 
+                                   jsf:value="${movieEditForm.bean.originalName}" label="Original Name"
+                                   placeholder="Enter Original Name">
+                                <f:ajax listener="#{movieEditForm.refreshUrlSelection}" render="urls" />
+                            </input>
+                        </label>
+                        <h:message for="originalName" class="error" />
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="small-6 columns">
+                        <label>Picture Filename:
+                            <input type="text" id="pictureFileName" name="pictureFileName" 
+                                   jsf:id="pictureFileName" label="Picture Filename"
+                                   jsf:value="#{movieEditForm.bean.pictureFileName}" 
+                                   placeholder="Enter Picture Filename" />
+                        </label>
+                        <h:message for="pictureFileName" class="error" />
+                    </div>
+                    
+                    <div class="small-6 columns">
+                        <label>Filename:
+                            <input type="text" id="fileName" name="fileName" 
+                                   jsf:id="fileName" label="Filename"
+                                   jsf:value="#{movieEditForm.bean.fileName}" 
+                                   placeholder="Enter Filename" />
+                        </label>
+                        <h:message for="fileName" class="error" />
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="small-6 columns">
+                        <label>Serie
+                            <select jsf:id="serie" id="serie" jsf:value="#{movieEditForm.bean.serieId}" size="1">
+                                <f:selectItems value="#{movieEditForm.series}" var="serie" itemLabel="#{serie.name}" />
+                                <f:ajax listener="#{movieEditForm.setGenreAccordingToSerie}" render="genre"  />
+                            </select>
+                        </label>
+                        <h:message for="serie" class="error" />
+                    </div>
+                    
+                    <div class="small-6 columns">
+                        <label>Genre:
+                            <select jsf:id="genre" id="genre" jsf:value="#{movieEditForm.bean.genreId}" size="1">
+                                <f:selectItems value="#{movieEditForm.genres}" var="genre" itemLabel="#{genre.name}" />
+                            </select>
+                        </label>
+                        <h:message for="genre" class="error" />
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="small-3 columns">
+                        <label>Language
+                            <select jsf:id="language" id="language" jsf:value="#{movieEditForm.bean.language}" size="1">
+                                <f:selectItems value="#{movieEditForm.languages}" var="language" itemLabel="#{language.name}" />
+                            </select>
+                        </label>
+                        <h:message for="language" class="error" />
+                    </div>
+                    
+                    <div class="small-3 columns">
+                        <label>Original Language
+                            <select jsf:id="originalLanguage" id="originalLanguage" jsf:value="#{movieEditForm.bean.originalLanguage}" size="1">
+                                <f:selectItems value="#{movieEditForm.languages}" var="language" itemLabel="#{language.name}" />
+                            </select>
+                        </label>
+                        <h:message for="originalLanguage" class="error" />
+                    </div>
+                    
+                    <div class="small-3 columns">
+                        <label>Subtitles
+                            <select jsf:id="subtitles" id="subtitles" jsf:value="#{movieEditForm.bean.subtitles}" size="1">
+                                <f:selectItems value="#{movieEditForm.languages}" var="language" itemLabel="#{language.name}" />
+                            </select>
+                        </label>
+                        <h:message for="subtitles" class="error" />
+                    </div>
+                    
+                    <div class="small-3 columns">
                         <label>Display Order:
                             <input type="number" id="displayOrder" name="displayOrder" 
                                    jsf:id="displayOrder" label="Display Order"
@@ -50,27 +135,38 @@
                 </div>
                 
                 <div class="row">
-                    <div class="small-12 columns">
-                        <label>Picture Filename:
-                            <input type="text" id="pictureFileName" name="pictureFileName" 
-                                   jsf:id="pictureFileName" label="Picture Filename"
-                                   jsf:value="#{movieEditForm.bean.pictureFileName}" 
-                                   placeholder="Enter Picture Filename" />
+                    <div class="small-6 columns">
+                        <label>URL:
+                            <input type="text" id="url" name="url" jsf:id="url" 
+                                   jsf:value="${movieEditForm.bean.url}" label="URL"
+                                   placeholder="Enter IMDB or CSFD URL" />
                         </label>
-                        <h:message for="pictureFileName" class="error" />
+                        <h:message for="url" class="error" />
+                    </div>
+                    
+                    <div class="small-6 columns">
+                        <label>Available URLs:
+                            <select jsf:id="urls" id="urls" size="1" jsf:value="#{movieEditForm.selectedUrl}">
+                                <f:selectItems value="#{movieEditForm.urls}" var="item" itemLabel="#{item.dbName}: #{item.description}" />
+                                <f:ajax listener="#{movieEditForm.changeUrlFromSelection}" render="url"  />
+                            </select>
+                        </label>
+                        <h:message for="urls" class="error" />
                     </div>
                 </div>
                 
                 <div class="row">
                     <div class="small-12 columns">
-                        <label>Genre:
-                            <select jsf:id="genre" id="genre" jsf:value="#{movieEditForm.bean.genreId}" size="1">
-                                <f:selectItems value="#{movieEditForm.genres}" var="genre" itemLabel="#{genre.name}" />
-                            </select>
-                        </label>
-                        <h:message for="genre" class="error" />
+                        <textarea type="text" id="description" name="description" jsf:id="description" 
+                                jsf:value="${movieEditForm.bean.description}" label="Description"
+                                placeholder="Enter Description" rows="4" />
+                        <h:message for="description" class="error" />
                     </div>
                 </div>
+                
+                <!-- name, original changed: refresh a list of suggested URLs
+                     action: fetch description and picture if url has changed
+                -->
                 
                 <div class="row">&nbsp;</div>
                 
