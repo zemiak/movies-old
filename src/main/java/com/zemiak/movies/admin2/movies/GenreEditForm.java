@@ -3,10 +3,10 @@ package com.zemiak.movies.admin2.movies;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.service.GenreService;
 import java.io.Serializable;
+import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.ws.rs.NotFoundException;
 
 @SessionScoped
 @Named("genreEditForm")
@@ -38,7 +38,7 @@ public class GenreEditForm implements Serializable {
         bean = service.find(id);
 
         if (null == bean) {
-            throw new NotFoundException();
+            JsfMessages.addErrorMessage("Cannot find genre #" + id);
         }
     }
 
@@ -52,28 +52,31 @@ public class GenreEditForm implements Serializable {
 
     public String save() {
         service.save(bean);
+        JsfMessages.addSuccessMessage("The genre has been saved");
 
+        return close();
+    }
+
+    public String close() {
         return "index";
     }
 
     public String remove() {
-        if (-1 == id) {
-            throw new NotFoundException();
+        try {
+            service.remove(id);
+            JsfMessages.addSuccessMessage("The genre has been deleted");
+        } catch (EJBException ex) {
+            JsfMessages.addErrorMessage(ex);
         }
 
-        if (! bean.getSerieList().isEmpty()) {
-            throw new IllegalStateException("They are series existing with this genre.");
-        }
-
-        if (! bean.getMovieList().isEmpty()) {
-            throw new IllegalStateException("They are movies existing with this genre.");
-        }
-
-        service.remove(bean.getId());
-        return "index";
+        return close();
     }
 
     public String getActionTitle() {
-        return (null == id || -1 == id) ? "Create" : "Edit";
+        return isNew() ? "Create" : "Edit";
+    }
+
+    public boolean isNew() {
+        return null == id || -1 == id;
     }
 }

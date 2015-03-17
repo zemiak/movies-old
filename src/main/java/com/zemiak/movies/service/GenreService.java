@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -47,7 +48,17 @@ public class GenreService {
     }
 
     public void remove(Integer entityId) {
-        em.remove(em.find(Genre.class, entityId));
+        Genre bean = em.find(Genre.class, entityId);
+
+        if (! bean.getSerieList().isEmpty()) {
+            throw new ValidationException("They are series existing with this genre.");
+        }
+
+        if (! bean.getMovieList().isEmpty()) {
+            throw new ValidationException("They are movies existing with this genre.");
+        }
+
+        em.remove(bean);
     }
 
     public void clearCache(@Observes CacheClearEvent event) {

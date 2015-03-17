@@ -26,7 +26,6 @@
             </div>
             
             <div id="select-one" data-alert="" class="alert-box alert" style="display: none;">
-
                 <a href="#" class="close">&times;</a>
             </div>
             
@@ -40,6 +39,7 @@
                                    jsf:value="${genreEditForm.bean.name}" label="Name"
                                    placeholder="Enter Genre Name" jsf:required="true" />
                         </label>
+                        <h:message for="name" class="error" />
                     </div>
 
                     <div class="small-4 columns">
@@ -49,6 +49,7 @@
                                    jsf:value="#{genreEditForm.bean.displayOrder}" 
                                    placeholder="Enter Display Order" />
                         </label>
+                        <h:message for="number" class="error" />
                     </div>
                 </div>
                 
@@ -60,6 +61,7 @@
                                    jsf:value="#{genreEditForm.bean.pictureFileName}" 
                                    placeholder="Enter Picture Filename" />
                         </label>
+                        <h:message for="pictureFileName" class="error" />
                     </div>
                 </div>
                 
@@ -68,15 +70,15 @@
                 <div class="row">
                     <div class="small-12 columns">
                         <ul class="button-group">
-                            <li><a href="javascript:closeClick();" class="small button secondary">Close</a></li>
+                            <li><a href="index.xhtml" class="small button secondary">Close</a></li>
                             <li><input type="submit" class="small button" jsf:value="Save &amp; Close" jsf:action="#{genreEditForm.save()}" /></li>
-                            <li><input type="button" class="small button alert" data-confirm="" jsf:value="Remove" jsf:action="#{genreEditForm.remove()}" /></li>
+                            <li><a class="small button alert" href="javascript:$('#removeButton').click();" data-confirm="" type="button">Remove</a></li>
                         </ul>
                     </div>
                 </div>
+                
+                <button jsf:id="removeButton" id="removeButton" jsf:action="#{genreEditForm.remove()}" style="display:none;" />
             </form>
-
-            <script type="text/javascript" src="edit.js"></script>
         </ui:define>
     </ui:composition>
 </html>
