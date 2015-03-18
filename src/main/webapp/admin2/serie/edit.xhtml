@@ -9,6 +9,7 @@
     <ui:composition template="/templates/edit.xhtml">
         <f:metadata>
             <f:viewParam name="id" value="#{serieEditForm.id}" />
+            <f:viewAction action="#{serieEditForm.check}" />
         </f:metadata>
         
         <ui:define name="title">

@@ -27,12 +27,21 @@ public class LanguageEditForm implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
 
+    public String check() {
         if (isNew()) {
             create();
         } else {
             refresh();
         }
+
+        if (null == bean) {
+            JsfMessages.addErrorMessage("Cannot find language #" + id);
+            return "index";
+        }
+
+        return null;
     }
 
     private void refresh() {

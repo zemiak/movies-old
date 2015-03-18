@@ -48,12 +48,21 @@ public class MovieEditForm implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
 
-        if (-1 == id) {
+    public String check() {
+        if (isNew()) {
             create();
         } else {
             refresh();
         }
+
+        if (null == bean) {
+            JsfMessages.addErrorMessage("Cannot find movie #" + id);
+            return "index";
+        }
+
+        return null;
     }
 
     private void refresh() {

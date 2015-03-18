@@ -10,6 +10,7 @@
     <ui:composition template="/templates/edit.xhtml">
         <f:metadata>
             <f:viewParam name="id" value="#{movieEditForm.id}" />
+            <f:viewAction action="#{movieEditForm.check}" />
         </f:metadata>
         
         <ui:define name="title">

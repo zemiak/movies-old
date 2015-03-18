@@ -30,22 +30,27 @@ public class SerieEditForm implements Serializable {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-
-        if (-1 == id) {
+    public String check() {
+        if (isNew()) {
             create();
         } else {
             refresh();
         }
+
+        if (null == bean) {
+            JsfMessages.addErrorMessage("Cannot find serie #" + id);
+            return "index";
+        }
+
+        return null;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     private void refresh() {
         bean = service.find(id);
-
-        if (null == bean) {
-            JsfMessages.addErrorMessage("Cannot find serie #" + id);
-        }
     }
 
     public Serie getBean() {
