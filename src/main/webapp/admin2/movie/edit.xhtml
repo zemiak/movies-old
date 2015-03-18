@@ -147,8 +147,8 @@
                     <div class="small-6 columns">
                         <label>Available URLs:
                             <select jsf:id="urls" id="urls" size="1" jsf:value="#{movieEditForm.selectedUrl}">
-                                <f:selectItems value="#{movieEditForm.urls}" var="item" itemLabel="#{item.dbName}: #{item.description}" />
-                                <f:ajax listener="#{movieEditForm.changeUrlFromSelection}" render="url"  />
+                                <f:selectItems value="#{movieEditForm.urls}" var="oneUrl" itemLabel="#{oneUrl.dbName}: #{oneUrl.description}" itemValue="#{oneUrl.url}" />
+                                <f:ajax listener="#{movieEditForm.changeUrlFromSelection}" render="url description" />
                             </select>
                         </label>
                         <h:message for="urls" class="error" />

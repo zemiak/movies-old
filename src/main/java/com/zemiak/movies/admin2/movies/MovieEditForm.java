@@ -22,8 +22,8 @@ import javax.inject.Named;
 public class MovieEditForm implements Serializable {
     private Integer id;
     private Movie bean;
-    private String selectedUrl;
     private final UrlController urlControl;
+    private String selectedUrl;
 
     @Inject
     private MovieService service;
@@ -66,6 +66,14 @@ public class MovieEditForm implements Serializable {
 
     public Movie getBean() {
         return bean;
+    }
+
+    public String getSelectedUrl() {
+        return selectedUrl;
+    }
+
+    public void setSelectedUrl(String selectedUrl) {
+        this.selectedUrl = selectedUrl;
     }
 
     private void create() {
@@ -138,21 +146,12 @@ public class MovieEditForm implements Serializable {
         return urlControl.getItems();
     }
 
-    public String getSelectedUrl() {
-        return selectedUrl;
-    }
-
-    public void setSelectedUrl(String selectedUrl) {
-        this.selectedUrl = selectedUrl;
-    }
-
     public void changeUrlFromSelection(AjaxBehaviorEvent event) {
         if (null == bean.getUrl() || bean.getUrl().isEmpty()) {
             bean.setUrl(selectedUrl);
 
-            if (null == bean.getDescription() || bean.getDescription().trim().isEmpty()) {
-                fetchDescription();
-            }
+            fetchDescription();
+            fetchPicture();
         }
     }
 
@@ -160,14 +159,16 @@ public class MovieEditForm implements Serializable {
         urlControl.reloadItems();
     }
 
-    public void fetchDescription() {
+    private void fetchDescription() {
         final DescriptionReader reader = new DescriptionReader();
-        final ThumbnailReader thumbnail = new ThumbnailReader(new CDILookup().lookup(Configuration.class));
+
         final String desc = reader.read(bean);
 
-        if (null != desc && !desc.equals(bean.getDescription())) {
-            bean.setDescription(desc);
-            thumbnail.process(bean);
-        }
+        bean.setDescription(desc);
+    }
+
+    private void fetchPicture() {
+        final ThumbnailReader thumbnail = new ThumbnailReader(new CDILookup().lookup(Configuration.class));
+        thumbnail.process(bean);
     }
 }

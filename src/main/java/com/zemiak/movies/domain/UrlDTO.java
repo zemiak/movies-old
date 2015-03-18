@@ -1,5 +1,7 @@
 package com.zemiak.movies.domain;
 
+import java.util.Objects;
+
 /**
  *
  * @author vasko
@@ -50,5 +52,27 @@ public class UrlDTO {
 
     public void setMovieName(String movieName) {
         this.movieName = movieName;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 31 * hash + Objects.hashCode(this.url);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final UrlDTO other = (UrlDTO) obj;
+        if (!Objects.equals(this.url, other.url)) {
+            return false;
+        }
+        return true;
     }
 }
