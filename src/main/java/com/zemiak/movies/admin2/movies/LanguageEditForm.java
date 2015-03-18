@@ -30,37 +30,22 @@ public class LanguageEditForm implements Serializable {
     }
 
     public String check() {
-        if (isNew()) {
-            create();
-        } else {
-            refresh();
-        }
+        bean = isNew() ? Language.create() : service.find(id);
 
         if (null == bean) {
             JsfMessages.addErrorMessage("Cannot find language #" + id);
-            return "index";
-        }
-
-        return null;
-    }
-
-    private void refresh() {
-        bean = service.find(id);
-
-        if (null == bean) {
-            JsfMessages.addErrorMessage("Cannot find language #" + id);
+            return close();
         }
 
         code = bean.getId();
+
+        return null;
     }
 
     public Language getBean() {
         return bean;
     }
 
-    private void create() {
-        bean = Language.create();
-    }
 
     public String save() {
         bean.setId(code);

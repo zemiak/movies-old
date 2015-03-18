@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/templates/edit.xhtml">
+        <f:metadata>
+            <f:viewParam name="id" value="#{batchLogEditForm.id}" />
+            <f:viewAction action="#{batchLogEditForm.check}" />
+        </f:metadata>
+        
+        <ui:define name="title">
+            <h:outputText value="View Log"></h:outputText>
+        </ui:define>
+        
+
+        <ui:define name="body">
+            <div class="panel">
+                <div class="row">
+                    <div class="small-12 columns">
+                        <h3>View Log</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">&nbsp;</div>
+
+            <form method="post" jsf:id="genreEditForm" jsf:prependId="false">
+                <div class="row">
+                    <div class="small-6 columns">
+                        <label>Id:
+                            <input type="text" id="id" name="id" jsf:id="id" 
+                                   jsf:value="${batchLogEditForm.bean.id}" label="Id"
+                                   readonly="true" />
+                        </label>
+                        <h:message for="id" class="error" />
+                    </div>
+
+                    <div class="small-6 columns">
+                        <label>Created:
+                            <input type="date" id="created" name="created" jsf:id="created" 
+                                   jsf:value="${batchLogEditForm.bean.created}" label="Created"
+                                   readonly="true" />
+                        </label>
+                        <h:message for="created" class="error" />
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="small-12 columns">
+                        <label>Batch Log Text:
+                            <textarea type="text" id="text" name="text" 
+                                   jsf:id="text" label="Batch Log Text"
+                                   jsf:value="#{batchLogEditForm.bean.text}" 
+                                   readonly="true" rows="14" />
+                        </label>
+                        <h:message for="text" class="error" />
+                    </div>
+                </div>
+                
+                <div class="row">&nbsp;</div>
+                
+                <div class="row">
+                    <div class="small-12 columns">
+                        <ul class="button-group">
+                            <li><a href="index.xhtml" class="small button secondary">Close</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
+        </ui:define>
+    </ui:composition>
+</html>

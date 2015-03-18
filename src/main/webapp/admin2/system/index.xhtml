@@ -3,32 +3,106 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/templates/grid.xhtml">
         <ui:define name="title">
             <h:outputText value="System"></h:outputText>
         </ui:define>
-
+        
         <ui:define name="body">
-            <h3>System</h3>
+            <div class="panel">
+                <div class="row">
+                    <div class="small-12 columns">
+                        <h3>System</h3>
+                    </div>
+                </div>
+            </div>
             
             <div id="select-one" data-alert="" class="alert-box alert" style="display: none;">
                 Please, select exactly one row.
                 <a href="#" class="close">&times;</a>
             </div>
+            
+            <form method="post" jsf:id="systemForm" jsf:prependId="false">
+                <div class="row">
+                    <div class="small-6 columns">
+                        <label>New Movies:
+                            <input type="text" id="newMovies" name="newMovies" jsf:id="newMovies" 
+                                   jsf:value="${systemForm.newMovies}" label="New Movies"
+                                   readonly="true" />
+                        </label>
+                    </div>
 
-            <table id="grid" class="display" cellspacing="0" width="100%">
-                <thead> <tr>
-                    <th>Id</th> <th>Name</th> <th>Serie</th> <th>Genre</th> <th>Order</th> <th>Created</th>
-                </tr> </thead>
-            </table>
+                    <div class="small-6 columns">
+                        <label>All Movies:
+                            <input type="text" id="allMovies" name="allMovies" jsf:id="allMovies" 
+                                   jsf:value="${systemForm.allMovies}" label="New Movies"
+                                   readonly="true" />
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="small-6 columns">
+                        <label>Genres:
+                            <input type="text" id="genres" name="genres" jsf:id="genres" 
+                                   jsf:value="${systemForm.genres}" label="Genres"
+                                   readonly="true" />
+                        </label>
+                    </div>
 
-            <ul class="button-group" style="padding-left: 1em;">
-                <li><a href="javascript:editClick();" class="small button">Edit</a></li>
-                <li><a data-confirm="" href="javascript:removeClick();" class="small button">Remove</a></li>
-            </ul>
+                    <div class="small-6 columns">
+                        <label>Series:
+                            <input type="text" id="series" name="series" jsf:id="series" 
+                                   jsf:value="${systemForm.series}" label="Series"
+                                   readonly="true" />
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="small-6 columns">
+                        <label>Laguages:
+                            <input type="text" id="languages" name="languages" jsf:id="languages" 
+                                   jsf:value="${systemForm.languages}" label="Laguages"
+                                   readonly="true" />
+                        </label>
+                    </div>
 
+                    <div class="small-6 columns">
+                        <label>Batch Logs:
+                            <input type="text" id="logs" name="logs" jsf:id="logs" 
+                                   jsf:value="${systemForm.logs}" label="Logs"
+                                   readonly="true" />
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="row">&nbsp;</div>
+                
+                <div class="row">
+                    <div class="small-12 columns">
+                        <ul class="button-group">
+                            <li><a href="javascript:editClick();" class="small button">View Log</a></li>
+                            <li><input type="submit" class="small button" jsf:value="Clear Cache" jsf:action="#{systemForm.clearCache()}" /></li>
+                            <li><input type="submit" class="small button" jsf:value="Import New Movies" jsf:action="#{systemForm.runImport()}" /></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="small-12 columns">
+                        <table id="grid" class="display" cellspacing="0" width="100%">
+                            <thead> <tr>
+                                <th>Id</th> <th>Created</th>
+                            </tr> </thead>
+                        </table>
+                    </div>
+                </div>
+            </form>
+            
             <script type="text/javascript" src="index.js"></script>
         </ui:define>
     </ui:composition>

@@ -51,26 +51,14 @@ public class MovieEditForm implements Serializable {
     }
 
     public String check() {
-        if (isNew()) {
-            create();
-        } else {
-            refresh();
-        }
+        bean = isNew() ? Movie.create() : service.find(id);
 
         if (null == bean) {
             JsfMessages.addErrorMessage("Cannot find movie #" + id);
-            return "index";
+            return close();
         }
 
         return null;
-    }
-
-    private void refresh() {
-        bean = service.find(id);
-
-        if (null == bean) {
-            JsfMessages.addErrorMessage("Cannot find movie #" + id);
-        }
     }
 
     public Movie getBean() {
@@ -83,10 +71,6 @@ public class MovieEditForm implements Serializable {
 
     public void setSelectedUrl(String selectedUrl) {
         this.selectedUrl = selectedUrl;
-    }
-
-    private void create() {
-        bean = Movie.create();
     }
 
     public String save() {

@@ -31,15 +31,11 @@ public class SerieEditForm implements Serializable {
     }
 
     public String check() {
-        if (isNew()) {
-            create();
-        } else {
-            refresh();
-        }
+        bean = isNew() ? Serie.create() : service.find(id);
 
         if (null == bean) {
             JsfMessages.addErrorMessage("Cannot find serie #" + id);
-            return "index";
+            return close();
         }
 
         return null;
@@ -49,16 +45,8 @@ public class SerieEditForm implements Serializable {
         this.id = id;
     }
 
-    private void refresh() {
-        bean = service.find(id);
-    }
-
     public Serie getBean() {
         return bean;
-    }
-
-    private void create() {
-        bean = Serie.create();
     }
 
     public String save() {

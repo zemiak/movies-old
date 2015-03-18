@@ -29,34 +29,18 @@ public class GenreEditForm implements Serializable {
     }
 
     public String check() {
-        if (isNew()) {
-            create();
-        } else {
-            refresh();
-        }
+        bean = isNew() ? Genre.create() : service.find(id);
 
         if (null == bean) {
             JsfMessages.addErrorMessage("Cannot find genre #" + id);
-            return "index";
+            return close();
         }
 
         return null;
     }
 
-    private void refresh() {
-        bean = service.find(id);
-
-        if (null == bean) {
-            JsfMessages.addErrorMessage("Cannot find genre #" + id);
-        }
-    }
-
     public Genre getBean() {
         return bean;
-    }
-
-    private void create() {
-        bean = Genre.create();
     }
 
     public String save() {
