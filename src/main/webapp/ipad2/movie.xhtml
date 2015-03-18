@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/templates/ipad.xhtml">
+        <f:metadata>
+            <f:viewParam name="id" value="#{movieWebService.id}" />
+            <f:viewAction action="#{movieWebService.check}" />
+        </f:metadata>
+        
+        <ui:define name="title">#{movieWebService.movie.name}</ui:define>
+        <ui:define name="header">#{movieWebService.movie.name}</ui:define>
+
+        <ui:define name="body">
+            <div class="row">
+                <div class="small-1 columns">
+                    <a class="movie-box" href="javascript:window.history.back(-1);">
+                        <i class="fi-arrow-left movies-back-icon" style="font-size: 4em;"></i>
+                    </a>
+                    
+                    <a href="javascript:window.open('${movieWebService.movie.url}');"
+                        class="small button" id="url" name="url"
+                        jsf:rendered="#{!movieWebService.movie.urlEmpty}">
+                        Info
+                    </a>
+                </div>
+                
+                <div class="small-11 columns">
+                    <center>
+                        <video id="my_video" controls=""
+                               preload="auto" poster="${configWebService.imgServer}movie/${movieWebService.movie.pictureFileName}">
+                            <source src="${configWebService.playServer}?id=${movieWebService.movie.id}" type='video/mp4'></source>
+                        </video>
+                    </center>
+                </div>
+            </div>
+            
+            <form jsf:id="movieView" jsf:prependId="false">
+                <div class="row" jsf:rendered="#{!movieWebService.movie.descriptionEmpty}">
+                    <div class="small-12 columns">
+                        <textarea jsf:value="#{movieWebService.movie.description}" readonly="true" rows="4" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="small-4 columns">
+                        <label>Genre</label>
+                        <input type="text" value="${movieWebService.movie.genreId.name}" readonly="true" />
+                    </div>
+
+                    <div class="small-4 columns">
+                        <label>Serie</label>
+                        <input type="text" value="${movieWebService.movie.serieName}" readonly="true" />
+                    </div>
+
+                    <div class="small-4 columns">
+                        <label>Language</label>
+                        <input type="text" value="${movieWebService.movie.languageName}" readonly="true" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="small-4 columns">
+                        <label>Original Language</label>
+                        <input type="text" value="${movieWebService.movie.originalLanguageName}" readonly="true" />
+                    </div>
+
+                    <div class="small-4 columns">
+                        <label>Subtitles</label>
+                        <input type="text" value="${movieWebService.movie.subtitlesName}" readonly="true" />
+                    </div>
+
+                    <div class="small-4 columns">
+                        <label>Original Name</label>
+                        <input type="text" value="${movieWebService.movie.originalName}" readonly="true" />
+                    </div>
+                </div>
+            </form>
+        </ui:define>
+    </ui:composition>
+</html>

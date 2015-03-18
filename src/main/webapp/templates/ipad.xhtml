@@ -7,7 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:jsf="http://java.sun.com/jsf">
 
-    <h:head>
+    <head jsf:id="head">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title><ui:insert name="title">Default Title</ui:insert></title>
@@ -15,23 +15,52 @@
         <link href="/movies/js/libs/foundation/css/normalize.css" rel="stylesheet" />
         <link href="/movies/js/libs/foundation/css/foundation.css" rel="stylesheet" />
         <link href="/movies/js/libs/foundation/icons/foundation-icons.css" rel="stylesheet" />
-        
+        <link href="/movies/css/movies.css" rel="stylesheet" />
+
         <script type="text/javascript" src="/movies/js/libs/foundation/js/vendor/modernizr.js"></script>
         <script type="text/javascript" src="/movies/js/libs/foundation/js/vendor/jquery.js"></script>
         <script type="text/javascript" src="/movies/js/libs/foundation/js/vendor/fastclick.js"></script>
         <script type="text/javascript" src="/movies/js/libs/foundation/js/foundation.min.js"></script>
-        <script type="text/javascript" src="/movies/js/libs/foundation/js/confirm_with_reveal.js"></script>
         <script type="text/javascript" src="/movies/js/foundation.alert.js"></script>
-    </h:head>
+        
+        <script type="text/javascript" src="/movies/js/ipad-search.js"></script>
+    </head>
 
     <body jsf:id="body">
         <h:messages errorClass="alert-box alert" infoClass="alert-box success" warnClass="alert-box warning"/>
         
+        <div class="panel small-panel">
+            <div class="row">
+                <div class="small-4 columns">
+                    <h3><ui:insert name="header">Default Header</ui:insert></h3>
+                </div>
+                
+                <div class="small-5 columns">
+                    <input type="text" placeholder="Search for..." />
+                </div>
+                
+                <div class="small-3 columns">
+                    <div class="icon-bar small three-up" role="navigation">
+                        <a class="item small-icon-anchor" role="button" tabindex="0" aria-label="home" href="#" onclick="javascript:searchClick();">
+                            <i class="fi-filter small-icon"></i>
+                        </a>
+                        
+                        <a class="item small-icon-anchor" role="button" tabindex="0" aria-label="home" href="/movies/ipad2/index.xhtml">
+                            <i class="fi-home small-icon"></i>
+                        </a>
+
+                        <a class="item small-icon-anchor" role="button" tabindex="1" aria-label="system" href="/movies/admin2/system/index.xhtml">
+                            <i class="fi-widget small-icon"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <ui:insert name="body"/>
-        
+
         <script>
             $(document).foundation();
-            $(document).confirmWithReveal();
         </script>
     </body>
 </html>

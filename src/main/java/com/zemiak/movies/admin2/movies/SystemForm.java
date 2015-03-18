@@ -22,10 +22,6 @@ public class SystemForm implements Serializable {
     public SystemForm() {
     }
 
-    public String close() {
-        return "index";
-    }
-
     public Integer getGenres() {
         return genres.all().size();
     }
