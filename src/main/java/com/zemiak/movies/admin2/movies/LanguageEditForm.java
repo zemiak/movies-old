@@ -13,6 +13,7 @@ import javax.inject.Named;
 public class LanguageEditForm implements Serializable {
     private String id;
     private Language bean;
+    private String code;
 
     @Inject
     private LanguageService service;
@@ -40,6 +41,8 @@ public class LanguageEditForm implements Serializable {
         if (null == bean) {
             JsfMessages.addErrorMessage("Cannot find language #" + id);
         }
+
+        code = bean.getId();
     }
 
     public Language getBean() {
@@ -51,6 +54,7 @@ public class LanguageEditForm implements Serializable {
     }
 
     public String save() {
+        bean.setId(code);
         service.save(bean);
         JsfMessages.addSuccessMessage("The language has been saved");
 
@@ -77,6 +81,14 @@ public class LanguageEditForm implements Serializable {
     }
 
     public boolean isNew() {
-        return null == id || id.isEmpty() || id.equals("-1");
+        return "-1".equals(id);
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }
