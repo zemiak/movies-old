@@ -36,12 +36,12 @@
                 </div>
                 
                 <div class="small-5 columns">
-                    <input type="text" placeholder="Search for..." />
+                    <input type="text" id="query" name="query" placeholder="Search for..." onkeyup="javascript:searchKeyUp(e);" />
                 </div>
                 
                 <div class="small-3 columns">
                     <div class="icon-bar small three-up" role="navigation">
-                        <a class="item small-icon-anchor" role="button" tabindex="0" aria-label="home" href="#" onclick="javascript:searchClick();">
+                        <a class="item small-icon-anchor" role="button" tabindex="0" aria-label="home" href="javascript:searchClick();">
                             <i class="fi-filter small-icon"></i>
                         </a>
                         

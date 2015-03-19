@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/templates/iphone.xhtml">
+        <f:metadata>
+            <f:viewParam name="id" value="#{genreWebService.id}" />
+            <f:viewAction action="#{genreWebService.check}" />
+        </f:metadata>
+        
+        <ui:define name="title">#{genreWebService.bean.name}</ui:define>
+        
+        <ui:define name="body">
+            <div class="toolbar">
+                <h1 id="pageTitle"></h1>
+                <a class="button leftButton" href="javascript:window.history.back()">Back</a>
+            </div>
+            
+            <ul id="main" title="#{genreWebService.bean.name}" selected="true">
+                <ui:repeat var="item" value="#{serieWebService.byGenreId}">
+                    <li>
+                        <img src="#{configWebService.imgServer}serie/#{item.pictureFileName}" align="left" class="movies-thumbnail" />
+                        <a href="serie.xhtml?id=#{item.id}" target="_self">*#{item.name}</a>
+                    </li>
+                </ui:repeat>
+                
+                <ui:repeat var="item" value="#{movieWebService.byGenreId}">
+                    <li>
+                        <img src="#{configWebService.imgServer}movie/#{item.pictureFileName}" align="left" class="movies-thumbnail" />
+                        <a href="#{configWebService.playServer}?id=#{item.id}" target="_self">#{item.name}</a>
+                    </li>
+                </ui:repeat>
+            </ul>
+        </ui:define>
+    </ui:composition>
+</html>

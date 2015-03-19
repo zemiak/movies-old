@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/templates/iphone.xhtml">
+        <f:metadata>
+            <f:viewParam name="query" value="#{searchWebService.query}" />
+            <f:viewParam name="months" value="#{searchWebService.query}" />
+            <f:viewAction action="#{searchWebService.search}" />
+        </f:metadata>
+        
+        <ui:define name="title">#{searchWebService.title}</ui:define>
+        
+        <ui:define name="body">
+            <div class="toolbar">
+                <h1 id="pageTitle"></h1>
+                <a class="button leftButton" href="index.xhtml">Back</a>
+            </div>
+            
+            <ul id="main" title="#{searchWebService.title}" selected="true">
+                <ui:repeat var="item" value="#{searchWebService.series}">
+                    <li>
+                        <img src="#{configWebService.imgServer}serie/#{item.pictureFileName}" align="left" class="movies-thumbnail" />
+                        <a href="serie.xhtml?id=#{item.id}" target="_self">*#{item.name}</a>
+                    </li>
+                </ui:repeat>
+                
+                <ui:repeat var="item" value="#{searchWebService.movies}">
+                    <li>
+                        <img src="#{configWebService.imgServer}movie/#{item.pictureFileName}" align="left" class="movies-thumbnail" />
+                        <a href="#{configWebService.playServer}?id=#{item.id}" target="_self">#{item.name}</a>
+                    </li>
+                </ui:repeat>
+            </ul>
+        </ui:define>
+    </ui:composition>
+</html>
