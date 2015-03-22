@@ -2,6 +2,7 @@ package com.zemiak.movies.batch.metadata;
 
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.service.description.DescriptionReader;
 import java.util.logging.Level;
 
 /**
@@ -10,6 +11,7 @@ import java.util.logging.Level;
  */
 public class MovieMetadata {
     private static final BatchLogger LOG = BatchLogger.getLogger(MovieMetadata.class.getName());
+    private static final DescriptionReader DESCRIPTIONS = new DescriptionReader();
 
     private String encoder;
     private String name;
@@ -121,6 +123,14 @@ public class MovieMetadata {
         if (commentsAreEmpty && movie.isDescriptionEmpty() && !movie.isUrlEmpty()) {
             if (debug) {
                 LOG.log(Level.INFO, "{0}: metadata and movie comments empty, comments URL not. Updating.", movie.getFileName());
+            }
+
+            return true;
+        }
+
+        if (commentsAreEmpty && DESCRIPTIONS.isSpecialDescriptions(movie)) {
+            if (debug) {
+                LOG.log(Level.INFO, "{0}: metadata comments empty, but descriptions available internaly. Updating.", movie.getFileName());
             }
 
             return true;
