@@ -2,9 +2,9 @@ package com.zemiak.movies.batch.metadata;
 
 import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.batch.service.log.BatchLogger;
-import com.zemiak.movies.service.description.DescriptionReader;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.configuration.Configuration;
+import com.zemiak.movies.service.description.DescriptionReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +61,7 @@ public class Writer extends AbstractItemWriter {
 
     private void updateName(final String fileName, final MovieMetadata data) {
         if (! data.isNameEqual()) {
-            update(fileName, NAME, data.getMovie().getName());
+            update(fileName, NAME, data.getMovieName());
         }
     }
 

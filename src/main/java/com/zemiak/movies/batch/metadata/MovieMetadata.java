@@ -152,7 +152,7 @@ public class MovieMetadata {
             return false;
         }
 
-        return name == null || name.equals(movie.getName());
+        return name == null || name.equals(getMovieName());
     }
 
     public boolean isGenreEqual() {
@@ -195,5 +195,13 @@ public class MovieMetadata {
 
     public Movie getMovie() {
         return movie;
+    }
+
+    public String getMovieName() {
+        if (null != movie.getSerieId() && null != movie.getDisplayOrder()) {
+            return movie.getDisplayOrder() + " " + movie.getName();
+        }
+
+        return movie.getName();
     }
 }
