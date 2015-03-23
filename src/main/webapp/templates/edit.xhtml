@@ -45,6 +45,10 @@
         <script>
             $(document).foundation();
             $(document).confirmWithReveal();
+            
+            $("document").ready(function(){
+                $("form input:text, form textarea").first().focus();
+            });
         </script>
     </body>
 </html>
