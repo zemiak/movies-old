@@ -38,5 +38,4 @@ fi
 $CLI --file=driver-install.cli
 $CLI --file=common.cli
 $CLI --file=mail-session.cli
-$CLI --file="$1-properties.cli"
 $CLI --file="$1-ds.cli"

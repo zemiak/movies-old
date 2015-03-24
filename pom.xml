@@ -43,6 +43,35 @@
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/dev/resources</directory>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        
+        <profile>
+            <id>prod</id>
+            
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/prod/resources</directory>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+    </profiles>
+    
     <build>
         <finalName>movies</finalName>
         <defaultGoal>package</defaultGoal>
@@ -73,7 +102,6 @@
                         </configuration>
                     </execution>
                 </executions>
-
             </plugin>
         </plugins>
     </build>
