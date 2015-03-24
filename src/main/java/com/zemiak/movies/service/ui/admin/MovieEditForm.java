@@ -1,12 +1,10 @@
 package com.zemiak.movies.service.ui.admin;
 
 import com.zemiak.movies.domain.*;
-import com.zemiak.movies.lookup.CDILookup;
 import com.zemiak.movies.service.GenreService;
 import com.zemiak.movies.service.LanguageService;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.SerieService;
-import com.zemiak.movies.service.configuration.Configuration;
 import com.zemiak.movies.service.description.DescriptionReader;
 import com.zemiak.movies.service.thumbnail.ThumbnailReader;
 import java.io.Serializable;
@@ -36,6 +34,12 @@ public class MovieEditForm implements Serializable {
 
     @Inject
     private LanguageService languages;
+    
+    @Inject
+    private String imgPath;
+    
+    @Inject
+    private String ffmpeg;
 
     public MovieEditForm() {
         urlControl = new UrlController();
@@ -161,7 +165,7 @@ public class MovieEditForm implements Serializable {
     }
 
     private void fetchPicture() {
-        final ThumbnailReader thumbnail = new ThumbnailReader(new CDILookup().lookup(Configuration.class));
+        final ThumbnailReader thumbnail = new ThumbnailReader(imgPath, ffmpeg);
         thumbnail.process(bean);
     }
 }

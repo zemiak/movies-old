@@ -1,7 +1,6 @@
 package com.zemiak.movies.batch.service;
 
 import com.zemiak.movies.batch.service.log.BatchLogger;
-import com.zemiak.movies.service.configuration.Configuration;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,8 +21,8 @@ import javax.inject.Named;
 public class PrepareFileList implements Batchlet {
     @Inject
     JobContext jobCtx;
-
-    @Inject Configuration conf;
+    
+    @Inject private String path;
 
     List<String> files = new ArrayList<>();
 
@@ -39,13 +38,13 @@ public class PrepareFileList implements Batchlet {
         String fileList = getFileListName();
         long counter = 0;
 
-        File mainDir = new File(conf.getPath());
+        File mainDir = new File(path);
         if (! mainDir.isDirectory()) {
-            throw new IOException(conf.getPath() + " is not a directory");
+            throw new IOException(path + " is not a directory");
         }
 
         if (! mainDir.canExecute() || ! mainDir.canRead()) {
-            throw new IOException(conf.getPath() + " is not readable");
+            throw new IOException(path + " is not readable");
         }
 
         try (FileWriter stream = new FileWriter(fileList)) {

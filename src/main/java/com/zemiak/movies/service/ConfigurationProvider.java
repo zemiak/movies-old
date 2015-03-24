@@ -1,10 +1,8 @@
 package com.zemiak.movies.service;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
-import java.util.logging.Level;
+import java.util.ResourceBundle;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;

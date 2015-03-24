@@ -3,7 +3,6 @@ package com.zemiak.movies.batch.metadata;
 import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.service.MovieService;
-import com.zemiak.movies.service.configuration.Configuration;
 import com.zemiak.movies.service.description.DescriptionReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,9 +21,10 @@ import javax.inject.Named;
 public class Writer extends AbstractItemWriter {
     private static final BatchLogger LOG = BatchLogger.getLogger(Writer.class.getName());
 
-    @Inject Configuration conf;
     private final DescriptionReader descriptions = new DescriptionReader();
     @Inject MovieService service;
+    @Inject String mp4tags;
+    @Inject String path;
 
     private static final String GENRE = "-g";
     private static final String NAME = "-s";
@@ -36,7 +36,7 @@ public class Writer extends AbstractItemWriter {
             MovieMetadata data = (MovieMetadata) obj;
 
             if (null != data) {
-                String fileName = conf.getPath() + data.getMovie().getFileName();
+                String fileName = path + data.getMovie().getFileName();
                 updateName(fileName, data);
                 updateGenre(fileName, data);
                 updateComment(fileName, data);
@@ -52,7 +52,7 @@ public class Writer extends AbstractItemWriter {
         params.add(fileName);
 
         try {
-            CommandLine.execCmd(conf.getMp4tags(), params);
+            CommandLine.execCmd(mp4tags, params);
             LOG.info(String.format("Updated %s with %s on %s", commandLineSwitch, value, fileName));
         } catch (IOException | InterruptedException | IllegalStateException ex) {
             Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, "Cannot update " + commandLineSwitch + " for " + fileName, ex);

@@ -2,7 +2,6 @@ package com.zemiak.movies.service.ui.admin;
 
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.service.GenreService;
-import com.zemiak.movies.service.ui.play.ConfigWebService;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
@@ -30,10 +29,10 @@ public class GenreEditForm implements Serializable {
     private Part file;
 
     @Inject
-    private ConfigWebService conf;
-
-    @Inject
     private GenreService service;
+    
+    @Inject
+    private String imgPath;
 
     public GenreEditForm() {
     }
@@ -93,7 +92,7 @@ public class GenreEditForm implements Serializable {
 
     public void upload() {
         try {
-            Path imagePath = Paths.get(conf.getImgPath(), "genre", bean.getPictureFileName());
+            Path imagePath = Paths.get(imgPath, "genre", bean.getPictureFileName());
             Files.copy(file.getInputStream(), imagePath);
 
             JsfMessages.addSuccessMessage("The image has been uploaded to " + imagePath.toString());

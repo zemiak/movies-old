@@ -1,6 +1,5 @@
 package com.zemiak.movies.service;
 
-import com.zemiak.movies.service.configuration.ConfigBean;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.lookup.CDILookup;
 import java.io.IOException;
@@ -36,7 +35,7 @@ public class FileStreamer {
     private final MovieService service;
 
     public FileStreamer() {
-        videoPath = new ConfigBean().getPath();
+        videoPath = new CDILookup().lookup(FileStreamerConfiguration.class).getPath();
         service = new CDILookup().lookup(MovieService.class);
     }
 

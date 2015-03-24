@@ -1,19 +1,19 @@
 package com.zemiak.movies.service.thumbnail;
 
 import com.zemiak.movies.domain.Movie;
-import com.zemiak.movies.service.configuration.Configuration;
 
 public class ThumbnailReader {
     private final IThumbnailReader[] readers;
-    private final Configuration conf;
+    private final String imgPath;
 
-    public ThumbnailReader(final Configuration conf) {
-        this.conf = conf;
+    public ThumbnailReader(String imgPath, String ffmpeg) {
         this.readers = new IThumbnailReader[]{
             new CsfdThumbnail(),
             new ImdbThumbnail(),
-            new GenerateThumbnail(conf.getFfmpeg())
+            new GenerateThumbnail(ffmpeg)
         };
+        
+        this.imgPath = imgPath;
     }
 
     public void process(final Movie movie) {
@@ -27,7 +27,7 @@ public class ThumbnailReader {
 
     public String getImageFileName(final Movie movie) {
         final String movieFileName = movie.getFileName();
-        final String imageFileName = conf.getImgPath() + movieFileName;
+        final String imageFileName = imgPath + movieFileName;
         final int pos = imageFileName.lastIndexOf(".");
 
         return imageFileName.substring(0, pos) + ".jpg";

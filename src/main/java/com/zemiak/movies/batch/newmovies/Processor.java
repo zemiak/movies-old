@@ -3,7 +3,6 @@ package com.zemiak.movies.batch.newmovies;
 import com.zemiak.movies.batch.service.RemoveFileList;
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.service.MovieService;
-import com.zemiak.movies.service.configuration.Configuration;
 import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.batch.api.chunk.ItemProcessor;
@@ -19,13 +18,13 @@ public class Processor implements ItemProcessor {
     private static final BatchLogger LOG = BatchLogger.getLogger(Processor.class.getName());
 
     @Inject MovieService service;
-    @Inject Configuration conf;
+    @Inject private String path;
 
     private String prefix;
 
     @PostConstruct
     public void init() {
-        prefix = conf.getPath();
+        prefix = path;
     }
 
     @Override

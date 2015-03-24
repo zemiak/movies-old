@@ -1,7 +1,6 @@
 package com.zemiak.movies.batch.service;
 
 import com.zemiak.movies.batch.service.log.*;
-import com.zemiak.movies.service.configuration.Configuration;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -23,9 +22,7 @@ public class MetadataChanged implements Batchlet {
     @Inject
     JobContext jobCtx;
 
-    @Inject
-    private Configuration conf;
-
+    @Inject private String path;
 
     public MetadataChanged() {
     }
@@ -46,7 +43,7 @@ public class MetadataChanged implements Batchlet {
     }
 
     private boolean createIndicatorFile() {
-        final File mainDir = new File(conf.getPath());
+        final File mainDir = new File(path);
         final File file = new File(mainDir.getAbsolutePath() + RemoveFileList.PATH_SEPARATOR + INDICATOR_FILE_NAME);
 
         try {

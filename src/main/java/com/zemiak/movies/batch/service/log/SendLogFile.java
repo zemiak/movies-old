@@ -1,6 +1,5 @@
 package com.zemiak.movies.batch.service.log;
 
-import com.zemiak.movies.service.configuration.Configuration;
 import java.io.File;
 import java.util.Date;
 import java.util.logging.Level;
@@ -36,9 +35,10 @@ public class SendLogFile implements Batchlet {
 
     @Resource(name = "java:/movies/mail/default")
     private Session mailSession;
-
-    @Inject
-    private Configuration conf;
+    
+    @Inject private String mailSubject;
+    @Inject private String mailTo;
+    @Inject private String mailFrom;
 
     public SendLogFile() {
     }
@@ -63,9 +63,9 @@ public class SendLogFile implements Batchlet {
 
     private void sendLogFile() throws MessagingException {
         final Message message = new MimeMessage(mailSession);
-        message.setFrom(new InternetAddress(conf.getMailFrom()));
-        message.setRecipient(Message.RecipientType.TO, new InternetAddress(conf.getMailTo()));
-        message.setSubject(conf.getMailSubject());
+        message.setFrom(new InternetAddress(mailFrom));
+        message.setRecipient(Message.RecipientType.TO, new InternetAddress(mailTo));
+        message.setSubject(mailSubject);
         message.setText("Batch run ended on " + new Date());
 
         MimeBodyPart messageBodyPart = new MimeBodyPart();
@@ -80,7 +80,7 @@ public class SendLogFile implements Batchlet {
 
         Transport.send(message);
 
-        LOG.log(Level.INFO, "Sent LOG file to {0}", conf.getMailTo());
+        LOG.log(Level.INFO, "Sent LOG file to {0}", mailTo);
 
         //BatchLogger.deleteLogFile();
     }
