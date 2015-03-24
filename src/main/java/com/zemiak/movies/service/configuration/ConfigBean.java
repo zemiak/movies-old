@@ -30,6 +30,10 @@ public class ConfigBean implements Serializable {
         return null == conf ? (String) lookup.lookup("com.zemiak.movies.imgServer") : conf.getImgServer();
     }
 
+    public String getImgPath() {
+        return null == conf ? (String) lookup.lookup("com.zemiak.movies.imgPath") : conf.getImgPath();
+    }
+
     public String getPlayServer() {
         return null == conf ? (String) lookup.lookup("com.zemiak.movies.playServer") : conf.getPlayServer();
     }

@@ -20,6 +20,10 @@ public class ConfigWebService implements Serializable {
         return service.getImgServer();
     }
 
+    public String getImgPath() {
+        return service.getImgServer();
+    }
+
     public String getPlayServer() {
         return service.getPlayServer();
     }

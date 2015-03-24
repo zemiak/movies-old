@@ -28,7 +28,7 @@
             
             <div class="row">&nbsp;</div>
 
-            <form method="post" jsf:id="genreEditForm" jsf:prependId="false">
+            <form method="post" jsf:id="genreEditForm" jsf:prependId="false" enctype="multipart/form-data" jsf:enctype="multipart/form-data">
                 <div class="row">
                     <div class="small-8 columns">
                         <label>Name:
@@ -56,9 +56,29 @@
                             <input type="text" id="pictureFileName" name="pictureFileName" 
                                    jsf:id="pictureFileName" label="Picture Filename"
                                    jsf:value="#{genreEditForm.bean.pictureFileName}" 
-                                   placeholder="Enter Picture Filename" />
+                                   placeholder="Enter Picture Filename" jsf:readonly="true" readonly="true" />
                         </label>
                         <h:message for="pictureFileName" class="error" />
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="small-10 columns">
+                        <label>Picture Upload:
+                            <h:inputFile id="file" value="#{genreEditForm.file}" validator="#{genreEditForm.validateFile}" />
+                        </label>
+                        <h:message for="file" class="error" />
+                    </div>
+                    
+                    <div class="small-2 columns">
+                        <h:commandButton value="Upload" action="#{genreEditForm.upload}" styleClass="small button" />
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="small-6 columns">
+                        <img alt="${genreEditForm.bean.name} Thumbnail"
+                                src="${conf.imgServer}genre/${genreEditForm.bean.pictureFileName}" />
                     </div>
                 </div>
                 
