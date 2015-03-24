@@ -14,6 +14,10 @@ $(document).ready(function() {
             { "data": "created" }
         ]
     });
+
+    $('#grid tbody').on('dblclick', 'tr', function() {
+	editClick();
+    });
 });
 
 function editClick() {

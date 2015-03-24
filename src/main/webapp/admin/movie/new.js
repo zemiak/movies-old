@@ -13,6 +13,10 @@ $(document).ready(function() {
             { "data": "name" }
         ]
     });
+
+    $('#grid tbody').on('dblclick', 'tr', function() {
+	editClick();
+    });
 });
 
 function editClick() {
