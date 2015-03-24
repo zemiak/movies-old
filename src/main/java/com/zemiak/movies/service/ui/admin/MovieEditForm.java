@@ -24,6 +24,9 @@ public class MovieEditForm implements Serializable {
     private String selectedUrl;
 
     @Inject
+    private String imgPath;
+
+    @Inject
     private MovieService service;
 
     @Inject
@@ -34,10 +37,7 @@ public class MovieEditForm implements Serializable {
 
     @Inject
     private LanguageService languages;
-    
-    @Inject
-    private String imgPath;
-    
+
     @Inject
     private String ffmpeg;
 

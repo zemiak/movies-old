@@ -1,6 +1,7 @@
 package com.zemiak.movies.service;
 
 import com.zemiak.movies.domain.CacheClearEvent;
+import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.strings.Encodings;
 import java.util.ArrayList;
@@ -73,5 +74,10 @@ public class SerieService {
         }
 
         return res;
+    }
+
+    public void save(Serie bean, Integer genreId) {
+        bean.setGenreId(em.getReference(Genre.class, genreId));
+        save(bean);
     }
 }

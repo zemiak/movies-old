@@ -28,7 +28,7 @@
             
             <div class="row">&nbsp;</div>
 
-            <form method="post" jsf:id="serieEditForm" jsf:prependId="false">
+            <form method="post" jsf:id="serieEditForm" jsf:prependId="false" enctype="multipart/form-data" jsf:enctype="multipart/form-data">
                 <div class="row">
                     <div class="small-8 columns">
                         <label>Name:
@@ -51,22 +51,30 @@
                 </div>
                 
                 <div class="row">
-                    <div class="small-12 columns">
-                        <label>Picture Filename:
-                            <input type="text" id="pictureFileName" name="pictureFileName" 
-                                   jsf:id="pictureFileName" label="Picture Filename"
-                                   jsf:value="#{serieEditForm.bean.pictureFileName}" 
-                                   placeholder="Enter Picture Filename" />
+                    <div class="small-10 columns">
+                        <label>Picture Upload:
+                            <h:inputFile id="file" value="#{serieEditForm.file}" validator="#{serieEditForm.validateFile}" />
                         </label>
-                        <h:message for="pictureFileName" class="error" />
+                        <h:message for="file" class="error" />
+                    </div>
+                    
+                    <div class="small-2 columns">
+                        <h:commandButton value="Upload" action="#{serieEditForm.upload}" styleClass="small button" />
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="small-6 columns">
+                        <img alt="${serieEditForm.bean.name} Thumbnail"
+                                src="${conf.imgServer}genre/${serieEditForm.bean.pictureFileName}" />
                     </div>
                 </div>
                 
                 <div class="row">
                     <div class="small-12 columns">
                         <label>Genre:
-                            <select jsf:id="genre" id="genre" jsf:value="#{serieEditForm.bean.genreId}" size="1">
-                                <f:selectItems value="#{serieEditForm.genres}" var="genre" itemLabel="#{genre.name}" />
+                            <select jsf:id="genre" id="genre" jsf:value="#{serieEditForm.genreId}" size="1">
+                                <f:selectItems value="#{serieEditForm.genres}" var="genre" itemValue="#{genre.id}" />
                             </select>
                         </label>
                         <h:message for="genre" class="error" />

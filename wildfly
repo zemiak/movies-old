@@ -1,3 +1,4 @@
 #!/bin/sh
 
-cp src/main/resources/META-INF/persistence-wildfly.xml src/main/resources/META-INF/persistence.xml
+cp src/dev/resources/META-INF/persistence-wildfly.xml src/dev/resources/META-INF/persistence.xml
+cp src/prod/resources/META-INF/persistence-wildfly.xml src/prod/resources/META-INF/persistence.xml

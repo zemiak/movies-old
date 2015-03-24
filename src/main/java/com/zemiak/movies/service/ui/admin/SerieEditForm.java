@@ -8,20 +8,27 @@ import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.Part;
 
 @SessionScoped
 @Named("serieEditForm")
 public class SerieEditForm implements Serializable {
     private Integer id;
     private Serie bean;
+    private Integer genreId;
 
     @Inject
     private SerieService service;
 
     @Inject
     private GenreService genres;
+
+    @Inject
+    private UploaderControl uploader;
 
     public SerieEditForm() {
     }
@@ -38,6 +45,8 @@ public class SerieEditForm implements Serializable {
             return close();
         }
 
+        genreId = bean.getGenreId().getId();
+
         return null;
     }
 
@@ -50,7 +59,7 @@ public class SerieEditForm implements Serializable {
     }
 
     public String save() {
-        service.save(bean);
+        service.save(bean, genreId);
         JsfMessages.addSuccessMessage("The serie has been saved");
 
         return close();
@@ -81,5 +90,31 @@ public class SerieEditForm implements Serializable {
 
     public List<Genre> getGenres() {
         return genres.all();
+    }
+
+    public void upload() {
+        uploader.upload("serie", bean.getPictureFileName());
+    }
+
+    public Part getFile() {
+        return uploader.getFile();
+    }
+
+    public void setFile(Part file) {
+        uploader.setFile(file);
+    }
+
+    public void validateFile(FacesContext ctx,
+            UIComponent comp,
+            Object value) {
+        uploader.validateFile(ctx, comp, value);
+    }
+
+    public Integer getGenreId() {
+        return genreId;
+    }
+
+    public void setGenreId(Integer genreId) {
+        this.genreId = genreId;
     }
 }
