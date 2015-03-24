@@ -21,17 +21,10 @@ public class ConfigurationProvider {
 
     @PostConstruct
     public void readConfiguration() {
-        Properties props = new Properties();
+	ResourceBundle props = ResourceBundle.getBundle("config");
         
-        try {
-            props.load(getClass().getResourceAsStream("config.properties"));
-        } catch (IOException ex) {
-            LOG.log(Level.SEVERE, "Cannot read configuration: {0}", ex.getMessage());
-            return;
-        }
-        
-        for (String key: props.stringPropertyNames()) {
-            configuration.put(key, props.getProperty(key));
+        for (String key: props.keySet()) {
+            configuration.put(key, props.getString(key));
         }
     }
     
