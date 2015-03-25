@@ -64,7 +64,6 @@ public class Movie implements Serializable, Comparable<Movie> {
     private String pictureFileName;
 
     @Column(name = "display_order")
-    @NotNull
     private Integer displayOrder;
 
     @Size(max = 2147483647)

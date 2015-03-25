@@ -63,7 +63,7 @@ public class MovieEditForm implements Serializable {
             JsfMessages.addErrorMessage("Cannot find movie #" + id);
             return close();
         }
-        
+
         serieId = (null == bean.getSerieId()) ? 0 : bean.getSerieId().getId();
         genreId = (null == bean.getGenreId()) ? 0 : bean.getGenreId().getId();
         languageId = (null == bean.getLanguage()) ? "  " : bean.getLanguage().getId();
@@ -128,11 +128,7 @@ public class MovieEditForm implements Serializable {
     }
 
     public List<Serie> getSeries() {
-        if (null == bean.getGenreId() || bean.getGenreId().isEmpty()) {
-            return series.all();
-        }
-
-        return bean.getGenreId().getSerieList();
+        return series.all();
     }
 
     public List<Language> getLanguages() {
@@ -140,11 +136,9 @@ public class MovieEditForm implements Serializable {
     }
 
     public void setGenreAccordingToSerie(AjaxBehaviorEvent event) {
-        if (0 == genreId) {
-            Genre genre = series.find(serieId).getGenreId();
-            if (null != genre) {
-                genreId = genre.getId();
-            }
+        Genre genre = series.find(serieId).getGenreId();
+        if (!genre.getId().equals(genreId)) {
+            genreId = genre.getId();
         }
     }
 
@@ -218,5 +212,5 @@ public class MovieEditForm implements Serializable {
         this.subtitlesId = subtitlesId;
     }
 
-    
+
 }
