@@ -2,6 +2,7 @@ package com.zemiak.movies.service;
 
 import com.zemiak.movies.domain.CacheClearEvent;
 import com.zemiak.movies.domain.Genre;
+import com.zemiak.movies.domain.Language;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.strings.Encodings;
@@ -145,5 +146,15 @@ public class MovieService {
 
     public void detach(Movie movie) {
         em.detach(movie);
+    }
+
+    public void save(Movie bean, Integer genreId, Integer serieId, String languageId, String originalLanguageId, String subtitlesId) {
+        bean.setGenreId(em.getReference(Genre.class, genreId));
+        bean.setSerieId(em.getReference(Serie.class, serieId));
+        bean.setLanguage(em.getReference(Language.class, languageId));
+        bean.setOriginalLanguage(em.getReference(Language.class, originalLanguageId));
+        bean.setSubtitles(em.getReference(Language.class, subtitlesId));
+        
+        save(bean);
     }
 }

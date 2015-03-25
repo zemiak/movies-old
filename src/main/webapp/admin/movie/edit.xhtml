@@ -77,8 +77,8 @@
                 <div class="row">
                     <div class="small-6 columns">
                         <label>Serie
-                            <select jsf:id="serie" id="serie" jsf:value="#{movieEditForm.bean.serieId}" size="1">
-                                <f:selectItems value="#{movieEditForm.series}" var="serie" itemLabel="#{serie.name}" />
+                            <select jsf:id="serie" id="serie" jsf:value="#{movieEditForm.serieId}" size="1">
+                                <f:selectItems value="#{movieEditForm.series}" var="item" itemValue="#{item.id}" />
                                 <f:ajax listener="#{movieEditForm.setGenreAccordingToSerie}" render="genre"  />
                             </select>
                         </label>
@@ -87,8 +87,8 @@
                     
                     <div class="small-6 columns">
                         <label>Genre:
-                            <select jsf:id="genre" id="genre" jsf:value="#{movieEditForm.bean.genreId}" size="1">
-                                <f:selectItems value="#{movieEditForm.genres}" var="genre" itemLabel="#{genre.name}" />
+                            <select jsf:id="genre" id="genre" jsf:value="#{movieEditForm.genreId}" size="1">
+                                <f:selectItems value="#{movieEditForm.genres}" var="item" itemValue="#{item.id}" />
                             </select>
                         </label>
                         <h:message for="genre" class="error" />
@@ -98,8 +98,8 @@
                 <div class="row">
                     <div class="small-3 columns">
                         <label>Language
-                            <select jsf:id="language" id="language" jsf:value="#{movieEditForm.bean.language}" size="1">
-                                <f:selectItems value="#{movieEditForm.languages}" var="language" itemLabel="#{language.name}" />
+                            <select jsf:id="language" id="language" jsf:value="#{movieEditForm.languageId}" size="1">
+                                <f:selectItems value="#{movieEditForm.languages}" var="item" itemValue="#{item.id}" />
                             </select>
                         </label>
                         <h:message for="language" class="error" />
@@ -107,8 +107,8 @@
                     
                     <div class="small-3 columns">
                         <label>Original Language
-                            <select jsf:id="originalLanguage" id="originalLanguage" jsf:value="#{movieEditForm.bean.originalLanguage}" size="1">
-                                <f:selectItems value="#{movieEditForm.languages}" var="language" itemLabel="#{language.name}" />
+                            <select jsf:id="originalLanguage" id="originalLanguage" jsf:value="#{movieEditForm.originalLanguageId}" size="1">
+                                <f:selectItems value="#{movieEditForm.languages}" var="item" itemValue="#{item.id}" />
                             </select>
                         </label>
                         <h:message for="originalLanguage" class="error" />
@@ -116,8 +116,8 @@
                     
                     <div class="small-3 columns">
                         <label>Subtitles
-                            <select jsf:id="subtitles" id="subtitles" jsf:value="#{movieEditForm.bean.subtitles}" size="1">
-                                <f:selectItems value="#{movieEditForm.languages}" var="language" itemLabel="#{language.name}" />
+                            <select jsf:id="subtitles" id="subtitles" jsf:value="#{movieEditForm.subtitlesId}" size="1">
+                                <f:selectItems value="#{movieEditForm.languages}" var="item" itemValue="#{item.id}" />
                             </select>
                         </label>
                         <h:message for="subtitles" class="error" />

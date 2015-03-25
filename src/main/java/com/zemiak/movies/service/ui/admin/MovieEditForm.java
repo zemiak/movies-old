@@ -22,6 +22,8 @@ public class MovieEditForm implements Serializable {
     private Movie bean;
     private final UrlController urlControl;
     private String selectedUrl;
+    private String languageId, originalLanguageId, subtitlesId;
+    private Integer serieId, genreId;
 
     @Inject
     private String imgPath;
@@ -61,6 +63,12 @@ public class MovieEditForm implements Serializable {
             JsfMessages.addErrorMessage("Cannot find movie #" + id);
             return close();
         }
+        
+        serieId = (null == bean.getSerieId()) ? 0 : bean.getSerieId().getId();
+        genreId = (null == bean.getGenreId()) ? 0 : bean.getGenreId().getId();
+        languageId = (null == bean.getLanguage()) ? "  " : bean.getLanguage().getId();
+        subtitlesId = (null == bean.getSubtitles()) ? "  " : bean.getSubtitles().getId();
+        originalLanguageId = (null == bean.getOriginalLanguage()) ? "" : bean.getOriginalLanguage().getId();
 
         return null;
     }
@@ -78,7 +86,7 @@ public class MovieEditForm implements Serializable {
     }
 
     public String save() {
-        service.save(bean);
+        service.save(bean, genreId, serieId, languageId, originalLanguageId, subtitlesId);
         JsfMessages.addSuccessMessage("The movie has been saved");
 
         return close();
@@ -132,9 +140,10 @@ public class MovieEditForm implements Serializable {
     }
 
     public void setGenreAccordingToSerie(AjaxBehaviorEvent event) {
-        if (null == bean.getGenreId() || bean.getGenreId().isEmpty()) {
-            if (null != bean.getSerieId() && !bean.getSerieId().isEmpty()) {
-                bean.setGenreId(bean.getSerieId().getGenreId());
+        if (0 == genreId) {
+            Genre genre = series.find(serieId).getGenreId();
+            if (null != genre) {
+                genreId = genre.getId();
             }
         }
     }
@@ -150,6 +159,22 @@ public class MovieEditForm implements Serializable {
             fetchDescription();
             fetchPicture();
         }
+    }
+
+    public Integer getSerieId() {
+        return serieId;
+    }
+
+    public void setSerieId(Integer serieId) {
+        this.serieId = serieId;
+    }
+
+    public Integer getGenreId() {
+        return genreId;
+    }
+
+    public void setGenreId(Integer genreId) {
+        this.genreId = genreId;
     }
 
     public void refreshUrlSelection(AjaxBehaviorEvent event) {
@@ -168,4 +193,30 @@ public class MovieEditForm implements Serializable {
         final ThumbnailReader thumbnail = new ThumbnailReader(imgPath, ffmpeg);
         thumbnail.process(bean);
     }
+
+    public String getLanguageId() {
+        return languageId;
+    }
+
+    public void setLanguageId(String languageId) {
+        this.languageId = languageId;
+    }
+
+    public String getOriginalLanguageId() {
+        return originalLanguageId;
+    }
+
+    public void setOriginalLanguageId(String originalLanguageId) {
+        this.originalLanguageId = originalLanguageId;
+    }
+
+    public String getSubtitlesId() {
+        return subtitlesId;
+    }
+
+    public void setSubtitlesId(String subtitlesId) {
+        this.subtitlesId = subtitlesId;
+    }
+
+    
 }
