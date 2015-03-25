@@ -17,16 +17,6 @@ $(document).ready(function() {
     });
 
     $('#grid tbody').on('dblclick', 'tr', function() {
-	editClick();
+	DataTablesExt.editDoubleClick(this);
     });
 });
-
-function editClick() {
-    var id = DataTablesExt.getSelectedId("grid");
-    
-    if (null === id) {
-        $("#select-one").show();
-    } else {
-        window.location = "edit.xhtml?id=" + id;
-    }
-};

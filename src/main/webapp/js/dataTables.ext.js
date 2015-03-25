@@ -1,8 +1,18 @@
 var DataTablesExt = {
-    getSelectedId: function(divId) {
+    editClick: function() {
         var tt = TableTools.fnGetInstance(divId);
         var rows = tt.fnGetSelectedData();
-
-        return 1 !== rows.length ? null : rows[0].id;
+        var id = 1 !== rows.length ? null : rows[0].id;
+    
+        if (null === id) {
+            $("#select-one").show();
+        } else {
+            window.location = "edit.xhtml?id=" + id;
+        }
+    },
+    
+    editDoubleClick: function(element) {
+        var id = $(element).children().first().text();
+        window.location = "edit.xhtml?id=" + id;
     }
 };
