@@ -11,18 +11,6 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     
-    <servlet>
-        <servlet-name>Static Servlet</servlet-name>
-        <servlet-class>com.zemiak.movies.servlet.StaticServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    
-    <servlet>
-        <servlet-name>Streaming Servlet</servlet-name>
-        <servlet-class>com.zemiak.movies.servlet.StreamingServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
@@ -41,26 +29,6 @@
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.faces</url-pattern>
-    </servlet-mapping>
-    
-    <servlet-mapping>
-        <servlet-name>Static Servlet</servlet-name>
-        <url-pattern>*.jpg</url-pattern>
-    </servlet-mapping>
-    
-    <servlet-mapping>
-        <servlet-name>Static Servlet</servlet-name>
-        <url-pattern>*.jpeg</url-pattern>
-    </servlet-mapping>
-    
-    <servlet-mapping>
-        <servlet-name>Static Servlet</servlet-name>
-        <url-pattern>*.png</url-pattern>
-    </servlet-mapping>
-    
-    <servlet-mapping>
-        <servlet-name>Streaming Servlet</servlet-name>
-        <url-pattern>/stream/*</url-pattern>
     </servlet-mapping>
     
     <session-config>

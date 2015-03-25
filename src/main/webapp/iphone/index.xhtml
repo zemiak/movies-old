@@ -17,7 +17,7 @@
             <ul id="main" title="Videotéka" selected="true">
                 <ui:repeat var="item" value="#{genreWebService.all}">
                     <li>
-                        <img src="#{configWebService.imgServer}genre/#{item.pictureFileName}" align="left" class="movies-thumbnail" />
+                        <img src="/movies/images/genre/#{item.pictureFileName}" align="left" class="movies-thumbnail" />
                         <a href="genre.xhtml?id=#{item.id}" target="_self">#{item.name}</a>
                     </li>
                 </ui:repeat>

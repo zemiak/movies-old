@@ -8,25 +8,27 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.JarURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.zip.GZIPOutputStream;
-import java.util.zip.ZipEntry;
-
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@SuppressWarnings("serial")
+@WebServlet(urlPatterns = {"/images/*"})
 public class StaticServlet extends HttpServlet {
+    private static final int DEFLATE_TRESHOLD = 4 * 1024;
+    private static final int BUFFER_SIZE = 4 * 1024;
+
     private final String imgPath;
-    
+
     public StaticServlet() {
         imgPath = new CDILookup().lookup(ServletConfiguration.class).getImgPath();
     }
-    
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         lookup(req).respondGet(resp);
@@ -51,7 +53,7 @@ public class StaticServlet extends HttpServlet {
         return lookup(req).getLastModified();
     }
 
-    protected LookupResult lookup(HttpServletRequest req) {
+    private LookupResult lookup(HttpServletRequest req) {
         LookupResult r = (LookupResult) req.getAttribute("lookupResult");
         if (r == null) {
             r = lookupNoCache(req);
@@ -60,75 +62,39 @@ public class StaticServlet extends HttpServlet {
         return r;
     }
 
-    protected LookupResult lookupNoCache(HttpServletRequest req) {
+    private LookupResult lookupNoCache(HttpServletRequest req) {
         final String path = getPath(req);
-        if (isForbidden(path)) {
-            return new Error(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
-        }
-
-        final URL url;
-        try {
-            url = getServletContext().getResource(path);
-        } catch (MalformedURLException e) {
-            return new Error(HttpServletResponse.SC_BAD_REQUEST, "Malformed path");
-        }
-        if (url == null) {
-            return new Error(HttpServletResponse.SC_NOT_FOUND, "Not found");
-        }
 
         final String mimeType = getMimeType(path);
 
-        if (path != null) {
-            // Try as an ordinary file
-            File f = new File(path);
-            if (!f.isFile()) {
-                return new Error(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
-            } else {
-                return new StaticFile(f.lastModified(), mimeType, (int) f.length(), acceptsDeflate(req), url);
-            }
+        File f = new File(path);
+        if (!f.isFile()) {
+            return new StaticServletError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not a file");
         } else {
+            URL url;
             try {
-                // Try as a JAR Entry
-                final ZipEntry ze = ((JarURLConnection) url.openConnection()).getJarEntry();
-                if (ze != null) {
-                    if (ze.isDirectory()) {
-                        return new Error(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
-                    } else {
-                        return new StaticFile(ze.getTime(), mimeType, (int) ze.getSize(), acceptsDeflate(req), url);
-                    }
-                } else // Unexpected?
-                {
-                    return new StaticFile(-1, mimeType, -1, acceptsDeflate(req), url);
-                }
-            } catch (ClassCastException e) {
-                // Unknown resource type
-                return new StaticFile(-1, mimeType, -1, acceptsDeflate(req), url);
-            } catch (IOException e) {
-                return new Error(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal server error");
+                url = new URL("file://" + path);
+            } catch (MalformedURLException ex) {
+                return new StaticServletError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Malformed URL");
             }
+            return new StaticFile(f.lastModified(), mimeType, (int) f.length(), acceptsDeflate(req), url);
         }
     }
 
-    protected String getPath(HttpServletRequest req) {
-        String pathInfo = coalesce(req.getPathInfo(), "");
-        return imgPath + pathInfo;
+    private String getPath(HttpServletRequest req) {
+        return Paths.get(imgPath, req.getPathInfo()).toString();
     }
 
-    protected boolean isForbidden(String path) {
-        String lpath = path.toLowerCase();
-        return lpath.startsWith("/web-inf/") || lpath.startsWith("/meta-inf/");
-    }
-
-    protected String getMimeType(String path) {
+    private String getMimeType(String path) {
         return coalesce(getServletContext().getMimeType(path), "application/octet-stream");
     }
 
-    protected static boolean acceptsDeflate(HttpServletRequest req) {
+    private static boolean acceptsDeflate(HttpServletRequest req) {
         final String ae = req.getHeader("Accept-Encoding");
         return ae != null && ae.contains("gzip");
     }
 
-    protected static boolean deflatable(String mimetype) {
+    private static boolean deflatable(String mimetype) {
         return mimetype.startsWith("text/")
                 || mimetype.equals("application/postscript")
                 || mimetype.startsWith("application/ms")
@@ -136,13 +102,11 @@ public class StaticServlet extends HttpServlet {
                 || mimetype.endsWith("xml");
     }
 
-    protected static final int deflateThreshold = 4 * 1024;
 
-    protected static final int bufferSize = 4 * 1024;
 
-    protected static void transferStreams(InputStream is, OutputStream os) throws IOException {
+    private static void transferStreams(InputStream is, OutputStream os) throws IOException {
         try {
-            byte[] buf = new byte[bufferSize];
+            byte[] buf = new byte[BUFFER_SIZE];
             int bytesRead;
             while ((bytesRead = is.read(buf)) != -1) {
                 os.write(buf, 0, bytesRead);
@@ -161,7 +125,7 @@ public class StaticServlet extends HttpServlet {
         }
         return null;
     }
-    
+
     private static class StaticFile implements LookupResult {
         protected final long lastModified;
         protected final String mimeType;
@@ -182,11 +146,11 @@ public class StaticServlet extends HttpServlet {
             return lastModified;
         }
 
-        protected boolean willDeflate() {
-            return acceptsDeflate && deflatable(mimeType) && contentLength >= deflateThreshold;
+        private boolean willDeflate() {
+            return acceptsDeflate && deflatable(mimeType) && contentLength >= DEFLATE_TRESHOLD;
         }
 
-        protected void setHeaders(HttpServletResponse resp) {
+        private void setHeaders(HttpServletResponse resp) {
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.setContentType(mimeType);
             if (contentLength >= 0 && !willDeflate()) {
@@ -200,7 +164,7 @@ public class StaticServlet extends HttpServlet {
             final OutputStream os;
             if (willDeflate()) {
                 resp.setHeader("Content-Encoding", "gzip");
-                os = new GZIPOutputStream(resp.getOutputStream(), bufferSize);
+                os = new GZIPOutputStream(resp.getOutputStream(), BUFFER_SIZE);
             } else {
                 os = resp.getOutputStream();
             }
@@ -215,8 +179,8 @@ public class StaticServlet extends HttpServlet {
             setHeaders(resp);
         }
     }
-    
-    public static interface LookupResult {
+
+    private static interface LookupResult {
 
         public void respondGet(HttpServletResponse resp) throws IOException;
 
@@ -225,12 +189,11 @@ public class StaticServlet extends HttpServlet {
         public long getLastModified();
     }
 
-    public static class Error implements LookupResult {
+    private static class StaticServletError implements LookupResult {
+        private final int statusCode;
+        private final String message;
 
-        protected final int statusCode;
-        protected final String message;
-
-        public Error(int statusCode, String message) {
+        public StaticServletError(int statusCode, String message) {
             this.statusCode = statusCode;
             this.message = message;
         }

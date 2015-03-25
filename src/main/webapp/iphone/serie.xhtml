@@ -22,7 +22,7 @@
             <ul id="main" title="#{serieWebService.bean.name}" selected="true">
                 <ui:repeat var="item" value="#{movieWebService.bySerieId}">
                     <li>
-                        <img src="#{configWebService.imgServer}movie/#{item.pictureFileName}" align="left" class="movies-thumbnail" />
+                        <img src="/movies/images/movie/#{item.pictureFileName}" align="left" class="movies-thumbnail" />
                         <a href="#{configWebService.playServer}?id=#{item.id}" target="_self">#{item.name}</a>
                     </li>
                 </ui:repeat>
