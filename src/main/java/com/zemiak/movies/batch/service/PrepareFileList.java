@@ -13,18 +13,15 @@ import javax.batch.runtime.context.JobContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- *
- * @author vasko
- */
 @Named("PrepareFileList")
 public class PrepareFileList implements Batchlet {
     @Inject
-    JobContext jobCtx;
-    
-    @Inject private String path;
+    private JobContext jobCtx;
 
-    List<String> files = new ArrayList<>();
+    @Inject
+    private String path;
+
+    private final List<String> files = new ArrayList<>();
 
     private static final BatchLogger LOG = BatchLogger.getLogger(PrepareFileList.class.getName());
     private static final Logger LOG1 = Logger.getLogger(PrepareFileList.class.getName());

@@ -7,12 +7,12 @@
 
     <ui:composition template="/templates/ipad.xhtml">
         <f:metadata>
-            <f:viewParam name="id" value="#{genreWebService.id}" />
-            <f:viewAction action="#{genreWebService.check}" />
+            <f:viewParam name="id" value="#{genreViewForm.id}" />
+            <f:viewAction action="#{genreViewForm.check}" />
         </f:metadata>
         
-        <ui:define name="title">#{genreWebService.bean.name}</ui:define>
-        <ui:define name="header">#{genreWebService.bean.name}</ui:define>
+        <ui:define name="title">#{genreViewForm.bean.name}</ui:define>
+        <ui:define name="header">#{genreViewForm.bean.name}</ui:define>
 
         <ui:define name="body">
             <div class="page">
@@ -20,7 +20,7 @@
                     <i class="fi-arrow-left movies-back-icon"></i>
                 </a>
                 
-                <ui:repeat var="item" value="#{serieWebService.byGenreId}">
+                <ui:repeat var="item" value="#{serieViewForm.byGenreId}">
                     <div class="movie-box serie-box">
                         <a href="serie.xhtml?#{id=item.id}">
                             <img class="movie-thumbnail" alt="item.name} Thumbnail"
@@ -30,7 +30,7 @@
                     </div>
                 </ui:repeat>
                 
-                <ui:repeat var="item" value="#{movieWebService.byGenreId}">
+                <ui:repeat var="item" value="#{movieViewForm.byGenreId}">
                     <div class="movie-box">
                         <a href="movie.xhtml?id=#{item.id}">
                             <img class="movie-thumbnail" alt="#{item.name} Thumbnail"

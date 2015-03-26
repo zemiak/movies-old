@@ -1,11 +1,7 @@
 package com.zemiak.movies.batch.service;
 
 import com.zemiak.movies.batch.service.log.BatchLogger;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Serializable;
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.batch.api.chunk.AbstractItemReader;
@@ -13,21 +9,17 @@ import javax.batch.runtime.context.JobContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- *
- * @author vasko
- */
 @Named("FilenameItemReader")
 public class FilenameItemReader extends AbstractItemReader {
     private static final BatchLogger LOG = BatchLogger.getLogger(FilenameItemReader.class.getName());
     private static final Logger LOG1 = Logger.getLogger(FilenameItemReader.class.getName());
 
     @Inject
-    JobContext jobCtx;
+    private JobContext jobCtx;
 
-    FileInputStream inputStream;
-    BufferedReader br;
-    int recordNumber;
+    private FileInputStream inputStream;
+    private BufferedReader br;
+    private int recordNumber;
 
     public FilenameItemReader() {
     }

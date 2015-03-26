@@ -1,4 +1,4 @@
-package com.zemiak.movies.service.ui.admin;
+package com.zemiak.movies.service.ui.admin.resource;
 
 import com.zemiak.movies.domain.DataTablesAjaxData;
 import com.zemiak.movies.domain.GenreDTO;
@@ -18,7 +18,7 @@ import javax.ws.rs.core.MediaType;
 @Consumes(value = MediaType.APPLICATION_JSON)
 public class GenresResource {
     @Inject
-    GenreService genres;
+    private GenreService genres;
 
     @GET
     public DataTablesAjaxData<GenreDTO> getAllMovies() {

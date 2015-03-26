@@ -11,10 +11,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.validation.ValidationException;
 
-/**
- *
- * @author vasko
- */
 @Stateless
 public class LanguageService {
     @PersistenceContext
@@ -61,11 +57,9 @@ public class LanguageService {
     public List<Language> getByExpression(final String text) {
         List<Language> res = new ArrayList<>();
 
-        for (Language entry: all()) {
-            if (entry.getName().toLowerCase().contains(text.toLowerCase())) {
-                res.add(entry);
-            }
-        }
+        all().stream().filter(entry -> entry.getName().toLowerCase().contains(text.toLowerCase())).forEach(entry -> {
+            res.add(entry);
+        });
 
         return res;
     }

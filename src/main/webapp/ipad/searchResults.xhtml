@@ -7,17 +7,17 @@
 
     <ui:composition template="/templates/ipad.xhtml">
         <f:metadata>
-            <f:viewParam name="query" value="#{searchWebService.query}" />
-            <f:viewParam name="months" value="#{searchWebService.months}" />
-            <f:viewAction action="#{searchWebService.search}" />
+            <f:viewParam name="query" value="#{searchViewForm.query}" />
+            <f:viewParam name="months" value="#{searchViewForm.months}" />
+            <f:viewAction action="#{searchViewForm.search}" />
         </f:metadata>
         
-        <ui:define name="title">#{searchWebService.title}</ui:define>
-        <ui:define name="header">#{searchWebService.title}</ui:define>
+        <ui:define name="title">#{searchViewForm.title}</ui:define>
+        <ui:define name="header">#{searchViewForm.title}</ui:define>
 
         <ui:define name="body">
             <div class="page">
-                <ui:repeat var="item" value="#{searchWebService.series}">
+                <ui:repeat var="item" value="#{searchViewForm.series}">
                     <div class="movie-box serie-box">
                         <a href="serie.xhtml?id=${item.id}">
                             <img class="movie-thumbnail" alt="#{item.name} Thumbnail"
@@ -27,7 +27,7 @@
                     </div>
                 </ui:repeat>
                 
-                <ui:repeat var="item" value="#{searchWebService.movies}">
+                <ui:repeat var="item" value="#{searchViewForm.movies}">
                     <div class="movie-box">
                         <a href="movie.xhtml?id=#{item.id}">
                             <img class="movie-thumbnail" alt="#{item.name} Thumbnail"

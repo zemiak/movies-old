@@ -1,19 +1,11 @@
 package com.zemiak.movies.batch.service.log;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-/**
- *
- * @author vasko
- */
 public class BatchLogger {
     public static BatchLogger getLogger(final String clazz) {
         return new BatchLogger(clazz);

@@ -1,10 +1,6 @@
 package com.zemiak.movies.service;
 
-import com.zemiak.movies.domain.CacheClearEvent;
-import com.zemiak.movies.domain.Genre;
-import com.zemiak.movies.domain.Language;
-import com.zemiak.movies.domain.Movie;
-import com.zemiak.movies.domain.Serie;
+import com.zemiak.movies.domain.*;
 import com.zemiak.movies.strings.Encodings;
 import java.io.File;
 import java.util.ArrayList;
@@ -13,10 +9,6 @@ import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
 import javax.persistence.*;
 
-/**
- *
- * @author vasko
- */
 @Stateless
 public class MovieService {
     @PersistenceContext
@@ -79,14 +71,13 @@ public class MovieService {
         List<Movie> res = new ArrayList<>();
         String textAscii = Encodings.toAscii(text.trim().toLowerCase());
 
-        for (Movie entry: all()) {
+        all().stream().forEach(entry -> {
             String name = (null == entry.getName() ? ""
                     : Encodings.toAscii(entry.getName().trim().toLowerCase()));
-
             if (name.contains(textAscii)) {
                 res.add(entry);
             }
-        }
+        });
 
         return res;
     }
@@ -101,11 +92,9 @@ public class MovieService {
     public List<Movie> findAllNew() {
         List<Movie> res = new ArrayList<>();
 
-        for (Movie movie: all()) {
-            if (null == movie.getGenreId() || movie.getGenreId().isEmpty()) {
-                res.add(movie);
-            }
-        }
+        all().stream().filter(movie -> null == movie.getGenreId() || movie.getGenreId().isEmpty()).forEach(movie -> {
+            res.add(movie);
+        });
 
         return res;
     }
@@ -154,7 +143,7 @@ public class MovieService {
         bean.setLanguage(em.getReference(Language.class, languageId));
         bean.setOriginalLanguage(em.getReference(Language.class, originalLanguageId));
         bean.setSubtitles(em.getReference(Language.class, subtitlesId));
-        
+
         save(bean);
     }
 }

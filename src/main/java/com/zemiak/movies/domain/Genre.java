@@ -12,10 +12,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author vasko
- */
 @Entity
 @Table(name = "genre", schema="data")
 @NamedQueries({
@@ -68,7 +64,7 @@ public class Genre implements Serializable, Comparable<Genre> {
         genre.serieList = new ArrayList<>();
         genre.movieList = new ArrayList<>();
         genre.setDisplayOrder(9000);
-        
+
         return genre;
     }
 

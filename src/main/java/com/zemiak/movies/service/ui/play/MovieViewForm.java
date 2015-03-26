@@ -1,8 +1,8 @@
 package com.zemiak.movies.service.ui.play;
 
-import com.zemiak.movies.service.ui.admin.JsfMessages;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.service.MovieService;
+import com.zemiak.movies.service.ui.admin.JsfMessages;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,11 +11,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 @SessionScoped
-@Named("movieWebService")
-public class MovieWebService implements Serializable {
+@Named("movieViewForm")
+public class MovieViewForm implements Serializable {
     @Inject private MovieService service;
-    @Inject private GenreWebService genreWebService;
-    @Inject private SerieWebService serieWebService;
+    @Inject private GenreViewForm genreWebService;
+    @Inject private SerieViewForm serieWebService;
 
     private Integer id;
     private Movie movie;

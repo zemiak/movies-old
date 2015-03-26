@@ -14,10 +14,6 @@ import javax.validation.Valid;
 import javax.validation.ValidationException;
 import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author vasko
- */
 @Stateless
 public class GenreService {
     @PersistenceContext
@@ -68,11 +64,9 @@ public class GenreService {
     public List<Genre> getByExpression(final String text) {
         List<Genre> res = new ArrayList<>();
 
-        for (Genre entry: all()) {
-            if (entry.getName().toLowerCase().contains(text.toLowerCase())) {
-                res.add(entry);
-            }
-        }
+        all().stream().filter(entry -> entry.getName().toLowerCase().contains(text.toLowerCase())).forEach(entry -> {
+            res.add(entry);
+        });
 
         return res;
     }

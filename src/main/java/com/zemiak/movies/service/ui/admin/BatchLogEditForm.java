@@ -1,8 +1,7 @@
 package com.zemiak.movies.service.ui.admin;
 
-import com.zemiak.movies.service.BatchLogService;
 import com.zemiak.movies.domain.BatchLog;
-import com.zemiak.movies.service.*;
+import com.zemiak.movies.service.BatchLogService;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;

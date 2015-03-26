@@ -1,10 +1,8 @@
 package com.zemiak.movies.service.description;
 
-import java.util.Objects;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
-class ManagedSerieInfo {
+public class ManagedSerieInfo {
     private Integer id;
     private String name;
     private ResourceBundle descriptions;
@@ -57,10 +55,10 @@ class ManagedSerieInfo {
     }
 
     public Set<Integer> getRange() {
-        return range;
+        return Collections.unmodifiableSet(range);
     }
 
     public void setRange(Set<Integer> range) {
-        this.range = range;
+        this.range = new HashSet(range);
     }
 }

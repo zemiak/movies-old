@@ -9,13 +9,9 @@ import javax.enterprise.inject.spi.BeanManager;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-/**
- *
- * @author vasko
- */
 public class CDILookup {
     private static final Logger LOG = Logger.getLogger(CDILookup.class.getName());
-    
+
     public <T> T lookup(final Class<T> type) {
         try {
             final BeanManager beanManager = InitialContext.doLookup("java:comp/BeanManager");

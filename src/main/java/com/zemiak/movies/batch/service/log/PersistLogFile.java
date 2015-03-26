@@ -15,22 +15,18 @@ import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- *
- * @author vasko
- */
 @Named("PersistLogFile")
 public class PersistLogFile implements Batchlet {
     private static final Logger LOG = Logger.getLogger(PersistLogFile.class.getName());
 
     @Inject
-    JobContext jobCtx;
+    private JobContext jobCtx;
 
     @Inject
-    BatchLogService service;
-    
+    private BatchLogService service;
+
     @Inject
-    Event<CacheClearEvent> events;
+    private Event<CacheClearEvent> events;
 
     public PersistLogFile() {
     }
@@ -42,10 +38,10 @@ public class PersistLogFile implements Batchlet {
             LOG.log(Level.INFO, "Log file does not exist, not saving...");
             return "does-not-exist";
         }
-        
+
         persistLogFile();
         events.fire(new CacheClearEvent());
-        
+
         LOG.log(Level.INFO, "Persisted log file");
 
         return "saved";

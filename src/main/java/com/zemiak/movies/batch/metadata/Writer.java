@@ -13,18 +13,14 @@ import javax.batch.api.chunk.AbstractItemWriter;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- *
- * @author vasko
- */
 @Named("MetadataWriter")
 public class Writer extends AbstractItemWriter {
     private static final BatchLogger LOG = BatchLogger.getLogger(Writer.class.getName());
 
     private final DescriptionReader descriptions = new DescriptionReader();
-    @Inject MovieService service;
-    @Inject String mp4tags;
-    @Inject String path;
+    @Inject private MovieService service;
+    @Inject private String mp4tags;
+    @Inject private String path;
 
     private static final String GENRE = "-g";
     private static final String NAME = "-s";
@@ -32,16 +28,13 @@ public class Writer extends AbstractItemWriter {
 
     @Override
     public void writeItems(final List list) throws Exception {
-        for (Object obj : list) {
+        list.stream().filter(obj -> null != obj).forEach(obj -> {
             MovieMetadata data = (MovieMetadata) obj;
-
-            if (null != data) {
-                String fileName = path + data.getMovie().getFileName();
-                updateName(fileName, data);
-                updateGenre(fileName, data);
-                updateComment(fileName, data);
-            }
-        }
+            String fileName = path + data.getMovie().getFileName();
+            updateName(fileName, data);
+            updateGenre(fileName, data);
+            updateComment(fileName, data);
+        });
     }
 
     private void update(final String fileName, final String commandLineSwitch, final String value) {

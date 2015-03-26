@@ -7,11 +7,11 @@
 
     <ui:composition template="/templates/iphone.xhtml">
         <f:metadata>
-            <f:viewParam name="id" value="#{genreWebService.id}" />
-            <f:viewAction action="#{genreWebService.check}" />
+            <f:viewParam name="id" value="#{genreViewForm.id}" />
+            <f:viewAction action="#{genreViewForm.check}" />
         </f:metadata>
         
-        <ui:define name="title">#{genreWebService.bean.name}</ui:define>
+        <ui:define name="title">#{genreViewForm.bean.name}</ui:define>
         
         <ui:define name="body">
             <div class="toolbar">
@@ -19,15 +19,15 @@
                 <a class="button leftButton" href="javascript:window.history.back()">Back</a>
             </div>
             
-            <ul id="main" title="#{genreWebService.bean.name}" selected="true">
-                <ui:repeat var="item" value="#{serieWebService.byGenreId}">
+            <ul id="main" title="#{genreViewForm.bean.name}" selected="true">
+                <ui:repeat var="item" value="#{serieViewForm.byGenreId}">
                     <li>
                         <img src="/movies/images/serie/#{item.id}" align="left" class="movies-thumbnail" />
                         <a href="serie.xhtml?id=#{item.id}" target="_self">*#{item.name}</a>
                     </li>
                 </ui:repeat>
                 
-                <ui:repeat var="item" value="#{movieWebService.byGenreId}">
+                <ui:repeat var="item" value="#{movieViewForm.byGenreId}">
                     <li>
                         <img src="/movies/images/movie/#{item.id}" align="left" class="movies-thumbnail" />
                         <a href="/movies/stream/#{item.id}" target="_self">#{item.name}</a>

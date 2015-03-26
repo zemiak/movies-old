@@ -11,10 +11,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author vasko
- */
 @Entity
 @Table(name = "movie", schema="data")
 @NamedQueries({

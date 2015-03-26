@@ -5,10 +5,6 @@ import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.service.description.DescriptionReader;
 import java.util.logging.Level;
 
-/**
- *
- * @author vasko
- */
 public class MovieMetadata {
     private static final BatchLogger LOG = BatchLogger.getLogger(MovieMetadata.class.getName());
     private static final DescriptionReader DESCRIPTIONS = new DescriptionReader();

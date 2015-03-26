@@ -4,10 +4,6 @@ import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.UrlDTO;
 import java.util.List;
 
-/**
- *
- * @author vasko
- */
 public interface IDescriptionReader {
     public boolean accepts(final Movie movie);
     public String getDescription(final Movie movie);

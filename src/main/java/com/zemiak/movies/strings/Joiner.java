@@ -3,11 +3,7 @@ package com.zemiak.movies.strings;
 import java.util.Collection;
 import java.util.Iterator;
 
-/**
- *
- * @author vasko
- */
-public class Joiner {
+public final class Joiner {
     public static String join(Collection<?> s, String delimiter) {
         StringBuilder builder = new StringBuilder();
         Iterator<?> iter = s.iterator();

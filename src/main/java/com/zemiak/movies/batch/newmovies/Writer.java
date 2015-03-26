@@ -9,24 +9,17 @@ import javax.batch.api.chunk.AbstractItemWriter;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- *
- * @author vasko
- */
 @Named("NewmoviesWriter")
 public class Writer extends AbstractItemWriter {
-    @Inject MovieService service;
+    @Inject private MovieService service;
     private static final BatchLogger LOG = BatchLogger.getLogger(Writer.class.getName());
 
     @Override
     public void writeItems(final List list) throws Exception {
-        for (Object obj: list) {
-            final String newFile = (String) obj;
-
-            Movie m = service.create(newFile);
-
+        list.stream().map(obj -> service.create((String) obj)).forEach(obj -> {
+            Movie m = (Movie) obj;
             LOG.log(Level.INFO, "Created a new movie ''{0}''/''{1}'', id {2}...",
                     new Object[]{m.getFileName(), m.getName(), m.getId()});
-        }
+        });
     }
 }

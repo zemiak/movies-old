@@ -1,18 +1,18 @@
 package com.zemiak.movies.service.ui.play;
 
-import com.zemiak.movies.service.ui.admin.JsfMessages;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.GenreDTO;
 import com.zemiak.movies.service.GenreService;
+import com.zemiak.movies.service.ui.admin.JsfMessages;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-@Named("genreWebService")
+@Named("genreViewForm")
 @SessionScoped
-public class GenreWebService implements Serializable {
+public class GenreViewForm implements Serializable {
     @Inject private GenreService service;
     private Integer id;
     private Genre bean;

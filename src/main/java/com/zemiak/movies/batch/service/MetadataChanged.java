@@ -10,17 +10,13 @@ import javax.batch.runtime.context.JobContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- *
- * @author vasko
- */
 @Named("MetadataChanged")
 public class MetadataChanged implements Batchlet {
     private static final Logger LOG = Logger.getLogger(MetadataChanged.class.getName());
     private static final String INDICATOR_FILE_NAME = "itunes-refresh";
 
     @Inject
-    JobContext jobCtx;
+    private JobContext jobCtx;
 
     @Inject private String path;
 

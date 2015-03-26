@@ -2,10 +2,6 @@ package com.zemiak.movies.domain;
 
 import java.util.Objects;
 
-/**
- *
- * @author vasko
- */
 public class UrlDTO {
     private String url;
     private String description;

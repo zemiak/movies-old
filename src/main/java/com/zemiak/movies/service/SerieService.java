@@ -13,10 +13,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.validation.ValidationException;
 
-/**
- *
- * @author vasko
- */
 @Stateless
 public class SerieService {
     @PersistenceContext
@@ -64,14 +60,13 @@ public class SerieService {
         List<Serie> res = new ArrayList<>();
         String textAscii = Encodings.toAscii(text.trim().toLowerCase());
 
-        for (Serie entry: all()) {
+        all().stream().forEach(entry -> {
             String name = (null == entry.getName() ? ""
                     : Encodings.toAscii(entry.getName().trim().toLowerCase()));
-
             if (name.contains(textAscii)) {
                 res.add(entry);
             }
-        }
+        });
 
         return res;
     }

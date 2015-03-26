@@ -9,21 +9,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-/**
- *
- * @author vasko
- */
 @Stateless
 public class BatchLogService {
     @PersistenceContext
     private EntityManager em;
-    
+
     public List<BatchLog> all() {
         Query query = em.createNamedQuery("BatchLog.findAll");
-        
+
         return query.getResultList();
     }
-    
+
     public void clearCache(@Observes CacheClearEvent event) {
         em.getEntityManagerFactory().getCache().evictAll();
     }
@@ -31,10 +27,10 @@ public class BatchLogService {
     public BatchLog create(final String text) {
         BatchLog res = create();
         res.setText(text);
-        
+
         return res;
     }
-    
+
     public BatchLog find(final Integer id) {
         return em.find(BatchLog.class, id);
     }
@@ -43,7 +39,7 @@ public class BatchLogService {
         BatchLog res = new BatchLog();
         res.setText("");
         em.persist(res);
-        
+
         return res;
     }
 }

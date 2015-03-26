@@ -1,4 +1,4 @@
-package com.zemiak.movies.service.ui.admin;
+package com.zemiak.movies.service.ui.admin.resource;
 
 import com.zemiak.movies.domain.DataTablesAjaxData;
 import com.zemiak.movies.domain.LanguageDTO;
@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
 @Consumes(value = MediaType.APPLICATION_JSON)
 public class LanguagesResource {
     @Inject
-    LanguageService languages;
+    private LanguageService languages;
 
     @GET
     public DataTablesAjaxData<LanguageDTO> getAllMovies() {

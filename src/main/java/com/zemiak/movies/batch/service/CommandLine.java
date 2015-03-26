@@ -2,36 +2,20 @@ package com.zemiak.movies.batch.service;
 
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.strings.Joiner;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author vasko
- */
-public final class CommandLine {
+public class CommandLine {
     private static final BatchLogger LOG = BatchLogger.getLogger(CommandLine.class.getName());
     private static final Logger LOG1 = Logger.getLogger(CommandLine.class.getName());
     private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
     private static final Integer TIMEOUT = 300; // 5 minutes
-    
+
     private CommandLine() {
     }
 
@@ -99,18 +83,18 @@ public final class CommandLine {
 
         Callable<CommandLineResult> callable = () -> {
             Process process = Runtime.getRuntime().exec(command.toArray(new String[]{}));
-            
+
             int exitValue = process.waitFor();
-            
+
             List<String> lines = new ArrayList<>();
             try (InputStream stream = process.getInputStream();) {
                 lines.addAll(Arrays.asList(streamToString(stream).split(System.getProperty("line.separator"))));
             }
-            
+
             CommandLineResult result = new CommandLineResult();
             result.setExitValue(exitValue);
             result.setOutput(lines);
-            
+
             return result;
         };
 

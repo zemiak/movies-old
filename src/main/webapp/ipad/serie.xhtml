@@ -7,20 +7,20 @@
 
     <ui:composition template="/templates/ipad.xhtml">
         <f:metadata>
-            <f:viewParam name="id" value="#{serieWebService.id}" />
-            <f:viewAction action="#{serieWebService.check}" />
+            <f:viewParam name="id" value="#{serieViewForm.id}" />
+            <f:viewAction action="#{serieViewForm.check}" />
         </f:metadata>
         
-        <ui:define name="title">#{serieWebService.bean.name}</ui:define>
-        <ui:define name="header">#{serieWebService.bean.name}</ui:define>
+        <ui:define name="title">#{serieViewForm.bean.name}</ui:define>
+        <ui:define name="header">#{serieViewForm.bean.name}</ui:define>
 
         <ui:define name="body">
             <div class="page">
-                <a class="movie-box" href="genre.xhtml?id=#{serieWebService.bean.genreId.id}">
+                <a class="movie-box" href="genre.xhtml?id=#{serieViewForm.bean.genreId.id}">
                     <i class="fi-arrow-left movies-back-icon"></i>
                 </a>
                 
-                <ui:repeat var="item" value="#{movieWebService.bySerieId}">
+                <ui:repeat var="item" value="#{movieViewForm.bySerieId}">
                     <div class="movie-box">
                         <a href="movie.xhtml?id=#{item.id}">
                             <img class="movie-thumbnail" alt="#{item.name} Thumbnail"

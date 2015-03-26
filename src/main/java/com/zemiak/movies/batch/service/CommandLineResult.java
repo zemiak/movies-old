@@ -1,11 +1,9 @@
 package com.zemiak.movies.batch.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-/**
- *
- * @author vasko
- */
 public class CommandLineResult {
     private int exitValue;
     private List<String> output;
@@ -22,11 +20,11 @@ public class CommandLineResult {
     }
 
     public List<String> getOutput() {
-        return output;
+        return Collections.unmodifiableList(output);
     }
 
     public void setOutput(List<String> output) {
-        this.output = output;
+        this.output = new ArrayList<>(output);
     }
 
     public boolean isError() {

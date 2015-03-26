@@ -392,11 +392,11 @@ public class StreamingServlet extends HttpServlet {
         }
     }
 
-    protected class Range {
-        long start;
-        long end;
-        long length;
-        long total;
+    private class Range {
+        private long start;
+        private long end;
+        private long length;
+        private long total;
 
         /**
          * Construct a byte range.
@@ -404,7 +404,7 @@ public class StreamingServlet extends HttpServlet {
          * @param end End of the byte range.
          * @param total Total length of the byte source.
          */
-        public Range(long start, long end, long total) {
+        Range(long start, long end, long total) {
             this.start = start;
             this.end = end;
             this.length = end - start + 1;

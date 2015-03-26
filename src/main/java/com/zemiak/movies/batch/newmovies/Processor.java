@@ -9,15 +9,11 @@ import javax.batch.api.chunk.ItemProcessor;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- *
- * @author vasko
- */
 @Named("NewmoviesProcessor")
 public class Processor implements ItemProcessor {
     private static final BatchLogger LOG = BatchLogger.getLogger(Processor.class.getName());
 
-    @Inject MovieService service;
+    @Inject private MovieService service;
     @Inject private String path;
 
     private String prefix;

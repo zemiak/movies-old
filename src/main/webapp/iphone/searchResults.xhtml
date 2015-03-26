@@ -7,12 +7,12 @@
 
     <ui:composition template="/templates/iphone.xhtml">
         <f:metadata>
-            <f:viewParam name="query" value="#{searchWebService.query}" />
-            <f:viewParam name="months" value="#{searchWebService.query}" />
-            <f:viewAction action="#{searchWebService.search}" />
+            <f:viewParam name="query" value="#{searchViewForm.query}" />
+            <f:viewParam name="months" value="#{searchViewForm.query}" />
+            <f:viewAction action="#{searchViewForm.search}" />
         </f:metadata>
         
-        <ui:define name="title">#{searchWebService.title}</ui:define>
+        <ui:define name="title">#{searchViewForm.title}</ui:define>
         
         <ui:define name="body">
             <div class="toolbar">
@@ -20,15 +20,15 @@
                 <a class="button leftButton" href="index.xhtml">Back</a>
             </div>
             
-            <ul id="main" title="#{searchWebService.title}" selected="true">
-                <ui:repeat var="item" value="#{searchWebService.series}">
+            <ul id="main" title="#{searchViewForm.title}" selected="true">
+                <ui:repeat var="item" value="#{searchViewForm.series}">
                     <li>
                         <img src="/movies/images/serie/#{item.id}" align="left" class="movies-thumbnail" />
                         <a href="serie.xhtml?id=#{item.id}" target="_self">*#{item.name}</a>
                     </li>
                 </ui:repeat>
                 
-                <ui:repeat var="item" value="#{searchWebService.movies}">
+                <ui:repeat var="item" value="#{searchViewForm.movies}">
                     <li>
                         <img src="/movies/images/movie/#{item.id}" align="left" class="movies-thumbnail" />
                         <a href="/movies/stream/#{item.id}" target="_self">#{item.name}</a>

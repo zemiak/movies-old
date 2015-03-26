@@ -83,13 +83,13 @@ public class Csfd implements IDescriptionReader {
             return res;
         }
 
-        for (Element li: list.select("li")) {
+        list.select("li").stream().forEach(li -> {
             final Element desc = li.select("p").first();
             final Element href = li.select("h3").first().select("a").first();
             final String descUrl = href.absUrl("href");
 
             res.add(new UrlDTO(descUrl, getReaderName(), href.text(), desc.text()));
-        }
+        });
 
         return res;
     }

@@ -8,12 +8,12 @@
 
     <ui:composition template="/templates/ipad.xhtml">
         <f:metadata>
-            <f:viewParam name="id" value="#{movieWebService.id}" />
-            <f:viewAction action="#{movieWebService.check}" />
+            <f:viewParam name="id" value="#{movieViewForm.id}" />
+            <f:viewAction action="#{movieViewForm.check}" />
         </f:metadata>
         
-        <ui:define name="title">#{movieWebService.movie.name}</ui:define>
-        <ui:define name="header">#{movieWebService.movie.name}</ui:define>
+        <ui:define name="title">#{movieViewForm.movie.name}</ui:define>
+        <ui:define name="header">#{movieViewForm.movie.name}</ui:define>
 
         <ui:define name="body">
             <div class="row">
@@ -22,9 +22,9 @@
                         <i class="fi-arrow-left movies-back-icon" style="font-size: 4em;"></i>
                     </a>
                     
-                    <a href="javascript:window.open('#{movieWebService.movie.url}');"
+                    <a href="javascript:window.open('#{movieViewForm.movie.url}');"
                         class="small button" id="url" name="url"
-                        jsf:rendered="#{!movieWebService.movie.urlEmpty}">
+                        jsf:rendered="#{!movieViewForm.movie.urlEmpty}">
                         Info
                     </a>
                 </div>
@@ -32,51 +32,51 @@
                 <div class="small-11 columns">
                     <center>
                         <video id="my_video" controls=""
-                               preload="auto" poster="/movies/images/movie/#{movieWebService.movie.id}">
-                            <source src="/movies/stream/#{movieWebService.movie.id}" type='video/mp4'></source>
+                               preload="auto" poster="/movies/images/movie/#{movieViewForm.movie.id}">
+                            <source src="/movies/stream/#{movieViewForm.movie.id}" type='video/mp4'></source>
                         </video>
                     </center>
                 </div>
             </div>
             
             <form jsf:id="movieView" jsf:prependId="false">
-                <div class="row" jsf:rendered="#{!movieWebService.movie.descriptionEmpty}">
+                <div class="row" jsf:rendered="#{!movieViewForm.movie.descriptionEmpty}">
                     <div class="small-12 columns">
-                        <textarea jsf:value="#{movieWebService.movie.description}" readonly="true" rows="4" />
+                        <textarea jsf:value="#{movieViewForm.movie.description}" readonly="true" rows="4" />
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="small-4 columns">
                         <label>Genre</label>
-                        <input type="text" value="#{movieWebService.movie.genreId.name}" readonly="true" />
+                        <input type="text" value="#{movieViewForm.movie.genreId.name}" readonly="true" />
                     </div>
 
                     <div class="small-4 columns">
                         <label>Serie</label>
-                        <input type="text" value="#{movieWebService.movie.serieName}" readonly="true" />
+                        <input type="text" value="#{movieViewForm.movie.serieName}" readonly="true" />
                     </div>
 
                     <div class="small-4 columns">
                         <label>Language</label>
-                        <input type="text" value="#{movieWebService.movie.languageName}" readonly="true" />
+                        <input type="text" value="#{movieViewForm.movie.languageName}" readonly="true" />
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="small-4 columns">
                         <label>Original Language</label>
-                        <input type="text" value="#{movieWebService.movie.originalLanguageName}" readonly="true" />
+                        <input type="text" value="#{movieViewForm.movie.originalLanguageName}" readonly="true" />
                     </div>
 
                     <div class="small-4 columns">
                         <label>Subtitles</label>
-                        <input type="text" value="#{movieWebService.movie.subtitlesName}" readonly="true" />
+                        <input type="text" value="#{movieViewForm.movie.subtitlesName}" readonly="true" />
                     </div>
 
                     <div class="small-4 columns">
                         <label>Original Name</label>
-                        <input type="text" value="#{movieWebService.movie.originalName}" readonly="true" />
+                        <input type="text" value="#{movieViewForm.movie.originalName}" readonly="true" />
                     </div>
                 </div>
             </form>

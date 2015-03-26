@@ -62,7 +62,7 @@ public class StaticServlet extends HttpServlet {
         private final long contentLength;
         private final Path path;
 
-        public StaticFile(HttpServletRequest req) {
+        StaticFile(HttpServletRequest req) {
             // /movie/id, /serie/id, /genre/id
             String imageFileName;
 

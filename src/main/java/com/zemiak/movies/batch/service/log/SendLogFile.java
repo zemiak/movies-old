@@ -12,30 +12,22 @@ import javax.batch.api.Batchlet;
 import javax.batch.runtime.context.JobContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-/**
- *
- * @author vasko
- */
 @Named("SendLogFile")
 public class SendLogFile implements Batchlet {
     private static final Logger LOG = Logger.getLogger(SendLogFile.class.getName());
 
     @Inject
-    JobContext jobCtx;
+    private JobContext jobCtx;
 
     @Resource(name = "java:/movies/mail/default")
     private Session mailSession;
-    
+
     @Inject private String mailSubject;
     @Inject private String mailTo;
     @Inject private String mailFrom;

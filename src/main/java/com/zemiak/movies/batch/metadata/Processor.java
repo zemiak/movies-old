@@ -7,16 +7,12 @@ import javax.batch.api.chunk.ItemProcessor;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- *
- * @author vasko
- */
 @Named("MetadataProcessor")
 public class Processor implements ItemProcessor {
     private static final BatchLogger LOG = BatchLogger.getLogger(Processor.class.getName());
 
-    @Inject MovieService service;
-    @Inject String path;
+    @Inject private MovieService service;
+    @Inject private String path;
 
     @Override
     public Object processItem(final Object movieName) throws Exception {
@@ -27,7 +23,7 @@ public class Processor implements ItemProcessor {
 
         if (null != movie && null != data) {
             if (! data.isMetadataEqual()) {
-                System.out.println("Metadata: going to update " + fileName);
+                LOG.info("Metadata: going to update " + fileName);
                 return data;
             }
         }

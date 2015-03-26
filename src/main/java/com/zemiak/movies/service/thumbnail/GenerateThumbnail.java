@@ -8,9 +8,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 
-class GenerateThumbnail implements IThumbnailReader {
+public class GenerateThumbnail implements IThumbnailReader {
     private static final BatchLogger LOG = BatchLogger.getLogger(GenerateThumbnail.class.getName());
-    private String imageFileName, ffmpegPath;
+    private String imageFileName;
+    private final String ffmpegPath;
 
     public GenerateThumbnail(final String ffmpegPath) {
         this.ffmpegPath = ffmpegPath;

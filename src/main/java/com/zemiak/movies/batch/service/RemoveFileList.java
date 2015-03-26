@@ -8,14 +8,10 @@ import javax.batch.runtime.context.JobContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- *
- * @author vasko
- */
 @Named("RemoveFileList")
 public class RemoveFileList implements Batchlet {
     @Inject
-    JobContext jobCtx;
+    private JobContext jobCtx;
 
     final static public String PATH_SEPARATOR = System.getProperty("file.separator");
 

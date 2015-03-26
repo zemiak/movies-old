@@ -9,17 +9,13 @@ import javax.batch.api.chunk.ItemProcessor;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- *
- * @author vasko
- */
 @Named("ThumbnailsProcessor")
 public class Processor implements ItemProcessor {
     private static final Logger LOG = Logger.getLogger(Processor.class.getName());
 
-    @Inject MovieService service;
-    @Inject String path;
-    @Inject String imgPath;
+    @Inject private MovieService service;
+    @Inject private String path;
+    @Inject private String imgPath;
 
     @Override
     public Object processItem(final Object movieFileName) throws Exception {

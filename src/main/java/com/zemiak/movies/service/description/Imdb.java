@@ -13,17 +13,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-/**
- *
- * @author vasko
- */
 public class Imdb implements IDescriptionReader {
     private static final Logger LOG = Logger.getLogger(Imdb.class.getName());
-    
+
     private static final String URL1 = "www.imdb.com/";
     private static final String URL2 = "http://" + URL1;
     private static final String SEARCH_URL = URL2 + "find?q=";
-    
+
     public Imdb() {
     }
 
@@ -36,9 +32,9 @@ public class Imdb implements IDescriptionReader {
     @Override
     public String getDescription(final Movie movie) {
         return getDescription(movie.getUrl());
-        
+
     }
-    
+
     private String getDescription(final String url) {
         Document doc;
         try {
@@ -47,11 +43,11 @@ public class Imdb implements IDescriptionReader {
             LOG.log(Level.SEVERE, "Cannot read " + url, ex);
             return null;
         }
-        
+
         Element description = doc.select("meta[name=description]").first();
         return description.attr("content");
     }
-    
+
     @Override
     public String getReaderName() {
         return "IMDB";
@@ -61,14 +57,14 @@ public class Imdb implements IDescriptionReader {
     public List<UrlDTO> getUrlCandidates(final String movieName) {
         List<UrlDTO> res = new ArrayList<>();
         String url;
-        
+
         try {
             url = SEARCH_URL + URLEncoder.encode(movieName, "UTF-8");
         } catch (UnsupportedEncodingException ex) {
             LOG.log(Level.SEVERE, "Unsupported UTF-8 encoding.");
             return res;
         }
-        
+
         Document doc;
         try {
             doc = Jsoup.connect(url).timeout(5000).get();
@@ -76,12 +72,12 @@ public class Imdb implements IDescriptionReader {
             LOG.log(Level.SEVERE, "Cannot read " + url, ex);
             return res;
         }
-        
-        for (Element result: doc.select("td[class=result_text]")) {
+
+        doc.select("td[class=result_text]").stream().forEach(result -> {
             final Element href = result.select("a").first();
             res.add(new UrlDTO(href.absUrl("href"), getReaderName(), href.text(), result.text()));
-        }
-        
+        });
+
         return res;
     }
 }

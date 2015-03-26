@@ -8,16 +8,12 @@ import javax.batch.runtime.BatchRuntime;
 import javax.batch.runtime.BatchStatus;
 import javax.ejb.Stateless;
 
-/**
- *
- * @author vasko
- */
 @Stateless
 public class BatchRunner {
     private static final Logger LOG = Logger.getLogger(BatchRunner.class.getName());
 
-    JobOperator operator;
-    Long updateMoviesJob = null;
+    private JobOperator operator;
+    private Long updateMoviesJob = null;
 
     public BatchRunner() {
     }

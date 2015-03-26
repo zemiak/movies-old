@@ -8,18 +8,14 @@ import javax.batch.runtime.context.JobContext;
 import javax.batch.runtime.context.StepContext;
 import javax.inject.Inject;
 
-/**
- *
- * @author vasko
- */
 public class Listener implements JobListener, StepListener {
     private static final Logger LOG = Logger.getLogger(Listener.class.getName());
 
     @Inject
-    JobContext jobCtx;
+    private JobContext jobCtx;
 
     @Inject
-    StepContext stepCtx;
+    private StepContext stepCtx;
 
     @Override
     public void beforeJob() throws Exception {

@@ -7,11 +7,11 @@
 
     <ui:composition template="/templates/iphone.xhtml">
         <f:metadata>
-            <f:viewParam name="id" value="#{serieWebService.id}" />
-            <f:viewAction action="#{serieWebService.check}" />
+            <f:viewParam name="id" value="#{serieViewForm.id}" />
+            <f:viewAction action="#{serieViewForm.check}" />
         </f:metadata>
         
-        <ui:define name="title">#{serieWebService.bean.name}</ui:define>
+        <ui:define name="title">#{serieViewForm.bean.name}</ui:define>
 
         <ui:define name="body">
             <div class="toolbar">
@@ -19,8 +19,8 @@
                 <a class="button leftButton" href="javascript:window.history.back()">Back</a>
             </div>
             
-            <ul id="main" title="#{serieWebService.bean.name}" selected="true">
-                <ui:repeat var="item" value="#{movieWebService.bySerieId}">
+            <ul id="main" title="#{serieViewForm.bean.name}" selected="true">
+                <ui:repeat var="item" value="#{movieViewForm.bySerieId}">
                     <li>
                         <img src="/movies/images/movie/#{item.id}" align="left" class="movies-thumbnail" />
                         <a href="/movies/stream/#{item.id}" target="_self">#{item.name}</a>

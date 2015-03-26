@@ -1,19 +1,14 @@
 package com.zemiak.movies.batch.service.log;
 
-import com.zemiak.movies.batch.service.log.BatchLogger;
 import javax.batch.api.Batchlet;
 import javax.batch.runtime.context.JobContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- *
- * @author vasko
- */
 @Named("PrepareLogFile")
 public class PrepareLogFile implements Batchlet {
     @Inject
-    JobContext jobCtx;
+    private JobContext jobCtx;
 
     public PrepareLogFile() {
     }

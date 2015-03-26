@@ -11,8 +11,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 @SessionScoped
-@Named("searchWebService")
-public class SearchWebService implements Serializable {
+@Named("searchViewForm")
+public class SearchViewForm implements Serializable {
     private final List<Serie> series = new ArrayList<>();
     private final List<Movie> movies = new ArrayList<>();
 
@@ -65,11 +65,11 @@ public class SearchWebService implements Serializable {
     }
 
     public List<Serie> getSeries() {
-        return series;
+        return Collections.unmodifiableList(series);
     }
 
     public List<Movie> getMovies() {
-        return movies;
+        return Collections.unmodifiableList(movies);
     }
 
     public String getTitle() {

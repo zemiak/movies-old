@@ -1,8 +1,8 @@
-package com.zemiak.movies.service.ui.admin;
+package com.zemiak.movies.service.ui.admin.resource;
 
+import com.zemiak.movies.domain.BatchLogDTO;
 import com.zemiak.movies.domain.DataTablesAjaxData;
-import com.zemiak.movies.domain.SerieDTO;
-import com.zemiak.movies.service.SerieService;
+import com.zemiak.movies.service.BatchLogService;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -13,15 +13,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @RequestScoped
-@Path("series")
+@Path("logs")
 @Produces(value = MediaType.APPLICATION_JSON)
 @Consumes(value = MediaType.APPLICATION_JSON)
-public class SeriesResource {
+public class LogsResource {
     @Inject
-    SerieService series;
+    private BatchLogService logs;
 
     @GET
-    public DataTablesAjaxData<SerieDTO> getAllMovies() {
-        return new DataTablesAjaxData<>(series.all().stream().map(movie -> new SerieDTO(movie)).collect(Collectors.toList()));
+    public DataTablesAjaxData<BatchLogDTO> getAllMovies() {
+        return new DataTablesAjaxData<>(logs.all().stream().map(log -> new BatchLogDTO(log)).collect(Collectors.toList()));
     }
 }

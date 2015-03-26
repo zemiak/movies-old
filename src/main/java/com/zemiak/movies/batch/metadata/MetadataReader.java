@@ -1,11 +1,7 @@
 package com.zemiak.movies.batch.metadata;
 
 import com.coremedia.iso.IsoFile;
-import com.coremedia.iso.boxes.Box;
-import com.coremedia.iso.boxes.MetaBox;
-import com.coremedia.iso.boxes.MovieBox;
-import com.coremedia.iso.boxes.UnknownBox;
-import com.coremedia.iso.boxes.UserDataBox;
+import com.coremedia.iso.boxes.*;
 import com.coremedia.iso.boxes.apple.AppleItemListBox;
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.domain.Movie;
@@ -16,10 +12,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.util.logging.Level;
 
-/**
- *
- * @author vasko
- */
 public class MetadataReader {
     private static final BatchLogger LOG = BatchLogger.getLogger(MetadataReader.class.getName());
 
@@ -44,11 +36,9 @@ public class MetadataReader {
         }
 
         MovieBox moov = isoFile.getMovieBox();
-        for (Box b : moov.getBoxes()) {
-            if ("udta".equals(b.getType())) {
-                processUserData((UserDataBox) b);
-            }
-        }
+        moov.getBoxes().stream().filter(b -> "udta".equals(b.getType())).forEach(b -> {
+            processUserData((UserDataBox) b);
+        });
         try {
             isoFile.close();
         } catch (IOException ex) {
@@ -57,19 +47,15 @@ public class MetadataReader {
     }
 
     private void processUserData(final UserDataBox box) {
-        for (Box subBox : box.getBoxes()) {
-            if ("meta".equals(subBox.getType())) {
-                processMetaBox((MetaBox) subBox);
-            }
-        }
+        box.getBoxes().stream().filter(subBox -> "meta".equals(subBox.getType())).forEach(subBox -> {
+            processMetaBox((MetaBox) subBox);
+        });
     }
 
     private void processMetaBox(final MetaBox box) {
-        for (Box subBox : box.getBoxes()) {
-            if ("ilst".equals(subBox.getType())) {
-                processAppleBox((AppleItemListBox) subBox);
-            }
-        }
+        box.getBoxes().stream().filter(subBox -> "ilst".equals(subBox.getType())).forEach(subBox -> {
+            processAppleBox((AppleItemListBox) subBox);
+        });
     }
 
     private void processAppleBox(final AppleItemListBox box) {
@@ -125,9 +111,9 @@ public class MetadataReader {
         String data;
         Charset charset = Charset.forName("UTF-8");
         CharsetDecoder decoder = charset.newDecoder();
-        
+
         buffer.rewind();
-        
+
         try {
             buffer.position(16);
         } catch (IllegalArgumentException ex) {
@@ -142,7 +128,7 @@ public class MetadataReader {
             LOG.log(Level.SEVERE, "Cannot decode string data for box " + box.getType(), e);
             return "";
         }
-        
+
         if (data.contains("data")) {
             data = data.substring(data.indexOf("data") + 4).trim();
         }

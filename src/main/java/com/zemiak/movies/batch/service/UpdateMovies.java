@@ -6,17 +6,13 @@ import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-/**
- *
- * @author vasko
- */
 @Stateless
 public class UpdateMovies {
     private static final Logger LOG = Logger.getLogger(UpdateMovies.class.getName());
-    
+
     @Inject
-    BatchRunner runner;
-    
+    private BatchRunner runner;
+
     @Schedule(dayOfWeek="*", hour="03", minute="10")
     public void start() {
         if (runner.isUpdateMoviesRunning()) {
