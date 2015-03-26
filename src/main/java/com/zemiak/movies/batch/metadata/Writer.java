@@ -30,6 +30,11 @@ public class Writer extends AbstractItemWriter {
     public void writeItems(final List list) throws Exception {
         list.stream().filter(obj -> null != obj).forEach(obj -> {
             MovieMetadata data = (MovieMetadata) obj;
+
+            if (null != data.getMovie().getSerieId()) {
+                data.getMovie().setDisplayOrder(service.getNiceDisplayOrder(data.getMovie()));
+            }
+
             String fileName = path + data.getMovie().getFileName();
             updateName(fileName, data);
             updateGenre(fileName, data);

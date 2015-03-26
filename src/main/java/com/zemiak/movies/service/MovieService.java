@@ -146,4 +146,30 @@ public class MovieService {
 
         save(bean);
     }
+
+    private class Counter {
+        private Integer i = 0;
+
+        public Integer get() {
+            return i;
+        }
+
+        public void inc() {
+            this.i++;
+        }
+    }
+
+    public Integer getNiceDisplayOrder(Movie movie) {
+        final Counter i = new Counter();
+
+        em.createQuery("SELECT l FROM Movie l WHERE l.serieId = :serie ORDER BY l.displayOrder", Movie.class)
+            .setParameter("serie", movie.getSerieId()).getResultList().stream()
+                .peek(m -> {
+                    i.inc();
+                })
+                .filter(m -> m.getId().equals(movie.getId()))
+                .findFirst();
+
+        return i.get();
+    }
 }
