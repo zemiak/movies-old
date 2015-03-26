@@ -22,20 +22,20 @@
                 
                 <ui:repeat var="item" value="#{serieWebService.byGenreId}">
                     <div class="movie-box serie-box">
-                        <a href="serie.xhtml?id=${item.id}">
-                            <img class="movie-thumbnail" alt="${item.name} Thumbnail"
-                                src="/movies/images/serie/${item.pictureFileName}" />
-                            <p class="movie-label">${item.name}</p>
+                        <a href="serie.xhtml?#{id=item.id}">
+                            <img class="movie-thumbnail" alt="item.name} Thumbnail"
+                                src="/movies/images/serie/#{item.id}" />
+                            <p class="movie-label">#{item.name}</p>
                         </a>
                     </div>
                 </ui:repeat>
                 
                 <ui:repeat var="item" value="#{movieWebService.byGenreId}">
                     <div class="movie-box">
-                        <a href="movie.xhtml?id=${item.id}">
-                            <img class="movie-thumbnail" alt="${item.name} Thumbnail"
-                                src="/movies/images/movie/${item.pictureFileName}" />
-                            <p class="movie-label">${item.name}</p>
+                        <a href="movie.xhtml?id=#{item.id}">
+                            <img class="movie-thumbnail" alt="#{item.name} Thumbnail"
+                                src="/movies/images/movie/#{item.id}" />
+                            <p class="movie-label">#{item.name}</p>
                         </a>
                     </div>
                 </ui:repeat>

@@ -6,11 +6,11 @@
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU Lesser General Public License as published by the Free Software Foundation, either version 3
  * of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License along with this library.
  * If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,17 +20,12 @@ package com.zemiak.movies.servlet;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.lookup.CDILookup;
 import com.zemiak.movies.service.MovieService;
-import java.io.Closeable;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.RandomAccessFile;
+import java.io.*;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.zip.GZIPOutputStream;
-
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
@@ -73,20 +68,20 @@ public class StreamingServlet extends HttpServlet {
             throws IOException
     {
         Integer movieId;
-        
+
         try {
-            movieId = Integer.valueOf(request.getPathInfo());
+            movieId = Integer.valueOf(request.getPathInfo().substring(1));
         } catch (NumberFormatException ex) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Invalid movie ID number");
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Invalid movie ID number: " + request.getPathInfo());
             return;
         }
-        
+
         Movie movie = service.find(movieId);
         if (null == movie) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Movie ID not found");
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Movie ID not found: " + movieId);
             return;
         }
-        
+
         String requestedFile = Paths.get(basePath, movie.getFileName()).toString();
 
         File file = new File(requestedFile);
@@ -95,7 +90,7 @@ public class StreamingServlet extends HttpServlet {
         if (!file.exists()) {
             // Do your thing if the file appears to be non-existing.
             // Throw an exception, or send 404, or show default/warning page, or just ignore it.
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Movie file does not exist");
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Movie file does not exist: " + requestedFile);
             return;
         }
 
@@ -220,7 +215,7 @@ public class StreamingServlet extends HttpServlet {
             String acceptEncoding = request.getHeader("Accept-Encoding");
             acceptsGzip = acceptEncoding != null && accepts(acceptEncoding, "gzip");
             contentType += ";charset=UTF-8";
-        } 
+        }
 
         // Else, expect for images, determine content disposition. If content type is supported by
         // the browser, then set to inline, else attachment which will pop a 'save as' dialogue.

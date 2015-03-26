@@ -33,7 +33,7 @@
                     <div class="small-8 columns">
                         <label>Name:
                             <input type="text" id="name" name="name" jsf:id="name" 
-                                   jsf:value="${genreEditForm.bean.name}" label="Name"
+                                   jsf:value="#{genreEditForm.bean.name}" label="Name"
                                    placeholder="Enter Genre Name" jsf:required="true" />
                         </label>
                         <h:message for="name" class="error" />
@@ -77,8 +77,8 @@
                 
                 <div class="row">
                     <div class="small-6 columns">
-                        <img alt="${genreEditForm.bean.name} Thumbnail"
-                                src="/movies/images/genre/${genreEditForm.bean.pictureFileName}" />
+                        <img alt="#{genreEditForm.bean.name} Thumbnail"
+                                src="/movies/images/genre/#{genreEditForm.bean.id}" />
                     </div>
                 </div>
                 

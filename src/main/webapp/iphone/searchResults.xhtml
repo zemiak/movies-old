@@ -23,14 +23,14 @@
             <ul id="main" title="#{searchWebService.title}" selected="true">
                 <ui:repeat var="item" value="#{searchWebService.series}">
                     <li>
-                        <img src="/movies/images/serie/#{item.pictureFileName}" align="left" class="movies-thumbnail" />
+                        <img src="/movies/images/serie/#{item.id}" align="left" class="movies-thumbnail" />
                         <a href="serie.xhtml?id=#{item.id}" target="_self">*#{item.name}</a>
                     </li>
                 </ui:repeat>
                 
                 <ui:repeat var="item" value="#{searchWebService.movies}">
                     <li>
-                        <img src="/movies/images/movie/#{item.pictureFileName}" align="left" class="movies-thumbnail" />
+                        <img src="/movies/images/movie/#{item.id}" align="left" class="movies-thumbnail" />
                         <a href="/movies/stream/#{item.id}" target="_self">#{item.name}</a>
                     </li>
                 </ui:repeat>

@@ -22,7 +22,7 @@
                         <i class="fi-arrow-left movies-back-icon" style="font-size: 4em;"></i>
                     </a>
                     
-                    <a href="javascript:window.open('${movieWebService.movie.url}');"
+                    <a href="javascript:window.open('#{movieWebService.movie.url}');"
                         class="small button" id="url" name="url"
                         jsf:rendered="#{!movieWebService.movie.urlEmpty}">
                         Info
@@ -32,8 +32,8 @@
                 <div class="small-11 columns">
                     <center>
                         <video id="my_video" controls=""
-                               preload="auto" poster="/images/movie/${movieWebService.movie.pictureFileName}">
-                            <source src="/movies/stream/${movieWebService.movie.id}" type='video/mp4'></source>
+                               preload="auto" poster="/movies/images/movie/#{movieWebService.movie.id}">
+                            <source src="/movies/stream/#{movieWebService.movie.id}" type='video/mp4'></source>
                         </video>
                     </center>
                 </div>
@@ -49,34 +49,34 @@
                 <div class="row">
                     <div class="small-4 columns">
                         <label>Genre</label>
-                        <input type="text" value="${movieWebService.movie.genreId.name}" readonly="true" />
+                        <input type="text" value="#{movieWebService.movie.genreId.name}" readonly="true" />
                     </div>
 
                     <div class="small-4 columns">
                         <label>Serie</label>
-                        <input type="text" value="${movieWebService.movie.serieName}" readonly="true" />
+                        <input type="text" value="#{movieWebService.movie.serieName}" readonly="true" />
                     </div>
 
                     <div class="small-4 columns">
                         <label>Language</label>
-                        <input type="text" value="${movieWebService.movie.languageName}" readonly="true" />
+                        <input type="text" value="#{movieWebService.movie.languageName}" readonly="true" />
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="small-4 columns">
                         <label>Original Language</label>
-                        <input type="text" value="${movieWebService.movie.originalLanguageName}" readonly="true" />
+                        <input type="text" value="#{movieWebService.movie.originalLanguageName}" readonly="true" />
                     </div>
 
                     <div class="small-4 columns">
                         <label>Subtitles</label>
-                        <input type="text" value="${movieWebService.movie.subtitlesName}" readonly="true" />
+                        <input type="text" value="#{movieWebService.movie.subtitlesName}" readonly="true" />
                     </div>
 
                     <div class="small-4 columns">
                         <label>Original Name</label>
-                        <input type="text" value="${movieWebService.movie.originalName}" readonly="true" />
+                        <input type="text" value="#{movieWebService.movie.originalName}" readonly="true" />
                     </div>
                 </div>
             </form>
