@@ -1,6 +1,5 @@
 package com.zemiak.movies.batch.service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class CommandLineResult {
     }
 
     public void setOutput(List<String> output) {
-        this.output = new ArrayList<>(output);
+        this.output = output;
     }
 
     public boolean isError() {

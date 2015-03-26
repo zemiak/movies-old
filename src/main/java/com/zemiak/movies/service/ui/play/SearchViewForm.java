@@ -65,11 +65,11 @@ public class SearchViewForm implements Serializable {
     }
 
     public List<Serie> getSeries() {
-        return Collections.unmodifiableList(series);
+        return series;
     }
 
     public List<Movie> getMovies() {
-        return Collections.unmodifiableList(movies);
+        return movies;
     }
 
     public String getTitle() {

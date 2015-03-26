@@ -55,7 +55,7 @@ public class ManagedSerieInfo {
     }
 
     public Set<Integer> getRange() {
-        return Collections.unmodifiableSet(range);
+        return range;
     }
 
     public void setRange(Set<Integer> range) {

@@ -6,7 +6,6 @@ import com.zemiak.movies.service.description.Csfd;
 import com.zemiak.movies.service.description.Imdb;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class UrlController implements Serializable {
@@ -24,7 +23,7 @@ public class UrlController implements Serializable {
 
     public List<UrlDTO> getItems() {
         reloadItems();
-        return Collections.unmodifiableList(items);
+        return items;
     }
 
     public void reloadItems() {
