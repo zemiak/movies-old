@@ -1,59 +1,13 @@
 connect
 
 ###
-# Remove Database Connection
+# Remove Database and Mail Connection
 ###
+
 if (outcome == success) of /subsystem=datasources/data-source=ZemiakMovies/:read-resource
     /subsystem=datasources/data-source=ZemiakMovies/:disable
     reload
     /subsystem=datasources/data-source=ZemiakMovies/:remove
-end-if
-
-###
-# Remove JNDI strings
-###
-if (outcome == success) of /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.ffmpeg:read-attribute(name=value)
-    /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.ffmpeg:remove
-end-if
-
-if (outcome == success) of /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.path:read-attribute(name=value)
-    /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.path:remove
-end-if
-
-if (outcome == success) of /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.imgPath:read-attribute(name=value)
-    /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.imgPath:remove
-end-if
-
-if (outcome == success) of /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.mp4tags:read-attribute(name=value)
-    /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.mp4tags:remove
-end-if
-
-if (outcome == success) of /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.mp4info:read-attribute(name=value)
-    /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.mp4info:remove
-end-if
-
-if (outcome == success) of /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.mailFrom:read-attribute(name=value)
-    /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.mailFrom:remove
-end-if
-
-if (outcome == success) of /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.mailTo:read-attribute(name=value)
-    /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.mailTo:remove
-end-if
-
-if (outcome == success) of /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.mailSubject:read-attribute(name=value)
-    /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.mailSubject:remove
-end-if
-
-if (outcome == success) of /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.backendUrl:read-attribute(name=value)
-    /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.backendUrl:remove
-end-if
-
-if (outcome == success) of /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.imgServer:read-attribute(name=value)
-    /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.imgServer:remove
-end-if
-
-if (outcome == success) of /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.playServer:read-attribute(name=value)
-    /subsystem=naming/binding=java\:jboss\/com.zemiak.movies.playServer:remove
 end-if
 
 if (outcome == success) of /subsystem=mail/mail-session=MoviesMail/:read-attribute(name=jndi-name)

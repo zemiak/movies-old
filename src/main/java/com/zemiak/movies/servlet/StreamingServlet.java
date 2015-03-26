@@ -17,13 +17,15 @@
 
 package com.zemiak.movies.servlet;
 
+import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.lookup.CDILookup;
+import com.zemiak.movies.service.MovieService;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
-import java.net.URLDecoder;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,90 +33,69 @@ import java.util.zip.GZIPOutputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * A file servlet supporting resume of downloads and client-side caching and GZIP of text content.
- * This servlet can also be used for images, client-side caching would become more efficient.
- * This servlet can also be used for text files, GZIP would decrease network bandwidth.
- *
- * @author BalusC
- * @link http://balusc.blogspot.com/2009/02/fileservlet-supporting-resume-and.html
- */
+@WebServlet(urlPatterns = {"/stream/*"})
 public class StreamingServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
     private static final int DEFAULT_BUFFER_SIZE = 10240; // ..bytes = 10KB.
     private static final long DEFAULT_EXPIRE_TIME = 604800000L; // ..ms = 1 week.
     private static final String MULTIPART_BOUNDARY = "MULTIPART_BYTERANGES";
 
     private String basePath;
+    private MovieService service;
 
-    /**
-     * Initialize the servlet.
-     * @see HttpServlet#init().
-     */
     @Override
     public void init() throws ServletException {
         this.basePath = new CDILookup().lookup(ServletConfiguration.class).getPath();
+        this.service = new CDILookup().lookup(MovieService.class);
     }
 
-    /**
-     * Process HEAD request. This returns the same headers as GET request, but without content.
-     * @see HttpServlet#doHead(HttpServletRequest, HttpServletResponse).
-     */
     @Override
     protected void doHead(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException
     {
-        // Process request without content.
         processRequest(request, response, false);
     }
 
-    /**
-     * Process GET request.
-     * @see HttpServlet#doGet(HttpServletRequest, HttpServletResponse).
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException
     {
-        // Process request with content.
         processRequest(request, response, true);
     }
 
-    /**
-     * Process the actual request.
-     * @param request The request to be processed.
-     * @param response The response to be created.
-     * @param content Whether the request body should be written (GET) or not (HEAD).
-     * @throws IOException If something fails at I/O level.
-     */
     private void processRequest
         (HttpServletRequest request, HttpServletResponse response, boolean content)
             throws IOException
     {
-        // Validate the requested file ------------------------------------------------------------
-
-        // Get requested file by path info.
-        String requestedFile = request.getPathInfo();
-
-        // Check if file is actually supplied to the request URL.
-        if (requestedFile == null) {
-            // Do your thing if the file is not supplied to the request URL.
-            // Throw an exception, or send 404, or show default/warning page, or just ignore it.
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        Integer movieId;
+        
+        try {
+            movieId = Integer.valueOf(request.getPathInfo());
+        } catch (NumberFormatException ex) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Invalid movie ID number");
             return;
         }
+        
+        Movie movie = service.find(movieId);
+        if (null == movie) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Movie ID not found");
+            return;
+        }
+        
+        String requestedFile = Paths.get(basePath, movie.getFileName()).toString();
 
-        // URL-decode the file name (might contain spaces and on) and prepare file object.
-        File file = new File(basePath, URLDecoder.decode(requestedFile, "UTF-8"));
+        File file = new File(requestedFile);
 
         // Check if file actually exists in filesystem.
         if (!file.exists()) {
             // Do your thing if the file appears to be non-existing.
             // Throw an exception, or send 404, or show default/warning page, or just ignore it.
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Movie file does not exist");
             return;
         }
 
@@ -148,19 +129,15 @@ public class StreamingServlet extends HttpServlet {
         }
 
 
-        // Validate request headers for resume ----------------------------------------------------
-
-        // If-Match header should contain "*" or ETag. If not, then return 412.
         String ifMatch = request.getHeader("If-Match");
         if (ifMatch != null && !matches(ifMatch, eTag)) {
-            response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED);
+            response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED, "If-Match header should contain \"*\" or ETag. If not, then return 412.");
             return;
         }
 
-        // If-Unmodified-Since header should be greater than LastModified. If not, then return 412.
         long ifUnmodifiedSince = request.getDateHeader("If-Unmodified-Since");
         if (ifUnmodifiedSince != -1 && ifUnmodifiedSince + 1000 <= lastModified) {
-            response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED);
+            response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED, "If-Unmodified-Since header should be greater than LastModified. If not, then return 412.");
             return;
         }
 
@@ -175,10 +152,9 @@ public class StreamingServlet extends HttpServlet {
         String range = request.getHeader("Range");
         if (range != null) {
 
-            // Range header should match format "bytes=n-n,n-n,n-n...". If not, then return 416.
             if (!range.matches("^bytes=\\d*-\\d*(,\\d*-\\d*)*$")) {
                 response.setHeader("Content-Range", "bytes */" + length); // Required in 416.
-                response.sendError(HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE);
+                response.sendError(HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE, "Range header should match format \"bytes=n-n,n-n,n-n...\". If not, then return 416.");
                 return;
             }
 
@@ -211,10 +187,9 @@ public class StreamingServlet extends HttpServlet {
                         end = length - 1;
                     }
 
-                    // Check if Range is syntactically valid. If not, then return 416.
                     if (start > end) {
                         response.setHeader("Content-Range", "bytes */" + length); // Required in 416.
-                        response.sendError(HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE);
+                        response.sendError(HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE, "Check if Range is syntactically valid. If not, then return 416.");
                         return;
                     }
 
@@ -339,7 +314,6 @@ public class StreamingServlet extends HttpServlet {
                 }
             }
         } finally {
-            // Gently close streams.
             close(output);
             close(input);
         }
@@ -385,14 +359,6 @@ public class StreamingServlet extends HttpServlet {
         return (substring.length() > 0) ? Long.parseLong(substring) : -1;
     }
 
-    /**
-     * Copy the given byte range of the given input to the given output.
-     * @param input The input to copy the given range to the given output for.
-     * @param output The output to copy the given range from the given input for.
-     * @param start Start of the byte range.
-     * @param length Length of the byte range.
-     * @throws IOException If something fails at I/O level.
-     */
     private static void copy(RandomAccessFile input, OutputStream output, long start, long length)
         throws IOException
     {
@@ -420,10 +386,6 @@ public class StreamingServlet extends HttpServlet {
         }
     }
 
-    /**
-     * Close the given resource.
-     * @param resource The resource to be closed.
-     */
     private static void close(Closeable resource) {
         if (resource != null) {
             try {
@@ -435,9 +397,6 @@ public class StreamingServlet extends HttpServlet {
         }
     }
 
-    /**
-     * This class represents a byte range.
-     */
     protected class Range {
         long start;
         long end;

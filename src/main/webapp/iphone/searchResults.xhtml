@@ -31,7 +31,7 @@
                 <ui:repeat var="item" value="#{searchWebService.movies}">
                     <li>
                         <img src="/movies/images/movie/#{item.pictureFileName}" align="left" class="movies-thumbnail" />
-                        <a href="#{configWebService.playServer}?id=#{item.id}" target="_self">#{item.name}</a>
+                        <a href="/movies/stream/#{item.id}" target="_self">#{item.name}</a>
                     </li>
                 </ui:repeat>
             </ul>

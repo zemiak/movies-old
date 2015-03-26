@@ -33,7 +33,7 @@
                     <center>
                         <video id="my_video" controls=""
                                preload="auto" poster="/images/movie/${movieWebService.movie.pictureFileName}">
-                            <source src="${configWebService.playServer}?id=${movieWebService.movie.id}" type='video/mp4'></source>
+                            <source src="/movies/stream/${movieWebService.movie.id}" type='video/mp4'></source>
                         </video>
                     </center>
                 </div>
