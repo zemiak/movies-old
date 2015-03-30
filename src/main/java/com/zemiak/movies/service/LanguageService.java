@@ -8,7 +8,7 @@ import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.validation.ValidationException;
 
 @Stateless
@@ -17,7 +17,7 @@ public class LanguageService {
     private EntityManager em;
 
     public List<Language> all() {
-        Query query = em.createQuery("SELECT l FROM Language l ORDER by l.displayOrder");
+        TypedQuery<Language> query = em.createQuery("SELECT l FROM Language l ORDER by l.displayOrder", Language.class);
 
         return query.getResultList();
     }

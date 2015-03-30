@@ -10,6 +10,7 @@ import javax.enterprise.event.Observes;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 import javax.validation.constraints.NotNull;
@@ -20,7 +21,7 @@ public class GenreService {
     private EntityManager em;
 
     public List<Genre> all() {
-        Query query = em.createQuery("SELECT l FROM Genre l ORDER by l.displayOrder");
+        TypedQuery<Genre> query = em.createQuery("SELECT l FROM Genre l ORDER by l.displayOrder", Genre.class);
 
         return query.getResultList();
     }

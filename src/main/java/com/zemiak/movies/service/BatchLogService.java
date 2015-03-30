@@ -7,7 +7,7 @@ import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 @Stateless
 public class BatchLogService {
@@ -15,7 +15,7 @@ public class BatchLogService {
     private EntityManager em;
 
     public List<BatchLog> all() {
-        Query query = em.createNamedQuery("BatchLog.findAll");
+        TypedQuery<BatchLog> query = em.createNamedQuery("BatchLog.findAll", BatchLog.class);
 
         return query.getResultList();
     }

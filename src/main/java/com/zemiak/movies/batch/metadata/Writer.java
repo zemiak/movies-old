@@ -32,7 +32,7 @@ public class Writer extends AbstractItemWriter {
             MovieMetadata data = (MovieMetadata) obj;
 
             if (null != data.getMovie().getSerieId()) {
-                data.getMovie().setDisplayOrder(service.getNiceDisplayOrder(data.getMovie()));
+                data.setNiceDisplayOrder(service.getNiceDisplayOrder(data.getMovie()));
             }
 
             String fileName = path + data.getMovie().getFileName();

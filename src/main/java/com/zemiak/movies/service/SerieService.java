@@ -10,7 +10,7 @@ import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.validation.ValidationException;
 
 @Stateless
@@ -19,7 +19,7 @@ public class SerieService {
     private EntityManager em;
 
     public List<Serie> all() {
-        Query query = em.createQuery("SELECT l FROM Serie l ORDER by l.displayOrder");
+        TypedQuery<Serie> query = em.createQuery("SELECT l FROM Serie l ORDER by l.displayOrder", Serie.class);
 
         return query.getResultList();
     }

@@ -15,27 +15,27 @@ public class MovieService {
     private EntityManager em;
 
     public List<Movie> all() {
-        Query query = em.createQuery("SELECT l FROM Movie l ORDER BY l.genreId, l.serieId, l.displayOrder");
+        TypedQuery<Movie> query = em.createQuery("SELECT l FROM Movie l ORDER BY l.genreId, l.serieId, l.displayOrder", Movie.class);
 
         return query.getResultList();
     }
 
     public List<Movie> getNewMovies() {
-        Query query = em.createQuery("SELECT l FROM Movie l WHERE (l.genreId = :genreNew1 OR l.genreId IS NULL) ORDER BY l.genreId, l.serieId, l.displayOrder");
+        TypedQuery<Movie> query = em.createQuery("SELECT l FROM Movie l WHERE (l.genreId = :genreNew1 OR l.genreId IS NULL) ORDER BY l.genreId, l.serieId, l.displayOrder", Movie.class);
         query.setParameter("genreNew1", em.find(Genre.class, 0));
 
         return query.getResultList();
     }
 
     public List<Movie> getSerieMovies(Serie serie) {
-        Query query = em.createQuery("SELECT l FROM Movie l WHERE l.serieId IS NULL OR l.serieId = :serie ORDER BY l.genreId, l.serieId, l.displayOrder");
+        TypedQuery<Movie> query = em.createQuery("SELECT l FROM Movie l WHERE l.serieId IS NULL OR l.serieId = :serie ORDER BY l.genreId, l.serieId, l.displayOrder", Movie.class);
         query.setParameter("serie", serie);
 
         return query.getResultList();
     }
 
     public List<Movie> getGenreMovies(Genre genre) {
-        Query query = em.createQuery("SELECT l FROM Movie l WHERE l.genreId IS NULL OR l.genreId = :genre ORDER by l.genreId, l.serieId, l.displayOrder");
+        TypedQuery<Movie> query = em.createQuery("SELECT l FROM Movie l WHERE l.genreId IS NULL OR l.genreId = :genre ORDER by l.genreId, l.serieId, l.displayOrder", Movie.class);
         query.setParameter("genre", genre);
 
         return query.getResultList();
@@ -159,17 +159,20 @@ public class MovieService {
         }
     }
 
-    public Integer getNiceDisplayOrder(Movie movie) {
+    public String getNiceDisplayOrder(Movie movie) {
         final Counter i = new Counter();
 
-        em.createQuery("SELECT l FROM Movie l WHERE l.serieId = :serie ORDER BY l.displayOrder", Movie.class)
-            .setParameter("serie", movie.getSerieId()).getResultList().stream()
+        List<Movie> list = em.createQuery("SELECT l FROM Movie l WHERE l.serieId = :serie ORDER BY l.displayOrder", Movie.class)
+            .setParameter("serie", movie.getSerieId()).getResultList();
+        int count = list.size();
+        
+        list.stream()
                 .peek(m -> {
                     i.inc();
                 })
                 .filter(m -> m.getId().equals(movie.getId()))
                 .findFirst();
 
-        return i.get();
+        return String.format("%0" + String.valueOf(count).length() + "d", i.get());
     }
 }

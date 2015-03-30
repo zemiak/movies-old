@@ -19,6 +19,7 @@ public class MovieMetadata {
     private String genre;
     private String year;
     private String comments;
+    private String niceDisplayOrder;
 
     private Movie movie;
 
@@ -194,10 +195,20 @@ public class MovieMetadata {
     }
 
     public String getMovieName() {
-        if (null != movie.getSerieId() && null != movie.getDisplayOrder()) {
-            return movie.getDisplayOrder() + " " + movie.getName();
+        if (null != niceDisplayOrder) {
+            return niceDisplayOrder + " " + movie.getName();
         }
 
         return movie.getName();
     }
+
+    public String getNiceDisplayOrder() {
+        return niceDisplayOrder;
+    }
+
+    public void setNiceDisplayOrder(String niceDisplayOrder) {
+        this.niceDisplayOrder = niceDisplayOrder;
+    }
+    
+    
 }
