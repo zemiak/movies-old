@@ -6,7 +6,7 @@
         <string>com.zemiak.movies.sync-itunes</string>
         <key>ProgramArguments</key>
         <array>
-            <string>/Users/vasko/bin/sync-itunes.bash</string>
+            <string>/Users/vasko/bin/sync-itunes.sh</string>
         </array>
         <key>WorkingDirectory</key>
         <string>/Users/vasko</string>
