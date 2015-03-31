@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
     <dict>
-        <key>Synchronize iTunes Movies</key>
+        <key>Label</key>
         <string>com.zemiak.movies.sync-itunes</string>
         <key>ProgramArguments</key>
         <array>
@@ -10,12 +10,18 @@
         </array>
         <key>WorkingDirectory</key>
         <string>/Users/vasko</string>
+	<key>StandardOutPath</key>
+	<string>/Users/vasko/bin/sync-itunes.log</string>
+	<key>StandardErrorPath</key>
+	<string>/Users/vasko/bin/sync-itunes.log</string>
+	<key>Debug</key>
+	<true/>
         <key>StartCalendarInterval</key>
         <dict>
             <key>Hour</key>
-            <integer>4</interval>
+            <integer>4</integer>
             <key>Minute</key>
-            <integer>30</interval>
+            <integer>30</integer>
         </dict>
     </dict>
 </plist>

@@ -1,42 +1,48 @@
 tell application "iTunes"
 	-- start it
 	activate
-	
-	-- work with all movies
-	reveal (some playlist whose special kind is Movies)
-	set theMoviesPlayList to (get some playlist whose special kind is Movies)
-	set these_tracks to (tracks of theMoviesPlayList)
-	
-	-- delete all movies
-	repeat with t in these_tracks
-		try
-			delete t
-		on error errMsg
-		end try
-	end repeat
 end tell
+
+-- show Home Videos
+delay 0.5
+set timeoutSeconds to 2.0
+set uiScript to "click menu bar item \"View\" of menu bar 1 of application process \"iTunes\"" -- View
+my doWithTimeout(uiScript, timeoutSeconds)
+
+delay 0.5
+set uiScript to "click menu item 2 of menu 1 of menu bar item \"View\" of menu bar 1 of application process \"iTunes\"" -- Movies
+my doWithTimeout(uiScript, timeoutSeconds)
+
+delay 0.5
+set uiScript to "keystroke \"a\" using {command down}" -- press Apple+A (select All)
+my doWithTimeout(uiScript, timeoutSeconds)
+
+delay 0.5
+set uiScript to "key code 51" -- delete
+my doWithTimeout(uiScript, timeoutSeconds)
+
+delay 0.5
+set uiScript to "key code 36" -- enter
+my doWithTimeout(uiScript, timeoutSeconds)
+
 
 -- Click the “File” menu.
 delay 0.5
-set timeoutSeconds to 2.0
 set uiScript to "click menu bar item \"File\" of menu bar 1 of application process \"iTunes\""
 my doWithTimeout(uiScript, timeoutSeconds)
 
 -- Add to Library…
 delay 0.5
-set timeoutSeconds to 2.0
 set uiScript to "click menu item 5 of menu 1 of menu bar item \"File\" of menu bar 1 of application process \"iTunes\""
 my doWithTimeout(uiScript, timeoutSeconds)
 
--- Press ⇧⌘G
+-- Press Shift Apple G (goto folder)
 delay 0.5
-set timeoutSeconds to 2.0
 set uiScript to "keystroke \"g\" using {shift down, command down}"
 my doWithTimeout(uiScript, timeoutSeconds)
 
 -- Type '/Volumes/media/Movies/'
 delay 0.5
-set timeoutSeconds to 2.0
 set uiScript to "keystroke \"/Volumes/media/Movies/\""
 my doWithTimeout(uiScript, timeoutSeconds)
 
