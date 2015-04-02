@@ -1,6 +1,6 @@
 var DataTablesExt = {
     editClick: function() {
-        var tt = TableTools.fnGetInstance(divId);
+        var tt = TableTools.fnGetInstance("grid");
         var rows = tt.fnGetSelectedData();
         var id = 1 !== rows.length ? null : rows[0].id;
     

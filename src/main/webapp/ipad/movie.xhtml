@@ -27,6 +27,8 @@
                         jsf:rendered="#{!movieViewForm.movie.urlEmpty}">
                         Info
                     </a>
+                    
+                    <input type="hidden" value="#{movieViewForm.movie.url}" id="urlValue" />
                 </div>
                 
                 <div class="small-11 columns">
@@ -80,6 +82,8 @@
                     </div>
                 </div>
             </form>
+            
+            <script type="text/javascript" src="movie.js"></script>
         </ui:define>
     </ui:composition>
 </html>
