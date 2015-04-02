@@ -7,8 +7,8 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 @Stateless
-public class UpdateMovies {
-    private static final Logger LOG = Logger.getLogger(UpdateMovies.class.getName());
+public class UpdateMoviesScheduler {
+    private static final Logger LOG = Logger.getLogger(UpdateMoviesScheduler.class.getName());
 
     @Inject
     private BatchRunner runner;
