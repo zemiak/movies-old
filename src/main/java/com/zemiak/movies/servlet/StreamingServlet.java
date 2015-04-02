@@ -206,7 +206,11 @@ public class StreamingServlet extends HttpServlet {
         // For all content types, see: http://www.w3schools.com/media/media_mimeref.asp
         // To add new content types, add new mime-mapping entry in web.xml.
         if (contentType == null) {
-            contentType = "application/octet-stream";
+            if (fileName.toLowerCase().endsWith("mp4") || fileName.toLowerCase().endsWith("m4v")) {
+                contentType = "video/mp4";
+            } else {
+                contentType = "application/octet-stream";
+            }
         }
 
         // If content type is text, then determine whether GZIP content encoding is supported by

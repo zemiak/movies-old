@@ -32,12 +32,10 @@
                 </div>
                 
                 <div class="small-11 columns">
-                    <center>
-                        <video id="my_video" controls=""
-                               preload="auto" poster="/movies/images/movie/#{movieViewForm.movie.id}">
-                            <source src="/movies/stream/#{movieViewForm.movie.id}" type='video/mp4'></source>
-                        </video>
-                    </center>
+                    <video id="my_video" controls="true" width="80%" height="100%"
+                           preload="true" poster="/movies/images/movie/#{movieViewForm.movie.id}"
+                           src="/movies/stream/#{movieViewForm.movie.id}" type="video/mp4">
+                    </video>
                 </div>
             </div>
             
