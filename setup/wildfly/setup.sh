@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MAC=/Users/vasko/bin/wildfly8/
-LINUX=/home/wildfly/wildfly8/
+LINUX=/home/vasko/bin/wildfly8/
 WINDOWS=/e/Java/wildfly8/
 
 if [ -d "$JBOSS_HOME" ]
