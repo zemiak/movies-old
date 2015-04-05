@@ -23,12 +23,11 @@ public class Processor implements ItemProcessor {
         final String fileName = file.getAbsolutePath();
         final Movie movie = service.findByFilename(fileName.substring(path.length()));
 
-        String imageName = imgPath + file.getName();
-        imageName = imageName.substring(0, imageName.lastIndexOf(".")) + ".jpg";
+        String imageName = imgPath + movie.getPictureFileName();
         boolean exists = (new File(imageName).exists());
 
         if (! exists) {
-            LOG.log(Level.INFO, "Will generate thumbnail for {0}", movie);
+            LOG.log(Level.INFO, "Will generate thumbnail for {0}: {1}", new Object[]{movie.getFileName(), imageName});
         }
 
         return (exists ? null : movie);

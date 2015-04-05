@@ -3,7 +3,6 @@ package com.zemiak.movies.batch.thumbnail;
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.service.thumbnail.ThumbnailReader;
-import java.io.File;
 import java.util.List;
 import javax.batch.api.chunk.AbstractItemWriter;
 import javax.inject.Inject;
@@ -23,13 +22,8 @@ public class Writer extends AbstractItemWriter {
     public void writeItems(List list) throws Exception {
         ((List<Movie>) list)
                 .stream()
-                .filter(movie -> !thumbnailExists(movie))
                 .forEach(movie -> {
                     new ThumbnailReader(imgPath, ffmpeg).process(movie);
                 });
-    }
-
-    private boolean thumbnailExists(final Movie movie) {
-        return new File(new ThumbnailReader(imgPath, ffmpeg).getImageFileName(movie)).isFile();
     }
 }
