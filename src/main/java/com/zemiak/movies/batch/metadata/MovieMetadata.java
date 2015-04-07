@@ -149,7 +149,9 @@ public class MovieMetadata {
             return false;
         }
 
-        return name == null || name.equals(getMovieName());
+        String shouldBeName = getMovieName();
+
+        return name == null || name.equals(shouldBeName);
     }
 
     public boolean isGenreEqual() {
@@ -167,7 +169,8 @@ public class MovieMetadata {
             ret = false;
 
             if (debug) {
-                LOG.log(Level.INFO, "{0}: isMetadataEqual: Name is not equal", movie.getFileName());
+                LOG.log(Level.INFO, "{0}: isMetadataEqual: Name is not equal. Is \"{1}\", should be \"{2}\"",
+                        new Object[]{movie.getFileName(), name, getMovieName()});
             }
         }
 
@@ -175,7 +178,8 @@ public class MovieMetadata {
             ret = false;
 
             if (debug) {
-                LOG.log(Level.INFO, "{0}: isMetadataEqual: Genre is not equal", movie.getFileName());
+                LOG.log(Level.INFO, "{0}: isMetadataEqual: Genre is not equal. Is \"{1}\", should be \"{2}\"",
+                        new Object[]{movie.getFileName(), genre, movie.composeGenreName()});
             }
         }
 
@@ -209,6 +213,6 @@ public class MovieMetadata {
     public void setNiceDisplayOrder(String niceDisplayOrder) {
         this.niceDisplayOrder = niceDisplayOrder;
     }
-    
-    
+
+
 }

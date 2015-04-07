@@ -15,27 +15,27 @@ public class MovieService {
     private EntityManager em;
 
     public List<Movie> all() {
-        TypedQuery<Movie> query = em.createQuery("SELECT l FROM Movie l ORDER BY l.genreId, l.serieId, l.displayOrder", Movie.class);
+        TypedQuery<Movie> query = em.createQuery("SELECT l FROM Movie l ORDER BY l.genre, l.serie, l.displayOrder", Movie.class);
 
         return query.getResultList();
     }
 
     public List<Movie> getNewMovies() {
-        TypedQuery<Movie> query = em.createQuery("SELECT l FROM Movie l WHERE (l.genreId = :genreNew1 OR l.genreId IS NULL) ORDER BY l.genreId, l.serieId, l.displayOrder", Movie.class);
+        TypedQuery<Movie> query = em.createQuery("SELECT l FROM Movie l WHERE (l.genre = :genreNew1 OR l.genre IS NULL) ORDER BY l.genre, l.serie, l.displayOrder", Movie.class);
         query.setParameter("genreNew1", em.find(Genre.class, 0));
 
         return query.getResultList();
     }
 
     public List<Movie> getSerieMovies(Serie serie) {
-        TypedQuery<Movie> query = em.createQuery("SELECT l FROM Movie l WHERE l.serieId IS NULL OR l.serieId = :serie ORDER BY l.genreId, l.serieId, l.displayOrder", Movie.class);
+        TypedQuery<Movie> query = em.createQuery("SELECT l FROM Movie l WHERE l.serie IS NULL OR l.serie = :serie ORDER BY l.genre, l.serie, l.displayOrder", Movie.class);
         query.setParameter("serie", serie);
 
         return query.getResultList();
     }
 
     public List<Movie> getGenreMovies(Genre genre) {
-        TypedQuery<Movie> query = em.createQuery("SELECT l FROM Movie l WHERE l.genreId IS NULL OR l.genreId = :genre ORDER by l.genreId, l.serieId, l.displayOrder", Movie.class);
+        TypedQuery<Movie> query = em.createQuery("SELECT l FROM Movie l WHERE l.genre IS NULL OR l.genre = :genre ORDER by l.genre, l.serie, l.displayOrder", Movie.class);
         query.setParameter("genre", genre);
 
         return query.getResultList();
@@ -92,7 +92,7 @@ public class MovieService {
     public List<Movie> findAllNew() {
         List<Movie> res = new ArrayList<>();
 
-        all().stream().filter(movie -> null == movie.getGenreId() || movie.getGenreId().isEmpty()).forEach(movie -> {
+        all().stream().filter(movie -> null == movie.getGenre() || movie.getGenre().isEmpty()).forEach(movie -> {
             res.add(movie);
         });
 
@@ -119,8 +119,8 @@ public class MovieService {
         final String name = baseFileName.substring(0, baseFileName.lastIndexOf("."));
 
         movie.setFileName(newFile);
-        movie.setGenreId(em.getReference(Genre.class, 0));
-        movie.setSerieId(em.getReference(Serie.class, 0));
+        movie.setGenre(em.getReference(Genre.class, 0));
+        movie.setSerie(em.getReference(Serie.class, 0));
         movie.setName(name);
         movie.setPictureFileName(name + ".jpg");
         movie.setDisplayOrder(0);
@@ -138,8 +138,8 @@ public class MovieService {
     }
 
     public void save(Movie bean, Integer genreId, Integer serieId, String languageId, String originalLanguageId, String subtitlesId) {
-        bean.setGenreId(em.getReference(Genre.class, genreId));
-        bean.setSerieId(em.getReference(Serie.class, serieId));
+        bean.setGenre(em.getReference(Genre.class, genreId));
+        bean.setSerie(em.getReference(Serie.class, serieId));
         bean.setLanguage(em.getReference(Language.class, languageId));
         bean.setOriginalLanguage(em.getReference(Language.class, originalLanguageId));
         bean.setSubtitles(em.getReference(Language.class, subtitlesId));
@@ -162,10 +162,10 @@ public class MovieService {
     public String getNiceDisplayOrder(Movie movie) {
         final Counter i = new Counter();
 
-        List<Movie> list = em.createQuery("SELECT l FROM Movie l WHERE l.serieId = :serie ORDER BY l.displayOrder", Movie.class)
-            .setParameter("serie", movie.getSerieId()).getResultList();
+        List<Movie> list = em.createQuery("SELECT l FROM Movie l WHERE l.serie = :serie ORDER BY l.displayOrder", Movie.class)
+            .setParameter("serie", movie.getSerie()).getResultList();
         int count = list.size();
-        
+
         list.stream()
                 .peek(m -> {
                     i.inc();

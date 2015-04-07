@@ -19,11 +19,11 @@ public class SerieViewForm implements Serializable {
     private Integer id;
     private Serie bean;
 
-    public List<Serie> getByGenreId() {
+    public List<Serie> getByGenre() {
         return service
                 .all()
                 .stream()
-                .filter(serie -> genreWebService.getId().equals(serie.getGenreId().getId()))
+                .filter(serie -> genreWebService.getId().equals(serie.getGenre().getId()))
                 .sorted()
                 .collect(Collectors.toList());
     }

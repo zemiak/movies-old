@@ -16,11 +16,11 @@
 
         <ui:define name="body">
             <div class="page">
-                <a class="movie-box" href="genre.xhtml?id=#{serieViewForm.bean.genreId.id}">
+                <a class="movie-box" href="genre.xhtml?id=#{serieViewForm.bean.genre.id}">
                     <i class="fi-arrow-left movies-back-icon"></i>
                 </a>
                 
-                <ui:repeat var="item" value="#{movieViewForm.bySerieId}">
+                <ui:repeat var="item" value="#{movieViewForm.bySerie}">
                     <div class="movie-box">
                         <a href="movie.xhtml?id=#{item.id}">
                             <img class="movie-thumbnail" alt="#{item.name} Thumbnail"

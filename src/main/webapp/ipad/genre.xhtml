@@ -20,7 +20,7 @@
                     <i class="fi-arrow-left movies-back-icon"></i>
                 </a>
                 
-                <ui:repeat var="item" value="#{serieViewForm.byGenreId}">
+                <ui:repeat var="item" value="#{serieViewForm.byGenre}">
                     <div class="movie-box serie-box">
                         <a href="serie.xhtml?id=#{item.id}">
                             <img class="movie-thumbnail" alt="item.name} Thumbnail"
@@ -30,7 +30,7 @@
                     </div>
                 </ui:repeat>
                 
-                <ui:repeat var="item" value="#{movieViewForm.byGenreId}">
+                <ui:repeat var="item" value="#{movieViewForm.byGenre}">
                     <div class="movie-box">
                         <a href="movie.xhtml?id=#{item.id}">
                             <img class="movie-thumbnail" alt="#{item.name} Thumbnail"

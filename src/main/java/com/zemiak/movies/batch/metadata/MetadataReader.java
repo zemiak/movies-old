@@ -5,6 +5,7 @@ import com.coremedia.iso.boxes.*;
 import com.coremedia.iso.boxes.apple.AppleItemListBox;
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.service.MovieService;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.CharacterCodingException;
@@ -16,11 +17,13 @@ public class MetadataReader {
     private static final BatchLogger LOG = BatchLogger.getLogger(MetadataReader.class.getName());
 
     private final MovieMetadata metaData;
+    private final MovieService service;
     private final String fileName;
 
-    public MetadataReader(final String name, final Movie movie) {
+    public MetadataReader(final String name, final Movie movie, final MovieService service) {
         metaData = new MovieMetadata(movie);
         fileName = name;
+        this.service = service;
 
         process();
     }
@@ -43,6 +46,10 @@ public class MetadataReader {
             isoFile.close();
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, "Cannot close file", ex);
+        }
+
+        if (!metaData.getMovie().isEmptySerie()) {
+            metaData.setNiceDisplayOrder(service.getNiceDisplayOrder(metaData.getMovie()));
         }
     }
 

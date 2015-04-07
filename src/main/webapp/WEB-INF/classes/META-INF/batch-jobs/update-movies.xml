@@ -2,7 +2,7 @@
 
 <job id="update-movies" xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="1.0">
     <properties>
-        <property name="fileList" value="/tmp/books-filelist"/>
+        <property name="fileList" value="/tmp/movies-filelist"/>
     </properties>
 
     <flow id="newmovies" next="metadata">

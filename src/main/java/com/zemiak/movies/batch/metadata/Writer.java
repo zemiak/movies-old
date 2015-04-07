@@ -4,6 +4,7 @@ import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.description.DescriptionReader;
+import com.zemiak.movies.strings.Joiner;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class Writer extends AbstractItemWriter {
     @Inject private MovieService service;
     @Inject private String mp4tags;
     @Inject private String path;
+    @Inject private String developmentSystem;
 
     private static final String GENRE = "-g";
     private static final String NAME = "-s";
@@ -30,10 +32,6 @@ public class Writer extends AbstractItemWriter {
     public void writeItems(final List list) throws Exception {
         list.stream().filter(obj -> null != obj).forEach(obj -> {
             MovieMetadata data = (MovieMetadata) obj;
-
-            if (null != data.getMovie().getSerieId()) {
-                data.setNiceDisplayOrder(service.getNiceDisplayOrder(data.getMovie()));
-            }
 
             String fileName = path + data.getMovie().getFileName();
             updateName(fileName, data);
@@ -50,7 +48,12 @@ public class Writer extends AbstractItemWriter {
         params.add(fileName);
 
         try {
-            CommandLine.execCmd(mp4tags, params);
+            if (!"true".equals(developmentSystem)) {
+                CommandLine.execCmd(mp4tags, params);
+            } else {
+                LOG.log(Level.INFO, "dry run:{0} {1}", new Object[]{mp4tags, null == params ? "" : Joiner.join(params, "|")});
+            }
+
             LOG.info(String.format("Updated %s with %s on %s", commandLineSwitch, value, fileName));
         } catch (IOException | InterruptedException | IllegalStateException ex) {
             Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, "Cannot update " + commandLineSwitch + " for " + fileName, ex);

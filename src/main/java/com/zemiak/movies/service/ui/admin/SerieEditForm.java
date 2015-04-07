@@ -45,7 +45,7 @@ public class SerieEditForm implements Serializable {
             return close();
         }
 
-        genreId = bean.getGenreId().getId();
+        genreId = bean.getGenre().getId();
 
         return null;
     }

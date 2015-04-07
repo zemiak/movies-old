@@ -32,12 +32,12 @@ public class MashTest {
 
         final Serie s1 = new Serie();
         s1.setId(Integer.SIZE - 1);
-        m1.setSerieId(s1);
+        m1.setSerie(s1);
         assertFalse(instance.accepts(m1));
 
         final Serie s2 = new Serie();
         s2.setId(ID);
-        m1.setSerieId(s2);
+        m1.setSerie(s2);
         m1.setDisplayOrder(1);
         assertTrue(instance.accepts(m1));
 
@@ -53,7 +53,7 @@ public class MashTest {
         s2.setId(ID);
 
         final Movie m1 = new Movie();
-        m1.setSerieId(s2);
+        m1.setSerie(s2);
         m1.setDisplayOrder(0);
 
         assertNull(instance.getDescription(m1));

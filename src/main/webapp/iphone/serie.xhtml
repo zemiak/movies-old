@@ -20,7 +20,7 @@
             </div>
             
             <ul id="main" title="#{serieViewForm.bean.name}" selected="true">
-                <ui:repeat var="item" value="#{movieViewForm.bySerieId}">
+                <ui:repeat var="item" value="#{movieViewForm.bySerie}">
                     <li>
                         <img src="/movies/images/movie/#{item.id}" align="left" class="movies-thumbnail" />
                         <a href="/movies/stream/#{item.id}" target="_self">#{item.name}</a>

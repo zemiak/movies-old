@@ -15,12 +15,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "serie", schema="data")
 @NamedQueries({
-    @NamedQuery(name = "Serie.findAll", query = "SELECT s FROM Serie s ORDER BY s.genreId, s.displayOrder"),
+    @NamedQuery(name = "Serie.findAll", query = "SELECT s FROM Serie s ORDER BY s.genre, s.displayOrder"),
     @NamedQuery(name = "Serie.findById", query = "SELECT s FROM Serie s WHERE s.id = :id"),
     @NamedQuery(name = "Serie.findByName", query = "SELECT s FROM Serie s WHERE s.name = :name"),
     @NamedQuery(name = "Serie.findByPictureFileName", query = "SELECT s FROM Serie s WHERE s.pictureFileName = :pictureFileName"),
     @NamedQuery(name = "Serie.findByDisplayOrder", query = "SELECT s FROM Serie s WHERE s.displayOrder = :displayOrder"),
-    @NamedQuery(name = "Serie.findByGenreId", query = "SELECT s FROM Serie s WHERE s.genreId = :genreId")})
+    @NamedQuery(name = "Serie.findByGenre", query = "SELECT s FROM Serie s WHERE s.genre = :genre")})
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Serie implements Serializable, Comparable<Serie> {
@@ -50,9 +50,9 @@ public class Serie implements Serializable, Comparable<Serie> {
     @JoinColumn(name = "genre_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     @NotNull
-    private Genre genreId;
+    private Genre genre;
 
-    @OneToMany(mappedBy = "serieId")
+    @OneToMany(mappedBy = "serie")
     @XmlTransient
     private List<Movie> movieList;
 
@@ -82,7 +82,7 @@ public class Serie implements Serializable, Comparable<Serie> {
         this.setName(entity.getName());
         this.setDisplayOrder(entity.getDisplayOrder());
         this.setPictureFileName(entity.getPictureFileName());
-        this.setGenreId(entity.getGenreId());
+        this.setGenre(entity.getGenre());
     }
 
     public Integer getId() {
@@ -117,12 +117,12 @@ public class Serie implements Serializable, Comparable<Serie> {
         this.displayOrder = displayOrder;
     }
 
-    public Genre getGenreId() {
-        return genreId;
+    public Genre getGenre() {
+        return genre;
     }
 
-    public void setGenreId(Genre genre) {
-        this.genreId = genre;
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
     @XmlTransient
@@ -181,7 +181,7 @@ public class Serie implements Serializable, Comparable<Serie> {
     }
 
     public String getGenreName() {
-        return null == genreId ? "<None>" : (genreId.isEmpty() ? "<None>" : genreId.getName());
+        return null == genre ? "<None>" : (genre.isEmpty() ? "<None>" : genre.getName());
     }
 
     public static Serie create() {

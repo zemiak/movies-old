@@ -36,12 +36,13 @@ public class ImdbThumbnailIT {
     @Test
     public void testDownload() {
         String fileName = "/tmp/" + Math.random() + ".jpg";
-        movie.setUrl("http://www.imdb.com/title/tt0096895/?ref_=fn_al_tt_1");
+        movie.setUrl("");
         thumbnail.setImageFileName(fileName);
         thumbnail.process(movie);
 
         File file = new File(fileName);
         assertTrue(file.isFile());
         assertTrue(file.canRead());
+        assertTrue(file.length() > 0);
     }
 }

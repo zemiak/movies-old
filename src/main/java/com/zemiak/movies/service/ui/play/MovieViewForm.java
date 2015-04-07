@@ -20,16 +20,16 @@ public class MovieViewForm implements Serializable {
     private Integer id;
     private Movie movie;
 
-    public List<Movie> getByGenreId() {
+    public List<Movie> getByGenre() {
         return service.all().stream()
-                .filter(entry -> genreWebService.getId().equals(entry.getGenreId().getId()) && entry.isEmptySerie())
+                .filter(entry -> genreWebService.getId().equals(entry.getGenre().getId()) && entry.isEmptySerie())
                 .sorted()
                 .collect(Collectors.toList());
     }
 
-    public List<Movie> getBySerieId() {
+    public List<Movie> getBySerie() {
         return service.all().stream()
-                .filter(movie -> null != movie.getSerieId() && serieWebService.getId().equals(movie.getSerieId().getId()))
+                .filter(movie -> null != movie.getSerie() && serieWebService.getId().equals(movie.getSerie().getId()))
                 .sorted()
                 .collect(Collectors.toList());
     }

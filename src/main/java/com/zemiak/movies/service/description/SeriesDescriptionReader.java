@@ -20,10 +20,10 @@ public class SeriesDescriptionReader implements IDescriptionReader {
 
     @Override
     public boolean accepts(final Movie movie) {
-        return null != movie.getSerieId()
-                && series.keySet().contains(movie.getSerieId().getId())
+        return null != movie.getSerie()
+                && series.keySet().contains(movie.getSerie().getId())
                 && null != movie.getDisplayOrder()
-                && series.get(movie.getSerieId().getId()).getRange().contains(movie.getDisplayOrder());
+                && series.get(movie.getSerie().getId()).getRange().contains(movie.getDisplayOrder());
     }
 
     @Override
@@ -31,7 +31,7 @@ public class SeriesDescriptionReader implements IDescriptionReader {
         String raw;
 
         try {
-            raw = series.get(movie.getSerieId().getId()).getDescriptions().getString(movie.getDisplayOrder().toString());
+            raw = series.get(movie.getSerie().getId()).getDescriptions().getString(movie.getDisplayOrder().toString());
         } catch (MissingResourceException ex) {
             return null;
         }

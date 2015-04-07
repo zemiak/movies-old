@@ -3,6 +3,7 @@ package com.zemiak.movies.service.thumbnail;
 import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.strings.Joiner;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -12,9 +13,11 @@ public class GenerateThumbnail implements IThumbnailReader {
     private static final BatchLogger LOG = BatchLogger.getLogger(GenerateThumbnail.class.getName());
     private String imageFileName;
     private final String ffmpegPath;
+    private final boolean developmentSystem;
 
-    public GenerateThumbnail(final String ffmpegPath) {
+    public GenerateThumbnail(final String ffmpegPath, final boolean developmentSystem) {
         this.ffmpegPath = ffmpegPath;
+        this.developmentSystem = developmentSystem;
     }
 
     @Override
@@ -41,7 +44,12 @@ public class GenerateThumbnail implements IThumbnailReader {
         );
 
         try {
-            CommandLine.execCmd(ffmpegPath, params);
+            if (!developmentSystem) {
+                CommandLine.execCmd(ffmpegPath, params);
+            } else {
+                LOG.log(Level.INFO, "dry run:{0} {1}", new Object[]{ffmpegPath, null == params ? "" : Joiner.join(params, "|")});
+            }
+
             LOG.log(Level.INFO, "Generated thumbnail {0} ...", imageFileName);
         } catch (IllegalStateException | InterruptedException | IOException ex) {
             LOG.log(Level.SEVERE, "DID NOT generate thumbnail {0}: {1} ...",

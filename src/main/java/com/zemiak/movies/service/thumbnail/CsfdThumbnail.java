@@ -59,7 +59,8 @@ public class CsfdThumbnail implements IThumbnailReader {
         try {
             downloadFile(imageUrl, imageFileName);
         } catch (IOException ex) {
-            LOG.log(Level.SEVERE, "Cannot fetch poster", ex);
+            LOG.log(Level.SEVERE, "Cannot fetch poster url {0} file name {1} error {2}",
+                    new Object[]{imageUrl, imageFileName, ex.getMessage()});
         }
     }
 

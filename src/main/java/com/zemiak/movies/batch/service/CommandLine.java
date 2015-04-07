@@ -25,7 +25,6 @@ public class CommandLine {
         Callable<CommandLineResult> callable = getCallable(cmd, arguments);
 
         LOG1.log(Level.INFO, "run:{0} {1}", new Object[]{cmd, null == arguments ? "" : Joiner.join(arguments, "|")});
-        //return new ArrayList<>();
 
         try {
             result = timedCall(callable, TIMEOUT, TimeUnit.SECONDS);

@@ -18,7 +18,7 @@ public class Processor implements ItemProcessor {
     public Object processItem(final Object movieName) throws Exception {
         final String fileName = (String) movieName;
         Movie movie = service.findByFilename(fileName.substring(path.length()));
-        MovieMetadata data = new MetadataReader(fileName, movie).get();
+        MovieMetadata data = new MetadataReader(fileName, movie, service).get();
 
 
         if (null != movie && null != data) {
@@ -27,8 +27,6 @@ public class Processor implements ItemProcessor {
                 return data;
             }
         }
-
-        //System.out.println("Metadata: skipping " + fileName);
 
         return null;
     }

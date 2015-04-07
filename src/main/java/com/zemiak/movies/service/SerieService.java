@@ -72,7 +72,7 @@ public class SerieService {
     }
 
     public void save(Serie bean, Integer genreId) {
-        bean.setGenreId(em.getReference(Genre.class, genreId));
+        bean.setGenre(em.getReference(Genre.class, genreId));
         save(bean);
     }
 }

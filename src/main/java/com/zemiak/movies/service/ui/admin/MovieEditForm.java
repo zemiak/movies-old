@@ -25,23 +25,13 @@ public class MovieEditForm implements Serializable {
     private String languageId, originalLanguageId, subtitlesId;
     private Integer serieId, genreId;
 
-    @Inject
-    private String imgPath;
-
-    @Inject
-    private MovieService service;
-
-    @Inject
-    private GenreService genres;
-
-    @Inject
-    private SerieService series;
-
-    @Inject
-    private LanguageService languages;
-
-    @Inject
-    private String ffmpeg;
+    @Inject private String imgPath;
+    @Inject private MovieService service;
+    @Inject private GenreService genres;
+    @Inject private SerieService series;
+    @Inject private LanguageService languages;
+    @Inject private String ffmpeg;
+    @Inject private String developmentSystem;
 
     public MovieEditForm() {
         urlControl = new UrlController();
@@ -64,8 +54,8 @@ public class MovieEditForm implements Serializable {
             return close();
         }
 
-        serieId = (null == bean.getSerieId()) ? 0 : bean.getSerieId().getId();
-        genreId = (null == bean.getGenreId()) ? 0 : bean.getGenreId().getId();
+        serieId = (null == bean.getSerie()) ? 0 : bean.getSerie().getId();
+        genreId = (null == bean.getGenre()) ? 0 : bean.getGenre().getId();
         languageId = (null == bean.getLanguage()) ? "  " : bean.getLanguage().getId();
         subtitlesId = (null == bean.getSubtitles()) ? "  " : bean.getSubtitles().getId();
         originalLanguageId = (null == bean.getOriginalLanguage()) ? "" : bean.getOriginalLanguage().getId();
@@ -120,10 +110,10 @@ public class MovieEditForm implements Serializable {
     }
 
     public void setSerie(Serie serie) {
-        bean.setSerieId(serie);
+        bean.setSerie(serie);
 
-        if (null == bean.getGenreId() || bean.getGenreId().isEmpty()) {
-            bean.setGenreId(serie.getGenreId());
+        if (null == bean.getGenre() || bean.getGenre().isEmpty()) {
+            bean.setGenre(serie.getGenre());
         }
     }
 
@@ -136,7 +126,7 @@ public class MovieEditForm implements Serializable {
     }
 
     public void setGenreAccordingToSerie(AjaxBehaviorEvent event) {
-        Genre genre = series.find(serieId).getGenreId();
+        Genre genre = series.find(serieId).getGenre();
         if (!genre.getId().equals(genreId)) {
             genreId = genre.getId();
         }
@@ -184,7 +174,7 @@ public class MovieEditForm implements Serializable {
     }
 
     private void fetchPicture() {
-        final ThumbnailReader thumbnail = new ThumbnailReader(imgPath, ffmpeg);
+        final ThumbnailReader thumbnail = new ThumbnailReader(imgPath, ffmpeg, "true".equals(developmentSystem));
         thumbnail.process(bean);
     }
 

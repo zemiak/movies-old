@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "movie", schema="data")
 @NamedQueries({
-    @NamedQuery(name = "Movie.findByGenreWithoutSerie", query = "SELECT m FROM Movie m WHERE m.genreId = :genre AND (m.serieId IS NULL OR m.serieId.id = 0) ORDER BY m.name"),
+    @NamedQuery(name = "Movie.findByGenreWithoutSerie", query = "SELECT m FROM Movie m WHERE m.genre = :genre AND (m.serie IS NULL OR m.serie.id = 0) ORDER BY m.name"),
     @NamedQuery(name = "Movie.findAll", query = "SELECT m FROM Movie m ORDER BY m.id"),
     @NamedQuery(name = "Movie.findById", query = "SELECT m FROM Movie m WHERE m.id = :id"),
     @NamedQuery(name = "Movie.findByIdDesc", query = "SELECT m FROM Movie m ORDER BY m.id DESC"),
@@ -68,7 +68,7 @@ public class Movie implements Serializable, Comparable<Movie> {
 
     @JoinColumn(name = "serie_id", referencedColumnName = "id")
     @ManyToOne
-    private Serie serieId;
+    private Serie serie;
 
     @JoinColumn(name = "subtitles", referencedColumnName = "id")
     @ManyToOne
@@ -85,7 +85,7 @@ public class Movie implements Serializable, Comparable<Movie> {
     @JoinColumn(name = "genre_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     @NotNull
-    private Genre genreId;
+    private Genre genre;
 
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
@@ -115,11 +115,11 @@ public class Movie implements Serializable, Comparable<Movie> {
         this.setPictureFileName(entity.getPictureFileName());
         this.setDescription(entity.getDescription());
         this.setFileName(entity.getFileName());
-        this.setGenreId(entity.getGenreId());
+        this.setGenre(entity.getGenre());
         this.setLanguage(entity.getLanguage());
         this.setOriginalLanguage(entity.getOriginalLanguage());
         this.setOriginalName(entity.getOriginalName());
-        this.setSerieId(entity.getSerieId());
+        this.setSerie(entity.getSerie());
         this.setSubtitles(entity.getSubtitles());
         this.setUrl(entity.getUrl());
     }
@@ -188,12 +188,12 @@ public class Movie implements Serializable, Comparable<Movie> {
         this.description = description;
     }
 
-    public Serie getSerieId() {
-        return serieId;
+    public Serie getSerie() {
+        return serie;
     }
 
-    public void setSerieId(Serie serieId) {
-        this.serieId = serieId;
+    public void setSerie(Serie serie) {
+        this.serie = serie;
     }
 
     public Language getSubtitles() {
@@ -220,12 +220,12 @@ public class Movie implements Serializable, Comparable<Movie> {
         this.language = language;
     }
 
-    public Genre getGenreId() {
-        return genreId;
+    public Genre getGenre() {
+        return genre;
     }
 
-    public void setGenreId(Genre genreId) {
-        this.genreId = genreId;
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
     @Override
@@ -249,11 +249,11 @@ public class Movie implements Serializable, Comparable<Movie> {
     }
 
     public String composeGenreName() {
-        if (null == getSerieId() || getSerieId().getId() == 0) {
-            return getGenreId().getName();
+        if (null == getSerie() || getSerie().getId() == 0) {
+            return getGenre().getName();
         }
 
-        return getGenreId().getDisplayOrder() + " " + getSerieId().getName();
+        return getGenre().getDisplayOrder() + " " + getSerie().getName();
     }
 
     @Override
@@ -280,7 +280,7 @@ public class Movie implements Serializable, Comparable<Movie> {
     }
 
     public String getSerieName() {
-        return null == serieId ? "<None>" : (serieId.isEmpty() ? "<None>" : serieId.getName());
+        return null == serie ? "<None>" : (serie.isEmpty() ? "<None>" : serie.getName());
     }
 
     public String getLanguageName() {
@@ -296,7 +296,7 @@ public class Movie implements Serializable, Comparable<Movie> {
     }
 
     public boolean isEmptySerie() {
-        return null == serieId || serieId.getId() == 0;
+        return null == serie || serie.getId() == 0;
     }
 
     @Override
@@ -317,7 +317,7 @@ public class Movie implements Serializable, Comparable<Movie> {
     }
 
     public String getGenreName() {
-        return null == genreId ? "<None>" : (genreId.isEmpty() ? "<None>" : genreId.getName());
+        return null == genre ? "<None>" : (genre.isEmpty() ? "<None>" : genre.getName());
     }
 
     public static Movie create() {

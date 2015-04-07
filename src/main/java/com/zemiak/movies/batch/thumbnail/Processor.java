@@ -3,6 +3,7 @@ package com.zemiak.movies.batch.thumbnail;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.service.MovieService;
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.batch.api.chunk.ItemProcessor;
@@ -23,7 +24,7 @@ public class Processor implements ItemProcessor {
         final String fileName = file.getAbsolutePath();
         final Movie movie = service.findByFilename(fileName.substring(path.length()));
 
-        String imageName = imgPath + movie.getPictureFileName();
+        String imageName = Paths.get(imgPath, "movie", movie.getPictureFileName()).toString();
         boolean exists = (new File(imageName).exists());
 
         if (! exists) {

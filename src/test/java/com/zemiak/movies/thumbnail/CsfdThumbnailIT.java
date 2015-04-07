@@ -43,5 +43,6 @@ public class CsfdThumbnailIT {
         File file = new File(fileName);
         assertTrue(file.isFile());
         assertTrue(file.canRead());
+        assertTrue(file.length() > 0);
     }
 }
