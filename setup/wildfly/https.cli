@@ -1,0 +1,7 @@
+connect
+
+/core-service=management/security-realm=WebSocketRealm:add()
+/core-service=management/security-realm=WebSocketRealm/server-identity=ssl:add(keystore-path=websocket.keystore, keystore-relative-to=jboss.server.config.dir, keystore-password=websocket)
+/subsystem=undertow/server=default-server/https-listener=https:add(socket-binding=https, security-realm=WebSocketRealm)
+
+reload

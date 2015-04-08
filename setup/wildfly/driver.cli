@@ -1,0 +1,4 @@
+connect
+module add --name=org.postgres --resources=postgresql-9.3-1101.jdbc41.jar --dependencies=javax.api,javax.transaction.api
+/subsystem=datasources/jdbc-driver=postgres:add(driver-name="postgres",driver-module-name="org.postgres",driver-class-name=org.postgresql.Driver)
+reload

@@ -29,12 +29,8 @@ then
     exit 1
 fi
 
-if [ -z "$1.cli" ]
-then
-    echo "Provide environment name (dev, prod...)"
-    exit 2
-fi
-
-$CLI --file=driver-install.cli
+$CLI --file=driver.cli
+$CLI --file=datasource.cli
+$CLI --file=authentication-realm.cli
 $CLI --file=mail-session.cli
-$CLI --file="$1-ds.cli"
+$CLI --file=https.cli

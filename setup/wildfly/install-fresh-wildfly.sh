@@ -1,14 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 
 WILDFLY=wildfly-8.2.0.Final
-PROJECT=~/Documents/projects/movies
+PROJECT=~/Documents/projects/online
 DOWNLOAD=~/Downloads/$WILDFLY.zip
 INSTALL=~/bin
 TARGET=wildfly8
-
-cd $PROJECT
-sh wildfly
-mvn clean package
 
 cd $INSTALL
 killall java
@@ -23,7 +19,7 @@ mv $WILDFLY $TARGET
 sleep 5s
 
 cd $PROJECT/setup/wildfly
-bash setup.sh dev
+sh setup.sh
 
 sleep 3s
 killall java
