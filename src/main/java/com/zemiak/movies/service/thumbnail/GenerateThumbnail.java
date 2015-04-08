@@ -43,7 +43,7 @@ public class GenerateThumbnail implements IThumbnailReader {
         final String movieFileName = Paths.get(path, movie.getFileName()).toString();
 
         final List<String> params = Arrays.asList(
-            "-s", "220", "-i", movieFileName, "-o", imageFileName
+            "-s", "180", "-i", movieFileName, "-o", imageFileName
         );
 
         try {

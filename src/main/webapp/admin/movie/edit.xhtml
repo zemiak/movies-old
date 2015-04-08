@@ -27,7 +27,7 @@
             
             <div class="row">&nbsp;</div>
 
-            <form method="post" jsf:id="movieEditForm" jsf:prependId="false">
+            <form method="post" jsf:id="movieEditForm" jsf:prependId="false" background="/movies/images/movie/#{movieEditForm.bean.id}">
                 <div class="row">
                     <div class="small-6 columns">
                         <label>Name:
@@ -156,32 +156,25 @@
                 </div>
                 
                 <div class="row">
-                    <div class="small-12 columns">
+                    <div class="small-10 columns">
                         <textarea type="text" id="description" name="description" jsf:id="description" 
                                 jsf:value="${movieEditForm.bean.description}" label="Description"
                                 placeholder="Enter Description" rows="4" />
                         <h:message for="description" class="error" />
-                    </div>
-                </div>
-                
-                <!-- name, original changed: refresh a list of suggested URLs
-                     action: fetch description and picture if url has changed
-                -->
-                
-                <div class="row">&nbsp;</div>
-                
-                <div class="row">
-                    <div class="small-12 columns">
+                        
                         <ul class="button-group">
                             <li><a href="javascript:window.history.back();" class="small button secondary">Close</a></li>
                             <li><input type="submit" class="small button" jsf:value="Save &amp; Close" jsf:action="#{movieEditForm.save()}" /></li>
                             <li><a class="small button alert" href="javascript:$('#removeButton').click();" data-confirm="" type="button">Remove</a></li>
                         </ul>
                     </div>
+                    
+                    <div class="small-2 columns">
+                        <img src="/movies/images/movie/#{movieEditForm.bean.id}" height="180px" />
+                    </div>
                 </div>
-                
-                <button jsf:id="removeButton" id="removeButton" jsf:action="#{movieEditForm.remove()}" style="display:none;" />
             </form>
+            
         </ui:define>
     </ui:composition>
 </html>

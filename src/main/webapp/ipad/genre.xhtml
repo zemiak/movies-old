@@ -21,11 +21,11 @@
                 </a>
                 
                 <ui:repeat var="item" value="#{serieViewForm.byGenre}">
-                    <div class="movie-box serie-box">
+                    <div class="serie-box">
                         <a href="serie.xhtml?id=#{item.id}">
-                            <img class="movie-thumbnail" alt="item.name} Thumbnail"
+                            <img class="serie-thumbnail" alt="item.name} Thumbnail"
                                 src="/movies/images/serie/#{item.id}" />
-                            <p class="movie-label">#{item.name}</p>
+                            <p class="serie-label">#{item.name}</p>
                         </a>
                     </div>
                 </ui:repeat>

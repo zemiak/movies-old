@@ -12,11 +12,11 @@
         <ui:define name="body">
             <div class="page">
                 <ui:repeat var="item" value="#{genreViewForm.all}">
-                    <div class="movie-box genre-box">
+                    <div class="genre-box">
                         <a href="genre.xhtml?id=#{item.id}">
-                            <img class="movie-thumbnail" alt="Genre Thumbnail"
+                            <img class="serie-thumbnail" alt="Genre Thumbnail"
                                  src="/movies/images/genre/#{item.id}" />
-                            <p class="movie-label">#{item.name}</p>
+                            <p class="serie-label">#{item.name}</p>
                         </a>
                     </div>
                 </ui:repeat>

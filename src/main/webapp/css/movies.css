@@ -9,12 +9,39 @@
     display: none;
 }
 
+.serie-box {
+    width: 165px;
+    height: 167px;
+    margin-left: 10px;
+    float: left;
+    border: 1px black;
+    text-shadow:5px 5px 10px black;
+}
+
+.genre-box {
+    width: 165px;
+    height: 167px;
+    margin-left: 10px;
+    float: left;
+    text-shadow:5px 5px 10px black;
+}
+
+.serie-label {
+    width: 165px;
+    text-align: center;
+}
+
+.serie-thumbnail {
+    width:152px;
+    height:114px;
+}
+
 /**
  * One item (box)
  */
 .movie-box {
-    width: 165px;
-    height: 167px;
+    width: 140px;
+    height: 235px;
     margin-left: 10px;
     float: left;
 }
@@ -23,7 +50,7 @@
  * a label inside the item
  */
 .movie-label {
-    width: 165px;
+    width: 140px;
     text-align: center;
 }
 
@@ -31,8 +58,8 @@
  * IMG inside the item
  */
 .movie-thumbnail {
-    width:152px;
-    height:114px;
+    width:127px;
+    height:180px;
 }
 
 .back-image {
@@ -48,15 +75,6 @@
 .movie-picture {
     width: 360px;
     height: 480px;
-}
-
-.genre-box {
-    text-shadow:5px 5px 10px black;
-}
-
-.serie-box {
-    border: 1px black;
-    text-shadow:5px 5px 10px black;
 }
 
 .fullwidth {
