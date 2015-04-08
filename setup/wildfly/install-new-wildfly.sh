@@ -25,8 +25,5 @@ sleep 5s
 cd $PROJECT/setup/wildfly
 bash setup.sh dev
 
-cd ~/bin
-./$TARGET/bin/jboss-cli.sh --connect --command="deploy ~/Documents/projects/movies/target/movies.war --force"
-
-#sleep 3s
-#killall java
+sleep 3s
+killall java

@@ -36,7 +36,7 @@ public class ImdbThumbnailIT {
     @Test
     public void testDownload() {
         String fileName = "/tmp/" + Math.random() + ".jpg";
-        movie.setUrl("");
+        movie.setUrl("http://www.imdb.com/title/tt0470752/?ref_=hm_otw_t1");
         thumbnail.setImageFileName(fileName);
         thumbnail.process(movie);
 
