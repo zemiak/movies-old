@@ -43,8 +43,9 @@ public class CommandLine {
         }
 
         if (result.isError()) {
-            LOG.log(Level.SEVERE, "... execCmd: error code is {0}, output is {1}",
-                    new Object[]{result.getExitValue(), Joiner.join(result.getOutput(), "|")});
+            LOG.log(Level.SEVERE, "... execCmd: error code is {0}, arguments {1}, output is {2}",
+                    new Object[]{result.getExitValue(), null == arguments ? "" : Joiner.join(arguments, "|"),
+                        Joiner.join(result.getOutput(), "|")});
             IllegalStateException ex = new IllegalStateException("Exit code " + result.getExitValue() + " instead of success");
             throw ex;
         }

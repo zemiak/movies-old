@@ -7,11 +7,11 @@ public class ThumbnailReader {
     private final IThumbnailReader[] readers;
     private final String imgPath;
 
-    public ThumbnailReader(String imgPath, String ffmpeg, boolean developmentSystem) {
+    public ThumbnailReader(String imgPath, String path, String ffmpeg, boolean developmentSystem) {
         this.readers = new IThumbnailReader[]{
             new CsfdThumbnail(),
             new ImdbThumbnail(),
-            new GenerateThumbnail(ffmpeg, developmentSystem)
+            new GenerateThumbnail(path, ffmpeg, developmentSystem)
         };
 
         this.imgPath = imgPath;

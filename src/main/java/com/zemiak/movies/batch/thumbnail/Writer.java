@@ -13,6 +13,7 @@ import javax.inject.Named;
 public class Writer extends AbstractItemWriter {
     private static final BatchLogger LOG = BatchLogger.getLogger("ThumbnailsWriter");
 
+    @Inject private String path;
     @Inject private String imgPath;
     @Inject private String ffmpeg;
     @Inject private String developmentSystem;
@@ -22,7 +23,7 @@ public class Writer extends AbstractItemWriter {
         ((List<Movie>) list)
                 .stream()
                 .forEach(movie -> {
-                    if (new ThumbnailReader(imgPath, ffmpeg, "true".equals(developmentSystem)).process(movie)) {
+                    if (new ThumbnailReader(imgPath, path, ffmpeg, "true".equals(developmentSystem)).process(movie)) {
                         LOG.info("Generated a thumbnail " + movie.getPictureFileName());
                     } else {
                         LOG.log(Level.SEVERE, "Error generating a thumbnail {0}", movie.getPictureFileName());

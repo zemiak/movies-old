@@ -25,6 +25,7 @@ public class MovieEditForm implements Serializable {
     private String languageId, originalLanguageId, subtitlesId;
     private Integer serieId, genreId;
 
+    @Inject private String path;
     @Inject private String imgPath;
     @Inject private MovieService service;
     @Inject private GenreService genres;
@@ -174,7 +175,7 @@ public class MovieEditForm implements Serializable {
     }
 
     private void fetchPicture() {
-        final ThumbnailReader thumbnail = new ThumbnailReader(imgPath, ffmpeg, "true".equals(developmentSystem));
+        final ThumbnailReader thumbnail = new ThumbnailReader(imgPath, path, ffmpeg, "true".equals(developmentSystem));
         thumbnail.process(bean);
     }
 

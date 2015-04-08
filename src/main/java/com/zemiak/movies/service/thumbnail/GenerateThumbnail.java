@@ -5,6 +5,7 @@ import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.strings.Joiner;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -13,11 +14,13 @@ public class GenerateThumbnail implements IThumbnailReader {
     private static final BatchLogger LOG = BatchLogger.getLogger(GenerateThumbnail.class.getName());
     private String imageFileName;
     private final String ffmpegPath;
+    private final String path;
     private final boolean developmentSystem;
 
-    public GenerateThumbnail(final String ffmpegPath, final boolean developmentSystem) {
+    public GenerateThumbnail(final String path, final String ffmpegPath, final boolean developmentSystem) {
         this.ffmpegPath = ffmpegPath;
         this.developmentSystem = developmentSystem;
+        this.path = path;
     }
 
     @Override
@@ -37,7 +40,7 @@ public class GenerateThumbnail implements IThumbnailReader {
 
     @Override
     public void process(final Movie movie) {
-        final String movieFileName = movie.getFileName();
+        final String movieFileName = Paths.get(path, movie.getFileName()).toString();
 
         final List<String> params = Arrays.asList(
             "-s", "220", "-i", movieFileName, "-o", imageFileName
