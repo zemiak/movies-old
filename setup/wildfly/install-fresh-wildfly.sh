@@ -1,7 +1,7 @@
 #!/bin/sh
 
 WILDFLY=wildfly-8.2.0.Final
-PROJECT=~/Documents/projects/online
+PROJECT=~/Documents/projects/movies
 DOWNLOAD=~/Downloads/$WILDFLY.zip
 INSTALL=~/bin
 TARGET=wildfly8
