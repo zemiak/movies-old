@@ -22,15 +22,15 @@
             <ul id="main" title="#{genreViewForm.bean.name}" selected="true">
                 <ui:repeat var="item" value="#{serieViewForm.byGenre}">
                     <li>
-                        <img src="/movies/images/serie/#{item.id}" align="left" class="movies-thumbnail" />
+                        <img src="#{request.contextPath}/images/serie/#{item.id}" align="left" class="movies-thumbnail" />
                         <a href="serie.xhtml?id=#{item.id}" target="_self">*#{item.name}</a>
                     </li>
                 </ui:repeat>
                 
                 <ui:repeat var="item" value="#{movieViewForm.byGenre}">
                     <li>
-                        <img src="/movies/images/movie/#{item.id}" align="left" class="movies-thumbnail" />
-                        <a href="/movies/stream/#{item.id}" target="_self">#{item.name}</a>
+                        <img src="#{request.contextPath}/images/movie/#{item.id}" align="left" class="movies-thumbnail" />
+                        <a href="#{request.contextPath}/stream/#{item.id}" target="_self">#{item.name}</a>
                     </li>
                 </ui:repeat>
             </ul>

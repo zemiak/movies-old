@@ -27,7 +27,7 @@
             
             <div class="row">&nbsp;</div>
 
-            <form method="post" jsf:id="movieEditForm" jsf:prependId="false" background="/movies/images/movie/#{movieEditForm.bean.id}">
+            <form method="post" jsf:id="movieEditForm" jsf:prependId="false">
                 <div class="row">
                     <div class="small-6 columns">
                         <label>Name:
@@ -170,7 +170,7 @@
                     </div>
                     
                     <div class="small-2 columns">
-                        <img src="/movies/images/movie/#{movieEditForm.bean.id}" height="180px" />
+                        <img src="#{request.contextPath}/images/movie/#{movieEditForm.bean.id}" height="180px" />
                     </div>
                 </div>
             </form>

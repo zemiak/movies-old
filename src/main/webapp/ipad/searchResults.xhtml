@@ -21,7 +21,7 @@
                     <div class="serie-box">
                         <a href="serie.xhtml?id=${item.id}">
                             <img class="serie-thumbnail" alt="#{item.name} Thumbnail"
-                                src="/movies/images/serie/#{item.id}" />
+                                src="#{request.contextPath}/images/serie/#{item.id}" />
                             <p class="serie-label">#{item.name}</p>
                         </a>
                     </div>
@@ -31,7 +31,7 @@
                     <div class="movie-box">
                         <a href="movie.xhtml?id=#{item.id}">
                             <img class="movie-thumbnail" alt="#{item.name} Thumbnail"
-                                src="/movies/images/movie/#{item.id}" />
+                                src="#{request.contextPath}/images/movie/#{item.id}" />
                             <p class="movie-label">#{item.name}</p>
                         </a>
                     </div>

@@ -26,7 +26,7 @@
                     <div class="movie-box">
                         <a href="movie.xhtml?id=#{item.id}">
                             <img alt="#{item.name} Thumbnail"
-                                src="/movies/images/movie/#{item.id}" />
+                                src="#{request.contextPath}/images/movie/#{item.id}" />
                             <h:outputLabel rendered="#{item.urlEmpty}" value="#{item.name}" />
                         </a>
                     </div>

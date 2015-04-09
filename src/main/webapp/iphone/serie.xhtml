@@ -22,8 +22,8 @@
             <ul id="main" title="#{serieViewForm.bean.name}" selected="true">
                 <ui:repeat var="item" value="#{movieViewForm.bySerie}">
                     <li>
-                        <img src="/movies/images/movie/#{item.id}" align="left" class="movies-thumbnail" />
-                        <a href="/movies/stream/#{item.id}" target="_self">#{item.name}</a>
+                        <img src="#{request.contextPath}/images/movie/#{item.id}" align="left" class="movies-thumbnail" />
+                        <a href="#{request.contextPath}/stream/#{item.id}" target="_self">#{item.name}</a>
                     </li>
                 </ui:repeat>
             </ul>
