@@ -14,9 +14,9 @@
                 <ui:repeat var="item" value="#{genreViewForm.all}">
                     <div class="genre-box">
                         <a href="genre.xhtml?id=#{item.id}">
-                            <img class="serie-thumbnail" alt="Genre Thumbnail"
+                            <img alt="Genre Thumbnail"
                                  src="/movies/images/genre/#{item.id}" />
-                            <p class="serie-label">#{item.name}</p>
+                            <p>#{item.name}</p>
                         </a>
                     </div>
                 </ui:repeat>

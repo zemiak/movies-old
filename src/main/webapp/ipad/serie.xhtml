@@ -25,9 +25,9 @@
                 <ui:repeat var="item" value="#{movieViewForm.bySerie}">
                     <div class="movie-box">
                         <a href="movie.xhtml?id=#{item.id}">
-                            <img class="movie-thumbnail" alt="#{item.name} Thumbnail"
+                            <img alt="#{item.name} Thumbnail"
                                 src="/movies/images/movie/#{item.id}" />
-                            <h:outputLabel styleClass="movie-label" rendered="#{item.urlEmpty}" value="#{item.name}" />
+                            <h:outputLabel rendered="#{item.urlEmpty}" value="#{item.name}" />
                         </a>
                     </div>
                 </ui:repeat>
