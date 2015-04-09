@@ -28,6 +28,7 @@
 
 .serie-label {
     width: 165px;
+    font-size: 75%;
     text-align: center;
 }
 
@@ -52,6 +53,8 @@
 .movie-label {
     width: 140px;
     text-align: center;
+    font-size: 75%;
+    color: black;
 }
 
 /**
@@ -117,7 +120,7 @@ a.item.small-icon-anchor {
 }
 
 i.fi-arrow-left.movies-back-icon {
-    font-size: 160px; 
+    font-size: 1.25em; 
     vertical-align: top; 
     color: green;
 }

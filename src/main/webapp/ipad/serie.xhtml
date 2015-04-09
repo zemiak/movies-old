@@ -12,20 +12,22 @@
         </f:metadata>
         
         <ui:define name="title">#{serieViewForm.bean.name}</ui:define>
-        <ui:define name="header">#{serieViewForm.bean.name}</ui:define>
+        <ui:define name="header">
+            <a href="genre.xhtml?id=#{serieViewForm.bean.genre.id}">
+                <i class="fi-arrow-left movies-back-icon"></i>
+            </a>
+            
+            #{serieViewForm.bean.name}
+        </ui:define>
 
         <ui:define name="body">
             <div class="page">
-                <a class="movie-box" href="genre.xhtml?id=#{serieViewForm.bean.genre.id}">
-                    <i class="fi-arrow-left movies-back-icon"></i>
-                </a>
-                
                 <ui:repeat var="item" value="#{movieViewForm.bySerie}">
                     <div class="movie-box">
                         <a href="movie.xhtml?id=#{item.id}">
                             <img class="movie-thumbnail" alt="#{item.name} Thumbnail"
                                 src="/movies/images/movie/#{item.id}" />
-                            <p class="movie-label">#{item.name}</p>
+                            <h:outputLabel styleClass="movie-label" rendered="#{item.urlEmpty}" value="#{item.name}" />
                         </a>
                     </div>
                 </ui:repeat>
