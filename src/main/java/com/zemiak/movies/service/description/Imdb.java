@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class Imdb implements IDescriptionReader {
     private static final Logger LOG = Logger.getLogger(Imdb.class.getName());
@@ -44,8 +45,8 @@ public class Imdb implements IDescriptionReader {
             return null;
         }
 
-        Element description = doc.select("meta[name=description]").first();
-        return description.attr("content");
+        Elements description = doc.select("meta[name=description]");
+        return null == description ? "" : description.first().attr("content");
     }
 
     @Override
@@ -73,8 +74,18 @@ public class Imdb implements IDescriptionReader {
             return res;
         }
 
-        doc.select("td[class=result_text]").stream().forEach(result -> {
-            final Element href = result.select("a").first();
+        Elements results = doc.select("td[class=result_text]");
+        if (null == results) {
+            return res;
+        }
+
+        results.stream().forEach(result -> {
+            Elements result2 = result.select("a");
+            if (null == result2) {
+                return;
+            }
+
+            Element href = result2.first();
             res.add(new UrlDTO(href.absUrl("href"), getReaderName(), href.text(), result.text()));
         });
 

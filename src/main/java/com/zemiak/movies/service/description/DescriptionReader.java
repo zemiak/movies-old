@@ -1,6 +1,7 @@
 package com.zemiak.movies.service.description;
 
 import com.zemiak.movies.domain.Movie;
+import java.util.Arrays;
 
 public class DescriptionReader {
     private static final int SERIES_DESCRIPTIONS_INDEX = 0;
@@ -22,6 +23,13 @@ public class DescriptionReader {
         }
 
         return null;
+    }
+
+    public boolean canFetchDescription(final Movie movie) {
+        return Arrays.asList(readers).stream()
+                .filter(reader -> reader.accepts(movie))
+                .findFirst()
+                .isPresent();
     }
 
     public boolean isSpecialDescriptions(Movie movie) {

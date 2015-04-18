@@ -84,7 +84,7 @@ public class MovieEditForm implements Serializable {
     }
 
     public String close() {
-        return "index";
+        return isNew() ? "new" : "index";
     }
 
     public String remove() {

@@ -39,7 +39,7 @@
         </step>
     </flow>
 
-    <flow id="metadata" next="thumbnails">
+    <flow id="metadata" next="descriptions">
         <step id="metadata-prepare" next="metadata-run">
             <listeners>
                 <listener ref="com.zemiak.movies.batch.service.Listener"/>
@@ -60,6 +60,35 @@
         </step>
 
         <step id="metadata-cleanup" >
+            <listeners>
+                <listener ref="com.zemiak.movies.batch.service.Listener"/>
+            </listeners>
+            <batchlet ref="com.zemiak.movies.batch.service.RemoveFileList">
+            </batchlet>
+        </step>
+    </flow>
+    
+    <flow id="descriptions" next="thumbnails">
+        <step id="descriptions-prepare" next="descriptions-run">
+            <listeners>
+                <listener ref="com.zemiak.movies.batch.service.Listener"/>
+            </listeners>
+            <batchlet ref="PrepareFileList"></batchlet>
+        </step>
+
+        <step id="descriptions-run" next="descriptions-cleanup">
+            <listeners>
+                <listener ref="com.zemiak.movies.batch.service.Listener"/>
+            </listeners>
+
+            <chunk item-count="1">
+                <reader ref="FilenameItemReader"></reader>
+                <processor ref="DescriptionsProcessor"></processor>
+                <writer ref="DescriptionsWriter"></writer>
+            </chunk>
+        </step>
+
+        <step id="descriptions-cleanup" >
             <listeners>
                 <listener ref="com.zemiak.movies.batch.service.Listener"/>
             </listeners>

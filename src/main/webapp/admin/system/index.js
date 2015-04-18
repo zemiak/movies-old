@@ -10,7 +10,8 @@ $(document).ready(function() {
         "columns": [
             { "data": "id" },
             { "data": "created" }
-        ]
+        ],
+        "order": [[1, "desc"]]
     });
 });
 

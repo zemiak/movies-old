@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class Csfd implements IDescriptionReader {
     private static final Logger LOG = Logger.getLogger(Csfd.class.getName());
@@ -45,9 +45,9 @@ public class Csfd implements IDescriptionReader {
             return null;
         }
 
-        Element description = doc.select("div[data-truncate]").first();
+        Elements description = doc.select("div[data-truncate]");
 
-        return description.text();
+        return null != description ? description.text() : "";
     }
 
     @Override
@@ -75,20 +75,24 @@ public class Csfd implements IDescriptionReader {
             return res;
         }
 
-        final Element list = doc
-                .select("div[id=search-films]").first()
-                .select("div[class=content]").first()
-                .select("ul[class=ui-image-list js-odd-even]").first();
+        Elements list = doc
+                .select("div[id=search-films] > div[class=content] > ul[class=ui-image-list js-odd-even]");
         if (null == list) {
             return res;
         }
 
-        list.select("li").stream().forEach(li -> {
-            final Element desc = li.select("p").first();
-            final Element href = li.select("h3").first().select("a").first();
-            final String descUrl = href.absUrl("href");
+        Elements elements = list.select("li");
 
-            res.add(new UrlDTO(descUrl, getReaderName(), href.text(), desc.text()));
+        elements.stream().forEach(li -> {
+            final Elements href = li.select("div > h3 > a");
+            if (null == href) {
+                return;
+            }
+
+            final String desc = href.first().text();
+            final String descUrl = href.first().absUrl("href");
+
+            res.add(new UrlDTO(descUrl, getReaderName(), href.text(), desc));
         });
 
         return res;

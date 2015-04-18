@@ -54,28 +54,6 @@
                 
                 <div class="row">
                     <div class="small-6 columns">
-                        <label>Picture Filename:
-                            <input type="text" id="pictureFileName" name="pictureFileName" 
-                                   jsf:id="pictureFileName" label="Picture Filename"
-                                   jsf:value="#{movieEditForm.bean.pictureFileName}" 
-                                   placeholder="Enter Picture Filename" />
-                        </label>
-                        <h:message for="pictureFileName" class="error" />
-                    </div>
-                    
-                    <div class="small-6 columns">
-                        <label>Filename:
-                            <input type="text" id="fileName" name="fileName" 
-                                   jsf:id="fileName" label="Filename"
-                                   jsf:value="#{movieEditForm.bean.fileName}" 
-                                   placeholder="Enter Filename" />
-                        </label>
-                        <h:message for="fileName" class="error" />
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="small-6 columns">
                         <label>Serie
                             <select jsf:id="serie" id="serie" jsf:value="#{movieEditForm.serieId}" size="1">
                                 <f:selectItems value="#{movieEditForm.series}" var="item" itemValue="#{item.id}" />
@@ -130,7 +108,7 @@
                                    jsf:value="#{movieEditForm.bean.displayOrder}" 
                                    placeholder="Enter Display Order" />
                         </label>
-                        <h:message for="number" class="error" />
+                        <h:message for="displayOrder" class="error" />
                     </div>
                 </div>
                 
@@ -156,6 +134,30 @@
                 </div>
                 
                 <div class="row">
+                    <div class="small-6 columns">
+                        <label>Picture Filename:
+                            <input type="text" id="pictureFileName" name="pictureFileName" 
+                                   jsf:id="pictureFileName" label="Picture Filename"
+                                   jsf:value="#{movieEditForm.bean.pictureFileName}" 
+                                   readonly="true" jsf:readOnly="true"
+                                   placeholder="Enter Picture Filename" />
+                        </label>
+                        <h:message for="pictureFileName" class="error" />
+                    </div>
+                    
+                    <div class="small-6 columns">
+                        <label>Filename:
+                            <input type="text" id="fileName" name="fileName" 
+                                   jsf:id="fileName" label="Filename"
+                                   jsf:value="#{movieEditForm.bean.fileName}" 
+                                   readonly="true" jsf:readOnly="true"
+                                   placeholder="Enter Filename" />
+                        </label>
+                        <h:message for="fileName" class="error" />
+                    </div>
+                </div>
+                
+                <div class="row">
                     <div class="small-10 columns">
                         <textarea type="text" id="description" name="description" jsf:id="description" 
                                 jsf:value="${movieEditForm.bean.description}" label="Description"
@@ -165,7 +167,6 @@
                         <ul class="button-group">
                             <li><a href="javascript:window.history.back();" class="small button secondary">Close</a></li>
                             <li><input type="submit" class="small button" jsf:value="Save &amp; Close" jsf:action="#{movieEditForm.save()}" /></li>
-                            <li><a class="small button alert" href="javascript:$('#removeButton').click();" data-confirm="" type="button">Remove</a></li>
                         </ul>
                     </div>
                     
