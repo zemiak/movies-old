@@ -2,6 +2,7 @@ package com.zemiak.movies.service.description;
 
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.UrlDTO;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,8 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SeriesDescriptionReader implements IDescriptionReader {
+    private static final Logger LOG = Logger.getLogger(SeriesDescriptionReader.class.getName());
     final Map<Integer, ManagedSerieInfo> series; // id -> fileName
 
     public SeriesDescriptionReader() {
@@ -33,6 +37,7 @@ public class SeriesDescriptionReader implements IDescriptionReader {
         try {
             raw = series.get(movie.getSerie().getId()).getDescriptions().getString(movie.getDisplayOrder().toString());
         } catch (MissingResourceException ex) {
+            LOG.log(Level.SEVERE, "Cannot find description for {0}: {1}", new Object[]{movie.getFileName(), ex});
             return null;
         }
 

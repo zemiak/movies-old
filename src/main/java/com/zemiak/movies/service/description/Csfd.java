@@ -41,7 +41,7 @@ public class Csfd implements IDescriptionReader {
         try {
             doc = Jsoup.connect(url).timeout(5000).get();
         } catch (IOException ex) {
-            LOG.log(Level.SEVERE, "Cannot read " + url, ex);
+            LOG.log(Level.SEVERE, "Cannot read {0}: {1}", new Object[]{url, ex});
             return null;
         }
 
@@ -63,7 +63,7 @@ public class Csfd implements IDescriptionReader {
         try {
             url = SEARCH_URL + URLEncoder.encode(movieName, "UTF-8");
         } catch (UnsupportedEncodingException ex) {
-            LOG.log(Level.SEVERE, "Unsupported UTF-8 encoding.");
+            LOG.log(Level.SEVERE, "Unsupported UTF-8 encoding.", ex);
             return res;
         }
 

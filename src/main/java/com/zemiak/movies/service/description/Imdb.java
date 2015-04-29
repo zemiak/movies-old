@@ -62,7 +62,7 @@ public class Imdb implements IDescriptionReader {
         try {
             url = SEARCH_URL + URLEncoder.encode(movieName, "UTF-8");
         } catch (UnsupportedEncodingException ex) {
-            LOG.log(Level.SEVERE, "Unsupported UTF-8 encoding.");
+            LOG.log(Level.SEVERE, "Unsupported UTF-8 encoding.", ex);
             return res;
         }
 

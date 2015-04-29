@@ -2,17 +2,29 @@ package com.zemiak.movies.batch.service;
 
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.strings.Joiner;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CommandLine {
     private static final BatchLogger LOG = BatchLogger.getLogger(CommandLine.class.getName());
-    private static final Logger LOG1 = Logger.getLogger(CommandLine.class.getName());
+    private static final Logger FILE_LOGGER = Logger.getLogger(CommandLine.class.getName());
     private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
     private static final Integer TIMEOUT = 300; // 5 minutes
 
@@ -24,7 +36,7 @@ public class CommandLine {
         CommandLineResult result = new CommandLineResult();
         Callable<CommandLineResult> callable = getCallable(cmd, arguments);
 
-        LOG1.log(Level.INFO, "run:{0} {1}", new Object[]{cmd, null == arguments ? "" : Joiner.join(arguments, "|")});
+        FILE_LOGGER.log(Level.INFO, "run:{0} {1}", new Object[]{cmd, null == arguments ? "" : Joiner.join(arguments, "|")});
 
         try {
             result = timedCall(callable, TIMEOUT, TimeUnit.SECONDS);
@@ -46,8 +58,7 @@ public class CommandLine {
             LOG.log(Level.SEVERE, "... execCmd: error code is {0}, arguments {1}, output is {2}",
                     new Object[]{result.getExitValue(), null == arguments ? "" : Joiner.join(arguments, "|"),
                         Joiner.join(result.getOutput(), "|")});
-            IllegalStateException ex = new IllegalStateException("Exit code " + result.getExitValue() + " instead of success");
-            throw ex;
+            throw new IllegalStateException("Exit code " + result.getExitValue() + " instead of success");
         }
 
         return result.getOutput();
@@ -81,7 +92,7 @@ public class CommandLine {
         final List<String> command = new ArrayList<>(arguments);
         command.add(0, cmd);
 
-        Callable<CommandLineResult> callable = () -> {
+        return () -> {
             Process process = Runtime.getRuntime().exec(command.toArray(new String[]{}));
 
             int exitValue = process.waitFor();
@@ -97,7 +108,5 @@ public class CommandLine {
 
             return result;
         };
-
-        return callable;
     }
 }

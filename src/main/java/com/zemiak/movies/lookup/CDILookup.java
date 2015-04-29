@@ -19,10 +19,9 @@ public class CDILookup {
             final Bean<?> bean = beanManager.resolve(beans);
             final CreationalContext<?> cc = beanManager.createCreationalContext(bean);
 
-            final T object = (T) beanManager.getReference(bean, type, cc);
-            return object;
+            return (T) beanManager.getReference(bean, type, cc);
         } catch (final NamingException ex) {
-            LOG.log(Level.SEVERE, "Can''t lookup object by {0}.{1}", new Object[]{type, ex.getMessage()});
+            LOG.log(Level.SEVERE, "Can''t lookup object by {0}: {1}", new Object[]{type, ex});
             return null;
         }
     }

@@ -56,7 +56,7 @@ public class GenerateThumbnail implements IThumbnailReader {
             LOG.log(Level.INFO, "Generated thumbnail {0} ...", imageFileName);
         } catch (IllegalStateException | InterruptedException | IOException ex) {
             LOG.log(Level.SEVERE, "DID NOT generate thumbnail {0}: {1} ...",
-                    new Object[]{imageFileName, ex.getMessage()});
+                    new Object[]{imageFileName, ex});
         }
     }
 }

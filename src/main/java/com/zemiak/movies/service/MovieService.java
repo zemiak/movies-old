@@ -72,8 +72,8 @@ public class MovieService {
         String textAscii = Encodings.toAscii(text.trim().toLowerCase());
 
         all().stream().forEach(entry -> {
-            String name = (null == entry.getName() ? ""
-                    : Encodings.toAscii(entry.getName().trim().toLowerCase()));
+            String name = null == entry.getName() ? ""
+                    : Encodings.toAscii(entry.getName().trim().toLowerCase());
             if (name.contains(textAscii)) {
                 res.add(entry);
             }
@@ -92,9 +92,9 @@ public class MovieService {
     public List<Movie> findAllNew() {
         List<Movie> res = new ArrayList<>();
 
-        all().stream().filter(movie -> null == movie.getGenre() || movie.getGenre().isEmpty()).forEach(movie -> {
-            res.add(movie);
-        });
+        all().stream()
+                .filter(movie -> null == movie.getGenre() || movie.getGenre().isEmpty())
+                .forEach(movie -> res.add(movie));
 
         return res;
     }
@@ -167,9 +167,7 @@ public class MovieService {
         int count = list.size();
 
         list.stream()
-                .peek(m -> {
-                    i.inc();
-                })
+                .peek(m -> i.inc())
                 .filter(m -> m.getId().equals(movie.getId()))
                 .findFirst();
 
