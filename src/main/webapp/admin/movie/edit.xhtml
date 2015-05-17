@@ -122,14 +122,17 @@
                         <h:message for="url" class="error" />
                     </div>
                     
-                    <div class="small-6 columns">
+                    <div class="small-4 columns">
                         <label>Available URLs:
                             <select jsf:id="urls" id="urls" size="1" jsf:value="#{movieEditForm.selectedUrl}">
                                 <f:selectItems value="#{movieEditForm.urls}" var="oneUrl" itemLabel="#{oneUrl.dbName}: #{oneUrl.description}" itemValue="#{oneUrl.url}" />
-                                <f:ajax listener="#{movieEditForm.changeUrlFromSelection}" render="url description" />
                             </select>
                         </label>
                         <h:message for="urls" class="error" />
+                    </div>
+                    
+                    <div class="small-2 columns">
+                        <h:commandButton style="margin-bottom: 0px; margin-top: 1em;" class="small button" value="Fetch" action="#{movieEditForm.fetchInfoFromUrlSelection}" />
                     </div>
                 </div>
                 

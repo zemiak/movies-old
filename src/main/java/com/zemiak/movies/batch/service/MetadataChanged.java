@@ -38,6 +38,8 @@ public class MetadataChanged implements Batchlet {
     private boolean createIndicatorFile() {
         final File mainDir = new File(path);
         final File file = new File(mainDir.getAbsolutePath() + RemoveFileList.PATH_SEPARATOR + INDICATOR_FILE_NAME);
+        file.setReadable(true, false);
+        file.setWritable(true, false);
 
         try {
             if (file.createNewFile()) {
