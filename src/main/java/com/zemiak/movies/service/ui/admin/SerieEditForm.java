@@ -38,7 +38,7 @@ public class SerieEditForm implements Serializable {
     }
 
     public String check() {
-        bean = isNew() ? Serie.create() : service.find(id);
+        bean = isNew() ? Serie.create(service.getEm()) : service.find(id);
 
         if (null == bean) {
             JsfMessages.addErrorMessage("Cannot find serie #" + id);

@@ -75,4 +75,10 @@ public class SerieService {
         bean.setGenre(em.getReference(Genre.class, genreId));
         save(bean);
     }
+
+    public EntityManager getEm() {
+        return em;
+    }
+
+    
 }

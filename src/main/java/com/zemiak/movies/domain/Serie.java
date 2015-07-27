@@ -184,11 +184,12 @@ public class Serie implements Serializable, Comparable<Serie> {
         return null == genre ? "<None>" : (genre.isEmpty() ? "<None>" : genre.getName());
     }
 
-    public static Serie create() {
+    public static Serie create(EntityManager em) {
         Serie serie = new Serie();
         serie.setCreated(new Date());
         serie.setMovieList(new ArrayList<>());
         serie.setDisplayOrder(9000);
+        serie.setGenre(em.find(Genre.class, 0));
 
         return serie;
     }
