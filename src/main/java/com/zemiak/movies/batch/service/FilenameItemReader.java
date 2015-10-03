@@ -1,6 +1,5 @@
 package com.zemiak.movies.batch.service;
 
-import com.zemiak.movies.batch.service.log.BatchLogger;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,7 +10,6 @@ import javax.inject.Named;
 
 @Named("FilenameItemReader")
 public class FilenameItemReader extends AbstractItemReader {
-    private static final BatchLogger LOG = BatchLogger.getLogger(FilenameItemReader.class.getName());
     private static final Logger LOG1 = Logger.getLogger(FilenameItemReader.class.getName());
 
     @Inject

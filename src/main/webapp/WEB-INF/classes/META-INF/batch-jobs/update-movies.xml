@@ -3,6 +3,7 @@
 <job id="update-movies" xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="1.0">
     <properties>
         <property name="fileList" value="/tmp/movies-filelist"/>
+        <property name="plexFolder" value="/mnt/plex/data"/>
     </properties>
 
     <flow id="newmovies" next="metadata">
@@ -97,7 +98,7 @@
         </step>
     </flow>
 
-    <flow id="thumbnails" next="updateStorageCleanup">
+    <flow id="thumbnails" next="plex">
         <step id="thumbnails-prepare" next="thumbnails-run">
             <listeners>
                 <listener ref="com.zemiak.movies.batch.service.Listener"/>
@@ -118,6 +119,35 @@
         </step>
 
         <step id="thumbnails-cleanup" >
+            <listeners>
+                <listener ref="com.zemiak.movies.batch.service.Listener"/>
+            </listeners>
+            <batchlet ref="com.zemiak.movies.batch.service.RemoveFileList">
+            </batchlet>
+        </step>
+    </flow>
+    
+    <flow id="plex" next="updateStorageCleanup">
+        <step id="plex-prepare" next="plex-run">
+            <listeners>
+                <listener ref="com.zemiak.movies.batch.service.Listener"/>
+            </listeners>
+            <batchlet ref="PrepareFileList"></batchlet>
+        </step>
+
+        <step id="plex-run" next="plex-cleanup">
+            <listeners>
+                <listener ref="com.zemiak.movies.batch.service.Listener"/>
+            </listeners>
+
+            <chunk item-count="1">
+                <reader ref="FilenameItemReader"></reader>
+                <processor ref="PlexProcessor"></processor>
+                <writer ref="PlexWriter"></writer>
+            </chunk>
+        </step>
+
+        <step id="plex-cleanup" >
             <listeners>
                 <listener ref="com.zemiak.movies.batch.service.Listener"/>
             </listeners>
