@@ -133,6 +133,7 @@
                 <listener ref="com.zemiak.movies.batch.service.Listener"/>
             </listeners>
             <batchlet ref="PrepareFileList"></batchlet>
+            <batchlet ref="BasicFolderStructureCreator"></batchlet>
         </step>
 
         <step id="plex-run" next="plex-cleanup">
