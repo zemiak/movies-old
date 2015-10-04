@@ -11,6 +11,7 @@ $(document).ready(function() {
             { "data": "id" },
             { "data": "name" },
             { "data": "genre" },
+            { "data": "tvShow" },
             { "data": "displayOrder" },
             { "data": "created" }
         ]

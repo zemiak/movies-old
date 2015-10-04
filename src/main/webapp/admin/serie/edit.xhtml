@@ -71,13 +71,23 @@
                 </div>
                 
                 <div class="row">
-                    <div class="small-12 columns">
+                    <div class="small-6 columns">
                         <label>Genre:
                             <select jsf:id="genre" id="genre" jsf:value="#{serieEditForm.genreId}" size="1">
                                 <f:selectItems value="#{serieEditForm.genres}" var="genre" itemValue="#{genre.id}" />
                             </select>
                         </label>
                         <h:message for="genre" class="error" />
+                    </div>
+                    
+                    <div class="small-6 columns">
+                        <label>TV Show:
+                            <input type="checkbox" id="tvShow" name="tvShow" 
+                                   jsf:id="tvShow" label="TV Show"
+                                   jsf:value="#{serieEditForm.bean.tvShow}" 
+                                   />
+                        </label>
+                        <h:message for="tvShow" class="error" />
                     </div>
                 </div>
                 

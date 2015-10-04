@@ -60,16 +60,12 @@ public class Serie implements Serializable, Comparable<Serie> {
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
+    @Column(name = "tv_show")
+    private Boolean tvShow;
 
     public Serie() {
         this.created = new Date();
+        this.tvShow = Boolean.FALSE;
     }
 
     public Serie(Integer id) {
@@ -83,6 +79,7 @@ public class Serie implements Serializable, Comparable<Serie> {
         this.setDisplayOrder(entity.getDisplayOrder());
         this.setPictureFileName(entity.getPictureFileName());
         this.setGenre(entity.getGenre());
+        this.setTvShow(entity.getTvShow());
     }
 
     public Integer getId() {
@@ -192,5 +189,21 @@ public class Serie implements Serializable, Comparable<Serie> {
         serie.setGenre(em.find(Genre.class, 0));
 
         return serie;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Boolean getTvShow() {
+        return tvShow;
+    }
+
+    public void setTvShow(Boolean tvShow) {
+        this.tvShow = tvShow;
     }
 }

@@ -18,7 +18,7 @@ mv $WILDFLY $TARGET
 ./$TARGET/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0 &
 sleep 5s
 
-cd $PROJECT/setup/wildfly
+cd $PROJECT/setup
 sh setup.sh
 
 sleep 3s
