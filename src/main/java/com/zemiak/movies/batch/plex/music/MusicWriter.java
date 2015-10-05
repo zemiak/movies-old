@@ -1,6 +1,7 @@
 package com.zemiak.movies.batch.plex.music;
 
-import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.batch.metadata.MetadataReader;
+import com.zemiak.movies.batch.metadata.MovieMetadata;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,22 +13,17 @@ import javax.inject.Inject;
 public class MusicWriter {
     static final String PATH = "Music";
 
-    @Inject String path;
+    @Inject String musicPath;
 
-    public void process(String plexFolder, Movie movie) throws IOException {
-        String movieName = null == movie.getOriginalName() ? movie.getName() : movie.getOriginalName();
-        Path linkName = Paths.get(plexFolder, PATH, movieName + ".m4v");
+    public void process(String plexFolder, String musicFileName) throws IOException {
+        // Music/Artist_Name - Album_Name/Track_Number - Track_Name.ext
+        MovieMetadata data = new MetadataReader(Paths.get(musicPath, musicFileName).toString()).get();
+        String trackFileName = data.getNiceDisplayOrder() + " - " + data.getName() + ".m4a";
+        Path folder = Paths.get(plexFolder, PATH, data.getArtist() + " - " + data.getAlbumName());
+        Path linkName = Paths.get(folder.toString(), trackFileName);
 
-        Integer i = 2;
-        while (Files.exists(linkName)) {
-            linkName = Paths.get(plexFolder, PATH, movieName +  "-" + String.valueOf(i) + ".m4v");
-
-            if (i > 100) {
-                throw new IllegalStateException("Cannot find a suitable name for " + linkName.toString());
-            }
-        }
-
-        Path existing = Paths.get(path, movie.getFileName());
+        Files.createDirectories(folder);
+        Path existing = Paths.get(musicFileName);
         Files.createSymbolicLink(linkName, existing);
     }
 }

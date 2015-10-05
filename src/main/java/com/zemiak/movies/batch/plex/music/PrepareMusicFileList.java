@@ -20,7 +20,7 @@ public class PrepareMusicFileList implements Batchlet {
     private JobContext jobCtx;
 
     @Inject
-    private String path;
+    private String musicPath;
 
     private final List<String> files = new ArrayList<>();
 
@@ -33,13 +33,13 @@ public class PrepareMusicFileList implements Batchlet {
         String fileList = getFileListName();
         long counter = 0;
 
-        File mainDir = new File(path);
+        File mainDir = new File(musicPath);
         if (! mainDir.isDirectory()) {
-            throw new IOException(path + " is not a directory");
+            throw new IOException(musicPath + " is not a directory");
         }
 
         if (! mainDir.canExecute() || ! mainDir.canRead()) {
-            throw new IOException(path + " is not readable");
+            throw new IOException(musicPath + " is not readable");
         }
 
         try (FileWriter stream = new FileWriter(fileList)) {
@@ -87,7 +87,7 @@ public class PrepareMusicFileList implements Batchlet {
         final int extPos = absolutePath.lastIndexOf(".");
         final String ext = absolutePath.substring(extPos + 1, absolutePath.length()).toLowerCase();
 
-        if ("mp4".equals(ext) || "m4v".equals(ext)) {
+        if ("m4a".equals(ext)) {
             files.add(absolutePath);
         }
     }

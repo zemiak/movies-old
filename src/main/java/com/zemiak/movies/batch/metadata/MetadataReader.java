@@ -28,6 +28,10 @@ public class MetadataReader {
         process();
     }
 
+    public MetadataReader(final String name) {
+        this(name, null, null);
+    }
+
     private void process() {
         IsoFile isoFile;
 
@@ -48,7 +52,7 @@ public class MetadataReader {
             LOG.log(Level.SEVERE, "Cannot close file", ex);
         }
 
-        if (!metaData.getMovie().isEmptySerie()) {
+        if (!metaData.getMovie().isEmptySerie() && null != service) {
             metaData.setNiceDisplayOrder(service.getNiceDisplayOrder(metaData.getMovie()));
         }
     }
