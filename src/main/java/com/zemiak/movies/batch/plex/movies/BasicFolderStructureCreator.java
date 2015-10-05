@@ -1,4 +1,4 @@
-package com.zemiak.movies.batch.plex;
+package com.zemiak.movies.batch.plex.movies;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -10,7 +10,7 @@ import javax.batch.runtime.context.JobContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-@Named("FilenameItemReader")
+@Named("BasicFolderStructureCreator")
 public class BasicFolderStructureCreator implements Batchlet {
     private static final Logger LOG = Logger.getLogger(BasicFolderStructureCreator.class.getName());
 

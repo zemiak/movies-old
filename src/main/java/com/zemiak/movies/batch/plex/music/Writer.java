@@ -1,5 +1,7 @@
-package com.zemiak.movies.batch.plex;
+package com.zemiak.movies.batch.plex.music;
 
+import com.zemiak.movies.batch.plex.movies.*;
+import com.zemiak.movies.batch.plex.music.Writer;
 import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
@@ -11,12 +13,12 @@ import javax.batch.runtime.context.JobContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-@Named("PlexWriter")
+@Named("PlexMusicWriter")
 public class Writer extends AbstractItemWriter {
     private static final BatchLogger LOG = BatchLogger.getLogger(Writer.class.getName());
 
     @Inject private JobContext jobCtx;
-    @Inject private MovieWriter movieWriter;
+    @Inject private MusicWriter movieWriter;
     @Inject private SerieItemWriter serieItemWriter;
 
     @Override

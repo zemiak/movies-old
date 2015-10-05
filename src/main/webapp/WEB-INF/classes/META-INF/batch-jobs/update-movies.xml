@@ -98,7 +98,7 @@
         </step>
     </flow>
 
-    <flow id="thumbnails" next="plex">
+    <flow id="thumbnails" next="plexMovies">
         <step id="thumbnails-prepare" next="thumbnails-run">
             <listeners>
                 <listener ref="com.zemiak.movies.batch.service.Listener"/>
@@ -127,8 +127,8 @@
         </step>
     </flow>
     
-    <flow id="plex" next="updateStorageCleanup">
-        <step id="plex-prepare" next="plex-run">
+    <flow id="plexMovies" next="plexMusic">
+        <step id="plex-movies-prepare" next="plex-movies-run">
             <listeners>
                 <listener ref="com.zemiak.movies.batch.service.Listener"/>
             </listeners>
@@ -136,19 +136,49 @@
             <batchlet ref="BasicFolderStructureCreator"></batchlet>
         </step>
 
-        <step id="plex-run" next="plex-cleanup">
+        <step id="plex-movies-run" next="plex-movies-cleanup">
             <listeners>
                 <listener ref="com.zemiak.movies.batch.service.Listener"/>
             </listeners>
 
             <chunk item-count="1">
                 <reader ref="FilenameItemReader"></reader>
-                <processor ref="PlexProcessor"></processor>
-                <writer ref="PlexWriter"></writer>
+                <processor ref="PlexMoviesProcessor"></processor>
+                <writer ref="PlexMoviesWriter"></writer>
             </chunk>
         </step>
 
-        <step id="plex-cleanup" >
+        <step id="plex-movies-cleanup" >
+            <listeners>
+                <listener ref="com.zemiak.movies.batch.service.Listener"/>
+            </listeners>
+            <batchlet ref="com.zemiak.movies.batch.service.RemoveFileList">
+            </batchlet>
+        </step>
+    </flow>
+    
+    <flow id="plexMusic" next="updateStorageCleanup">
+        <step id="plex-music-prepare" next="plex-music-run">
+            <listeners>
+                <listener ref="com.zemiak.movies.batch.service.Listener"/>
+            </listeners>
+            <batchlet ref="PrepareMusicFileList"></batchlet>
+            <batchlet ref="BasicMusicFolderStructureCreator"></batchlet>
+        </step>
+
+        <step id="plex-music-run" next="plex-music-cleanup">
+            <listeners>
+                <listener ref="com.zemiak.movies.batch.service.Listener"/>
+            </listeners>
+
+            <chunk item-count="1">
+                <reader ref="FilenameItemReader"></reader>
+                <processor ref="PlexMusicProcessor"></processor>
+                <writer ref="PlexMusicWriter"></writer>
+            </chunk>
+        </step>
+
+        <step id="plex-music-cleanup" >
             <listeners>
                 <listener ref="com.zemiak.movies.batch.service.Listener"/>
             </listeners>

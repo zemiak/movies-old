@@ -1,4 +1,4 @@
-package com.zemiak.movies.batch.plex;
+package com.zemiak.movies.batch.plex.movies;
 
 import com.zemiak.movies.domain.Movie;
 import java.io.IOException;

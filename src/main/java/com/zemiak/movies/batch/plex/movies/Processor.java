@@ -1,4 +1,4 @@
-package com.zemiak.movies.batch.plex;
+package com.zemiak.movies.batch.plex.movies;
 
 import com.zemiak.movies.service.MovieService;
 import javax.batch.api.chunk.ItemProcessor;
@@ -6,7 +6,7 @@ import javax.batch.runtime.context.JobContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-@Named("PlexProcessor")
+@Named("PlexMoviesProcessor")
 public class Processor implements ItemProcessor {
     @Inject private MovieService service;
     @Inject private String path;
