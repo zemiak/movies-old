@@ -25,30 +25,25 @@ public class SerieItemWriter {
         Files.createDirectories(folder);
 
         if (Objects.equals(GOT, serie.getId())) {
-            processGameOfThrones(folder, movie);
+            process(folder, movie, 2, movie.getDisplayOrder() % 100);
         } else if (Objects.equals(MASH, serie.getId())) {
-            processMash(folder, movie);
+            process(folder, movie, 3, 1);
         } else {
-            processStandard(folder, movie);
+            process(folder, movie, 2, 1);
         }
     }
 
-    private void processStandard(Path folder, Movie movie) throws IOException {
+    private void process(Path folder, Movie movie, Integer decimals, Integer season) throws IOException {
         String serie = movie.getSubtitlesName();
+        String format = "%0" + String.valueOf(decimals) + "d";
         Integer number = null == movie.getDisplayOrder() ? 0 : movie.getDisplayOrder();
-        String episodeName = serie + " - s01e" + String.format("%02d", number) + " - "
+        String episodeName = serie + " - s01e" + String.format(format, number) + " - "
                 + movie.getOriginalLanguageName() + ".m4v";
 
-        Path linkName = Paths.get(folder.toString(), serie, "Season 01", episodeName);
+        Path linkName = Paths.get(folder.toString(), serie, String.format("Season %02d", season), episodeName);
         Path existing = Paths.get(path, movie.getFileName());
+
+        Files.createDirectories(Paths.get(folder.toString(), "Season %02d"));
         Files.createSymbolicLink(linkName, existing);
-    }
-
-    private void processMash(Path folder, Movie movie) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void processGameOfThrones(Path folder, Movie movie) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
