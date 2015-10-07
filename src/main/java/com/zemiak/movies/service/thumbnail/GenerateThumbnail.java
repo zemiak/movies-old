@@ -1,7 +1,7 @@
 package com.zemiak.movies.service.thumbnail;
 
 import com.zemiak.movies.batch.service.CommandLine;
-import com.zemiak.movies.batch.service.log.BatchLogger;
+import com.zemiak.movies.batch.service.BatchLogger;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.strings.Joiner;
 import java.io.IOException;

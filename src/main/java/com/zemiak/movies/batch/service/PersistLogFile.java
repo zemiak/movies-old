@@ -1,6 +1,5 @@
-package com.zemiak.movies.batch.service.log;
+package com.zemiak.movies.batch.service;
 
-import com.zemiak.movies.domain.CacheClearEvent;
 import com.zemiak.movies.service.BatchLogService;
 import java.io.File;
 import java.io.IOException;
@@ -9,42 +8,29 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.batch.api.Batchlet;
-import javax.batch.runtime.context.JobContext;
-import javax.enterprise.event.Event;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
-import javax.inject.Named;
 
-@Named("PersistLogFile")
-public class PersistLogFile implements Batchlet {
+@Dependent
+public class PersistLogFile {
     private static final Logger LOG = Logger.getLogger(PersistLogFile.class.getName());
-
-    @Inject
-    private JobContext jobCtx;
 
     @Inject
     private BatchLogService service;
 
-    @Inject
-    private Event<CacheClearEvent> events;
-
-    public PersistLogFile() {
-    }
-
-    @Override
-    public String process() throws Exception {
+    public void persist() {
         final File file = new File(BatchLogger.getLogFileName());
         if (! file.exists()) {
             LOG.log(Level.INFO, "Log file does not exist, not saving...");
-            return "does-not-exist";
+            return;
         }
 
-        persistLogFile();
-        events.fire(new CacheClearEvent());
-
-        LOG.log(Level.INFO, "Persisted log file");
-
-        return "saved";
+        try {
+            persistLogFile();
+            LOG.log(Level.INFO, "Persisted log file");
+        } catch (IOException ex) {
+            LOG.log(Level.SEVERE, "Error persisting log file", ex);
+        }
     }
 
     private void persistLogFile() throws IOException {
@@ -53,9 +39,5 @@ public class PersistLogFile implements Batchlet {
         final String text = new String(content, "UTF-8");
 
         service.create(text);
-    }
-
-    @Override
-    public void stop() throws Exception {
     }
 }

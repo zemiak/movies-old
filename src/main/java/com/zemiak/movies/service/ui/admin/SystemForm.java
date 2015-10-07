@@ -1,7 +1,6 @@
 package com.zemiak.movies.service.ui.admin;
 
-import com.zemiak.movies.batch.service.BatchRunner;
-import com.zemiak.movies.service.BatchLogService;
+import com.zemiak.movies.batch.service.UpdateMoviesScheduler;
 import com.zemiak.movies.domain.CacheClearEvent;
 import com.zemiak.movies.service.*;
 import java.io.Serializable;
@@ -19,7 +18,7 @@ public class SystemForm implements Serializable {
     @Inject private BatchLogService logs;
     @Inject private MovieService movies;
     @Inject private Event<CacheClearEvent> clearCacheEvents;
-    @Inject private BatchRunner runner;
+    @Inject private UpdateMoviesScheduler runner;
 
     public SystemForm() {
     }
@@ -54,11 +53,6 @@ public class SystemForm implements Serializable {
     }
 
     public void runImport() {
-        if (runner.isUpdateMoviesRunning()) {
-            JsfMessages.addErrorMessage("Job is still running.");
-        } else {
-            runner.runUpdateCollection();
-            JsfMessages.addSuccessMessage("Job has been submitted.");
-        }
+        runner.start();
     }
 }

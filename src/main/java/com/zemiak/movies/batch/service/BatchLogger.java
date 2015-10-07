@@ -1,4 +1,4 @@
-package com.zemiak.movies.batch.service.log;
+package com.zemiak.movies.batch.service;
 
 import java.io.*;
 import java.util.logging.Level;

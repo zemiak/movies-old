@@ -1,4 +1,4 @@
-package com.zemiak.movies.batch.service.log;
+package com.zemiak.movies.batch.service;
 
 import java.io.File;
 import java.util.Date;
@@ -8,22 +8,17 @@ import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.annotation.Resource;
-import javax.batch.api.Batchlet;
-import javax.batch.runtime.context.JobContext;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-@Named("SendLogFile")
-public class SendLogFile implements Batchlet {
+@Dependent
+public class SendLogFile {
     private static final Logger LOG = Logger.getLogger(SendLogFile.class.getName());
-
-    @Inject
-    private JobContext jobCtx;
 
     @Resource(name = "java:/movies/mail/default")
     private Session mailSession;
@@ -35,22 +30,23 @@ public class SendLogFile implements Batchlet {
     public SendLogFile() {
     }
 
-    @Override
-    public String process() throws Exception {
+    public void send() {
         final File file = new File(BatchLogger.getLogFileName());
         if (! file.exists()) {
             LOG.log(Level.INFO, "Log file does not exist, not sending...");
-            return "does-not-exist";
+            return;
         }
 
         if (file.length() == 0) {
             LOG.log(Level.INFO, "Log file is empty, not sending...");
-            return "zero-size";
+            return;
         }
 
-        sendLogFile();
-
-        return "sent";
+        try {
+            sendLogFile();
+        } catch (MessagingException ex) {
+            LOG.log(Level.SEVERE, "Error mailing the log file", ex);
+        }
     }
 
     private void sendLogFile() throws MessagingException {
@@ -73,11 +69,5 @@ public class SendLogFile implements Batchlet {
         Transport.send(message);
 
         LOG.log(Level.INFO, "Sent LOG file to {0}", mailTo);
-
-        //BatchLogger.deleteLogFile();
-    }
-
-    @Override
-    public void stop() throws Exception {
     }
 }

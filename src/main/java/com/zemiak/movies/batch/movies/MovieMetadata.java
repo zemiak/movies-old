@@ -1,6 +1,6 @@
-package com.zemiak.movies.batch.metadata;
+package com.zemiak.movies.batch.movies;
 
-import com.zemiak.movies.batch.service.log.BatchLogger;
+import com.zemiak.movies.batch.service.BatchLogger;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.service.description.DescriptionReader;
 import java.util.logging.Level;

@@ -1,9 +1,9 @@
-package com.zemiak.movies.batch.metadata;
+package com.zemiak.movies.batch.movies;
 
 import com.coremedia.iso.IsoFile;
 import com.coremedia.iso.boxes.*;
 import com.coremedia.iso.boxes.apple.AppleItemListBox;
-import com.zemiak.movies.batch.service.log.BatchLogger;
+import com.zemiak.movies.batch.service.BatchLogger;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.service.MovieService;
 import java.io.IOException;

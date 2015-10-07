@@ -1,4 +1,4 @@
-package com.zemiak.movies.batch.plex.movies;
+package com.zemiak.movies.batch.plex;
 
 import com.zemiak.movies.domain.Movie;
 import java.io.IOException;
@@ -9,18 +9,19 @@ import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
 @Dependent
-public class MovieWriter {
+public class StandaloneMovieWriter {
     static final String PATH = "Movies";
 
     @Inject String path;
+    @Inject String plexPath;
 
-    public void process(String plexFolder, Movie movie) throws IOException {
+    public void process(Movie movie) throws IOException {
         String movieName = null == movie.getOriginalName() ? movie.getName() : movie.getOriginalName();
-        Path linkName = Paths.get(plexFolder, PATH, movieName + ".m4v");
+        Path linkName = Paths.get(plexPath, PATH, movieName + ".m4v");
 
         Integer i = 2;
         while (Files.exists(linkName)) {
-            linkName = Paths.get(plexFolder, PATH, movieName +  "-" + String.valueOf(i) + ".m4v");
+            linkName = Paths.get(plexPath, PATH, movieName +  "-" + String.valueOf(i) + ".m4v");
 
             if (i > 100) {
                 throw new IllegalStateException("Cannot find a suitable name for " + linkName.toString());

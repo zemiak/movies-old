@@ -1,16 +1,16 @@
-package com.zemiak.movies.batch.thumbnail;
+package com.zemiak.movies.batch.movies;
 
-import com.zemiak.movies.batch.service.log.BatchLogger;
-import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.batch.service.BatchLogger;
+import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.thumbnail.ThumbnailReader;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Level;
-import javax.batch.api.chunk.AbstractItemWriter;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
-import javax.inject.Named;
 
-@Named("ThumbnailsWriter")
-public class Writer extends AbstractItemWriter {
+@Dependent
+public class ThumbnailCreator {
     private static final BatchLogger LOG = BatchLogger.getLogger("ThumbnailsWriter");
 
     @Inject private String path;
@@ -18,10 +18,14 @@ public class Writer extends AbstractItemWriter {
     @Inject private String ffmpeg;
     @Inject private String developmentSystem;
 
-    @Override
-    public void writeItems(List list) throws Exception {
-        ((List<Movie>) list)
-                .stream()
+    @Inject private MovieService service;
+
+    public void process(final List<String> files) {
+        files.stream()
+                .map(fileName -> Paths.get(fileName).toFile().getAbsolutePath())
+                .map(fileName -> service.findByFilename(fileName.substring(path.length())))
+                .filter(movie -> null != movie)
+                .filter(movie -> !Paths.get(imgPath, "movie", movie.getPictureFileName()).toFile().exists())
                 .forEach(movie -> {
                     if (new ThumbnailReader(imgPath, path, ffmpeg, "true".equals(developmentSystem)).process(movie)) {
                         LOG.info("Generated a thumbnail " + movie.getPictureFileName());

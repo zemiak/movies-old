@@ -1,6 +1,5 @@
 package com.zemiak.movies.batch.service;
 
-import com.zemiak.movies.batch.service.log.BatchLogger;
 import com.zemiak.movies.strings.Joiner;
 import java.io.BufferedReader;
 import java.io.IOException;

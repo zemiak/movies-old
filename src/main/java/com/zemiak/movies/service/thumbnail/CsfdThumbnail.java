@@ -1,6 +1,6 @@
 package com.zemiak.movies.service.thumbnail;
 
-import com.zemiak.movies.batch.service.log.BatchLogger;
+import com.zemiak.movies.batch.service.BatchLogger;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.service.description.Csfd;
 import java.io.FileOutputStream;

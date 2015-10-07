@@ -1,4 +1,4 @@
-package com.zemiak.movies.batch.plex.movies;
+package com.zemiak.movies.batch.plex;
 
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
@@ -16,11 +16,12 @@ public class SerieItemWriter {
     static final Integer GOT = 1000;
     static final Integer MASH = 1;
 
+    @Inject String plexPath;
     @Inject String path;
 
-    public void process(String plexFolder, Movie movie) throws IOException {
+    public void process(Movie movie) throws IOException {
         Serie serie = movie.getSerie();
-        Path folder = Paths.get(path, PATH, serie.getName());
+        Path folder = Paths.get(plexPath, PATH, serie.getName());
 
         Files.createDirectories(folder);
 
