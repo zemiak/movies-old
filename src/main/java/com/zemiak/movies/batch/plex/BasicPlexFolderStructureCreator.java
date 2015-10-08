@@ -26,7 +26,12 @@ public class BasicPlexFolderStructureCreator {
 
                 @Override
                 public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                    if (plexPath.equals(dir.toString())) {
+                        return FileVisitResult.CONTINUE;
+                    }
+
                     Files.delete(dir);
+                    System.out.println("Deleted folder " + dir.toString());
                     return FileVisitResult.CONTINUE;
                 }
 

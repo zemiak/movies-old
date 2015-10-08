@@ -40,5 +40,7 @@ public class PlexMusicWriter {
         Files.createDirectories(folder);
         Path existing = Paths.get(musicFileName);
         Files.createSymbolicLink(linkName, existing);
+        
+        LOG.log(Level.INFO, "Created music link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});
     }
 }

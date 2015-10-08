@@ -5,12 +5,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
 @Dependent
 public class StandaloneMovieWriter {
     static final String PATH = "Movies";
+    private static final Logger LOG = Logger.getLogger(StandaloneMovieWriter.class.getName());
 
     @Inject String path;
     @Inject String plexPath;
@@ -30,5 +33,7 @@ public class StandaloneMovieWriter {
 
         Path existing = Paths.get(path, movie.getFileName());
         Files.createSymbolicLink(linkName, existing);
+
+        LOG.log(Level.INFO, "Created movie link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});
     }
 }

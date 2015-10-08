@@ -7,11 +7,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
 @Dependent
 public class SerieItemWriter {
+    private static final Logger LOG = Logger.getLogger(SerieItemWriter.class.getName());
     static final String PATH = "TV Shows";
     static final Integer GOT = 1000;
     static final Integer MASH = 1;
@@ -46,5 +49,7 @@ public class SerieItemWriter {
 
         Files.createDirectories(Paths.get(folder.toString(), "Season %02d"));
         Files.createSymbolicLink(linkName, existing);
+
+        LOG.log(Level.INFO, "Created TV Show link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});
     }
 }

@@ -39,7 +39,7 @@ public class PrepareMusicFileList {
 
         readMusicFiles(mainDir);
 
-        LOG1.log(Level.INFO, "Found {0} movies on HDD.", counter);
+        LOG1.log(Level.INFO, "Found {0} music files on HDD.", counter);
     }
 
     public List<String> getFiles() {
