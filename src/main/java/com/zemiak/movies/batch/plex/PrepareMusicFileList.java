@@ -24,8 +24,6 @@ public class PrepareMusicFileList {
 
     @PostConstruct
     public void init() {
-        long counter = 0;
-
         File mainDir = new File(musicPath);
         if (! mainDir.isDirectory()) {
             LOG.log(Level.SEVERE, musicPath + " is not a directory", null);
@@ -39,7 +37,7 @@ public class PrepareMusicFileList {
 
         readMusicFiles(mainDir);
 
-        LOG1.log(Level.INFO, "Found {0} music files on HDD.", counter);
+        LOG1.log(Level.INFO, "Found {0} music files on HDD.", files.size());
     }
 
     public List<String> getFiles() {

@@ -28,6 +28,8 @@ public class PlexMusicWriter {
                 LOG.log(Level.SEVERE, "Cannot create a song link " + musicFileName, ex);
             }
         });
+
+        LOG.log(Level.INFO, "Processed {0} music items", list.size());
     }
 
     public void process(String musicFileName) throws IOException {
@@ -40,7 +42,7 @@ public class PlexMusicWriter {
         Files.createDirectories(folder);
         Path existing = Paths.get(musicFileName);
         Files.createSymbolicLink(linkName, existing);
-        
+
         LOG.log(Level.INFO, "Created music link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});
     }
 }

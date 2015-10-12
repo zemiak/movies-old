@@ -24,7 +24,7 @@ public class StandaloneMovieWriter {
 
         Integer i = 2;
         while (Files.exists(linkName)) {
-            linkName = Paths.get(plexPath, PATH, movieName +  "-" + String.valueOf(i) + ".m4v");
+            linkName = Paths.get(plexPath, PATH, movieName +  "-" + String.valueOf(i++) + ".m4v");
 
             if (i > 100) {
                 throw new IllegalStateException("Cannot find a suitable name for " + linkName.toString());

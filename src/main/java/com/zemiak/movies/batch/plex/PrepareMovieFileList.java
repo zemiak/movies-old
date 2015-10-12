@@ -17,15 +17,12 @@ public class PrepareMovieFileList {
     private String path;
 
     private final List<String> files = new ArrayList<>();
-
     private static final BatchLogger LOG = BatchLogger.getLogger(PrepareMovieFileList.class.getName());
     private static final Logger LOG1 = Logger.getLogger(PrepareMovieFileList.class.getName());
 
 
     @PostConstruct
     public void init() {
-        long counter = 0;
-
         File mainDir = new File(path);
         if (! mainDir.isDirectory()) {
             LOG.log(Level.SEVERE, path + " is not a directory", null);
@@ -38,7 +35,7 @@ public class PrepareMovieFileList {
         }
 
         readMovieFiles(mainDir);
-        LOG1.log(Level.INFO, "Found {0} movies on HDD.", counter);
+        LOG1.log(Level.INFO, "Found {0} movies on HDD.", files.size());
     }
 
     public List<String> getFiles() {

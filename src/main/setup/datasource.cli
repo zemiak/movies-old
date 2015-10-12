@@ -1,3 +1,4 @@
 connect
 /subsystem=datasources/data-source=ZemiakMovies/:add(jndi-name="java:jboss/datasources/ZemiakMovies",driver-name="postgres",connection-url="jdbc:postgresql://localhost:5432/movies",password="movies/0",user-name="movies_user")
+/subsystem=transactions:write-attribute(name="default-timeout",value=3600)
 reload

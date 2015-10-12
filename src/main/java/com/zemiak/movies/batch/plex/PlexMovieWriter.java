@@ -41,5 +41,7 @@ public class PlexMovieWriter {
                         }
                     }
                 });
+        
+        LOG.log(Level.INFO, "Processed {0} movie/tv-series items", list.size());
     }
 }
