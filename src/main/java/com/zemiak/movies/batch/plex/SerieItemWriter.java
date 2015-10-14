@@ -38,16 +38,23 @@ public class SerieItemWriter {
     }
 
     private void process(Path folder, Movie movie, Integer decimals, Integer season) throws IOException {
-        String serie = movie.getSubtitlesName();
+        String serie = movie.getSerieName();
         String format = "%0" + String.valueOf(decimals) + "d";
         Integer number = null == movie.getDisplayOrder() ? 0 : movie.getDisplayOrder();
-        String episodeName = serie + " - s01e" + String.format(format, number) + " - "
-                + movie.getOriginalLanguageName() + ".m4v";
+        String movieName = null == movie.getOriginalName() ? movie.getName() : movie.getOriginalName();
 
-        Path linkName = Paths.get(folder.toString(), serie, String.format("Season %02d", season), episodeName);
+        if (null == movieName || "".equals(movieName)) {
+            LOG.log(Level.SEVERE, "TV Show episode {0} has no name", movie.getFileName());
+            return;
+        }
+
+        String episodeName = serie + " - s01e" + String.format(format, number) + " - "
+                + movieName+ ".m4v";
+
+        Path linkName = Paths.get(folder.toString(), String.format("Season %02d", season), episodeName);
         Path existing = Paths.get(path, movie.getFileName());
 
-        Files.createDirectories(Paths.get(folder.toString(), "Season %02d"));
+        Files.createDirectories(Paths.get(folder.toString(), String.format("Season %02d", season)));
         Files.createSymbolicLink(linkName, existing);
 
         LOG.log(Level.INFO, "Created TV Show link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});

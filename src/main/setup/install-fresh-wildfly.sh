@@ -1,10 +1,10 @@
 #!/bin/sh
 
-WILDFLY=wildfly-8.2.0.Final
+WILDFLY=wildfly-10.0.0.CR2
 PROJECT=~/Documents/projects/movies
 DOWNLOAD=~/Downloads/$WILDFLY.zip
 INSTALL=~/bin
-TARGET=wildfly8
+TARGET=wildfly10
 
 cd $INSTALL
 killall java

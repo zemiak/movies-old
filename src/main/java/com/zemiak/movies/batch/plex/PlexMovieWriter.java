@@ -31,17 +31,17 @@ public class PlexMovieWriter {
                         try {
                             serieItemWriter.process(movie);
                         } catch (IOException ex) {
-                            LOG.log(Level.SEVERE, "IO/Error creating a link for serie item " + movie.getFileName(), ex);
+                            LOG.log(Level.SEVERE, "IO/Error creating a link for serie item " + movie.getFileName() + ":" + ex.getMessage(), ex);
                         }
                     } else {
                         try {
                             movieWriter.process(movie);
                         } catch (IOException ex) {
-                            LOG.log(Level.SEVERE, "IO/Error creating a link for movie " + movie.getFileName(), ex);
+                            LOG.log(Level.SEVERE, "IO/Error creating a link for movie " + movie.getFileName() + ": " + ex.getMessage(), ex);
                         }
                     }
                 });
-        
+
         LOG.log(Level.INFO, "Processed {0} movie/tv-series items", list.size());
     }
 }

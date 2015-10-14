@@ -1,8 +1,7 @@
 package com.zemiak.movies.batch.movies;
 
-import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.batch.service.BatchLogger;
-import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.description.DescriptionReader;
 import com.zemiak.movies.strings.Joiner;
@@ -74,19 +73,19 @@ public class MetadataRefresher {
     }
 
     public void process(final List<String> files) {
-        files.stream().forEach(fileName -> {
-            Movie movie = service.findByFilename(fileName.substring(path.length()));
-            MovieMetadata data = new MetadataReader(fileName, movie, service).get();
-
-
-            if (null != movie && null != data) {
-                if (! data.isMetadataEqual()) {
-                    LOG.info("Metadata: going to update " + fileName);
-                    updateName(fileName, data);
-                    updateGenre(fileName, data);
-                    updateComment(fileName, data);
-                }
-            }
-        });
+//        files.stream().forEach(fileName -> {
+//            Movie movie = service.findByFilename(fileName.substring(path.length()));
+//            MovieMetadata data = new MetadataReader(fileName, movie, service).get();
+//
+//
+//            if (null != movie && null != data) {
+//                if (! data.isMetadataEqual()) {
+//                    LOG.info("Metadata: going to update " + fileName);
+//                    updateName(fileName, data);
+//                    updateGenre(fileName, data);
+//                    updateComment(fileName, data);
+//                }
+//            }
+//        });
     }
 }

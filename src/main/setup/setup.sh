@@ -1,8 +1,8 @@
 #!/bin/bash
 
-MAC=/Users/vasko/bin/wildfly8/
-LINUX=/home/vasko/bin/wildfly8/
-WINDOWS=/e/Java/wildfly8/
+MAC=/Users/vasko/bin/wildfly10/
+LINUX=/home/vasko/bin/wildfly10/
+WINDOWS=/e/Java/wildfly10/
 
 if [ -d "$JBOSS_HOME" ]
 then
@@ -31,4 +31,3 @@ fi
 
 $CLI --file=driver.cli
 $CLI --file=datasource.cli
-$CLI --file=mail-session.cli

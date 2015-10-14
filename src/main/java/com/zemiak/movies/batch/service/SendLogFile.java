@@ -20,7 +20,7 @@ import javax.mail.internet.MimeMultipart;
 public class SendLogFile {
     private static final Logger LOG = Logger.getLogger(SendLogFile.class.getName());
 
-    @Resource(name = "java:/movies/mail/default")
+    @Resource(name = "java:jboss/mail/Default")
     private Session mailSession;
 
     @Inject private String mailSubject;

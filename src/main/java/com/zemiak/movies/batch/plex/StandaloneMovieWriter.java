@@ -22,6 +22,11 @@ public class StandaloneMovieWriter {
         String movieName = null == movie.getOriginalName() ? movie.getName() : movie.getOriginalName();
         Path linkName = Paths.get(plexPath, PATH, movieName + ".m4v");
 
+        if (null == movieName || "".equals(movieName)) {
+            LOG.log(Level.SEVERE, "Movie {0} has no name", movie.getFileName());
+            return;
+        }
+
         Integer i = 2;
         while (Files.exists(linkName)) {
             linkName = Paths.get(plexPath, PATH, movieName +  "-" + String.valueOf(i++) + ".m4v");
