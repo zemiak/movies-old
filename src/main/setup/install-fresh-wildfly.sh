@@ -20,6 +20,11 @@ ln -s standalone.xml standalone-full-ha.xml
 ln -s standalone.xml standalone-ha.xml
 cd ../../..
 
+# Restore the database
+java \
+    -cp ./$TARGET/modules/system/layers/base/com/h2database/h2/main/h2-1.3.173.jar \
+    org.h2.tools.RunScript -url jdbc:h2:/tmp/movies -user sa -script $PROJECT/src/dev/resources/dump.sql
+
 ./$TARGET/bin/add-user.sh vasko 123456 --silent
 ./$TARGET/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0 &
 sleep 5s
