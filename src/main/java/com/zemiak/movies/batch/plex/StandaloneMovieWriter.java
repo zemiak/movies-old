@@ -19,7 +19,8 @@ public class StandaloneMovieWriter {
     @Inject String plexPath;
 
     public void process(Movie movie) throws IOException {
-        String movieName = null == movie.getOriginalName() ? movie.getName() : movie.getOriginalName();
+        String movieName = (null == movie.getOriginalName() || "".equals(movie.getOriginalName().trim()))
+                ? movie.getName() : movie.getOriginalName();
         Path linkName = Paths.get(plexPath, PATH, movieName + ".m4v");
 
         if (null == movieName || "".equals(movieName)) {

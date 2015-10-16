@@ -7,7 +7,7 @@
     
         <properties>
             <!-- Hibernate Config -->
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
             <property name="hibernate.show_sql" value="false" />
         </properties>
     </persistence-unit>

@@ -20,11 +20,6 @@
                 </div>
             </div>
             
-            <div id="select-one" data-alert="" class="alert-box alert" style="display: none;">
-                Please, select exactly one row.
-                <a href="#" class="close">&times;</a>
-            </div>
-            
             <form method="post" jsf:id="systemForm" jsf:prependId="false">
                 <div class="row">
                     <div class="small-6 columns">
@@ -63,18 +58,10 @@
                 </div>
                 
                 <div class="row">
-                    <div class="small-6 columns">
+                    <div class="small-12 columns">
                         <label>Laguages:
                             <input type="text" id="languages" name="languages" jsf:id="languages" 
                                    jsf:value="${systemForm.languages}" label="Laguages"
-                                   readonly="true" />
-                        </label>
-                    </div>
-
-                    <div class="small-6 columns">
-                        <label>Batch Logs:
-                            <input type="text" id="logs" name="logs" jsf:id="logs" 
-                                   jsf:value="${systemForm.logs}" label="Logs"
                                    readonly="true" />
                         </label>
                     </div>
@@ -85,25 +72,12 @@
                 <div class="row">
                     <div class="small-12 columns">
                         <ul class="button-group">
-                            <li><a href="javascript:editClick();" class="small button">View Log</a></li>
                             <li><input type="submit" class="small button" jsf:value="Clear Cache" jsf:action="#{systemForm.clearCache()}" /></li>
                             <li><input type="submit" class="small button" jsf:value="Import New Movies" jsf:action="#{systemForm.runImport()}" /></li>
                         </ul>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="small-12 columns">
-                        <table id="grid" class="display" cellspacing="0" width="100%">
-                            <thead> <tr>
-                                <th>Id</th> <th>Log Created</th>
-                            </tr> </thead>
-                        </table>
-                    </div>
-                </div>
             </form>
-            
-            <script type="text/javascript" src="index.js"></script>
         </ui:define>
     </ui:composition>
 </html>

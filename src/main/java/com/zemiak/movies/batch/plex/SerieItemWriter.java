@@ -41,7 +41,8 @@ public class SerieItemWriter {
         String serie = movie.getSerieName();
         String format = "%0" + String.valueOf(decimals) + "d";
         Integer number = null == movie.getDisplayOrder() ? 0 : movie.getDisplayOrder();
-        String movieName = null == movie.getOriginalName() ? movie.getName() : movie.getOriginalName();
+        String movieName = (null == movie.getOriginalName() || "".equals(movie.getOriginalName().trim()))
+                ? movie.getName() : movie.getOriginalName();
 
         if (null == movieName || "".equals(movieName)) {
             LOG.log(Level.SEVERE, "TV Show episode {0} has no name", movie.getFileName());

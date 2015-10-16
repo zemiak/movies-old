@@ -27,7 +27,6 @@ public class UpdateMoviesScheduler {
     @Inject private PlexMovieWriter plexMovies;
     @Inject private PlexMusicWriter plexMusic;
     @Inject private SendLogFile logFileMailer;
-    @Inject private PersistLogFile logFilePersister;
 
     @Inject
     private javax.enterprise.event.Event<CacheClearEvent> clearEvent;
@@ -55,7 +54,6 @@ public class UpdateMoviesScheduler {
         plexMusic.process(musicFileList.getFiles());
 
         logFileMailer.send();
-        logFilePersister.persist();
         clearEvent.fire(new CacheClearEvent());
     }
 }
