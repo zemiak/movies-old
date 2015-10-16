@@ -26,4 +26,4 @@ java \
     -cp ./$TARGET/modules/system/layers/base/com/h2database/h2/main/h2-1.3.173.jar \
     org.h2.tools.RunScript -url jdbc:h2:/tmp/movies -user sa -script $PROJECT/src/dev/resources/dump.sql
 
-./$TARGET/bin/add-user.sh vasko 123456 --silent
+./$TARGET/bin/add-user.sh admin admin --silent
