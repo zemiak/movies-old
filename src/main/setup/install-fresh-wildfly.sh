@@ -4,7 +4,7 @@ WILDFLY=wildfly-10.0.0.CR2
 PROJECT=~/Documents/projects/movies
 DOWNLOAD=~/Downloads/$WILDFLY.zip
 INSTALL=~/bin
-TARGET=wildfly10
+TARGET=wildfly
 
 cd $INSTALL
 test -d $TARGET && rm -rf $TARGET
