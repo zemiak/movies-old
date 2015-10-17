@@ -29,7 +29,7 @@ public class SerieItemWriter {
         Files.createDirectories(folder);
 
         if (Objects.equals(GOT, serie.getId())) {
-            process(folder, movie, 2, movie.getDisplayOrder() % 100);
+            process(folder, movie, 2, movie.getDisplayOrder() / 100);
         } else if (Objects.equals(MASH, serie.getId())) {
             process(folder, movie, 3, 1);
         } else {
@@ -39,6 +39,7 @@ public class SerieItemWriter {
 
     private void process(Path folder, Movie movie, Integer decimals, Integer season) throws IOException {
         String serie = movie.getSerieName();
+        String seasonNumber = String.format("%02d", season);
         String format = "%0" + String.valueOf(decimals) + "d";
         Integer number = null == movie.getDisplayOrder() ? 0 : movie.getDisplayOrder();
         String movieName = (null == movie.getOriginalName() || "".equals(movie.getOriginalName().trim()))
@@ -49,10 +50,10 @@ public class SerieItemWriter {
             return;
         }
 
-        String episodeName = serie + " - s01e" + String.format(format, number) + " - "
+        String episodeName = serie + " - s" + seasonNumber + "e" + String.format(format, number) + " - "
                 + movieName+ ".m4v";
 
-        Path linkName = Paths.get(folder.toString(), String.format("Season %02d", season), episodeName);
+        Path linkName = Paths.get(folder.toString(), "Season " + seasonNumber, episodeName);
         Path existing = Paths.get(path, movie.getFileName());
 
         Files.createDirectories(Paths.get(folder.toString(), String.format("Season %02d", season)));
