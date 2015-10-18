@@ -36,8 +36,8 @@ public class PlexMusicWriter {
         // Music/Artist_Name - Album_Name/Track_Number - Track_Name.ext
         MovieMetadata data = new MetadataReader(Paths.get(musicPath, musicFileName).toString()).get();
         String trackFileName = data.getNiceDisplayOrder() + " - " + data.getName() + ".m4a";
-        Path folder = Paths.get(plexPath, PATH, data.getArtist() + " - " + data.getAlbumName());
-        Path linkName = Paths.get(folder.toString(), trackFileName);
+        Path folder = Paths.get(plexPath, PATH, StandaloneMovieWriter.deAccent(data.getArtist() + " - " + data.getAlbumName()));
+        Path linkName = Paths.get(folder.toString(), StandaloneMovieWriter.deAccent(trackFileName));
 
         Files.createDirectories(folder);
         Path existing = Paths.get(musicFileName);

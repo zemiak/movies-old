@@ -38,7 +38,7 @@ public class SerieItemWriter {
     }
 
     private void process(Path folder, Movie movie, Integer decimals, Integer season) throws IOException {
-        String serie = movie.getSerieName();
+        String serie = StandaloneMovieWriter.deAccent(movie.getSerieName());
         String seasonNumber = String.format("%02d", season);
         String format = "%0" + String.valueOf(decimals) + "d";
         Integer number = null == movie.getDisplayOrder() ? 0 : movie.getDisplayOrder();
@@ -51,7 +51,7 @@ public class SerieItemWriter {
         }
 
         String episodeName = serie + " - s" + seasonNumber + "e" + String.format(format, number) + " - "
-                + movieName+ ".m4v";
+                + StandaloneMovieWriter.deAccent(movieName) + ".m4v";
 
         Path linkName = Paths.get(folder.toString(), "Season " + seasonNumber, episodeName);
         Path existing = Paths.get(path, movie.getFileName());
