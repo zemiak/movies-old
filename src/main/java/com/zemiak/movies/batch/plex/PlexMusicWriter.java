@@ -36,8 +36,9 @@ public class PlexMusicWriter {
 
     private void process(String musicFileName) throws IOException {
         // Music/Artist_Name - Album_Name/Track_Number - Track_Name.ext
+        String ext = PrepareMusicFileList.getFileExtension(musicFileName);
         MovieMetadata data = getSongMetadata(Paths.get(musicPath, musicFileName).toString());
-        String trackFileName = data.getNiceDisplayOrder() + " - " + data.getName() + ".m4a";
+        String trackFileName = data.getNiceDisplayOrder() + " - " + data.getName() + ext;
         Path folder = Paths.get(plexPath, PATH, StandaloneMovieWriter.deAccent(data.getArtist() + " - " + data.getAlbumName()));
         Path linkName = Paths.get(folder.toString(), StandaloneMovieWriter.deAccent(trackFileName));
 
