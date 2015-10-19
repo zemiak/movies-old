@@ -27,6 +27,9 @@ public class MovieMetadata {
         this.movie = movie;
     }
 
+    public MovieMetadata() {
+    }
+
     public String getGenre() {
         return genre;
     }

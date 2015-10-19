@@ -35,7 +35,7 @@ public class PrepareMusicFileList {
             return;
         }
 
-//        readMusicFiles(mainDir);
+        readMusicFiles(mainDir);
 
         LOG1.log(Level.INFO, "Found {0} music files on HDD.", files.size());
     }
