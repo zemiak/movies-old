@@ -48,6 +48,7 @@ public class StandaloneMovieWriter {
     public static String deAccent(String str) {
         String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-        return pattern.matcher(nfdNormalizedString).replaceAll("");
+        String asciiOnly = pattern.matcher(nfdNormalizedString).replaceAll("");
+        return asciiOnly.replaceAll("[^\\x00-\\x7F]", "");
     }
 }
