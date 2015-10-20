@@ -58,16 +58,24 @@ public class PrepareMusicFileList {
 
     private void processFile(final String absolutePath) {
         String ext = getFileExtension(absolutePath);
+        String relative = getRelativeFileName(absolutePath);
 
-        if ("m4a".equals(ext) || "mp3".equals(ext)) {
+        if (!relative.startsWith(".") && ("m4a".equals(ext) || "mp3".equals(ext))) {
             files.add(absolutePath);
         }
     }
 
     public static String getFileExtension(final String absolutePath) {
-        final int extPos = absolutePath.lastIndexOf(".");
-        final String ext = absolutePath.substring(extPos + 1, absolutePath.length()).toLowerCase();
+        final int pos = absolutePath.lastIndexOf(".");
+        final String part = absolutePath.substring(pos + 1, absolutePath.length()).toLowerCase();
 
-        return ext;
+        return part;
+    }
+
+    public static String getRelativeFileName(final String absolutePath) {
+        final int pos = absolutePath.lastIndexOf("/");
+        final String part = absolutePath.substring(pos + 1, absolutePath.length()).toLowerCase();
+
+        return part;
     }
 }

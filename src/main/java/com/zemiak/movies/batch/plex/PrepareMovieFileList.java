@@ -1,5 +1,7 @@
 package com.zemiak.movies.batch.plex;
 
+import static com.zemiak.movies.batch.plex.PrepareMusicFileList.getFileExtension;
+import static com.zemiak.movies.batch.plex.PrepareMusicFileList.getRelativeFileName;
 import com.zemiak.movies.batch.service.BatchLogger;
 import java.io.File;
 import java.nio.file.Paths;
@@ -55,10 +57,10 @@ public class PrepareMovieFileList {
     }
 
     private void processFile(final String absolutePath) {
-        final int extPos = absolutePath.lastIndexOf(".");
-        final String ext = absolutePath.substring(extPos + 1, absolutePath.length()).toLowerCase();
+        String ext = getFileExtension(absolutePath);
+        String relative = getRelativeFileName(absolutePath);
 
-        if ("mp4".equals(ext) || "m4v".equals(ext)) {
+        if (!relative.startsWith(".") && ("mp4".equals(ext) || "m4v".equals(ext))) {
             files.add(absolutePath);
         }
     }

@@ -43,6 +43,10 @@ public class MetadataReader {
         }
 
         MovieBox moov = isoFile.getMovieBox();
+        if (null == moov) {
+            return;
+        }
+
         moov.getBoxes().stream().filter(b -> "udta".equals(b.getType())).forEach(b -> {
             processUserData((UserDataBox) b);
         });
@@ -52,7 +56,7 @@ public class MetadataReader {
             LOG.log(Level.SEVERE, "Cannot close file", ex);
         }
 
-        if (!metaData.getMovie().isEmptySerie() && null != service) {
+        if (null != metaData.getMovie() && !metaData.getMovie().isEmptySerie() && null != service) {
             metaData.setNiceDisplayOrder(service.getNiceDisplayOrder(metaData.getMovie()));
         }
     }
@@ -88,6 +92,15 @@ public class MetadataReader {
 
                 case "aART":
                     metaData.setAlbumArtist(unknownBoxToString(b));
+                    break;
+
+                case "trkn":
+                    try {
+                        int order = b.getData().get();
+                        metaData.setNiceDisplayOrder(String.valueOf(order));
+                    } catch (java.nio.BufferUnderflowException ex) {
+                    }
+
                     break;
 
                 case "©wrt":
