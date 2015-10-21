@@ -19,7 +19,8 @@ public class BatchLogger {
 
     public BatchLogger(final String clazz) {
         this.logger = Logger.getLogger(clazz);
-        developmentSystem = "true".equals(new CDILookup().lookup(ConfigurationProvider.class).getConfigValue("developmentSystem"));
+        ConfigurationProvider configuration = new CDILookup().lookup(ConfigurationProvider.class);
+        developmentSystem = null == configuration ? true : "true".equals(configuration.getConfigValue("developmentSystem"));
     }
 
     public void log(final Level level, final String message, final Object[] params) {
