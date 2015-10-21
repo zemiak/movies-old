@@ -42,7 +42,7 @@ public class StandaloneMovieWriter {
         Path existing = Paths.get(path, movie.getFileName());
         Files.createSymbolicLink(linkName, existing);
 
-        LOG.log(Level.INFO, "Created movie link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});
+        LOG.log(Level.FINEST, "Created movie link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});
     }
 
     public static String deAccent(String str) {

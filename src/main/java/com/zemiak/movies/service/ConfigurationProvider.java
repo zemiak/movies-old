@@ -42,4 +42,8 @@ public class ConfigurationProvider {
 
         return Integer.parseInt(stringValue);
     }
+
+    public String getConfigValue(String key) {
+        return configuration.get(key);
+    }
 }

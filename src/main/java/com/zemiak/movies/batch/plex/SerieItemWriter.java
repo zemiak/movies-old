@@ -59,6 +59,6 @@ public class SerieItemWriter {
         Files.createDirectories(Paths.get(folder.toString(), String.format("Season %02d", season)));
         Files.createSymbolicLink(linkName, existing);
 
-        LOG.log(Level.INFO, "Created TV Show link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});
+        LOG.log(Level.FINEST, "Created TV Show link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});
     }
 }

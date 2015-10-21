@@ -54,7 +54,7 @@ public class PlexMusicWriter {
         Path existing = Paths.get(musicFileName);
         Files.createSymbolicLink(linkName, existing);
 
-        LOG.log(Level.INFO, "Created music link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});
+        LOG.log(Level.FINEST, "Created music link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});
     }
 
     private MovieMetadata getSongMetadata(String fileName, String ext) {
