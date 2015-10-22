@@ -24,7 +24,7 @@ public class SerieItemWriter {
 
     public void process(Movie movie) throws IOException {
         Serie serie = movie.getSerie();
-        Path folder = Paths.get(plexPath, PATH, serie.getName());
+        Path folder = Paths.get(plexPath, PATH, StandaloneMovieWriter.deAccent(serie.getName()));
 
         Files.createDirectories(folder);
 
@@ -46,17 +46,18 @@ public class SerieItemWriter {
                 ? movie.getName() : movie.getOriginalName();
 
         if (null == movieName || "".equals(movieName)) {
-            LOG.log(Level.SEVERE, "TV Show episode {0} has no name", movie.getFileName());
-            return;
+            movieName = "";
+        } else {
+            movieName = " - " + StandaloneMovieWriter.deAccent(movieName);
         }
 
-        String episodeName = serie + " - s" + seasonNumber + "e" + String.format(format, number) + " - "
-                + StandaloneMovieWriter.deAccent(movieName) + ".m4v";
+        String episodeName = serie + " - s" + seasonNumber + "e" + String.format(format, number) + movieName + ".m4v";
 
-        Path linkName = Paths.get(folder.toString(), "Season " + seasonNumber, episodeName);
+        Path linkFolder = Paths.get(folder.toString(), "Season ", seasonNumber);
+        Path linkName = Paths.get(linkFolder.toString(), episodeName);
         Path existing = Paths.get(path, movie.getFileName());
 
-        Files.createDirectories(Paths.get(folder.toString(), String.format("Season %02d", season)));
+        Files.createDirectories(linkFolder);
         Files.createSymbolicLink(linkName, existing);
 
         LOG.log(Level.FINEST, "Created TV Show link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});
