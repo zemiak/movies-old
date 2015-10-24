@@ -53,7 +53,7 @@ public class SerieItemWriter {
 
         String episodeName = serie + " - s" + seasonNumber + "e" + String.format(format, number) + movieName + ".m4v";
 
-        Path linkFolder = Paths.get(folder.toString(), "Season ", seasonNumber);
+        Path linkFolder = Paths.get(folder.toString(), "Season " + seasonNumber);
         Path linkName = Paths.get(linkFolder.toString(), episodeName);
         Path existing = Paths.get(path, movie.getFileName());
 

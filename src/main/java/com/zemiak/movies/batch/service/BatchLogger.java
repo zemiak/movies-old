@@ -24,6 +24,10 @@ public class BatchLogger {
     }
 
     public void log(final Level level, final String message, final Object[] params) {
+        if (!developmentSystem && level.intValue() < Level.INFO.intValue()) {
+            return;
+        }
+
         logger.log(level, message, params);
 
         final LogRecord lr = new LogRecord(level, message + System.getProperty("line.separator"));
@@ -34,10 +38,7 @@ public class BatchLogger {
     }
 
     public void log(final Level level, final String message, final Object param) {
-        if (developmentSystem || (!developmentSystem && level.intValue() >= Level.INFO.intValue())) {
-            // on PROD system, log only >= INFO messages
-            log(level, message, new Object[]{param});
-        }
+        log(level, message, new Object[]{param});
     }
 
     public void info(final String message) {
