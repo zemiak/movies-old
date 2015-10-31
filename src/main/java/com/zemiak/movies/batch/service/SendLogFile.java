@@ -26,11 +26,16 @@ public class SendLogFile {
     @Inject private String mailSubject;
     @Inject private String mailTo;
     @Inject private String mailFrom;
+    @Inject private Boolean developmentSystem;
 
     public SendLogFile() {
     }
 
     public void send() {
+        if (developmentSystem) {
+            return;
+        }
+
         final File file = new File(BatchLogger.getLogFileName());
         if (! file.exists()) {
             LOG.log(Level.INFO, "Log file does not exist, not sending...");

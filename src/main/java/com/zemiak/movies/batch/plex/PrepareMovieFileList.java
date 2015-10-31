@@ -37,7 +37,7 @@ public class PrepareMovieFileList {
         }
 
         readMovieFiles(mainDir);
-        LOG1.log(Level.FINEST, "Found {0} movies on HDD.", files.size());
+        LOG1.log(Level.FINE, "Found {0} movies on HDD.", files.size());
     }
 
     public List<String> getFiles() {

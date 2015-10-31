@@ -1,10 +1,6 @@
 package com.zemiak.movies.service.ui.admin;
 
-import com.zemiak.movies.domain.Genre;
-import com.zemiak.movies.domain.Language;
-import com.zemiak.movies.domain.Movie;
-import com.zemiak.movies.domain.Serie;
-import com.zemiak.movies.domain.UrlDTO;
+import com.zemiak.movies.domain.*;
 import com.zemiak.movies.service.GenreService;
 import com.zemiak.movies.service.LanguageService;
 import com.zemiak.movies.service.MovieService;
@@ -36,7 +32,7 @@ public class MovieEditForm implements Serializable {
     @Inject private SerieService series;
     @Inject private LanguageService languages;
     @Inject private String ffmpeg;
-    @Inject private String developmentSystem;
+    @Inject Boolean developmentSystem;
 
     public MovieEditForm() {
         urlControl = new UrlController();
@@ -177,7 +173,7 @@ public class MovieEditForm implements Serializable {
     }
 
     private void fetchPicture() {
-        final ThumbnailReader thumbnail = new ThumbnailReader(imgPath, path, ffmpeg, "true".equals(developmentSystem));
+        final ThumbnailReader thumbnail = new ThumbnailReader(imgPath, path, ffmpeg, developmentSystem);
         thumbnail.process(bean);
     }
 

@@ -31,7 +31,6 @@ public class BasicPlexFolderStructureCreator {
                     }
 
                     Files.delete(dir);
-                    System.out.println("Deleted folder " + dir.toString());
                     return FileVisitResult.CONTINUE;
                 }
 

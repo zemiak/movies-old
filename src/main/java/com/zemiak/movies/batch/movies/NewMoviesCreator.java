@@ -1,6 +1,7 @@
 package com.zemiak.movies.batch.movies;
 
 import com.zemiak.movies.batch.service.BatchLogger;
+import com.zemiak.movies.batch.service.RefreshStatistics;
 import com.zemiak.movies.service.MovieService;
 import java.util.List;
 import java.util.logging.Level;
@@ -11,6 +12,7 @@ import javax.inject.Inject;
 public class NewMoviesCreator {
     @Inject private MovieService service;
     @Inject private String path;
+    @Inject RefreshStatistics stats;
 
     private static final BatchLogger LOG = BatchLogger.getLogger(NewMoviesCreator.class.getName());
 
@@ -20,6 +22,7 @@ public class NewMoviesCreator {
                 .filter(fileName -> null == service.findByFilename(fileName))
                 .map(fileName -> service.create(fileName))
                 .forEach(m -> {
+                    stats.incrementCreated();
                     LOG.log(Level.INFO, "Created a new movie ''{0}''/''{1}'', id {2}...",
                             new Object[]{m.getFileName(), m.getName(), m.getId()});
                 });

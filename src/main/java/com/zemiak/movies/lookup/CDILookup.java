@@ -21,7 +21,7 @@ public class CDILookup {
 
             return (T) beanManager.getReference(bean, type, cc);
         } catch (final NamingException ex) {
-            LOG.log(Level.SEVERE, "Can''t lookup object by {0}: {1}", new Object[]{type, ex});
+            LOG.log(Level.SEVERE, "Can''t lookup object by " + type.getName() + ": {0}", ex);
             return null;
         }
     }

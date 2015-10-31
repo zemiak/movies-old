@@ -3,7 +3,6 @@ package com.zemiak.movies.service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -13,8 +12,6 @@ import javax.enterprise.inject.spi.InjectionPoint;
 @Singleton
 @Startup
 public class ConfigurationProvider {
-    private static final Logger LOG = Logger.getLogger(ConfigurationProvider.class.getName());
-
     private final Map<String, String> configuration = new HashMap<>();
 
     @PostConstruct
@@ -34,13 +31,23 @@ public class ConfigurationProvider {
     }
 
     @Produces
-    public int getInt(InjectionPoint point) {
+    public Integer getInt(InjectionPoint point) {
         String stringValue = getString(point);
         if (stringValue == null) {
-            return 0;
+            return null;
         }
 
         return Integer.parseInt(stringValue);
+    }
+
+    @Produces
+    public Boolean getBoolean(InjectionPoint point) {
+        String stringValue = getString(point);
+        if (stringValue == null) {
+            return null;
+        }
+
+        return "true".equals(stringValue);
     }
 
     public String getConfigValue(String key) {

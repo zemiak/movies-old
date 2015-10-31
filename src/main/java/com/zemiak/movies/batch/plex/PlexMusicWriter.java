@@ -3,6 +3,8 @@ package com.zemiak.movies.batch.plex;
 import com.zemiak.movies.batch.movies.MetadataReader;
 import com.zemiak.movies.batch.movies.MovieMetadata;
 import com.zemiak.movies.batch.service.BatchLogger;
+import com.zemiak.movies.batch.service.RefreshStatistics;
+import com.zemiak.movies.strings.Encodings;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -23,6 +25,7 @@ public class PlexMusicWriter {
     static final String PATH = "Music";
 
     @Inject String plexPath;
+    @Inject RefreshStatistics stats;
 
     public void process(final List<String> list) {
         list.stream().filter(obj -> null != obj).forEach(musicFileName -> {
@@ -40,21 +43,23 @@ public class PlexMusicWriter {
 
         MovieMetadata data = getSongMetadata(musicFileName, ext);
         if (null == data) {
-            LOG.log(Level.SEVERE, "No metadata for the song {0}", musicFileName);
+            LOG.log(Level.FINE, "No metadata for the song {0}", musicFileName);
+            stats.incrementMissingMusicMetadata();
             return;
         }
 
         String trackFileName = null != data.getNiceDisplayOrder()
                 ? data.getNiceDisplayOrder() + " - " + data.getName() + "." + ext
                 : musicFileName.substring(musicFileName.lastIndexOf("/") + 1);
-        Path folder = Paths.get(plexPath, PATH, StandaloneMovieWriter.deAccent(data.getArtist() + " - " + data.getAlbumName()));
-        Path linkName = Paths.get(folder.toString(), StandaloneMovieWriter.deAccent(trackFileName));
+        Path folder = Paths.get(plexPath, PATH, Encodings.deAccent(data.getArtist() + " - " + data.getAlbumName()));
+        Path linkName = Paths.get(folder.toString(), Encodings.deAccent(trackFileName));
 
         Files.createDirectories(folder);
         Path existing = Paths.get(musicFileName);
         Files.createSymbolicLink(linkName, existing);
+        stats.incrementLinksCreated();
 
-        LOG.log(Level.FINEST, "Created music link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});
+        LOG.log(Level.FINE, "Created music link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});
     }
 
     private MovieMetadata getSongMetadata(String fileName, String ext) {

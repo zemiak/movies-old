@@ -53,4 +53,8 @@ public class SystemForm implements Serializable {
     public void runImport() {
         runner.start();
     }
+
+    public void runBackup() {
+        runner.backupAndClean();
+    }
 }

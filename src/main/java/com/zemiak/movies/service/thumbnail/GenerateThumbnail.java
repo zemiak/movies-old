@@ -1,7 +1,7 @@
 package com.zemiak.movies.service.thumbnail;
 
-import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.batch.service.BatchLogger;
+import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.strings.Joiner;
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class GenerateThumbnail implements IThumbnailReader {
             if (!developmentSystem) {
                 CommandLine.execCmd(ffmpegPath, params);
             } else {
-                LOG.log(Level.INFO, "dry run:{0} {1}", new Object[]{ffmpegPath, null == params ? "" : Joiner.join(params, "|")});
+                LOG.log(Level.FINE, "dry run:{0} {1}", new Object[]{ffmpegPath, null == params ? "" : Joiner.join(params, "|")});
             }
 
             LOG.log(Level.INFO, "Generated thumbnail {0} ...", imageFileName);

@@ -7,4 +7,8 @@ public final class Encodings {
         return Normalizer.normalize(text, Normalizer.Form.NFD)
                 .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
+
+    public static String deAccent(String str) {
+        return toAscii(str).replaceAll("[^\\x00-\\x7F]", "");
+    }
 }

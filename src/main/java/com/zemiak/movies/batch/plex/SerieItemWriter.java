@@ -1,7 +1,9 @@
 package com.zemiak.movies.batch.plex;
 
+import com.zemiak.movies.batch.service.RefreshStatistics;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
+import com.zemiak.movies.strings.Encodings;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,10 +23,11 @@ public class SerieItemWriter {
 
     @Inject String plexPath;
     @Inject String path;
+    @Inject RefreshStatistics stats;
 
     public void process(Movie movie) throws IOException {
         Serie serie = movie.getSerie();
-        Path folder = Paths.get(plexPath, PATH, StandaloneMovieWriter.deAccent(serie.getName()));
+        Path folder = Paths.get(plexPath, PATH, Encodings.deAccent(serie.getName()));
 
         Files.createDirectories(folder);
 
@@ -38,7 +41,7 @@ public class SerieItemWriter {
     }
 
     private void process(Path folder, Movie movie, Integer decimals, Integer season) throws IOException {
-        String serie = StandaloneMovieWriter.deAccent(movie.getSerieName());
+        String serie = Encodings.deAccent(movie.getSerieName());
         String seasonNumber = String.format("%02d", season);
         String format = "%0" + String.valueOf(decimals) + "d";
         Integer number = null == movie.getDisplayOrder() ? 0 : movie.getDisplayOrder();
@@ -48,7 +51,7 @@ public class SerieItemWriter {
         if (null == movieName || "".equals(movieName)) {
             movieName = "";
         } else {
-            movieName = " - " + StandaloneMovieWriter.deAccent(movieName);
+            movieName = " - " + Encodings.deAccent(movieName);
         }
 
         String episodeName = serie + " - s" + seasonNumber + "e" + String.format(format, number) + movieName + ".m4v";
@@ -59,7 +62,8 @@ public class SerieItemWriter {
 
         Files.createDirectories(linkFolder);
         Files.createSymbolicLink(linkName, existing);
+        stats.incrementLinksCreated();
 
-        LOG.log(Level.FINEST, "Created TV Show link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});
+        LOG.log(Level.FINE, "Created TV Show link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});
     }
 }
