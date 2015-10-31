@@ -12,10 +12,10 @@ import javax.inject.Inject;
 public class BasicPlexFolderStructureCreator {
     private static final Logger LOG = Logger.getLogger(BasicPlexFolderStructureCreator.class.getName());
 
-    @Inject String plexPath;
+    @Inject String plexLinkPath;
 
     public void cleanAndCreate() {
-        Path directory = Paths.get(plexPath);
+        Path directory = Paths.get(plexLinkPath);
         try {
             Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
                 @Override
@@ -26,7 +26,7 @@ public class BasicPlexFolderStructureCreator {
 
                 @Override
                 public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                    if (plexPath.equals(dir.toString())) {
+                    if (plexLinkPath.equals(dir.toString())) {
                         return FileVisitResult.CONTINUE;
                     }
 
@@ -36,13 +36,13 @@ public class BasicPlexFolderStructureCreator {
 
             });
         } catch (IOException ex) {
-            LOG.log(Level.SEVERE, "Error deleting plex folder " + plexPath, ex);
+            LOG.log(Level.SEVERE, "Error deleting plex folder " + plexLinkPath, ex);
         }
 
         try {
-            Files.createDirectories(Paths.get(plexPath, StandaloneMovieWriter.PATH));
-            Files.createDirectories(Paths.get(plexPath, SerieItemWriter.PATH));
-            Files.createDirectories(Paths.get(plexPath, PlexMusicWriter.PATH));
+            Files.createDirectories(Paths.get(plexLinkPath, StandaloneMovieWriter.PATH));
+            Files.createDirectories(Paths.get(plexLinkPath, SerieItemWriter.PATH));
+            Files.createDirectories(Paths.get(plexLinkPath, PlexMusicWriter.PATH));
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, "Basic plex folder creation error", ex);
         }

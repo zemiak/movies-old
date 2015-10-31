@@ -21,13 +21,13 @@ public class SerieItemWriter {
     static final Integer GOT = 1000;
     static final Integer MASH = 1;
 
-    @Inject String plexPath;
+    @Inject String plexLinkPath;
     @Inject String path;
     @Inject RefreshStatistics stats;
 
     public void process(Movie movie) throws IOException {
         Serie serie = movie.getSerie();
-        Path folder = Paths.get(plexPath, PATH, Encodings.deAccent(serie.getName()));
+        Path folder = Paths.get(plexLinkPath, PATH, Encodings.deAccent(serie.getName()));
 
         Files.createDirectories(folder);
 

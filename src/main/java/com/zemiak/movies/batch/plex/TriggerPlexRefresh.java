@@ -64,14 +64,14 @@ public class TriggerPlexRefresh {
 
         if (! response.getStatusInfo().getFamily().equals(Family.SUCCESSFUL)) {
             String answer = response.readEntity(String.class);
-            LOG.log(Level.SEVERE, "Error refreshing library {0}. Return code {1}, response {2}",
-                    new Object[]{lib, response.getStatus(), answer});
+            LOG.log(Level.SEVERE, "Error refreshing library {0} / {1}. Return code {2}, response {3}",
+                    new Object[]{lib, target.getUri().toASCIIString(), response.getStatus(), answer});
             return;
         }
     }
 
     private String parseLibraryId(LibraryType lib) {
-        Path libraryConfigFile = Paths.get(conf.getConfigValue("plexDataPath"),
+        Path libraryConfigFile = Paths.get(conf.getConfigValue("plexConfigPath"),
                 lib.getFileName() + ".json");
 
         FileReader fileReader;

@@ -18,13 +18,13 @@ public class StandaloneMovieWriter {
     private static final Logger LOG = Logger.getLogger(StandaloneMovieWriter.class.getName());
 
     @Inject String path;
-    @Inject String plexPath;
+    @Inject String plexLinkPath;
     @Inject RefreshStatistics stats;
 
     public void process(Movie movie) throws IOException {
         String movieName = (null == movie.getOriginalName() || "".equals(movie.getOriginalName().trim()))
                 ? movie.getName() : movie.getOriginalName();
-        Path linkName = Paths.get(plexPath, PATH, Encodings.deAccent(movieName) + ".m4v");
+        Path linkName = Paths.get(plexLinkPath, PATH, Encodings.deAccent(movieName) + ".m4v");
 
         if (null == movieName || "".equals(movieName)) {
             LOG.log(Level.SEVERE, "Movie {0} has no name", movie.getFileName());
@@ -33,7 +33,7 @@ public class StandaloneMovieWriter {
 
         Integer i = 2;
         while (Files.exists(linkName)) {
-            linkName = Paths.get(plexPath, PATH, movieName +  "-" + String.valueOf(i++) + ".m4v");
+            linkName = Paths.get(plexLinkPath, PATH, movieName +  "-" + String.valueOf(i++) + ".m4v");
 
             if (i > 100) {
                 throw new IllegalStateException("Cannot find a suitable name for " + linkName.toString());

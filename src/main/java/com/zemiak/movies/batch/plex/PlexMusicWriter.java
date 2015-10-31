@@ -24,7 +24,7 @@ public class PlexMusicWriter {
     private static final BatchLogger LOG = BatchLogger.getLogger(PlexMusicWriter.class.getName());
     static final String PATH = "Music";
 
-    @Inject String plexPath;
+    @Inject String plexLinkPath;
     @Inject RefreshStatistics stats;
 
     public void process(final List<String> list) {
@@ -51,7 +51,7 @@ public class PlexMusicWriter {
         String trackFileName = null != data.getNiceDisplayOrder()
                 ? data.getNiceDisplayOrder() + " - " + data.getName() + "." + ext
                 : musicFileName.substring(musicFileName.lastIndexOf("/") + 1);
-        Path folder = Paths.get(plexPath, PATH, Encodings.deAccent(data.getArtist() + " - " + data.getAlbumName()));
+        Path folder = Paths.get(plexLinkPath, PATH, Encodings.deAccent(data.getArtist() + " - " + data.getAlbumName()));
         Path linkName = Paths.get(folder.toString(), Encodings.deAccent(trackFileName));
 
         Files.createDirectories(folder);
