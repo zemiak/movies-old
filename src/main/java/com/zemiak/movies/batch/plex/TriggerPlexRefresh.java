@@ -14,6 +14,7 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -60,7 +61,18 @@ public class TriggerPlexRefresh {
 
         WebTarget target = client.target(conf.getConfigValue("plexUrl"))
                 .path("library").path("sections").path(id).path("refresh");
-        Response response = target.request(MediaType.APPLICATION_JSON).get();
+        Response response;
+
+        try {
+            response = target.request(MediaType.APPLICATION_JSON).get();
+        } catch (ProcessingException ex) {
+            LOG.log(Level.SEVERE, "Error refreshing library "
+                    + lib + " / "
+                    + target.getUri().toASCIIString()
+                    + ".",
+                    ex);
+            return;
+        }
 
         if (! response.getStatusInfo().getFamily().equals(Family.SUCCESSFUL)) {
             String answer = response.readEntity(String.class);
