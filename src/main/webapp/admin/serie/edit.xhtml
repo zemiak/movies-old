@@ -11,11 +11,11 @@
             <f:viewParam name="id" value="#{serieEditForm.id}" />
             <f:viewAction action="#{serieEditForm.check}" />
         </f:metadata>
-        
+
         <ui:define name="title">
             <h:outputText value="#{serieEditForm.actionTitle} Serie"></h:outputText>
         </ui:define>
-        
+
 
         <ui:define name="body">
             <div class="panel small-panel">
@@ -25,14 +25,14 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="row">&nbsp;</div>
 
             <form method="post" jsf:id="serieEditForm" jsf:prependId="false" enctype="multipart/form-data" jsf:enctype="multipart/form-data">
                 <div class="row">
                     <div class="small-8 columns">
                         <label>Name:
-                            <input type="text" id="name" name="name" jsf:id="name" 
+                            <input type="text" id="name" name="name" jsf:id="name"
                                    jsf:value="#{serieEditForm.bean.name}" label="Name"
                                    placeholder="Enter Serie Name" jsf:required="true" />
                         </label>
@@ -41,35 +41,36 @@
 
                     <div class="small-4 columns">
                         <label>Display Order:
-                            <input type="number" id="displayOrder" name="displayOrder" 
+                            <input type="number" id="displayOrder" name="displayOrder"
                                    jsf:id="displayOrder" label="Display Order"
-                                   jsf:value="#{serieEditForm.bean.displayOrder}" 
+                                   jsf:value="#{serieEditForm.bean.displayOrder}"
                                    placeholder="Enter Display Order" />
                         </label>
                         <h:message for="number" class="error" />
                     </div>
                 </div>
-                
+
                 <div class="row">
-                    <div class="small-10 columns">
-                        <label>Picture Upload:
-                            <h:inputFile id="file" value="#{serieEditForm.file}" validator="#{serieEditForm.validateFile}" />
+                    <div class="small-8 columns">
+                        <label>File Name:
+                            <input type="text" id="file" name="file" jsf:id="file"
+                                   jsf:value="#{serieEditForm.bean.pictureFileName}" label="File Name"
+                                   placeholder="Enter Thumbnail File Name" jsf:required="true" />
                         </label>
                         <h:message for="file" class="error" />
                     </div>
-                    
-                    <div class="small-2 columns">
-                        <h:commandButton value="Upload" action="#{serieEditForm.upload}" styleClass="small button" />
+
+                    <div class="small-4 columns">
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="small-6 columns">
                         <img alt="#{serieEditForm.bean.name} Thumbnail"
                                 src="#{request.contextPath}/images/serie/#{serieEditForm.bean.id}" />
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="small-6 columns">
                         <label>Genre:
@@ -79,20 +80,20 @@
                         </label>
                         <h:message for="genre" class="error" />
                     </div>
-                    
+
                     <div class="small-6 columns">
                         <label>TV Show:
-                            <input type="checkbox" id="tvShow" name="tvShow" 
+                            <input type="checkbox" id="tvShow" name="tvShow"
                                    jsf:id="tvShow" label="TV Show"
-                                   jsf:value="#{serieEditForm.bean.tvShow}" 
+                                   jsf:value="#{serieEditForm.bean.tvShow}"
                                    />
                         </label>
                         <h:message for="tvShow" class="error" />
                     </div>
                 </div>
-                
+
                 <div class="row">&nbsp;</div>
-                
+
                 <div class="row">
                     <div class="small-12 columns">
                         <ul class="button-group">
@@ -102,7 +103,7 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <button jsf:id="removeButton" id="removeButton" jsf:action="#{serieEditForm.remove()}" style="display:none;" />
             </form>
         </ui:define>
