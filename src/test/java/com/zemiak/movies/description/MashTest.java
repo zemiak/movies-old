@@ -1,11 +1,11 @@
 package com.zemiak.movies.description;
 
-import com.zemiak.movies.service.description.SeriesDescriptionReader;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
+import com.zemiak.movies.service.scraper.SeriesDescriptionReader;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -25,7 +25,7 @@ public class MashTest {
 
     @Test
     public void testAccepts() {
-        final SeriesDescriptionReader instance = new SeriesDescriptionReader();
+        final SeriesDescriptionReader instance = new SeriesDescriptionReader(null, null, true);
 
         final Movie m1 = new Movie();
         assertFalse(instance.accepts(m1));
@@ -47,7 +47,7 @@ public class MashTest {
 
     @Test
     public void testGetDescription() {
-        final SeriesDescriptionReader instance = new SeriesDescriptionReader();
+        final SeriesDescriptionReader instance = new SeriesDescriptionReader(null, null, true);
 
         final Serie s2 = new Serie();
         s2.setId(ID);

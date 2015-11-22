@@ -120,7 +120,7 @@ public class MetadataReader {
                     break;
 
                 case "©day":
-                    metaData.setYear(unknownBoxToString(b));
+                    metaData.setYear(Integer.valueOf(unknownBoxToString(b)));
                     break;
 
                 case "©cmt":

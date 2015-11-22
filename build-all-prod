@@ -1,6 +1,7 @@
 #/bin/sh
 
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/
-mvn -q clean
-mvn -q package -Pprod
+mvn -q clean || exit 1
+mvn -q integration-test || exit 2
+mvn -q package -Pprod || exit 3
 echo "Done."

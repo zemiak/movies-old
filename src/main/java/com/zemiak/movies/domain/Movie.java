@@ -1,7 +1,7 @@
 package com.zemiak.movies.domain;
 
-import com.zemiak.movies.service.description.Csfd;
-import com.zemiak.movies.service.description.Imdb;
+import com.zemiak.movies.service.scraper.Csfd;
+import com.zemiak.movies.service.scraper.Imdb;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
@@ -89,6 +89,9 @@ public class Movie implements Serializable, Comparable<Movie> {
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
+
+    @Column(name = "year")
+    private Integer year;
 
     public Date getCreated() {
         return created;
@@ -324,5 +327,13 @@ public class Movie implements Serializable, Comparable<Movie> {
         movie.setCreated(new Date());
 
         return movie;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 }

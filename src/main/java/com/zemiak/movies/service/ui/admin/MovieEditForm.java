@@ -5,10 +5,10 @@ import com.zemiak.movies.service.GenreService;
 import com.zemiak.movies.service.LanguageService;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.SerieService;
-import com.zemiak.movies.service.description.DescriptionReader;
-import com.zemiak.movies.service.thumbnail.ThumbnailReader;
+import com.zemiak.movies.service.scraper.WebMetadataReader;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -24,6 +24,7 @@ public class MovieEditForm implements Serializable {
     private String selectedUrl;
     private String languageId, originalLanguageId, subtitlesId;
     private Integer serieId, genreId;
+    private WebMetadataReader reader;
 
     @Inject private String path;
     @Inject private String imgPath;
@@ -37,6 +38,11 @@ public class MovieEditForm implements Serializable {
     public MovieEditForm() {
         urlControl = new UrlController();
         urlControl.setMovieForm(this);
+    }
+
+    @PostConstruct
+    public void init() {
+        reader = new WebMetadataReader(imgPath, path, ffmpeg, developmentSystem);
     }
 
     public Integer getId() {
@@ -142,6 +148,7 @@ public class MovieEditForm implements Serializable {
 
         fetchDescription();
         fetchPicture();
+        fetchYear();
     }
 
     public Integer getSerieId() {
@@ -165,16 +172,16 @@ public class MovieEditForm implements Serializable {
     }
 
     private void fetchDescription() {
-        final DescriptionReader reader = new DescriptionReader();
-
-        final String desc = reader.read(bean);
-
+        final String desc = reader.readDescription(bean);
         bean.setDescription(desc);
     }
 
     private void fetchPicture() {
-        final ThumbnailReader thumbnail = new ThumbnailReader(imgPath, path, ffmpeg, developmentSystem);
-        thumbnail.process(bean);
+        reader.processThumbnail(bean);
+    }
+
+    private void fetchYear() {
+        bean.setYear(reader.readYear(bean));
     }
 
     public String getLanguageId() {

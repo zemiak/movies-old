@@ -10,6 +10,7 @@ $(document).ready(function() {
         "columns": [
             { "data": "id" },
             { "data": "name" },
+            { "data": "year" },
             { "data": "serie" },
             { "data": "genre" },
             { "data": "displayOrder" },

@@ -5,13 +5,14 @@ import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.batch.service.RefreshStatistics;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.service.MovieService;
-import com.zemiak.movies.service.description.DescriptionReader;
+import com.zemiak.movies.service.scraper.WebMetadataReader;
 import com.zemiak.movies.strings.Joiner;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
@@ -19,16 +20,24 @@ import javax.inject.Inject;
 public class MetadataRefresher {
     private static final BatchLogger LOG = BatchLogger.getLogger(MetadataRefresher.class.getName());
 
-    private final DescriptionReader descriptions = new DescriptionReader();
+    private WebMetadataReader descriptions;
     @Inject private MovieService service;
     @Inject private String mp4tags;
     @Inject private String path;
+    @Inject private String imgPath;
+    @Inject private String ffmpeg;
     @Inject Boolean developmentSystem;
     @Inject RefreshStatistics stats;
 
     private static final String GENRE = "-g";
     private static final String NAME = "-s";
+    private static final String YEAR = "-y";
     private static final String COMMENTS = "-c";
+
+    @PostConstruct
+    public void init() {
+        descriptions = new WebMetadataReader(imgPath, path, ffmpeg, developmentSystem);
+    }
 
     private void update(final String fileName, final String commandLineSwitch, final String value) {
         final List<String> params = new ArrayList<>();
@@ -56,6 +65,12 @@ public class MetadataRefresher {
         }
     }
 
+    private void updateYear(final String fileName, final MovieMetadata data) {
+        if (! data.isYearEqual()) {
+            update(fileName, YEAR, data.getMovieName());
+        }
+    }
+
     private void updateGenre(final String fileName, final MovieMetadata data) {
         if (! data.isGenreEqual()) {
             update(fileName, GENRE, data.getMovie().composeGenreName());
@@ -64,7 +79,7 @@ public class MetadataRefresher {
 
     private void updateComment(final String fileName, final MovieMetadata data) {
         if (data.commentsShouldBeUpdatedQuiet()) {
-            final String desc = descriptions.read(data.getMovie());
+            final String desc = descriptions.readDescription(data.getMovie());
 
             if (null != desc && !desc.trim().isEmpty() && !desc.equals(data.getComments())) {
                 update(fileName, COMMENTS, desc);
@@ -80,13 +95,13 @@ public class MetadataRefresher {
             Movie movie = service.findByFilename(fileName.substring(path.length()));
             MovieMetadata data = new MetadataReader(fileName, movie, service).get();
 
-
             if (null != movie && null != data) {
                 if (! data.isMetadataEqual()) {
                     LOG.info("Metadata: going to update " + fileName);
                     updateName(fileName, data);
                     updateGenre(fileName, data);
                     updateComment(fileName, data);
+                    updateYear(fileName, data);
                     stats.incrementUpdated();
                 }
             }

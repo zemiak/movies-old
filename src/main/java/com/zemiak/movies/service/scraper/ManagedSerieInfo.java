@@ -1,4 +1,4 @@
-package com.zemiak.movies.service.description;
+package com.zemiak.movies.service.scraper;
 
 import java.util.*;
 

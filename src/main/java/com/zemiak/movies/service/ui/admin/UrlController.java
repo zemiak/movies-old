@@ -2,8 +2,8 @@ package com.zemiak.movies.service.ui.admin;
 
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.UrlDTO;
-import com.zemiak.movies.service.description.Csfd;
-import com.zemiak.movies.service.description.Imdb;
+import com.zemiak.movies.service.scraper.Csfd;
+import com.zemiak.movies.service.scraper.Imdb;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

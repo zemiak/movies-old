@@ -1,23 +1,17 @@
-package com.zemiak.movies.service.description;
+package com.zemiak.movies.service.scraper;
 
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.UrlDTO;
 import java.util.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SeriesDescriptionReader implements IDescriptionReader {
+public class SeriesDescriptionReader extends GeneralMetadataReader {
     private static final Logger LOG = Logger.getLogger(SeriesDescriptionReader.class.getName());
     final Map<Integer, ManagedSerieInfo> series; // id -> fileName
 
-    public SeriesDescriptionReader() {
+    public SeriesDescriptionReader(final String path, final String ffmpegPath, final boolean developmentSystem) {
+        super(path, ffmpegPath, developmentSystem);
         series = new HashMap<>();
         readManagedSeries();
     }

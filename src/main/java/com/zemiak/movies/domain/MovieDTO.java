@@ -22,6 +22,7 @@ public class MovieDTO {
     private String genre;
     private String serie;
     private String created;
+    private Integer year;
 
     public MovieDTO() {
     }
@@ -41,5 +42,6 @@ public class MovieDTO {
         language = source.getLanguageName();
         genre = source.getGenreName();
         created = null == source.getCreated() ? "" : new SimpleDateFormat("yyyy-MM-dd").format(source.getCreated());
+        year = source.getYear();
     }
 }

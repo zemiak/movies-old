@@ -1,9 +1,6 @@
 package com.zemiak.movies.batch.service;
 
-import com.zemiak.movies.batch.movies.DescriptionsUpdater;
-import com.zemiak.movies.batch.movies.MetadataRefresher;
-import com.zemiak.movies.batch.movies.NewMoviesCreator;
-import com.zemiak.movies.batch.movies.ThumbnailCreator;
+import com.zemiak.movies.batch.movies.*;
 import com.zemiak.movies.batch.plex.*;
 import com.zemiak.movies.domain.CacheClearEvent;
 import com.zemiak.movies.service.BackupService;
@@ -32,6 +29,7 @@ public class UpdateMoviesScheduler {
     @Inject RefreshStatistics stats;
     @Inject javax.enterprise.event.Event<CacheClearEvent> clearEvent;
     @Inject BackupService backup;
+    @Inject YearUpdater years;
 
     @Schedule(dayOfWeek="*", hour="03", minute="10")
     public void startScheduled() {
@@ -45,10 +43,10 @@ public class UpdateMoviesScheduler {
 
     @Schedule(dayOfWeek="0,2,4,6", hour="05", minute="15")
     public void backupAndClean() {
-//        if (developmentSystem) {
-//            LOG.log(Level.INFO, "Scheduled backup cancelled, a development system is in use.");
-//            return;
-//        }
+        if (developmentSystem) {
+            LOG.log(Level.INFO, "Scheduled backup cancelled, a development system is in use.");
+            return;
+        }
 
         backup.removeOldBackups();
         backup.backup();
@@ -63,6 +61,7 @@ public class UpdateMoviesScheduler {
         refresher.process(movieFileList.getFiles());
         descUpdater.process(movieFileList.getFiles());
         thumbnails.process(movieFileList.getFiles());
+        years.process(movieFileList.getFiles());
 
         plexFolders.cleanAndCreate();
         plexMovies.process(movieFileList.getFiles());

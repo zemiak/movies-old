@@ -2,7 +2,7 @@ package com.zemiak.movies.description;
 
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.UrlDTO;
-import com.zemiak.movies.service.description.Csfd;
+import com.zemiak.movies.service.scraper.Csfd;
 import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Before;

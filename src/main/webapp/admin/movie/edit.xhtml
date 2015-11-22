@@ -137,7 +137,7 @@
                 </div>
                 
                 <div class="row">
-                    <div class="small-6 columns">
+                    <div class="small-4 columns">
                         <label>Picture Filename:
                             <input type="text" id="pictureFileName" name="pictureFileName" 
                                    jsf:id="pictureFileName" label="Picture Filename"
@@ -148,7 +148,7 @@
                         <h:message for="pictureFileName" class="error" />
                     </div>
                     
-                    <div class="small-6 columns">
+                    <div class="small-4 columns">
                         <label>Filename:
                             <input type="text" id="fileName" name="fileName" 
                                    jsf:id="fileName" label="Filename"
@@ -157,6 +157,17 @@
                                    placeholder="Enter Filename" />
                         </label>
                         <h:message for="fileName" class="error" />
+                    </div>
+                    
+                    <div class="small-4 columns">
+                        <label>Year:
+                            <input type="text" id="year" name="year" 
+                                   jsf:id="year" label="Year"
+                                   jsf:value="#{movieEditForm.bean.year}" 
+                                   readonly="true" jsf:readOnly="true"
+                                   placeholder="Enter Year" />
+                        </label>
+                        <h:message for="year" class="error" />
                     </div>
                 </div>
                 

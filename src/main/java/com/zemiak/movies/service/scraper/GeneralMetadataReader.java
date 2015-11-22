@@ -1,23 +1,25 @@
-package com.zemiak.movies.service.thumbnail;
+package com.zemiak.movies.service.scraper;
 
 import com.zemiak.movies.batch.service.BatchLogger;
 import com.zemiak.movies.batch.service.CommandLine;
 import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.domain.UrlDTO;
 import com.zemiak.movies.strings.Joiner;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 
-public class GenerateThumbnail implements IThumbnailReader {
-    private static final BatchLogger LOG = BatchLogger.getLogger(GenerateThumbnail.class.getName());
+public class GeneralMetadataReader implements IWebMetadataReader {
+    private static final BatchLogger LOG = BatchLogger.getLogger(GeneralMetadataReader.class.getName());
     private String imageFileName;
     private final String ffmpegPath;
     private final String path;
     private final boolean developmentSystem;
 
-    public GenerateThumbnail(final String path, final String ffmpegPath, final boolean developmentSystem) {
+    public GeneralMetadataReader(final String path, final String ffmpegPath, final boolean developmentSystem) {
         this.ffmpegPath = ffmpegPath;
         this.developmentSystem = developmentSystem;
         this.path = path;
@@ -29,17 +31,22 @@ public class GenerateThumbnail implements IThumbnailReader {
     }
 
     @Override
+    public List<UrlDTO> getUrlCandidates(String movieName) {
+        return Collections.EMPTY_LIST;
+    }
+
+    @Override
     public String getReaderName() {
-        return "General";
+        return "GeneralLocalScraper";
     }
 
     @Override
-    public void setImageFileName(final String imageFileName) {
-        this.imageFileName = imageFileName;
+    public String getDescription(Movie movie) {
+        return "";
     }
 
     @Override
-    public void process(final Movie movie) {
+    public void processThumbnail(Movie movie) {
         final String movieFileName = Paths.get(path, movie.getFileName()).toString();
 
         final List<String> params = Arrays.asList(
@@ -58,5 +65,15 @@ public class GenerateThumbnail implements IThumbnailReader {
             LOG.log(Level.SEVERE, "DID NOT generate thumbnail {0}: {1} ...",
                     new Object[]{imageFileName, ex});
         }
+    }
+
+    @Override
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
+    }
+
+    @Override
+    public Integer getYear(final Movie movie) {
+        return null;
     }
 }
