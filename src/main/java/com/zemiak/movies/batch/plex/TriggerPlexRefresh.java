@@ -32,6 +32,7 @@ public class TriggerPlexRefresh {
     public enum LibraryType {
         MUSIC("music"),
         MOVIES("movies"),
+        PHOTOS("photos"),
         TV_SHOWS("tvshows");
 
         private final String fileName;
@@ -46,7 +47,7 @@ public class TriggerPlexRefresh {
     }
 
     public void refreshAll() {
-        Arrays.asList(LibraryType.values()).stream().forEach(lib -> refresh(lib));
+        Arrays.asList(LibraryType.values()).stream().forEach(this::refresh);
     }
 
     private void refresh(LibraryType lib) {
