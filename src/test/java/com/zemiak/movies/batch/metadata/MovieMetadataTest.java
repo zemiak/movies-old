@@ -3,6 +3,7 @@ package com.zemiak.movies.batch.metadata;
 import com.zemiak.movies.batch.movies.MovieMetadata;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.domain.Serie;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +16,7 @@ public class MovieMetadataTest {
 
     private Movie got, mash, spiderman;
     private MovieMetadata gotMeta, mashMeta, spidermanMeta;
+    private Serie mashSerie;
 
     @Before
     public void initData() {
@@ -26,6 +28,11 @@ public class MovieMetadataTest {
         spiderman.setName("Vyzva rude lebky");
         spiderman.setDisplayOrder(62);
         spiderman.setGenre(genre);
+        spiderman.setYear(1920);
+
+        mashSerie = new Serie();
+        mashSerie.setName("MASH");
+        mashSerie.setId(10);
 
         got = new Movie(); // 40 GoT parts
         got.setName("48 The Watchers on the Wall");
@@ -36,6 +43,8 @@ public class MovieMetadataTest {
         mash.setName("049 General za usvitu");
         mash.setDisplayOrder(49);
         mash.setGenre(genre);
+        mash.setYear(1991);
+        mash.setSerie(mashSerie);
 
         spidermanMeta = new MovieMetadata(spiderman);
         spidermanMeta.setName("Vyzva rude lebky");
@@ -48,9 +57,10 @@ public class MovieMetadataTest {
         gotMeta.setGenre("S/F");
 
         mashMeta = new MovieMetadata(mash);
-        mashMeta.setName("049 049 General za usvitu");
-        mashMeta.setNiceDisplayOrder("049");
+        mashMeta.setName("049 General za usvitu");
+        mashMeta.setNiceDisplayOrder("49");
         mashMeta.setGenre("S/F");
+        mashMeta.setYear(1991);
     }
 
     @Test
@@ -60,7 +70,7 @@ public class MovieMetadataTest {
 
     @Test
     public void spidermanMp4MovieName() {
-        assertEquals("62 Vyzva rude lebky", spidermanMeta.getMovieName());
+        assertEquals("Vyzva rude lebky (1920)", spidermanMeta.getMovieName());
     }
 
     @Test
@@ -75,11 +85,12 @@ public class MovieMetadataTest {
 
     @Test
     public void mashMp4MovieName() {
-        assertEquals("049 049 General za usvitu", mashMeta.getMovieName());
+        assertEquals("049 General za usvitu", mashMeta.getMovieName());
     }
 
     @Test
     public void mashMetadataEqual() {
-        assertTrue(mashMeta.isMetadataEqual());
+        boolean value = mashMeta.isMetadataEqual();
+        assertTrue(value);
     }
 }
