@@ -219,11 +219,12 @@ public class MovieMetadata {
     }
 
     public String getMovieName() {
-        if (null != niceDisplayOrder) {
-            return niceDisplayOrder + " " + movie.getName();
+        String title = null == movie.getName() || movie.getName().trim().isEmpty() ? movie.getOriginalName() : movie.getName();
+        if (null != movie.getYear() && movie.getYear() > 0) {
+            title += " (" + String.valueOf(movie.getYear()) + ")";
         }
 
-        return movie.getName();
+        return title;
     }
 
     public String getNiceDisplayOrder() {

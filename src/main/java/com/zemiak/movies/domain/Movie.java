@@ -251,11 +251,7 @@ public class Movie implements Serializable, Comparable<Movie> {
     }
 
     public String composeGenreName() {
-        if (null == getSerie() || getSerie().getId() == 0) {
-            return getGenre().getName();
-        }
-
-        return getGenre().getDisplayOrder() + " " + getSerie().getName();
+        return getGenre().getName();
     }
 
     @Override
