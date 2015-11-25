@@ -104,6 +104,10 @@ public class MetadataRefresher {
                     updateYear(fileName, data);
                     stats.incrementUpdated();
                 }
+
+                if (null != movie.getSerie() && !movie.getSerie().isEmpty() && (null == movie.getDisplayOrder() || movie.getDisplayOrder().equals(0))) {
+                    LOG.log(Level.SEVERE, "Movie with serie and no order " + fileName, movie);
+                }
             }
         });
     }
