@@ -25,7 +25,7 @@ public class BackupService {
     @Inject String backupPath;
 
     public void backup() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         Path filePath = Paths.get(backupPath, formatter.format(new Date()) + "_movies.plain");
 
         Query query = em.createNativeQuery("SCRIPT TO '" + filePath + "'");
