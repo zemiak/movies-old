@@ -51,17 +51,17 @@ public class GameOfThronesTest {
         m1.setSerie(s2);
         m1.setDisplayOrder(0);
 
-        assertNull(instance.getDescription(m1));
+        assertNull(instance.parseDescription(m1));
 
         m1.setDisplayOrder(101);
-        assertNotNull(instance.getDescription(m1));
-        assertEquals(GOT101, instance.getDescription(m1));
+        assertNotNull(instance.parseDescription(m1));
+        assertEquals(GOT101, instance.parseDescription(m1));
 
         m1.setDisplayOrder(410);
-        assertNotNull(instance.getDescription(m1));
-        assertEquals(GOT410, instance.getDescription(m1));
+        assertNotNull(instance.parseDescription(m1));
+        assertEquals(GOT410, instance.parseDescription(m1));
 
         m1.setDisplayOrder(2010);
-        assertNull(instance.getDescription(m1));
+        assertNull(instance.parseDescription(m1));
     }
 }

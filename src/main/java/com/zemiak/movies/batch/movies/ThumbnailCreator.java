@@ -26,8 +26,11 @@ public class ThumbnailCreator {
                 .map(fileName -> service.findByFilename(fileName.substring(path.length())))
                 .filter(movie -> null != movie)
                 .filter(movie -> !Paths.get(imgPath, "movie", movie.getPictureFileName()).toFile().exists())
+                .filter(movie -> null != movie.getWebPage())
                 .forEach(movie -> {
-                    if (new WebMetadataReader(imgPath, path, ffmpeg, developmentSystem).processThumbnail(movie)) {
+                    WebMetadataReader reader = new WebMetadataReader(imgPath, path, ffmpeg, developmentSystem);
+
+                    if (reader.processThumbnail(movie)) {
                         LOG.log(Level.FINE, "Generated a thumbnail {0}", movie.getPictureFileName());
                     } else {
                         LOG.log(Level.SEVERE, "Error generating a thumbnail {0}", movie.getPictureFileName());

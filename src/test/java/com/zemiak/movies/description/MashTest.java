@@ -56,17 +56,17 @@ public class MashTest {
         m1.setSerie(s2);
         m1.setDisplayOrder(0);
 
-        assertNull(instance.getDescription(m1));
+        assertNull(instance.parseDescription(m1));
 
         m1.setDisplayOrder(1);
-        assertNotNull(instance.getDescription(m1));
-        assertEquals(MASH1, instance.getDescription(m1));
+        assertNotNull(instance.parseDescription(m1));
+        assertEquals(MASH1, instance.parseDescription(m1));
 
         m1.setDisplayOrder(256);
-        assertNotNull(instance.getDescription(m1));
-        assertEquals(MASH256, instance.getDescription(m1));
+        assertNotNull(instance.parseDescription(m1));
+        assertEquals(MASH256, instance.parseDescription(m1));
 
         m1.setDisplayOrder(257);
-        assertNull(instance.getDescription(m1));
+        assertNull(instance.parseDescription(m1));
     }
 }

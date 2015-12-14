@@ -31,7 +31,8 @@ public class UpdateMoviesScheduler {
     @Inject RefreshStatistics stats;
     @Inject Event<CacheClearEvent> clearEvent;
     @Inject BackupService backup;
-    @Inject WebScrobbler scrobbler;
+    @Inject YearUpdater years;
+    @Inject WebPageScraper scraper;
 
     @Inject InfuseService infuseService;
     @Inject PlexService plexService;
@@ -57,16 +58,16 @@ public class UpdateMoviesScheduler {
         backup.backup();
     }
 
-
     public void start() {
         BatchLogger.deleteLogFile();
 
         stats.reset();
+        scraper.process(movieFileList.getFiles());
         creator.process(movieFileList.getFiles());
         refresher.process(movieFileList.getFiles());
         descUpdater.process(movieFileList.getFiles());
         thumbnails.process(movieFileList.getFiles());
-        scrobbler.process(movieFileList.getFiles());
+        years.process(movieFileList.getFiles());
 
         plexService.process(movieFileList.getFiles(), musicFileList.getFiles());
         infuseService.process(movieFileList.getFiles());

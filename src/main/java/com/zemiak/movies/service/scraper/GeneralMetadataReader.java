@@ -41,7 +41,7 @@ public class GeneralMetadataReader implements IWebMetadataReader {
     }
 
     @Override
-    public String getDescription(Movie movie) {
+    public String parseDescription(Movie movie) {
         return "";
     }
 

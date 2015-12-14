@@ -25,7 +25,7 @@ public class SeriesDescriptionReader extends GeneralMetadataReader {
     }
 
     @Override
-    public String getDescription(final Movie movie) {
+    public String parseDescription(final Movie movie) {
         String raw;
 
         try {

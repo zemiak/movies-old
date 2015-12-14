@@ -79,7 +79,7 @@ public class MetadataRefresher {
 
     private void updateComment(final String fileName, final MovieMetadata data) {
         if (data.commentsShouldBeUpdatedQuiet()) {
-            final String desc = descriptions.readDescription(data.getMovie());
+            final String desc = descriptions.parseDescription(data.getMovie());
 
             if (null != desc && !desc.trim().isEmpty() && !desc.equals(data.getComments())) {
                 update(fileName, COMMENTS, desc);

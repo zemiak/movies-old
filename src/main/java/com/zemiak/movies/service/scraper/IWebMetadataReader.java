@@ -9,7 +9,7 @@ public interface IWebMetadataReader {
     public List<UrlDTO> getUrlCandidates(final String movieName);
     public String getReaderName();
 
-    public String getDescription(final Movie movie);
+    public String parseDescription(final Movie movie);
 
     public void processThumbnail(final Movie movie);
     public void setImageFileName(final String imageFileName);

@@ -28,8 +28,8 @@ public class Imdb implements IWebMetadataReader {
     }
 
     @Override
-    public String getDescription(final Movie movie) {
-        Document doc = JsoupUtils.getMovieDocument(movie);
+    public String parseDescription(final Movie movie) {
+        Document doc = JsoupUtils.getMovieDocumentFromString(movie);
         if (null == doc) {
             return null;
         }
@@ -85,7 +85,7 @@ public class Imdb implements IWebMetadataReader {
 
     @Override
     public void processThumbnail(Movie movie) {
-        Document doc = JsoupUtils.getMovieDocument(movie);
+        Document doc = JsoupUtils.getMovieDocumentFromString(movie);
         if (null == doc) {
             return;
         }
@@ -136,11 +136,6 @@ public class Imdb implements IWebMetadataReader {
         }
 
         String[] dateArray = dateText.split("-");
-        if (3 != dateArray.length) {
-            LOG.log(Level.SEVERE, "Bad format of date text (2). Should be yyyy-mm-dd, is " + dateText, dateText);
-            return null;
-        }
-
         return Integer.valueOf(dateArray[0]);
     }
 }

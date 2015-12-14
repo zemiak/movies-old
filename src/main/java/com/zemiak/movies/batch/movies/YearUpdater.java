@@ -10,7 +10,7 @@ import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
 @Dependent
-public class WebScrobbler {
+public class YearUpdater {
     private static final BatchLogger LOG = BatchLogger.getLogger("YearUpdater");
 
     @Inject private String path;
@@ -24,18 +24,13 @@ public class WebScrobbler {
                 .map(fileName -> service.findByFilename(fileName.substring(path.length())))
                 .filter(movie -> null != movie)
                 .filter(movie -> null != movie.getUrl())
-                .filter(movie -> null == movie.getWebPage())
-                .limit(50)
+                .filter(movie -> null == movie.getYear())
+                .filter(movie -> null != movie.getWebPage())
                 .forEach(movie -> {
-                    String webPage = reader.readPage(movie);
+                    movie.setYear(reader.parseYear(movie));
+                    service.mergeAndSave(movie);
 
-                    if (null != webPage) {
-                        movie.setWebPage(webPage);
-                        movie.setYear(reader.parseYear(movie));
-                        service.mergeAndSave(movie);
-
-                        LOG.log(Level.INFO, "... update web page and year in DB of " + movie.getFileName() + " to " + movie.getYear(), movie.getId());
-                    }
+                    LOG.log(Level.INFO, "... update web page and year in DB of " + movie.getFileName() + " to " + movie.getYear(), movie.getId());
 
                     try {
                         Thread.sleep(1000);

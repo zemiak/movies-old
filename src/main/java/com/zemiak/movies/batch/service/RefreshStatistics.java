@@ -33,7 +33,7 @@ public class RefreshStatistics {
         LOG.log(level, "Metadata Refresh Statistics", null);
         LOG.log(level, "Movies Created: {0}", created);
         LOG.log(level, "Movies Updated: {0}", updated);
-        LOG.log(level, "Plex Links Created: {0}", linksCreated);
+        LOG.log(level, "3rd Party Links Created: {0}", linksCreated);
         LOG.log(level, "Music Files w/out Metadata: {0}", missingMusicMetadata);
     }
 

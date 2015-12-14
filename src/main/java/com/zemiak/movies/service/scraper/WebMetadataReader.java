@@ -21,10 +21,10 @@ public class WebMetadataReader {
         this.imgPath = imgPath;
     }
 
-    public String readDescription(final Movie movie) {
+    public String parseDescription(final Movie movie) {
         for (IWebMetadataReader reader: readers) {
             if (reader.accepts(movie)) {
-                return reader.getDescription(movie);
+                return reader.parseDescription(movie);
             }
         }
 

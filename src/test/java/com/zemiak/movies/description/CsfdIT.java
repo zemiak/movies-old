@@ -39,7 +39,7 @@ public class CsfdIT {
     @Test
     public void testGetDescription() {
         movie.setUrl("http://www.csfd.cz/film/9499-matrix/");
-        String description = reader.getDescription(movie);
+        String description = reader.parseDescription(movie);
 
         assertNotNull(description);
         assertFalse(description.trim().isEmpty());

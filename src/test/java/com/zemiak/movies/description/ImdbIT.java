@@ -43,7 +43,7 @@ public class ImdbIT {
     @Test
     public void testGetDescription() {
         movie.setUrl("http://www.imdb.com/title/tt0133093/?ref_=fn_al_tt_1");
-        String description = reader.getDescription(movie);
+        String description = reader.parseDescription(movie);
         
         assertNotNull(description);
         assertFalse(description.trim().isEmpty());

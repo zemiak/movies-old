@@ -12,16 +12,18 @@ import javax.inject.Inject;
 public class DescriptionsUpdater {
     private static final BatchLogger LOG = BatchLogger.getLogger(DescriptionsUpdater.class.getName());
 
-    private final WebMetadataReader descriptions = new WebMetadataReader(null, null, null, true);
+    private final WebMetadataReader reader = new WebMetadataReader(null, null, null, true);
     @Inject private MovieService service;
     @Inject private String path;
 
     public void process(final List<String> files) {
         files.stream()
                 .map(fileName -> service.findByFilename(fileName.substring(path.length())))
-                .filter(movie -> null != movie && movie.isDescriptionEmpty() && descriptions.canFetchDescription(movie))
+                .filter(movie -> null != movie && movie.isDescriptionEmpty())
+                .filter(movie -> reader.canFetchDescription(movie))
+                .filter(movie -> null != movie.getWebPage())
                 .forEach(movie -> {
-                    String desc = descriptions.readDescription(movie);
+                    String desc = reader.parseDescription(movie);
 
                     movie.setDescription(desc);
                     service.mergeAndSave(movie);

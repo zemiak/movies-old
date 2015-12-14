@@ -145,6 +145,7 @@ public class MovieEditForm implements Serializable {
 
     public void fetchInfoFromUrlSelection() {
         bean.setUrl(selectedUrl);
+        bean.setWebPage(null);
 
         fetchDescription();
         fetchPicture();
@@ -172,7 +173,7 @@ public class MovieEditForm implements Serializable {
     }
 
     private void fetchDescription() {
-        final String desc = reader.readDescription(bean);
+        final String desc = reader.parseDescription(bean);
         bean.setDescription(desc);
     }
 

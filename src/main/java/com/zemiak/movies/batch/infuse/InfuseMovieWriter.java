@@ -38,7 +38,7 @@ public class InfuseMovieWriter {
         try {
             makeMovieLink(movie);
         } catch (IOException ex) {
-            LOG.log(Level.SEVERE, "Cannot make movie link for " + movie.getFileName(), ex);
+            LOG.log(Level.SEVERE, "Cannot make movie link for " + movie.getFileName() + ": " + ex.getMessage(), null);
         }
     }
 
@@ -58,11 +58,20 @@ public class InfuseMovieWriter {
 
         Serie serie = movie.getSerie();
         Path linkName;
-        if (null == serie) {
+        if (null == serie || serie.isEmpty()) {
+            Files.createDirectories(Paths.get(infuseLinkPath, infuseLinkPath, PATH,
+                    Encodings.deAccent(genre.getName())
+            ));
+
             linkName = Paths.get(infuseLinkPath, PATH,
                     Encodings.deAccent(genre.getName()),
                     Encodings.deAccent(movieName) + ".m4v");
         } else {
+            Files.createDirectories(Paths.get(infuseLinkPath, infuseLinkPath, PATH,
+                    Encodings.deAccent(genre.getName()),
+                    Encodings.deAccent(serie.getName())
+            ));
+
             linkName = Paths.get(infuseLinkPath, PATH,
                     Encodings.deAccent(genre.getName()),
                     Encodings.deAccent(serie.getName()),

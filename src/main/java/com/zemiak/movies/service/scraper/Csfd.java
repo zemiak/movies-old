@@ -33,8 +33,8 @@ public class Csfd implements IWebMetadataReader {
     }
 
     @Override
-    public String getDescription(final Movie movie) {
-        Document doc = JsoupUtils.getMovieDocument(movie);
+    public String parseDescription(final Movie movie) {
+        Document doc = JsoupUtils.getMovieDocumentFromString(movie);
         if (null == doc) {
             return null;
         }
@@ -95,7 +95,7 @@ public class Csfd implements IWebMetadataReader {
 
     @Override
     public void processThumbnail(final Movie movie) {
-        Document doc = JsoupUtils.getMovieDocument(movie);
+        Document doc = JsoupUtils.getMovieDocumentFromString(movie);
         if (null == doc) {
             return;
         }
