@@ -14,5 +14,7 @@ public interface IWebMetadataReader {
     public void processThumbnail(final Movie movie);
     public void setImageFileName(final String imageFileName);
 
-    public Integer getYear(final Movie movie);
+    public Integer parseYear(final Movie movie);
+
+    public String getWebPage(Movie movie);
 }

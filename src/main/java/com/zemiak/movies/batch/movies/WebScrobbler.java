@@ -10,7 +10,7 @@ import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
 @Dependent
-public class YearUpdater {
+public class WebScrobbler {
     private static final BatchLogger LOG = BatchLogger.getLogger("YearUpdater");
 
     @Inject private String path;
@@ -23,14 +23,18 @@ public class YearUpdater {
                 .map(fileName -> Paths.get(fileName).toFile().getAbsolutePath())
                 .map(fileName -> service.findByFilename(fileName.substring(path.length())))
                 .filter(movie -> null != movie)
-                .filter(movie -> null == movie.getYear())
+                .filter(movie -> null != movie.getUrl())
+                .filter(movie -> null == movie.getWebPage())
+                .limit(50)
                 .forEach(movie -> {
-                    Integer year = reader.readYear(movie);
+                    String webPage = reader.readPage(movie);
 
-                    if (null != year) {
-                        movie.setYear(year);
+                    if (null != webPage) {
+                        movie.setWebPage(webPage);
+                        movie.setYear(reader.parseYear(movie));
                         service.mergeAndSave(movie);
-                        LOG.log(Level.INFO, "... update year in DB of " + movie.getFileName() + " to " + movie.getYear(), movie.getId());
+
+                        LOG.log(Level.INFO, "... update web page and year in DB of " + movie.getFileName() + " to " + movie.getYear(), movie.getId());
                     }
                 });
     }

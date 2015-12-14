@@ -9,7 +9,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -17,7 +16,6 @@ import org.jsoup.select.Elements;
 public class Imdb implements IWebMetadataReader {
     private static final BatchLogger LOG = BatchLogger.getLogger(Imdb.class.getName());
     private String imageFileName;
-    private MovieDocumentCache movieDoc = new MovieDocumentCache();
 
     private static final String URL1 = "www.imdb.com/";
     private static final String URL2 = "http://" + URL1;
@@ -31,7 +29,7 @@ public class Imdb implements IWebMetadataReader {
 
     @Override
     public String getDescription(final Movie movie) {
-        Document doc = getMovieDocument(movie);
+        Document doc = JsoupUtils.getMovieDocument(movie);
         if (null == doc) {
             return null;
         }
@@ -43,19 +41,6 @@ public class Imdb implements IWebMetadataReader {
     @Override
     public String getReaderName() {
         return "IMDB";
-    }
-
-    private Document getDocument(final String url) {
-        try {
-            return Jsoup.connect(url).timeout(5000).get();
-        } catch (IOException ex) {
-            LOG.log(Level.SEVERE, "Cannot read {0}: {1}", new Object[]{url, ex});
-            return null;
-        }
-    }
-
-    private Document getMovieDocument(final Movie movie) {
-        return movieDoc.getMovieDocument(movie);
     }
 
     @Override
@@ -70,7 +55,7 @@ public class Imdb implements IWebMetadataReader {
             return res;
         }
 
-        Document doc = getDocument(url);
+        Document doc = JsoupUtils.getDocument(url);
         if (null == doc) {
             return res;
         }
@@ -100,7 +85,7 @@ public class Imdb implements IWebMetadataReader {
 
     @Override
     public void processThumbnail(Movie movie) {
-        Document doc = getMovieDocument(movie);
+        Document doc = JsoupUtils.getMovieDocument(movie);
         if (null == doc) {
             return;
         }
@@ -122,8 +107,18 @@ public class Imdb implements IWebMetadataReader {
     }
 
     @Override
-    public Integer getYear(final Movie movie) {
-        Document doc = getMovieDocument(movie);
+    public String getWebPage(Movie movie) {
+        Document doc = JsoupUtils.getMovieDocument(movie);
+        if (null == doc) {
+            return null;
+        }
+
+        return doc.toString();
+    }
+
+    @Override
+    public Integer parseYear(final Movie movie) {
+        Document doc = JsoupUtils.getMovieDocumentFromString(movie);
         if (null == doc) {
             return null;
         }

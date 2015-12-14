@@ -59,10 +59,20 @@ public class WebMetadataReader {
         return Paths.get(imgPath, "movie", movie.getPictureFileName()).toString();
     }
 
-    public Integer readYear(final Movie movie) {
+    public Integer parseYear(final Movie movie) {
         for (IWebMetadataReader reader: readers) {
             if (reader.accepts(movie)) {
-                return reader.getYear(movie);
+                return reader.parseYear(movie);
+            }
+        }
+
+        return null;
+    }
+
+    public String readPage(Movie movie) {
+        for (IWebMetadataReader reader: readers) {
+            if (reader.accepts(movie)) {
+                return reader.getWebPage(movie);
             }
         }
 

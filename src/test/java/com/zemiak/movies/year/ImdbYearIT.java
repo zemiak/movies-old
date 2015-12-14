@@ -19,12 +19,12 @@ public class ImdbYearIT {
     @Test
     public void testSpectre() {
         movie.setUrl("http://www.imdb.com/title/tt2379713/?ref_=fn_al_tt_1");
-        assertEquals(Integer.valueOf(2015), reader.getYear(movie));
+        assertEquals(Integer.valueOf(2015), reader.parseYear(movie));
     }
 
     @Test
     public void testHowToTrainYourDragon() {
         movie.setUrl("http://www.imdb.com/title/tt0892769/?ref_=fn_al_tt_1");
-        assertEquals(Integer.valueOf(2010), reader.getYear(movie));
+        assertEquals(Integer.valueOf(2010), reader.parseYear(movie));
     }
 }

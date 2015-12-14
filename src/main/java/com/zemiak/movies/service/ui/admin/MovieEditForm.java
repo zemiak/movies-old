@@ -181,7 +181,7 @@ public class MovieEditForm implements Serializable {
     }
 
     private void fetchYear() {
-        bean.setYear(reader.readYear(bean));
+        bean.setYear(reader.parseYear(bean));
     }
 
     public String getLanguageId() {

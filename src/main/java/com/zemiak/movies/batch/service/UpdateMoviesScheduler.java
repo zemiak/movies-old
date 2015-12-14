@@ -1,7 +1,14 @@
 package com.zemiak.movies.batch.service;
 
-import com.zemiak.movies.batch.movies.*;
-import com.zemiak.movies.batch.plex.*;
+import com.zemiak.movies.batch.plex.PlexService;
+import com.zemiak.movies.batch.infuse.InfuseService;
+import com.zemiak.movies.batch.movies.DescriptionsUpdater;
+import com.zemiak.movies.batch.movies.MetadataRefresher;
+import com.zemiak.movies.batch.movies.NewMoviesCreator;
+import com.zemiak.movies.batch.movies.ThumbnailCreator;
+import com.zemiak.movies.batch.movies.WebScrobbler;
+import com.zemiak.movies.batch.plex.PrepareMovieFileList;
+import com.zemiak.movies.batch.plex.PrepareMusicFileList;
 import com.zemiak.movies.domain.CacheClearEvent;
 import com.zemiak.movies.service.BackupService;
 import java.util.logging.Level;
@@ -21,15 +28,14 @@ public class UpdateMoviesScheduler {
     @Inject MetadataRefresher refresher;
     @Inject DescriptionsUpdater descUpdater;
     @Inject ThumbnailCreator thumbnails;
-    @Inject BasicPlexFolderStructureCreator plexFolders;
-    @Inject PlexMovieWriter plexMovies;
-    @Inject PlexMusicWriter plexMusic;
     @Inject SendLogFile logFileMailer;
-    @Inject TriggerPlexRefresh plexRefresh;
     @Inject RefreshStatistics stats;
     @Inject javax.enterprise.event.Event<CacheClearEvent> clearEvent;
     @Inject BackupService backup;
-    @Inject YearUpdater years;
+    @Inject WebScrobbler scrobbler;
+
+    @Inject InfuseService infuseService;
+    @Inject PlexService plexService;
 
     @Schedule(dayOfWeek="*", hour="03", minute="10")
     public void startScheduled() {
@@ -61,12 +67,11 @@ public class UpdateMoviesScheduler {
         refresher.process(movieFileList.getFiles());
         descUpdater.process(movieFileList.getFiles());
         thumbnails.process(movieFileList.getFiles());
-        years.process(movieFileList.getFiles());
+        scrobbler.process(movieFileList.getFiles());
 
-        plexFolders.cleanAndCreate();
-        plexMovies.process(movieFileList.getFiles());
-        plexMusic.process(musicFileList.getFiles());
-        plexRefresh.refreshAll();
+        plexService.process(movieFileList.getFiles(), musicFileList.getFiles());
+        infuseService.process(movieFileList.getFiles());
+        
         stats.dump();
 
         logFileMailer.send();

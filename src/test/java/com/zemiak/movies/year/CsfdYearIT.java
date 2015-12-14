@@ -19,12 +19,12 @@ public class CsfdYearIT {
     @Test
     public void testSpectre() {
         movie.setUrl("http://www.csfd.cz/film/328151-spectre/prehled/");
-        assertEquals(Integer.valueOf(2015), reader.getYear(movie));
+        assertEquals(Integer.valueOf(2015), reader.parseYear(movie));
     }
 
     @Test
     public void testHowToTrainYourDragon() {
         movie.setUrl("http://www.csfd.cz/film/234768-jak-vycvicit-draka/prehled/");
-        assertEquals(Integer.valueOf(2010), reader.getYear(movie));
+        assertEquals(Integer.valueOf(2010), reader.parseYear(movie));
     }
 }

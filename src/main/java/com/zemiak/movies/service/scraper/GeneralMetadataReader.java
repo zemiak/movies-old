@@ -73,7 +73,12 @@ public class GeneralMetadataReader implements IWebMetadataReader {
     }
 
     @Override
-    public Integer getYear(final Movie movie) {
+    public Integer parseYear(final Movie movie) {
+        return null;
+    }
+
+    @Override
+    public String getWebPage(Movie movie) {
         return null;
     }
 }

@@ -93,6 +93,10 @@ public class Movie implements Serializable, Comparable<Movie> {
     @Column(name = "year")
     private Integer year;
 
+    @Column(name = "web_page")
+    @Size(max = 2147483647)
+    private String webPage;
+
     public Date getCreated() {
         return created;
     }
@@ -331,5 +335,13 @@ public class Movie implements Serializable, Comparable<Movie> {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    public String getWebPage() {
+        return webPage;
+    }
+
+    public void setWebPage(String webPage) {
+        this.webPage = webPage;
     }
 }

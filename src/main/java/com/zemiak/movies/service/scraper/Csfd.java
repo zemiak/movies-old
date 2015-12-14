@@ -24,7 +24,6 @@ public class Csfd implements IWebMetadataReader {
     private static final String SEARCH_URL = URL2 + "hledat/?q=";
 
     private String imageFileName;
-    private MovieDocumentCache movieDoc = new MovieDocumentCache();
 
     @Override
     public boolean accepts(final Movie movie) {
@@ -35,26 +34,13 @@ public class Csfd implements IWebMetadataReader {
 
     @Override
     public String getDescription(final Movie movie) {
-        Document doc = getMovieDocument(movie);
+        Document doc = JsoupUtils.getMovieDocument(movie);
         if (null == doc) {
             return null;
         }
 
         Elements description = doc.select("div[data-truncate]");
         return null != description ? description.text() : "";
-    }
-
-    private Document getDocument(final String url) {
-        try {
-            return Jsoup.connect(url).timeout(5000).get();
-        } catch (IOException ex) {
-            LOG.log(Level.SEVERE, "Cannot read {0}: {1}", new Object[]{url, ex});
-            return null;
-        }
-    }
-
-    private Document getMovieDocument(final Movie movie) {
-        return movieDoc.getMovieDocument(movie);
     }
 
     @Override
@@ -74,7 +60,7 @@ public class Csfd implements IWebMetadataReader {
             return res;
         }
 
-        Document doc = getDocument(url);
+        Document doc = JsoupUtils.getDocument(url);
         if (null == doc) {
             return res;
         }
@@ -109,7 +95,7 @@ public class Csfd implements IWebMetadataReader {
 
     @Override
     public void processThumbnail(final Movie movie) {
-        Document doc = getMovieDocument(movie);
+        Document doc = JsoupUtils.getMovieDocument(movie);
         if (null == doc) {
             return;
         }
@@ -142,8 +128,12 @@ public class Csfd implements IWebMetadataReader {
     }
 
     @Override
-    public Integer getYear(final Movie movie) {
-        Document doc = getMovieDocument(movie);
+    public Integer parseYear(final Movie movie) {
+        if (null == movie.getWebPage()) {
+            return null;
+        }
+
+        Document doc = JsoupUtils.getMovieDocumentFromString(movie);
         if (null == doc) {
             return null;
         }
@@ -165,7 +155,17 @@ public class Csfd implements IWebMetadataReader {
             LOG.log(Level.SEVERE, "Bad format of origin. Should be country, year, length", originText);
             return null;
         }
-        
+
         return Integer.valueOf(originData[1].trim());
+    }
+
+    @Override
+    public String getWebPage(final Movie movie) {
+        Document doc = JsoupUtils.getMovieDocument(movie);
+        if (null == doc) {
+            return null;
+        }
+
+        return doc.toString();
     }
 }
