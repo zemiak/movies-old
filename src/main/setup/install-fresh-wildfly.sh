@@ -21,9 +21,13 @@ ln -s standalone.xml standalone-ha.xml
 cd ../../..
 
 # Restore the database
+mkdir -p /tmp/movies-restore
+rm -f /tmp/movies-restore/*
+mv $PROJECT/src/dev/resources/movies.plain.bz2 /tmp/movies-restore/
+bunzip2 /tmp/movies-restore/movies.plain.bz2
 rm -rf /tmp/movies.*
 java \
     -cp ./$TARGET/modules/system/layers/base/com/h2database/h2/main/h2-1.3.173.jar \
-    org.h2.tools.RunScript -url jdbc:h2:/tmp/movies -user sa -script $PROJECT/src/dev/resources/dump.sql
+    org.h2.tools.RunScript -url jdbc:h2:/tmp/movies -user sa -script /tmp/movies-restore/movies.plain
 
 ./$TARGET/bin/add-user.sh admin admin --silent

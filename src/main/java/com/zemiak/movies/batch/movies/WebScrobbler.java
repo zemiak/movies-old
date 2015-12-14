@@ -36,6 +36,12 @@ public class WebScrobbler {
 
                         LOG.log(Level.INFO, "... update web page and year in DB of " + movie.getFileName() + " to " + movie.getYear(), movie.getId());
                     }
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        LOG.log(Level.FINE, "1000ms waiting interrupted", ex);
+                    }
                 });
     }
 }

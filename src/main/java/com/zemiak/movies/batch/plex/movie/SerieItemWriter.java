@@ -1,4 +1,4 @@
-package com.zemiak.movies.batch.plex;
+package com.zemiak.movies.batch.plex.movie;
 
 import com.zemiak.movies.batch.service.RefreshStatistics;
 import com.zemiak.movies.domain.Movie;
@@ -13,17 +13,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Dependent
 public class SerieItemWriter {
     private static final Logger LOG = Logger.getLogger(SerieItemWriter.class.getName());
-    static final String PATH = "TV Shows";
+    public static final String PATH = "TV Shows";
     static final Integer GOT = 1000;
     static final Integer MASH = 1;
 
     @Inject String plexLinkPath;
     @Inject String path;
     @Inject RefreshStatistics stats;
+    @PersistenceContext EntityManager em;
 
     public void process(Movie movie) throws IOException {
         Serie serie = movie.getSerie();
@@ -63,6 +66,9 @@ public class SerieItemWriter {
         Files.createDirectories(linkFolder);
         Files.createSymbolicLink(linkName, existing);
         stats.incrementLinksCreated();
+
+        movie.setPlexFileName(linkName.toString());
+        em.merge(movie);
 
         LOG.log(Level.FINE, "Created TV Show link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});
     }

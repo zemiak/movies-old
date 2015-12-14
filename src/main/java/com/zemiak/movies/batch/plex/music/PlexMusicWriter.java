@@ -1,4 +1,4 @@
-package com.zemiak.movies.batch.plex;
+package com.zemiak.movies.batch.plex.music;
 
 import com.zemiak.movies.batch.movies.MetadataReader;
 import com.zemiak.movies.batch.movies.MovieMetadata;
@@ -22,7 +22,7 @@ import org.farng.mp3.id3.ID3v2_2;
 @Dependent
 public class PlexMusicWriter {
     private static final BatchLogger LOG = BatchLogger.getLogger(PlexMusicWriter.class.getName());
-    static final String PATH = "Music";
+    public static final String PATH = "Music";
 
     @Inject String plexLinkPath;
     @Inject RefreshStatistics stats;

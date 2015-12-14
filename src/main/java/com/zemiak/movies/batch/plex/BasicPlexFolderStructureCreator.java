@@ -1,5 +1,9 @@
 package com.zemiak.movies.batch.plex;
 
+import com.zemiak.movies.batch.plex.movie.SerieItemWriter;
+import com.zemiak.movies.batch.plex.movie.StandaloneMovieWriter;
+import com.zemiak.movies.batch.plex.music.PlexMusicWriter;
+import com.zemiak.movies.batch.plex.photo.PlexPhotoWriter;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -43,6 +47,7 @@ public class BasicPlexFolderStructureCreator {
             Files.createDirectories(Paths.get(plexLinkPath, StandaloneMovieWriter.PATH));
             Files.createDirectories(Paths.get(plexLinkPath, SerieItemWriter.PATH));
             Files.createDirectories(Paths.get(plexLinkPath, PlexMusicWriter.PATH));
+            Files.createDirectories(Paths.get(plexLinkPath, PlexPhotoWriter.PATH));
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, "Basic plex folder creation error", ex);
         }

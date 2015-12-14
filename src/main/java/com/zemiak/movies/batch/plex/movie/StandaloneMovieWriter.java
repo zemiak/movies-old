@@ -1,4 +1,4 @@
-package com.zemiak.movies.batch.plex;
+package com.zemiak.movies.batch.plex.movie;
 
 import com.zemiak.movies.batch.service.RefreshStatistics;
 import com.zemiak.movies.domain.Movie;
@@ -11,15 +11,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Dependent
 public class StandaloneMovieWriter {
-    static final String PATH = "Movies";
+    public static final String PATH = "Movies";
     private static final Logger LOG = Logger.getLogger(StandaloneMovieWriter.class.getName());
 
     @Inject String path;
     @Inject String plexLinkPath;
     @Inject RefreshStatistics stats;
+    @PersistenceContext EntityManager em;
 
     public void process(Movie movie) throws IOException {
         String movieName = (null == movie.getOriginalName() || "".equals(movie.getOriginalName().trim()))
@@ -43,6 +46,9 @@ public class StandaloneMovieWriter {
         Path existing = Paths.get(path, movie.getFileName());
         Files.createSymbolicLink(linkName, existing);
         stats.incrementLinksCreated();
+
+        movie.setPlexFileName(linkName.toString());
+        em.merge(movie);
 
         LOG.log(Level.FINE, "Created movie link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});
     }

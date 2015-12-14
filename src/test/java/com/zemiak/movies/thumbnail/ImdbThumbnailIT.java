@@ -3,10 +3,10 @@ package com.zemiak.movies.thumbnail;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.service.scraper.Imdb;
 import java.io.File;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ImdbThumbnailIT {
     private Movie movie;

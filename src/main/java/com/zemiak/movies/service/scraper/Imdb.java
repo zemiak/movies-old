@@ -90,7 +90,7 @@ public class Imdb implements IWebMetadataReader {
             return;
         }
 
-        Element poster = doc.select("td[id=img_primary]>div[class=image]>a>img").first();
+        Element poster = doc.select("div[class=poster]>a>img").first();
         if (null == poster) {
             LOG.log(Level.SEVERE, "Cannot read poster", null);
             return;

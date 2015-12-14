@@ -19,7 +19,10 @@ public class BatchLogger {
 
     public BatchLogger(final String clazz) {
         this.logger = Logger.getLogger(clazz);
-        ConfigurationProvider configuration = new CDILookup().lookup(ConfigurationProvider.class);
+        
+        ConfigurationProvider configuration;
+        configuration = new CDILookup().lookup(ConfigurationProvider.class);
+
         developmentSystem = null == configuration ? true : "true".equals(configuration.getConfigValue("developmentSystem"));
     }
 

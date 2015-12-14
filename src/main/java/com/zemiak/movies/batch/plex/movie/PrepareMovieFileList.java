@@ -1,7 +1,7 @@
-package com.zemiak.movies.batch.plex;
+package com.zemiak.movies.batch.plex.movie;
 
-import static com.zemiak.movies.batch.plex.PrepareMusicFileList.getFileExtension;
-import static com.zemiak.movies.batch.plex.PrepareMusicFileList.getRelativeFileName;
+import static com.zemiak.movies.batch.plex.music.PrepareMusicFileList.getFileExtension;
+import static com.zemiak.movies.batch.plex.music.PrepareMusicFileList.getRelativeFileName;
 import com.zemiak.movies.batch.service.BatchLogger;
 import java.io.File;
 import java.nio.file.Paths;

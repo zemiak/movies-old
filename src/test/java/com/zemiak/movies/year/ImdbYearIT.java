@@ -2,7 +2,7 @@ package com.zemiak.movies.year;
 
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.service.scraper.Imdb;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,12 +19,14 @@ public class ImdbYearIT {
     @Test
     public void testSpectre() {
         movie.setUrl("http://www.imdb.com/title/tt2379713/?ref_=fn_al_tt_1");
+        movie.setWebPage(reader.getWebPage(movie));
         assertEquals(Integer.valueOf(2015), reader.parseYear(movie));
     }
 
     @Test
     public void testHowToTrainYourDragon() {
         movie.setUrl("http://www.imdb.com/title/tt0892769/?ref_=fn_al_tt_1");
+        movie.setWebPage(reader.getWebPage(movie));
         assertEquals(Integer.valueOf(2010), reader.parseYear(movie));
     }
 }

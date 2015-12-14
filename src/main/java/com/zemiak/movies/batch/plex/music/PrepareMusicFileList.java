@@ -1,4 +1,4 @@
-package com.zemiak.movies.batch.plex;
+package com.zemiak.movies.batch.plex.music;
 
 import com.zemiak.movies.batch.service.BatchLogger;
 import java.io.File;
