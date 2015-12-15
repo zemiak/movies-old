@@ -1,13 +1,13 @@
 package com.zemiak.movies.batch.infuse;
 
-import com.zemiak.movies.batch.service.logs.BatchLogger;
 import com.zemiak.movies.batch.service.RefreshStatistics;
-import com.zemiak.movies.domain.Genre;
+import com.zemiak.movies.batch.service.logs.BatchLogger;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.strings.Encodings;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -43,8 +43,7 @@ public class InfuseMovieWriter {
     }
 
     private void makeMovieLink(Movie movie) throws IOException {
-        Genre genre = movie.getGenre();
-        if (null == genre) {
+        if (null == movie.getGenre()) {
             LOG.log(Level.SEVERE, "Movie {0} has no genre", movie.getFileName());
             return;
         }
@@ -56,32 +55,48 @@ public class InfuseMovieWriter {
             return;
         }
 
+        int i = 0;
+        while (!createLink(movie, movieName, i)) {
+            i++;
+        }
+
+        stats.incrementLinksCreated();
+
+        LOG.log(Level.FINE, "Created Infuse movie link for movie ", movie.getFileName());
+    }
+
+    private boolean createLink(Movie movie, String movieName, int order) throws IOException {
+        String discriminator = 0 == order ? "" : "_" + order;
         Serie serie = movie.getSerie();
         Path linkName;
         if (null == serie || serie.isEmpty()) {
-            Files.createDirectories(Paths.get(infuseLinkPath, infuseLinkPath, PATH,
-                    Encodings.deAccent(genre.getName())
+            Files.createDirectories(Paths.get(infuseLinkPath, PATH,
+                    Encodings.deAccent(movie.getGenre().getName())
             ));
 
             linkName = Paths.get(infuseLinkPath, PATH,
-                    Encodings.deAccent(genre.getName()),
-                    Encodings.deAccent(movieName) + ".m4v");
+                    Encodings.deAccent(movie.getGenre().getName()),
+                    Encodings.deAccent(movieName) + discriminator + ".m4v");
         } else {
-            Files.createDirectories(Paths.get(infuseLinkPath, infuseLinkPath, PATH,
-                    Encodings.deAccent(genre.getName()),
+            Files.createDirectories(Paths.get(infuseLinkPath, PATH,
+                    Encodings.deAccent(movie.getGenre().getName()),
                     Encodings.deAccent(serie.getName())
             ));
 
             linkName = Paths.get(infuseLinkPath, PATH,
-                    Encodings.deAccent(genre.getName()),
+                    Encodings.deAccent(movie.getGenre().getName()),
                     Encodings.deAccent(serie.getName()),
-                    service.getNiceDisplayOrder(movie) + " " + Encodings.deAccent(movieName) + ".m4v");
+                    service.getNiceDisplayOrder(movie) + " " + Encodings.deAccent(movieName) + discriminator + ".m4v");
         }
 
         Path existing = Paths.get(path, movie.getFileName());
-        Files.createSymbolicLink(linkName, existing);
-        stats.incrementLinksCreated();
 
-        LOG.log(Level.FINE, "Created Infuse movie link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});
+        try {
+            Files.createSymbolicLink(linkName, existing);
+        } catch (FileAlreadyExistsException ex) {
+            return false;
+        }
+
+        return true;
     }
 }

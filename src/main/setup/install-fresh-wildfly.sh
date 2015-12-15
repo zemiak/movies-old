@@ -23,7 +23,7 @@ cd ../../..
 # Restore the database
 mkdir -p /tmp/movies-restore
 rm -f /tmp/movies-restore/*
-mv $PROJECT/src/dev/resources/movies.plain.bz2 /tmp/movies-restore/
+cp $PROJECT/src/dev/resources/movies.plain.bz2 /tmp/movies-restore/
 bunzip2 /tmp/movies-restore/movies.plain.bz2
 rm -rf /tmp/movies.*
 java \
