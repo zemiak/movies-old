@@ -1,11 +1,9 @@
 package com.zemiak.movies.batch.service;
 
+import com.zemiak.movies.batch.service.logs.SendLogFile;
+import com.zemiak.movies.batch.service.logs.BatchLogger;
 import com.zemiak.movies.batch.infuse.InfuseService;
-import com.zemiak.movies.batch.movies.*;
-import com.zemiak.movies.batch.plex.PlexRecreateTask;
-import com.zemiak.movies.batch.plex.PlexService;
-import com.zemiak.movies.batch.plex.movie.PrepareMovieFileList;
-import com.zemiak.movies.batch.plex.music.PrepareMusicFileList;
+import com.zemiak.movies.batch.metadata.MetadataService;
 import com.zemiak.movies.domain.CacheClearEvent;
 import com.zemiak.movies.service.BackupService;
 import java.util.logging.Level;
@@ -20,22 +18,13 @@ public class UpdateMoviesScheduler {
     private static final Logger LOG = Logger.getLogger(UpdateMoviesScheduler.class.getName());
 
     @Inject Boolean developmentSystem;
-    @Inject NewMoviesCreator creator;
-    @Inject MetadataRefresher refresher;
-    @Inject DescriptionsUpdater descUpdater;
-    @Inject ThumbnailCreator thumbnails;
-    @Inject PrepareMovieFileList movieFileList;
-    @Inject PrepareMusicFileList musicFileList;
-    @Inject PlexRecreateTask plexRecreateTask;
+
     @Inject SendLogFile logFileMailer;
     @Inject RefreshStatistics stats;
     @Inject Event<CacheClearEvent> clearEvent;
     @Inject BackupService backup;
-    @Inject YearUpdater years;
-    @Inject WebPageScraper scraper;
-
     @Inject InfuseService infuseService;
-    @Inject PlexService plexService;
+    @Inject MetadataService metadataService;
 
     @Schedule(dayOfWeek="*", hour="03", minute="10")
     public void startScheduled() {
@@ -62,15 +51,9 @@ public class UpdateMoviesScheduler {
         BatchLogger.deleteLogFile();
 
         stats.reset();
-        scraper.process(movieFileList.getFiles());
-        creator.process(movieFileList.getFiles());
-        refresher.process(movieFileList.getFiles());
-        descUpdater.process(movieFileList.getFiles());
-        thumbnails.process(movieFileList.getFiles());
-        years.process(movieFileList.getFiles());
 
-        plexService.process(movieFileList.getFiles(), musicFileList.getFiles());
-        infuseService.process(movieFileList.getFiles());
+        metadataService.process();
+        infuseService.process();
 
         stats.dump();
 

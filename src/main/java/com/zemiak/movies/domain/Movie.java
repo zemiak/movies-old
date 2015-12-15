@@ -21,7 +21,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Movie.findByFileName", query = "SELECT m FROM Movie m WHERE m.fileName = :fileName"),
     @NamedQuery(name = "Movie.findByName", query = "SELECT m FROM Movie m WHERE m.name = :name"),
     @NamedQuery(name = "Movie.findByOriginalName", query = "SELECT m FROM Movie m WHERE m.originalName = :originalName"),
-    @NamedQuery(name = "Movie.findByPlexFileName", query = "SELECT m FROM Movie m WHERE m.plexFileName = :plexFileName"),
     @NamedQuery(name = "Movie.findByUrl", query = "SELECT m FROM Movie m WHERE m.url = :url"),
     @NamedQuery(name = "Movie.findByPictureFileName", query = "SELECT m FROM Movie m WHERE m.pictureFileName = :pictureFileName"),
     @NamedQuery(name = "Movie.findByDisplayOrder", query = "SELECT m FROM Movie m WHERE m.displayOrder = :displayOrder"),
@@ -97,9 +96,6 @@ public class Movie implements Serializable, Comparable<Movie> {
     @Column(name = "web_page")
     @Size(max = 2147483647)
     private String webPage;
-
-    @Column(name = "plex_file_name")
-    private String plexFileName;
 
     public Date getCreated() {
         return created;
@@ -347,13 +343,5 @@ public class Movie implements Serializable, Comparable<Movie> {
 
     public void setWebPage(String webPage) {
         this.webPage = webPage;
-    }
-
-    public String getPlexFileName() {
-        return plexFileName;
-    }
-
-    public void setPlexFileName(String plexFileName) {
-        this.plexFileName = plexFileName;
     }
 }

@@ -1,6 +1,5 @@
 package com.zemiak.movies.service.ui.admin;
 
-import com.zemiak.movies.batch.plex.PlexProcess;
 import com.zemiak.movies.batch.service.UpdateMoviesScheduler;
 import com.zemiak.movies.domain.CacheClearEvent;
 import com.zemiak.movies.service.GenreService;
@@ -22,7 +21,6 @@ public class SystemForm implements Serializable {
     @Inject private MovieService movies;
     @Inject private Event<CacheClearEvent> clearCacheEvents;
     @Inject private UpdateMoviesScheduler runner;
-    @Inject PlexProcess process;
 
     public SystemForm() {
     }
@@ -64,15 +62,5 @@ public class SystemForm implements Serializable {
     public void runBackup() {
         runner.backupAndClean();
         JsfMessages.addSuccessMessage("DB backup has been successful");
-    }
-
-    public void restartPlex() {
-        try {
-            process.stop();
-            process.start();
-            JsfMessages.addSuccessMessage("Plex Media Server has been restarted");
-        } catch (RuntimeException ex) {
-            JsfMessages.addErrorMessage("Cannot restart Plex: " + ex.getMessage());
-        }
     }
 }

@@ -1,6 +1,6 @@
-package com.zemiak.movies.batch.movies;
+package com.zemiak.movies.batch.metadata;
 
-import com.zemiak.movies.batch.service.BatchLogger;
+import com.zemiak.movies.batch.service.logs.BatchLogger;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.scraper.WebMetadataReader;
 import java.nio.file.Paths;

@@ -1,6 +1,6 @@
 package com.zemiak.movies.batch.infuse;
 
-import com.zemiak.movies.batch.service.BatchLogger;
+import com.zemiak.movies.batch.service.logs.BatchLogger;
 import com.zemiak.movies.batch.service.RefreshStatistics;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;

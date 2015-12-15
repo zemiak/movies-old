@@ -1,6 +1,5 @@
 package com.zemiak.movies.batch.metadata;
 
-import com.zemiak.movies.batch.movies.MovieMetadata;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;

@@ -1,5 +1,6 @@
 package com.zemiak.movies.batch.service;
 
+import com.zemiak.movies.batch.service.logs.BatchLogger;
 import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;

@@ -1,6 +1,6 @@
-package com.zemiak.movies.batch.movies;
+package com.zemiak.movies.batch.metadata;
 
-import com.zemiak.movies.batch.service.BatchLogger;
+import com.zemiak.movies.batch.service.logs.BatchLogger;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.scraper.WebMetadataReader;
 import java.nio.file.Paths;
@@ -25,13 +25,13 @@ public class WebPageScraper {
                 .filter(movie -> null != movie)
                 .filter(movie -> null != movie.getUrl())
                 .filter(movie -> null == movie.getWebPage())
-                .limit(50)
+                .limit(0) // temporarily disabled because of CSFD BAN
                 .forEach(movie -> {
                     String webPage = reader.readPage(movie);
                     movie.setWebPage(webPage);
                     service.mergeAndSave(movie);
 
-                    LOG.log(Level.INFO, "... update web page in DB of " + movie.getFileName() + " to " + movie.getYear(), movie.getId());
+                    LOG.log(Level.INFO, "... update web page in DB of " + movie.getFileName(), movie.getId());
 
                     try {
                         Thread.sleep(1000);

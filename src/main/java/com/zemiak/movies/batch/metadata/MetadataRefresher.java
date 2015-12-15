@@ -1,7 +1,7 @@
-package com.zemiak.movies.batch.movies;
+package com.zemiak.movies.batch.metadata;
 
-import com.zemiak.movies.batch.service.BatchLogger;
-import com.zemiak.movies.batch.service.CommandLine;
+import com.zemiak.movies.batch.service.logs.BatchLogger;
+import com.zemiak.movies.batch.service.logs.CommandLine;
 import com.zemiak.movies.batch.service.RefreshStatistics;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.service.MovieService;

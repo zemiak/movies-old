@@ -1,4 +1,4 @@
-package com.zemiak.movies.batch.service;
+package com.zemiak.movies.batch.service.logs;
 
 import com.zemiak.movies.lookup.CDILookup;
 import com.zemiak.movies.service.ConfigurationProvider;

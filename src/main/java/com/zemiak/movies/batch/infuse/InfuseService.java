@@ -1,6 +1,6 @@
 package com.zemiak.movies.batch.infuse;
 
-import java.util.List;
+import com.zemiak.movies.batch.service.lists.PrepareMovieFileList;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
@@ -8,9 +8,10 @@ import javax.inject.Inject;
 public class InfuseService {
     @Inject BasicInfuseFolderStructureCreator basic;
     @Inject InfuseMovieWriter writer;
+    @Inject PrepareMovieFileList movieFileList;
 
-    public void process(List<String> files) {
+    public void process() {
         basic.cleanAndCreate();
-        writer.process(files);
+        writer.process(movieFileList.getFiles());
     }
 }

@@ -1,6 +1,6 @@
 package com.zemiak.movies.service.scraper;
 
-import com.zemiak.movies.batch.service.BatchLogger;
+import com.zemiak.movies.batch.service.logs.BatchLogger;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.UrlDTO;
 import java.io.IOException;
