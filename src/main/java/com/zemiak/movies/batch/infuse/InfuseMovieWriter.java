@@ -70,20 +70,20 @@ public class InfuseMovieWriter {
         Serie serie = movie.getSerie();
         Path linkName;
         if (null == serie || serie.isEmpty()) {
-            Files.createDirectories(Paths.get(infuseLinkPath, PATH,
+            Files.createDirectories(Paths.get(infuseLinkPath,
                     Encodings.deAccent(movie.getGenre().getName())
             ));
 
-            linkName = Paths.get(infuseLinkPath, PATH,
+            linkName = Paths.get(infuseLinkPath,
                     Encodings.deAccent(movie.getGenre().getName()),
                     Encodings.deAccent(movieName) + discriminator + ".m4v");
         } else {
-            Files.createDirectories(Paths.get(infuseLinkPath, PATH,
+            Files.createDirectories(Paths.get(infuseLinkPath,
                     Encodings.deAccent(movie.getGenre().getName()),
                     Encodings.deAccent(serie.getName())
             ));
 
-            linkName = Paths.get(infuseLinkPath, PATH,
+            linkName = Paths.get(infuseLinkPath,
                     Encodings.deAccent(movie.getGenre().getName()),
                     Encodings.deAccent(serie.getName()),
                     service.getNiceDisplayOrder(movie) + " " + Encodings.deAccent(movieName) + discriminator + ".m4v");
