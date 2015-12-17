@@ -12,9 +12,11 @@ import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MetadataReader {
     private static final BatchLogger LOG = BatchLogger.getLogger(MetadataReader.class.getName());
+    private static final Logger LOG1 = Logger.getLogger(MetadataReader.class.getName());
 
     private final MovieMetadata metaData;
     private final MovieService service;
@@ -124,8 +126,12 @@ public class MetadataReader {
                     if (dateString.length() > 4) {
                         dateString = dateString.substring(0, 4);
                     }
-                    
-                    metaData.setYear(Integer.valueOf(dateString));
+
+                    try {
+                        metaData.setYear(Integer.valueOf(dateString));
+                    } catch (NumberFormatException ex) {
+                        LOG1.log(Level.SEVERE, "Cannot set year: {0}", dateString);
+                    }
                     break;
 
                 case "©cmt":
