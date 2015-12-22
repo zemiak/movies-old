@@ -5,11 +5,9 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 
 public class WebMetadataReader {
-    private static final int SERIES_DESCRIPTIONS_INDEX = 0;
-
-    private IWebMetadataReader[] readers;
-    private final String imgPath;
-
+    private final IWebMetadataReader[] readers;
+    private final String imgPath, path, ffmpeg;
+    private final boolean developmentSystem;
 
     public WebMetadataReader(String imgPath, String path, String ffmpeg, boolean developmentSystem) {
         this.readers = new IWebMetadataReader[]{
@@ -19,6 +17,9 @@ public class WebMetadataReader {
         };
 
         this.imgPath = imgPath;
+        this.path = path;
+        this.ffmpeg = ffmpeg;
+        this.developmentSystem = developmentSystem;
     }
 
     public String parseDescription(final Movie movie) {
@@ -39,7 +40,8 @@ public class WebMetadataReader {
     }
 
     public boolean isSpecialDescriptions(Movie movie) {
-        return readers[SERIES_DESCRIPTIONS_INDEX].accepts(movie);
+        SeriesDescriptionReader descriptions = new SeriesDescriptionReader(path, ffmpeg, developmentSystem);
+        return descriptions.accepts(movie);
     }
 
     public boolean processThumbnail(final Movie movie) {

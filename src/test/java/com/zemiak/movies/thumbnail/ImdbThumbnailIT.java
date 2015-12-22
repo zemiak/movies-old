@@ -3,10 +3,9 @@ package com.zemiak.movies.thumbnail;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.service.scraper.Imdb;
 import java.io.File;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class ImdbThumbnailIT {
     private Movie movie;
@@ -41,6 +40,7 @@ public class ImdbThumbnailIT {
         reader.processThumbnail(movie);
 
         File file = new File(fileName);
+        assertNotNull(file);
         assertTrue(file.isFile());
         assertTrue(file.canRead());
         assertTrue(file.length() > 0);

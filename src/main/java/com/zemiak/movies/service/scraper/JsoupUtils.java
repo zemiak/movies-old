@@ -29,10 +29,15 @@ public class JsoupUtils {
     }
 
     static Document getMovieDocumentFromString(Movie movie) {
-        if (null == movie.getWebPage()) {
-            return null;
+        if (null == movie.getWebPage() && null != movie.getUrl()) {
+            Document webPage = getMovieDocument(movie);
+            if (null == webPage) {
+                return null;
+            }
+
+            movie.setWebPage(webPage.toString());
         }
-        
+
         return Jsoup.parse(movie.getWebPage());
     }
 }
