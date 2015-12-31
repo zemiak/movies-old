@@ -29,12 +29,6 @@
         </dependency>
 
         <dependency>
-            <groupId>net.sf.javamusictag</groupId>
-            <artifactId>jid3lib</artifactId>
-            <version>0.5.4</version>
-        </dependency>
-
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.11</version>
