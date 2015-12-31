@@ -30,7 +30,7 @@ public class YearUpdater {
                     movie.setYear(reader.parseYear(movie));
                     service.mergeAndSave(movie);
 
-                    LOG.log(Level.INFO, "... update web page and year in DB of " + movie.getFileName() + " to " + movie.getYear(), movie.getId());
+                    LOG.log(Level.INFO, "... updated year in DB of " + movie.getFileName() + " to " + movie.getYear(), movie.getId());
 
                     try {
                         Thread.sleep(1000);

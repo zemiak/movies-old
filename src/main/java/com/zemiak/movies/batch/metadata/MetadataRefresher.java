@@ -1,8 +1,8 @@
 package com.zemiak.movies.batch.metadata;
 
+import com.zemiak.movies.batch.service.RefreshStatistics;
 import com.zemiak.movies.batch.service.logs.BatchLogger;
 import com.zemiak.movies.batch.service.logs.CommandLine;
-import com.zemiak.movies.batch.service.RefreshStatistics;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.scraper.WebMetadataReader;
@@ -67,7 +67,7 @@ public class MetadataRefresher {
 
     private void updateYear(final String fileName, final MovieMetadata data) {
         if (! data.isYearEqual()) {
-            update(fileName, YEAR, data.getMovieName());
+            update(fileName, YEAR, String.valueOf(data.getYear()));
         }
     }
 

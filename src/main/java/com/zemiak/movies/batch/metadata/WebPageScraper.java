@@ -23,15 +23,15 @@ public class WebPageScraper {
                 .map(fileName -> Paths.get(fileName).toFile().getAbsolutePath())
                 .map(fileName -> service.findByFilename(fileName.substring(path.length())))
                 .filter(movie -> null != movie)
-                .filter(movie -> null != movie.getUrl())
-                .filter(movie -> null == movie.getWebPage())
+                .filter(movie -> null != movie.getUrl() && !"".equals(movie.getWebPage()))
+                .filter(movie -> null == movie.getWebPage() || "".equals(movie.getWebPage()))
                 .limit(50)
                 .forEach(movie -> {
                     String webPage = reader.readPage(movie);
                     movie.setWebPage(webPage);
                     service.mergeAndSave(movie);
 
-                    LOG.log(Level.INFO, "... update web page in DB of " + movie.getUrl(), movie.getId());
+                    LOG.log(Level.INFO, "... updated web page in DB of " + movie.getUrl(), movie.getId());
 
                     try {
                         Thread.sleep(1000);

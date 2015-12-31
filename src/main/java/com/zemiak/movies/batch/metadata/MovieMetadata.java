@@ -199,7 +199,7 @@ public class MovieMetadata {
 
             if (debug) {
                 LOG.log(Level.INFO, "{0}: isMetadataEqual: Year is not equal. Is \"{1}\", should be \"{2}\"",
-                        new Object[]{movie.getFileName(), year, movie.getYear()});
+                        new Object[]{movie.getFileName(), year, String.valueOf(movie.getYear())});
             }
         }
 
