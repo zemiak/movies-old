@@ -15,14 +15,19 @@ import javax.inject.Named;
 @SessionScoped
 @Named("systemForm")
 public class SystemForm implements Serializable {
-    @Inject private GenreService genres;
-    @Inject private SerieService series;
-    @Inject private LanguageService languages;
-    @Inject private MovieService movies;
-    @Inject private Event<CacheClearEvent> clearCacheEvents;
-    @Inject private UpdateMoviesScheduler runner;
+    @Inject GenreService genres;
+    @Inject SerieService series;
+    @Inject LanguageService languages;
+    @Inject MovieService movies;
+    @Inject Event<CacheClearEvent> clearCacheEvents;
+    @Inject UpdateMoviesScheduler runner;
+    @Inject Boolean developmentSystem;
 
     public SystemForm() {
+    }
+
+    public String getTitle() {
+        return developmentSystem ? "Movies (DEV)" : "Movies";
     }
 
     public Integer getGenres() {
