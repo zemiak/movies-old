@@ -26,8 +26,16 @@ public class SystemForm implements Serializable {
     public SystemForm() {
     }
 
-    public String getTitle() {
+    public String getTitleIndex() {
         return developmentSystem ? "Movies (DEV)" : "Movies";
+    }
+
+    public String getTitleNew() {
+        return developmentSystem ? "New Movies (DEV)" : "New Movies";
+    }
+
+    public String getTitleSystem() {
+        return developmentSystem ? "System (DEV)" : "System";
     }
 
     public Integer getGenres() {
