@@ -67,7 +67,7 @@ public class MetadataRefresher {
 
     private void updateYear(final String fileName, final MovieMetadata data) {
         if (! data.isYearEqual()) {
-            update(fileName, YEAR, String.valueOf(data.getYear()));
+            update(fileName, YEAR, String.valueOf(data.getMovie().getYear()));
         }
     }
 

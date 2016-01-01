@@ -23,7 +23,7 @@ public class WebPageScraper {
                 .map(fileName -> Paths.get(fileName).toFile().getAbsolutePath())
                 .map(fileName -> service.findByFilename(fileName.substring(path.length())))
                 .filter(movie -> null != movie)
-                .filter(movie -> null != movie.getUrl() && !"".equals(movie.getWebPage()))
+                .filter(movie -> null != movie.getUrl() && !"".equals(movie.getUrl()))
                 .filter(movie -> null == movie.getWebPage() || "".equals(movie.getWebPage()))
                 .limit(50)
                 .forEach(movie -> {
