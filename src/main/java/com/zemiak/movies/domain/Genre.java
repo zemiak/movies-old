@@ -45,11 +45,11 @@ public class Genre implements Serializable, Comparable<Genre> {
     @Column(name = "display_order")
     private Integer displayOrder;
 
-    @OneToMany(mappedBy = "genre")
+    @OneToMany(mappedBy = "genre", fetch = FetchType.LAZY)
     @XmlTransient
     private List<Serie> serieList;
 
-    @OneToMany(mappedBy = "genre")
+    @OneToMany(mappedBy = "genre", fetch = FetchType.LAZY)
     @XmlTransient
     private List<Movie> movieList;
 

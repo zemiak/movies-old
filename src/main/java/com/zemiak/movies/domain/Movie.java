@@ -93,6 +93,7 @@ public class Movie implements Serializable, Comparable<Movie> {
     @Column(name = "year")
     private Integer year;
 
+    @Basic(fetch = FetchType.LAZY)
     @Column(name = "web_page")
     @Size(max = 2147483647)
     private String webPage;

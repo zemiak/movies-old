@@ -51,7 +51,7 @@ public class Serie implements Serializable, Comparable<Serie> {
     @NotNull
     private Genre genre;
 
-    @OneToMany(mappedBy = "serie")
+    @OneToMany(mappedBy = "serie", fetch = FetchType.LAZY)
     @XmlTransient
     private List<Movie> movieList;
 

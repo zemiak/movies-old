@@ -2,11 +2,11 @@ package com.zemiak.movies.batch.infuse;
 
 import com.zemiak.movies.batch.service.RefreshStatistics;
 import com.zemiak.movies.batch.service.logs.BatchLogger;
+import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.service.MovieService;
-import com.zemiak.movies.service.NewReleasesGenre;
-import com.zemiak.movies.service.RecentlyAddedGenre;
+import com.zemiak.movies.service.ui.play.MoviesViewForm;
 import com.zemiak.movies.strings.Encodings;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.logging.Level;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Dependent
 public class InfuseMovieWriter {
@@ -26,8 +28,8 @@ public class InfuseMovieWriter {
     @Inject String path;
     @Inject String infuseLinkPath;
     @Inject RefreshStatistics stats;
-    @Inject NewReleasesGenre newReleases;
-    @Inject RecentlyAddedGenre recentlyAdded;
+    @Inject MoviesViewForm moviesViewService;
+    @PersistenceContext EntityManager em;
 
     public void process(final List<String> list) {
         list.stream()
@@ -36,8 +38,8 @@ public class InfuseMovieWriter {
                 .filter(movie -> null != movie)
                 .forEach(this::makeMovieLinkNoException);
 
-        recentlyAdded.getMovieList().stream().forEach(this::makeMovieLinkNoException);
-        newReleases.getMovieList().stream().forEach(this::makeMovieLinkNoException);
+        makeRecentlyAdded();
+        makeNewReleases();
     }
 
     private void makeMovieLinkNoException(Movie movie) {
@@ -113,5 +115,33 @@ public class InfuseMovieWriter {
         }
 
         return name;
+    }
+
+    private void makeRecentlyAdded() {
+        Genre genre = Genre.create();
+        genre.setId(-1);
+        genre.setName("X-Recently Added");
+
+        moviesViewService.setId(1);
+        moviesViewService.getByType().stream().forEach(movie -> {
+            em.detach(movie);
+            movie.setGenre(genre);
+            movie.setSerie(null);
+            makeMovieLinkNoException(movie);
+        });
+    }
+
+    private void makeNewReleases() {
+        Genre genre = Genre.create();
+        genre.setId(-2);
+        genre.setName("X-New Releases");
+
+        moviesViewService.setId(2);
+        moviesViewService.getByType().stream().forEach(movie -> {
+            em.detach(movie);
+            movie.setGenre(genre);
+            movie.setSerie(null);
+            makeMovieLinkNoException(movie);
+        });
     }
 }

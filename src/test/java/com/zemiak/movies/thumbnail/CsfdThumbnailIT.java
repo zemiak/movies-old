@@ -3,8 +3,7 @@ package com.zemiak.movies.thumbnail;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.service.scraper.Csfd;
 import java.io.File;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,14 +34,15 @@ public class CsfdThumbnailIT {
 
     @Test
     public void testDownload() {
-        String fileName = "/tmp/" + Math.random() + ".jpg";
+        String fileName = "/tmp/csfd-" + Math.random() + ".jpg";
         movie.setUrl("http://www.csfd.cz/film/9499-matrix/");
         reader.setImageFileName(fileName);
         reader.processThumbnail(movie);
 
         File file = new File(fileName);
-        assertTrue(file.isFile());
-        assertTrue(file.canRead());
-        assertTrue(file.length() > 0);
+        assertNotNull("Filename is not null", file);
+        assertTrue("Filename is a regular file", file.isFile());
+        assertTrue("Filename can be read", file.canRead());
+        assertTrue("Filename is not empty", file.length() > 0);
     }
 }

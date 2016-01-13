@@ -34,15 +34,15 @@ public class ImdbThumbnailIT {
 
     @Test
     public void testDownload() {
-        String fileName = "/tmp/" + Math.random() + ".jpg";
+        String fileName = "/tmp/imdb-" + Math.random() + ".jpg";
         movie.setUrl("http://www.imdb.com/title/tt0470752/?ref_=hm_otw_t1");
         reader.setImageFileName(fileName);
         reader.processThumbnail(movie);
 
         File file = new File(fileName);
-        assertNotNull(file);
-        assertTrue(file.isFile());
-        assertTrue(file.canRead());
-        assertTrue(file.length() > 0);
+        assertNotNull("Filename is not null", file);
+        assertTrue("Filename is a regular file", file.isFile());
+        assertTrue("Filename can be read", file.canRead());
+        assertTrue("Filename is not empty", file.length() > 0);
     }
 }
