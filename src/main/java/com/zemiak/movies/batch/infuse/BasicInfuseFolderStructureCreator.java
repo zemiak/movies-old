@@ -44,7 +44,7 @@ public class BasicInfuseFolderStructureCreator {
         }
 
         try {
-            Files.createDirectories(Paths.get(infuseLinkPath, InfuseMovieWriter.PATH));
+            Files.createDirectories(Paths.get(infuseLinkPath));
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, "Basic Infuse folder creation error", ex);
         }

@@ -7,13 +7,13 @@
 
     <ui:composition template="/templates/iphone.xhtml">
         <ui:define name="title">Videotéka</ui:define>
-        
+
         <ui:define name="body">
             <div class="toolbar">
                 <h1 id="pageTitle"></h1>
                 <a id="backButton" class="button" href="#"></a>
             </div>
-            
+
             <ul id="main" title="Videotéka" selected="true">
                 <ui:repeat var="item" value="#{genreViewForm.all}">
                     <li>
@@ -21,7 +21,7 @@
                         <a href="genre.xhtml?id=#{item.id}" target="_self">#{item.name}</a>
                     </li>
                 </ui:repeat>
-                
+
                 <li>
                     <img src="img/search.jpg" align="left" class="movies-thumbnail" />
                     <a href="search.xhtml" target="_self">Search</a>
@@ -29,7 +29,12 @@
 
                 <li>
                     <img src="img/calendar.jpg" align="left" class="movies-thumbnail" />
-                    <a href="searchResults.xhtml?months=6" target="_self">Recent</a>
+                    <a href="searchResults.xhtml?months=6" target="_self">Recently Added</a>
+                </li>
+
+                <li>
+                    <img src="img/calendar.jpg" align="left" class="movies-thumbnail" />
+                    <a href="searchResults.xhtml?years=2" target="_self">New Movies</a>
                 </li>
 
                 <li><a href="../ipad/index.xhtml">Full GUI</a></li>

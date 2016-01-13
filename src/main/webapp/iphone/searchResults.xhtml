@@ -9,17 +9,18 @@
         <f:metadata>
             <f:viewParam name="query" value="#{searchViewForm.query}" />
             <f:viewParam name="months" value="#{searchViewForm.query}" />
+            <f:viewParam name="years" value="#{searchViewForm.query}" />
             <f:viewAction action="#{searchViewForm.search}" />
         </f:metadata>
-        
+
         <ui:define name="title">#{searchViewForm.title}</ui:define>
-        
+
         <ui:define name="body">
             <div class="toolbar">
                 <h1 id="pageTitle"></h1>
                 <a class="button leftButton" href="index.xhtml">Back</a>
             </div>
-            
+
             <ul id="main" title="#{searchViewForm.title}" selected="true">
                 <ui:repeat var="item" value="#{searchViewForm.series}">
                     <li>
@@ -27,7 +28,7 @@
                         <a href="serie.xhtml?id=#{item.id}" target="_self">*#{item.name}</a>
                     </li>
                 </ui:repeat>
-                
+
                 <ui:repeat var="item" value="#{searchViewForm.movies}">
                     <li>
                         <img src="#{request.contextPath}/images/movie/#{item.id}" align="left" class="movies-thumbnail" />

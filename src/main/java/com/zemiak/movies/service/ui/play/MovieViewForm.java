@@ -21,6 +21,10 @@ public class MovieViewForm implements Serializable {
     private Movie movie;
 
     public List<Movie> getByGenre() {
+        if (-1 == genreWebService.getId() || -2 == genreWebService.getId()) {
+            return genreWebService.getBean().getMovieList();
+        }
+
         return service.all().stream()
                 .filter(entry -> genreWebService.getId().equals(entry.getGenre().getId()) && entry.isEmptySerie())
                 .sorted()

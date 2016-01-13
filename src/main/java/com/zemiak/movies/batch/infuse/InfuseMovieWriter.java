@@ -5,6 +5,8 @@ import com.zemiak.movies.batch.service.logs.BatchLogger;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.service.MovieService;
+import com.zemiak.movies.service.NewReleasesGenre;
+import com.zemiak.movies.service.RecentlyAddedGenre;
 import com.zemiak.movies.strings.Encodings;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
@@ -18,13 +20,14 @@ import javax.inject.Inject;
 
 @Dependent
 public class InfuseMovieWriter {
-    static final String PATH = "Movies";
     private static final BatchLogger LOG = BatchLogger.getLogger(InfuseMovieWriter.class.getName());
 
     @Inject MovieService service;
     @Inject String path;
     @Inject String infuseLinkPath;
     @Inject RefreshStatistics stats;
+    @Inject NewReleasesGenre newReleases;
+    @Inject RecentlyAddedGenre recentlyAdded;
 
     public void process(final List<String> list) {
         list.stream()
@@ -32,6 +35,9 @@ public class InfuseMovieWriter {
                 .map(fileName -> service.findByFilename(fileName.substring(path.length())))
                 .filter(movie -> null != movie)
                 .forEach(this::makeMovieLinkNoException);
+
+        recentlyAdded.getMovieList().stream().forEach(this::makeMovieLinkNoException);
+        newReleases.getMovieList().stream().forEach(this::makeMovieLinkNoException);
     }
 
     private void makeMovieLinkNoException(Movie movie) {
@@ -71,7 +77,7 @@ public class InfuseMovieWriter {
         Path linkName;
         if (null == serie || serie.isEmpty()) {
             Files.createDirectories(Paths.get(infuseLinkPath,
-                    Encodings.deAccent(movie.getGenre().getName())
+                    Encodings.deAccent(getGenreName(movie))
             ));
 
             linkName = Paths.get(infuseLinkPath,
@@ -84,7 +90,7 @@ public class InfuseMovieWriter {
             ));
 
             linkName = Paths.get(infuseLinkPath,
-                    Encodings.deAccent(movie.getGenre().getName()),
+                    Encodings.deAccent(getGenreName(movie)),
                     Encodings.deAccent(serie.getName()),
                     service.getNiceDisplayOrder(movie) + " " + Encodings.deAccent(movieName) + discriminator + ".m4v");
         }
@@ -98,5 +104,14 @@ public class InfuseMovieWriter {
         }
 
         return true;
+    }
+
+    private String getGenreName(Movie movie) {
+        String name = movie.getGenre().getName();
+        if ("Children".equals(name)) {
+            name = "0-Children";
+        }
+
+        return name;
     }
 }

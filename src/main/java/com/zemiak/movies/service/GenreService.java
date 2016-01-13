@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -17,8 +18,9 @@ import javax.validation.constraints.NotNull;
 
 @Stateless
 public class GenreService {
-    @PersistenceContext
-    private EntityManager em;
+    @PersistenceContext EntityManager em;
+    @Inject RecentlyAddedGenre recentlyAddedGenre;
+    @Inject NewReleasesGenre newReleasesGenre;
 
     public List<Genre> all() {
         TypedQuery<Genre> query = em.createQuery("SELECT l FROM Genre l ORDER by l.displayOrder", Genre.class);
@@ -41,6 +43,14 @@ public class GenreService {
     }
 
     public Genre find(Integer id) {
+        if (-1 == id) {
+            return recentlyAddedGenre;
+        }
+
+        if (-2 == id) {
+            return newReleasesGenre;
+        }
+
         return em.find(Genre.class, id);
     }
 

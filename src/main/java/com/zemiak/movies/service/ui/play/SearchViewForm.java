@@ -18,6 +18,7 @@ public class SearchViewForm implements Serializable {
 
     private String query;
     private Integer months;
+    private Integer years;
 
     @Inject private MovieService movieService;
     @Inject private SerieService serieService;
@@ -29,6 +30,10 @@ public class SearchViewForm implements Serializable {
 
         if (null != months) {
             searchByMonths(months);
+        }
+
+        if (null != years) {
+            searchByYears(years);
         }
     }
 
@@ -90,5 +95,17 @@ public class SearchViewForm implements Serializable {
 
     public void setMonths(Integer months) {
         this.months = months;
+    }
+
+    private void searchByYears(Integer years) {
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(new Date());
+
+        List<Movie> movieResults = new ArrayList<>();
+        movieService.all().stream().filter((movie) -> (null != movie.getYear() && movie.getYear() >= (cal.get(Calendar.YEAR) - years))).forEach((movie) -> {
+            movieResults.add(movie);
+        });
+        Collections.sort(movieResults, (Movie o1, Movie o2) -> o1.getCreated().compareTo(o2.getCreated()) * -1);
+        movies.addAll(movieResults);
     }
 }

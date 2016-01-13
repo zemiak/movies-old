@@ -4,6 +4,7 @@ import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.service.SerieService;
 import com.zemiak.movies.service.ui.admin.JsfMessages;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.enterprise.context.SessionScoped;
@@ -20,6 +21,10 @@ public class SerieViewForm implements Serializable {
     private Serie bean;
 
     public List<Serie> getByGenre() {
+        if (-1 == genreWebService.getId() || -2 == genreWebService.getId()) {
+            return Collections.EMPTY_LIST;
+        }
+
         return service
                 .all()
                 .stream()
