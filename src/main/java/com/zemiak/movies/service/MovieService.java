@@ -3,8 +3,7 @@ package com.zemiak.movies.service;
 import com.zemiak.movies.domain.*;
 import com.zemiak.movies.strings.Encodings;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -150,6 +149,21 @@ public class MovieService {
         save(bean);
     }
 
+    public List<Movie> getNewReleases() {
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(new Date());
+
+        List<Movie> movies = new ArrayList<>();
+        all().stream()
+                .filter((movie) -> (null != movie.getYear() && movie.getYear() >= (cal.get(Calendar.YEAR) - 3)))
+                .forEach((movie) -> {
+                    movies.add(movie);
+                });
+        Collections.sort(movies, (Movie o1, Movie o2) -> o1.getYear().compareTo(o2.getYear()) * -1);
+
+        return movies;
+    }
+
     private class Counter {
         private Integer i = 0;
 
@@ -176,39 +190,8 @@ public class MovieService {
 
         return String.format("%0" + String.valueOf(count).length() + "d", i.get());
     }
+
+    public List<Movie> getRecentlyAdded() {
+        return getLastMovies(64);
+    }
 }
-
-/*
-genre = Genre.create();
-        genre.setId(-1);
-        genre.setName("X-Recently Added");
-
-        Calendar cal = new GregorianCalendar();
-        cal.setTime(new Date());
-        cal.add(Calendar.MONTH, -RECENTLY_ADDED_MONTHS);
-
-        List<Movie> movies = new ArrayList<>();
-        service.all().stream().filter((movie) -> (null != movie.getCreated() && movie.getCreated().after(cal.getTime()))).forEach((movie) -> {
-            em.detach(movie);
-            movie.setGenre(genre);
-            movies.add(movie);
-        });
-        Collections.sort(movies, (Movie o1, Movie o2) -> o1.getCreated().compareTo(o2.getCreated()) * -1);
-*/
-
-/*
-genre = Genre.create();
-        genre.setId(-2);
-        genre.setName("X-New Releases");
-
-        Calendar cal = new GregorianCalendar();
-        cal.setTime(new Date());
-
-        movies = new ArrayList<>();
-        service.all().stream().filter((movie) -> (null != movie.getYear() && movie.getYear() >= (cal.get(Calendar.YEAR) - NEW_RELEASES_YEARS))).forEach((movie) -> {
-            em.detach(movie);
-            movie.setGenre(genre);
-            movies.add(movie);
-        });
-        Collections.sort(movies, (Movie o1, Movie o2) -> o1.getCreated().compareTo(o2.getCreated()) * -1);
-*/

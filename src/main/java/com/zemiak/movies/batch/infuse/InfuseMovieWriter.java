@@ -6,7 +6,6 @@ import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.service.MovieService;
-import com.zemiak.movies.service.ui.play.MoviesViewForm;
 import com.zemiak.movies.strings.Encodings;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
@@ -28,7 +27,6 @@ public class InfuseMovieWriter {
     @Inject String path;
     @Inject String infuseLinkPath;
     @Inject RefreshStatistics stats;
-    @Inject MoviesViewForm moviesViewService;
     @PersistenceContext EntityManager em;
 
     public void process(final List<String> list) {
@@ -83,11 +81,11 @@ public class InfuseMovieWriter {
             ));
 
             linkName = Paths.get(infuseLinkPath,
-                    Encodings.deAccent(movie.getGenre().getName()),
+                    Encodings.deAccent(getGenreName(movie)),
                     Encodings.deAccent(movieName) + discriminator + ".m4v");
         } else {
             Files.createDirectories(Paths.get(infuseLinkPath,
-                    Encodings.deAccent(movie.getGenre().getName()),
+                    Encodings.deAccent(getGenreName(movie)),
                     Encodings.deAccent(serie.getName())
             ));
 
@@ -122,8 +120,7 @@ public class InfuseMovieWriter {
         genre.setId(-1);
         genre.setName("X-Recently Added");
 
-        moviesViewService.setId(1);
-        moviesViewService.getByType().stream().forEach(movie -> {
+        service.getRecentlyAdded().stream().forEach(movie -> {
             em.detach(movie);
             movie.setGenre(genre);
             movie.setSerie(null);
@@ -136,8 +133,7 @@ public class InfuseMovieWriter {
         genre.setId(-2);
         genre.setName("X-New Releases");
 
-        moviesViewService.setId(2);
-        moviesViewService.getByType().stream().forEach(movie -> {
+        service.getNewReleases().stream().forEach(movie -> {
             em.detach(movie);
             movie.setGenre(genre);
             movie.setSerie(null);

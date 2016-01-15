@@ -1,9 +1,9 @@
 package com.zemiak.movies.batch.service;
 
-import com.zemiak.movies.batch.service.logs.SendLogFile;
-import com.zemiak.movies.batch.service.logs.BatchLogger;
 import com.zemiak.movies.batch.infuse.InfuseService;
 import com.zemiak.movies.batch.metadata.MetadataService;
+import com.zemiak.movies.batch.service.logs.BatchLogger;
+import com.zemiak.movies.batch.service.logs.SendLogFile;
 import com.zemiak.movies.domain.CacheClearEvent;
 import com.zemiak.movies.service.BackupService;
 import java.util.logging.Level;
@@ -16,6 +16,7 @@ import javax.inject.Inject;
 @Stateless
 public class UpdateMoviesScheduler {
     private static final Logger LOG = Logger.getLogger(UpdateMoviesScheduler.class.getName());
+    private static final BatchLogger LOG1 = BatchLogger.getLogger(UpdateMoviesScheduler.class.getName());
 
     @Inject Boolean developmentSystem;
 
@@ -32,6 +33,7 @@ public class UpdateMoviesScheduler {
             LOG.log(Level.INFO, "Scheduled batch update cancelled, a development system is in use.");
             return;
         }
+
 
         start();
     }
@@ -50,12 +52,16 @@ public class UpdateMoviesScheduler {
     public void start() {
         BatchLogger.deleteLogFile();
 
-        stats.reset();
+        try {
+            stats.reset();
 
-        metadataService.process();
-        infuseService.process();
+            metadataService.process();
+            infuseService.process();
 
-        stats.dump();
+            stats.dump();
+        } catch (Exception ex) {
+            LOG1.log(Level.SEVERE, "Exception running movies update batch " + ex.getMessage(), ex);
+        }
 
         logFileMailer.send();
         clearEvent.fire(new CacheClearEvent());

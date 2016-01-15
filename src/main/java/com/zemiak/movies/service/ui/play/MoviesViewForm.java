@@ -4,7 +4,8 @@ import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.ui.admin.JsfMessages;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,22 +43,11 @@ public class MoviesViewForm implements Serializable {
     }
 
     private List<Movie> getRecentlyAdded() {
-        return service.getLastMovies(64);
+        return service.getRecentlyAdded();
     }
 
     private List<Movie> getNewReleases() {
-        Calendar cal = new GregorianCalendar();
-        cal.setTime(new Date());
-
-        List<Movie> movies = new ArrayList<>();
-        service.all().stream()
-                .filter((movie) -> (null != movie.getYear() && movie.getYear() >= (cal.get(Calendar.YEAR) - 3)))
-                .forEach((movie) -> {
-                    movies.add(movie);
-                });
-        Collections.sort(movies, (Movie o1, Movie o2) -> o1.getYear().compareTo(o2.getYear()) * -1);
-
-        return movies;
+        return service.getNewReleases();
     }
 
     public List<Movie> getMovies() {

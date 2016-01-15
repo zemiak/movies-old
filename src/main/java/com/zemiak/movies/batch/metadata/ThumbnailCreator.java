@@ -26,7 +26,6 @@ public class ThumbnailCreator {
                 .map(fileName -> service.findByFilename(fileName.substring(path.length())))
                 .filter(movie -> null != movie)
                 .filter(movie -> !Paths.get(imgPath, "movie", movie.getPictureFileName()).toFile().exists())
-                .filter(movie -> null != movie.getWebPage())
                 .forEach(movie -> {
                     WebMetadataReader reader = new WebMetadataReader(imgPath, path, ffmpeg, developmentSystem);
 
