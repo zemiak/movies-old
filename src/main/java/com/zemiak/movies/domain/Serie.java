@@ -78,7 +78,7 @@ public class Serie implements Serializable, Comparable<Serie> {
         this.setDisplayOrder(entity.getDisplayOrder());
         this.setPictureFileName(entity.getPictureFileName());
         this.setGenre(entity.getGenre());
-        this.setTvShow(entity.getTvShow());
+        this.setTvShow(entity.isTvShow());
     }
 
     public Integer getId() {
@@ -198,7 +198,7 @@ public class Serie implements Serializable, Comparable<Serie> {
         this.created = created;
     }
 
-    public Boolean getTvShow() {
+    public Boolean isTvShow() {
         return tvShow;
     }
 

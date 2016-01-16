@@ -4,13 +4,8 @@ import com.zemiak.movies.batch.service.RefreshStatistics;
 import com.zemiak.movies.batch.service.logs.BatchLogger;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
-import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.service.MovieService;
-import com.zemiak.movies.strings.Encodings;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Level;
@@ -27,6 +22,7 @@ public class InfuseMovieWriter {
     @Inject String path;
     @Inject String infuseLinkPath;
     @Inject RefreshStatistics stats;
+    @Inject InfuseCoversAndLinks metadataFiles;
     @PersistenceContext EntityManager em;
 
     public void process(final List<String> list) {
@@ -62,57 +58,13 @@ public class InfuseMovieWriter {
         }
 
         int i = 0;
-        while (!createLink(movie, movieName, i)) {
+        while (!metadataFiles.createLink(movie, movieName, i)) {
             i++;
         }
 
         stats.incrementLinksCreated();
 
         LOG.log(Level.FINE, "Created Infuse movie link for movie ", movie.getFileName());
-    }
-
-    private boolean createLink(Movie movie, String movieName, int order) throws IOException {
-        String discriminator = 0 == order ? "" : "_" + order;
-        Serie serie = movie.getSerie();
-        Path linkName;
-        if (null == serie || serie.isEmpty()) {
-            Files.createDirectories(Paths.get(infuseLinkPath,
-                    Encodings.deAccent(getGenreName(movie))
-            ));
-
-            linkName = Paths.get(infuseLinkPath,
-                    Encodings.deAccent(getGenreName(movie)),
-                    Encodings.deAccent(movieName) + discriminator + ".m4v");
-        } else {
-            Files.createDirectories(Paths.get(infuseLinkPath,
-                    Encodings.deAccent(getGenreName(movie)),
-                    Encodings.deAccent(serie.getName())
-            ));
-
-            linkName = Paths.get(infuseLinkPath,
-                    Encodings.deAccent(getGenreName(movie)),
-                    Encodings.deAccent(serie.getName()),
-                    service.getNiceDisplayOrder(movie) + " " + Encodings.deAccent(movieName) + discriminator + ".m4v");
-        }
-
-        Path existing = Paths.get(path, movie.getFileName());
-
-        try {
-            Files.createSymbolicLink(linkName, existing);
-        } catch (FileAlreadyExistsException ex) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private String getGenreName(Movie movie) {
-        String name = movie.getGenre().getName();
-        if ("Children".equals(name)) {
-            name = "0-Children";
-        }
-
-        return name;
     }
 
     private void makeRecentlyAdded() {

@@ -26,6 +26,6 @@ public class SerieDTO {
         displayOrder = source.getDisplayOrder();
         created = null == source.getCreated() ? "" : new SimpleDateFormat("yyyy-MM-dd").format(source.getCreated());
         genre = source.getGenreName();
-        tvShow = source.getTvShow();
+        tvShow = source.isTvShow();
     }
 }
