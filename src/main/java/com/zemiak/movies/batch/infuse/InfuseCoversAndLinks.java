@@ -68,7 +68,7 @@ public class InfuseCoversAndLinks {
             linkName = Paths.get(infuseLinkPath,
                     Encodings.deAccent(getGenreName(movie)),
                     Encodings.deAccent(serie.getName()),
-                    movieNameInSerie + ".m4v");
+                    movieNameInSerie);
         }
 
         Path existing = Paths.get(path, movie.getFileName());
@@ -133,7 +133,8 @@ public class InfuseCoversAndLinks {
 
     private String getSeriedMovieName(Movie movie, String movieName, String discriminator) {
         if (! movie.getSerie().isTvShow()) {
-            return service.getNiceDisplayOrder(movie) + " " + Encodings.deAccent(movieName) + discriminator;
+            return service.getNiceDisplayOrder(movie) + " " + Encodings.deAccent(movieName) + discriminator
+                    + ".m4v";
         }
 
         return serieNamer.process(movie);

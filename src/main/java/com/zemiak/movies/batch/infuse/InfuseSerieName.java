@@ -37,7 +37,7 @@ public class InfuseSerieName {
         if (null == movieName || "".equals(movieName)) {
             movieName = "";
         } else {
-            movieName = " - " + Encodings.deAccent(movieName);
+            movieName = Encodings.deAccent(movieName);
         }
 
         String episodeName = serie + ".S" + seasonNumber + "E" + String.format(format, number)
