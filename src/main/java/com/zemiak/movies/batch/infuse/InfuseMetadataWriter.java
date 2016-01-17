@@ -43,9 +43,11 @@ public class InfuseMetadataWriter {
 
     private String getMetadataString(Movie movie, String movieName) {
         String published = null == movie.getYear() ? "" : movie.getYear() + "-01-01";
+        String description = null == movie.getDescription() ? "" : movie.getDescription();
+
         return TEMPLATE
                 .replace("{{title}}", movieName)
-                .replace("{{description}}", movie.getDescription())
+                .replace("{{description}}", description)
                 .replace("{{published}}", published)
                 .replace("{{genre}}", movie.getGenreName());
     }

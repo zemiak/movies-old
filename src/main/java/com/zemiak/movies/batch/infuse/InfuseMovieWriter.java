@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -16,6 +17,7 @@ import javax.persistence.PersistenceContext;
 
 @Dependent
 public class InfuseMovieWriter {
+    private static final Logger LOG1 = Logger.getLogger(InfuseMovieWriter.class.getName());
     private static final BatchLogger LOG = BatchLogger.getLogger(InfuseMovieWriter.class.getName());
 
     @Inject MovieService service;
@@ -34,6 +36,8 @@ public class InfuseMovieWriter {
 
         makeRecentlyAdded();
         makeNewReleases();
+
+        metadataFiles.createGenreAndSerieCovers();
     }
 
     private void makeMovieLinkNoException(Movie movie) {

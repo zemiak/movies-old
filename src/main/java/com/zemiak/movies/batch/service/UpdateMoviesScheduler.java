@@ -60,6 +60,7 @@ public class UpdateMoviesScheduler {
 
             stats.dump();
         } catch (Exception ex) {
+            ex.printStackTrace();
             LOG1.log(Level.SEVERE, "Exception running movies update batch " + ex.getMessage(), ex);
         }
 
