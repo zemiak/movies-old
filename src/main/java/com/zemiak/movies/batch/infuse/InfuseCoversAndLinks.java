@@ -132,11 +132,13 @@ public class InfuseCoversAndLinks {
     }
 
     private String getSeriedMovieName(Movie movie, String movieName, String discriminator) {
-        if (! movie.getSerie().isTvShow()) {
+        // Infuse somehow does not group series together :-(
+
+//        if (! movie.getSerie().isTvShow()) {
             return service.getNiceDisplayOrder(movie) + " " + Encodings.deAccent(movieName) + discriminator
                     + ".m4v";
-        }
-
-        return serieNamer.process(movie);
+//        }
+//
+//        return serieNamer.process(movie);
     }
 }
