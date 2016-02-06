@@ -8,7 +8,7 @@
     <ui:composition template="/templates/iphone.xhtml">
         <f:metadata>
             <f:viewParam name="id" value="#{moviesViewForm.id}" />
-            <f:viewAction action="#{moviesViewForm.filter}" />
+            <f:viewAction action="#{moviesViewForm.check}" />
         </f:metadata>
 
         <ui:define name="title">#{moviesViewForm.title}</ui:define>
@@ -20,7 +20,7 @@
             </div>
 
             <ul id="main" title="#{moviesViewForm.title}" selected="true">
-                <ui:repeat var="item" value="#{moviesViewForm.movies}">
+                <ui:repeat var="item" value="#{moviesViewForm.byType}">
                     <li>
                         <img src="#{request.contextPath}/images/movie/#{item.id}" align="left" class="movies-thumbnail" />
                         <a href="#{request.contextPath}/stream/#{item.id}" target="_self">#{item.name}</a>

@@ -35,11 +35,11 @@ public class MoviesViewForm implements Serializable {
     }
 
     public String getTitle() {
-        return 1 == id ? "Recently Added" : "New Releases";
+        return Integer.valueOf(1).equals(id) ? "Recently Added" : "New Releases";
     }
 
     public List<Movie> getByType() {
-        return 1 == id ? getRecentlyAdded() : getNewReleases();
+        return Integer.valueOf(1).equals(id) ? getRecentlyAdded() : getNewReleases();
     }
 
     private List<Movie> getRecentlyAdded() {
