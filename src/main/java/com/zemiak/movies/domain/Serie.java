@@ -202,6 +202,10 @@ public class Serie implements Serializable, Comparable<Serie> {
         return tvShow;
     }
 
+    public Boolean getTvShow() {
+        return tvShow;
+    }
+
     public void setTvShow(Boolean tvShow) {
         this.tvShow = tvShow;
     }
