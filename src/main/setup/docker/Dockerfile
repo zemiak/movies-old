@@ -3,7 +3,8 @@ MAINTAINER zemiak@gmail.com
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN echo deb http://www.deb-multimedia.org jessie main non-free >>/etc/apt/sources.list
-RUN apt-get update && apt-get -yq --force-yes install ffmpeg mp4v2-utils ffmpegthumbnailer bzip2
+RUN apt-get update && apt-get -yq --force-yes install ffmpeg mp4v2-utils \
+    ffmpegthumbnailer bzip2
 
 RUN mkdir -p /mnt/media
 

@@ -1,15 +1,19 @@
 #/bin/sh
 
-mvn -q clean || exit 1
+#mvn -q clean || exit 1
 #mvn -q integration-test || exit 2
 mvn -q package  || exit 3
 if [ $? -eq 0 ]
 then
+    eval $(docker-machine env)
     cp ./target/movies.war ./src/main/setup/docker/
     cd ./src/main/setup/docker
-    docker stop movies
-    docker rm movies
-    docker build -tag movies . || exit 4
-    docker run movies
-    cd ../../..
+    docker stop movies-dev
+    docker rm -f movies-dev
+    docker build --tag movies-dev . || exit 4
+    docker run -d -p 8080:8080 -p 2200:22 \
+        --name=movies-dev \
+        -v /mnt/media:/mnt/media \
+        movies-dev
+    cd ../../../..
 fi
