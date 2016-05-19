@@ -1,12 +1,15 @@
 #/bin/sh
 
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/
 mvn -q clean || exit 1
 #mvn -q integration-test || exit 2
 mvn -q package  || exit 3
 if [ $? -eq 0 ]
 then
-    rm ~/bin/wildfly/standalone/deployments/movies.war*
-    cp ./target/movies.war ~/bin/wildfly/standalone/deployments/
-    echo Deployed.
+    cp ./target/movies.war ./src/main/setup/docker/
+    cd ./src/main/setup/docker
+    docker stop movies
+    docker rm movies
+    docker build -tag movies . || exit 4
+    docker run movies
+    cd ../../..
 fi
