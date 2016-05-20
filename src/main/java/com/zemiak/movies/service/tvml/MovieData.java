@@ -7,6 +7,15 @@ public class MovieData {
     private String year;
     private String genreName;
     private String serieName;
+    private Integer displayOrder;
+
+    public Integer getDisplayOrder() {
+        return displayOrder;
+    }
+
+    public void setDisplayOrder(Integer displayOrder) {
+        this.displayOrder = displayOrder;
+    }
 
     public String getName() {
         return name;

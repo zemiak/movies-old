@@ -11,7 +11,7 @@ then
     docker stop movies-dev
     docker rm -f movies-dev
     docker build --tag movies-dev . || exit 4
-    docker run -d -p 8080:8080 -p 2200:22 \
+    docker run -d -p 8080:8080 -p 8787:8787 -p 9990:9990 -p 2200:22 \
         --name=movies-dev \
         -v /mnt/media:/mnt/media \
         movies-dev

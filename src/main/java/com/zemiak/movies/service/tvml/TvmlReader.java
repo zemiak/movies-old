@@ -64,6 +64,7 @@ public class TvmlReader {
         FolderData data = new FolderData();
         data.setName(serie.getName());
         data.setPath("s" + serie.getId());
+        data.setDisplayOrder(serie.getDisplayOrder());
 
         return data;
     }
@@ -75,7 +76,7 @@ public class TvmlReader {
 
     private List<MovieData> readSerieMovies(Integer id) {
         Serie serie = series.find(id);
-        return movies.getSerieMovies(serie).stream().map(this::movieToData).collect(Collectors.toList());
+        return movies.getOnlySerieMovies(serie).stream().map(this::movieToData).collect(Collectors.toList());
     }
 
     private MovieData movieToData(Movie movie) {
@@ -85,7 +86,8 @@ public class TvmlReader {
         data.setName(movie.getName());
         data.setPath(externalUrl + "stream/" + movie.getId());
         data.setSerieName(movie.getSerieName());
-        data.setYear(movie.getYear().toString());
+        data.setYear(null == movie.getYear() ? "" : movie.getYear().toString());
+        data.setDisplayOrder(movie.getDisplayOrder());
 
         return data;
     }
@@ -95,7 +97,7 @@ public class TvmlReader {
     }
 
     private List<MovieData> readRecentlyAdded() {
-        return movies.getNewMovies().stream().map(this::movieToData).collect(Collectors.toList());
+        return movies.getRecentlyAdded().stream().map(this::movieToData).collect(Collectors.toList());
     }
 
     private FolderData getLatestReleasesGenre() {

@@ -25,6 +25,9 @@ RUN chown wildfly:wildfly /var/lib/movies/*
 USER wildfly
 COPY movies.war /opt/wildfly/standalone/deployments/
 
+USER root
+RUN chown -R vasko /opt/wildfly/standalone/*
+
 VOLUME ["/mnt/media/"]
 
 EXPOSE 8080 22

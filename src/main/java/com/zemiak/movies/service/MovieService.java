@@ -36,6 +36,13 @@ public class MovieService {
         return query.getResultList();
     }
 
+    public List<Movie> getOnlySerieMovies(Serie serie) {
+        TypedQuery<Movie> query = em.createQuery("SELECT l FROM Movie l WHERE l.serie = :serie ORDER BY l.displayOrder", Movie.class);
+        query.setParameter("serie", serie);
+
+        return query.getResultList();
+    }
+
     public List<Movie> getGenreMovies(Genre genre) {
         TypedQuery<Movie> query = em.createQuery("SELECT l FROM Movie l WHERE l.genre IS NULL OR l.genre = :genre ORDER by l.genre, l.serie, l.displayOrder", Movie.class);
         query.setParameter("genre", genre);
