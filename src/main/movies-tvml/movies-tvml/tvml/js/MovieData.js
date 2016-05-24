@@ -1,4 +1,4 @@
-var PhotoData = {
+var MovieData = {
     "version": {
         "version": "0",
         "motd": "",

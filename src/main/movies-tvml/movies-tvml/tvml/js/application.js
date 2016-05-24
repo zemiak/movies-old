@@ -9,12 +9,11 @@ App.onLaunch = function(options) {
     LOG = JavascriptLogger.create();
 
     var javascriptFiles = [
-        resourceLoaderLocal.scriptUrl("PhotoData.js"),
+        resourceLoaderLocal.scriptUrl("MovieData.js"),
         resourceLoaderLocal.scriptUrl("service/Presenter.js"),
         resourceLoaderLocal.scriptUrl("service/ApplicationStorage.js"),
         resourceLoaderLocal.scriptUrl("service/DataReader.js"),
         resourceLoaderLocal.scriptUrl("service/MoviePlayer.js"),
-        resourceLoaderLocal.scriptUrl("service/PhotoViewer.js"),
         resourceLoaderLocal.scriptUrl("lib/mustache.min.js")
     ];
 

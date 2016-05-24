@@ -23,11 +23,14 @@ public class TvmlReader {
             data.setFolders(genres.all().stream().map(this::genreToFolder).collect(Collectors.toList()));
             data.getFolders().add(getLatestReleasesGenre());
             data.getFolders().add(getRecentlyAddedGenre());
+            data.getFolders().add(getMoviesWithoutGenre());
         } else if (path.startsWith("g")) {
             if ("g:rel".equals(path)) {
                 data.setMovies(readLatestReleases());
             } else if ("g:add".equals(path)) {
                 data.setMovies(readRecentlyAdded());
+            } else if ("g:none".equals(path)) {
+                data.setMovies(readMoviesWithoutGenre());
             } else {
                 data.setFolders(readGenreSeries(getId(path)));
                 data.setMovies(readGenreMovies(getId(path)));
@@ -114,5 +117,17 @@ public class TvmlReader {
         data.setPath("g:add");
 
         return data;
+    }
+
+    private FolderData getMoviesWithoutGenre() {
+        FolderData data = new FolderData();
+        data.setName("New Imports");
+        data.setPath("g:none");
+
+        return data;
+    }
+
+    private List<MovieData> readMoviesWithoutGenre() {
+        return movies.getNewMovies().stream().map(this::movieToData).collect(Collectors.toList());
     }
 }

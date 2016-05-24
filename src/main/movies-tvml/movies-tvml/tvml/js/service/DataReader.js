@@ -1,44 +1,44 @@
 var DataReader = {
-    VERSION_URL: null,
     DATA_URL: null,
+    VERSION_URL: null,
     currentFolder: null,
 
     init: function() {
-        DataReader.VERSION_URL = Presenter.options.BaseUrl + "files/data";
-        DataReader.DATA_URL = Presenter.options.BaseUrl + "files/list";
+        DataReader.DATA_URL = Presenter.options.BaseUrl + "tvml";
+        DataReader.VERSION_URL = Presenter.options.BaseUrl + "tvml/data";
     },
 
     clearCache: function() {
-        PhotoData.cache = {};
+        MovieData.cache = {};
         LOG.log("DataReader.clearCache: cleared");
     },
 
     check: function() {
-        PhotoData = ApplicationStorage.get("PhotoData", PhotoData);
+        MovieData = ApplicationStorage.get("MovieData", MovieData);
 
-        LOG.log("lastCheckedDay " + PhotoData.version.lastCheckedDay + " version " + PhotoData.version.version);
+        LOG.log("lastCheckedDay " + MovieData.version.lastCheckedDay + " version " + MovieData.version.version);
 
         var currentDayOfMonth = new Date().getDate();
-        if (PhotoData.version.lastCheckedDay === currentDayOfMonth) {
+        if (MovieData.version.lastCheckedDay === currentDayOfMonth) {
             return;
         }
 
-        PhotoData.version.lastCheckedDay = currentDayOfMonth;
+        MovieData.version.lastCheckedDay = currentDayOfMonth;
         DataReader.save();
 
         DataReader.requestNewVersion();
     },
 
     getFolderData: function(folderName) {
-        return PhotoData.cache[folderName];
+        return MovieData.cache[folderName];
     },
 
     getVersion: function() {
-        return PhotoData.version;
+        return MovieData.version;
     },
 
     requestNewVersion: function() {
-        LOG.log("DataReader.requestNewVersion: Refreshing photo data");
+        LOG.log("DataReader.requestNewVersion: Refreshing movie data");
 
         var request = new XMLHttpRequest();
         request.responseType = "text";
@@ -50,7 +50,7 @@ var DataReader = {
     newVersionLoaded: function(that) {
         var data = JSON.parse(that.responseText);
         var newVersion = data.version.version;
-        var ourVersion = PhotoData.version.version;
+        var ourVersion = MovieData.version.version;
 
         if (newVersion == ourVersion) {
             LOG.log("newVersionLoaded: We have the most recent version");
@@ -65,21 +65,21 @@ var DataReader = {
             data.cache = {};
         }
 
-        PhotoData = data;
+        MovieData = data;
         DataReader.save();
 
         if (data.version.motd) {
-            LOG.log("newVersionLoaded: Update message: " + PhotoData.version.motd);
+            LOG.log("newVersionLoaded: Update message: " + MovieData.version.motd);
             DataReader.showMessage();
         }
     },
 
     save: function() {
-        ApplicationStorage.set("PhotoData", PhotoData);
+        ApplicationStorage.set("MovieData", MovieData);
     },
 
     showMessage: function() {
-//        var errorDoc = createAlert("Dáta o fotkách boli aktualizované", PhotoData.version.version + ": " + PhotoData.version.motd);
+//        var errorDoc = createAlert("Dáta o filmoch boli aktualizované", MovieData.version.version + ": " + MovieData.version.motd);
 //        navigationDocument.presentModal(errorDoc);
 
         if (null === DataReader.currentFolder) {
@@ -92,7 +92,7 @@ var DataReader = {
     read: function(folder) {
         DataReader.currentFolder = folder;
 
-        if (PhotoData.cache[folder]) {
+        if (MovieData.cache[folder]) {
             LOG.log("DataReader.read: Cache hit for folder " + folder);
             Presenter.navigate("Folders");
             return;
@@ -117,7 +117,7 @@ var DataReader = {
     },
 
     folderDataLoaded: function(that) {
-        PhotoData.cache[that._folder] = JSON.parse(that.responseText);
+        MovieData.cache[that._folder] = JSON.parse(that.responseText);
         LOG.log("folderDataLoaded: Got data for folder " + that._folder);
 
         Presenter.navigate("Folders");
