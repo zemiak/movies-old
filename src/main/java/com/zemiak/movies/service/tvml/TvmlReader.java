@@ -24,19 +24,25 @@ public class TvmlReader {
             data.getFolders().add(getLatestReleasesGenre());
             data.getFolders().add(getRecentlyAddedGenre());
             data.getFolders().add(getMoviesWithoutGenre());
+            data.setTitle("Movies");
         } else if (path.startsWith("g")) {
             if ("g:rel".equals(path)) {
                 data.setMovies(readLatestReleases());
+                data.setTitle("Recently Released");
             } else if ("g:add".equals(path)) {
                 data.setMovies(readRecentlyAdded());
+                data.setTitle("Recently Added");
             } else if ("g:none".equals(path)) {
                 data.setMovies(readMoviesWithoutGenre());
+                data.setTitle("No Genre");
             } else {
                 data.setFolders(readGenreSeries(getId(path)));
                 data.setMovies(readGenreMovies(getId(path)));
+                data.setTitle(getGenreTitle(getId(path)));
             }
         } else if (path.startsWith("s")) {
             data.setMovies(readSerieMovies(getId(path)));
+            data.setTitle(getSerieTitle(getId(path)));
         }
 
         return data;
@@ -74,7 +80,7 @@ public class TvmlReader {
 
     private List<MovieData> readGenreMovies(Integer id) {
         Genre genre = genres.find(id);
-        return movies.getGenreMovies(genre).stream().map(this::movieToData).collect(Collectors.toList());
+        return movies.getGenreMovies(genre).stream().filter(m -> null == m.getSerie() || m.getSerie().isEmpty()).map(this::movieToData).collect(Collectors.toList());
     }
 
     private List<MovieData> readSerieMovies(Integer id) {
@@ -91,6 +97,7 @@ public class TvmlReader {
         data.setSerieName(movie.getSerieName());
         data.setYear(null == movie.getYear() ? "" : movie.getYear().toString());
         data.setDisplayOrder(movie.getDisplayOrder());
+        data.setId(movie.getId());
 
         return data;
     }
@@ -129,5 +136,13 @@ public class TvmlReader {
 
     private List<MovieData> readMoviesWithoutGenre() {
         return movies.getNewMovies().stream().map(this::movieToData).collect(Collectors.toList());
+    }
+
+    private String getGenreTitle(Integer id) {
+        return genres.find(id).getName();
+    }
+
+    private String getSerieTitle(Integer id) {
+        return series.find(id).getName();
     }
 }

@@ -25,7 +25,7 @@ App.onLaunch = function(options) {
             Presenter.loader = resourceLoaderLocal;
             DataReader.init();
             DataReader.check();
-            DataReader.read("/"); // navigates to Folders template after reading the data
+            DataReader.read("/"); // navigates to Folder template after reading the data
         } else {
             var errorDoc = createAlert("Evaluate Scripts Error", "Error attempting to evaluate external JavaScript files.");
             navigationDocument.presentModal(errorDoc);

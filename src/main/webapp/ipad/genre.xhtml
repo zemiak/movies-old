@@ -25,7 +25,7 @@
                 <ui:repeat var="item" value="#{serieViewForm.byGenre}">
                     <div class="serie-box">
                         <a href="serie.xhtml?id=#{item.id}">
-                            <img alt="item.name} Thumbnail"
+                            <img alt="#{item.name} Thumbnail"
                                 src="#{request.contextPath}/images/serie/#{item.id}" />
                             <p>#{item.name}</p>
                         </a>

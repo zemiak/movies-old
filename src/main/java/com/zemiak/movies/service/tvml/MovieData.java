@@ -8,6 +8,15 @@ public class MovieData {
     private String genreName;
     private String serieName;
     private Integer displayOrder;
+    private Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getDisplayOrder() {
         return displayOrder;

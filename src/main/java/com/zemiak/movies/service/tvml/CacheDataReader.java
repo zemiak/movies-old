@@ -99,6 +99,7 @@ public class CacheDataReader {
         processLatestReleases(builder);
         processRecentlyAdded(builder);
         processNoGenreMovies(builder);
+        processRoot(builder);
 
         cache = builder.build();
     }
@@ -133,6 +134,12 @@ public class CacheDataReader {
         builder.add(folder, dataToJson(data));
     }
 
+    private void processRoot(JsonObjectBuilder builder) {
+        String folder = "/";
+        TvmlData data = reader.readData(folder);
+        builder.add(folder, dataToJson(data));
+    }
+
     public void reload() {
         buildVersion();
         buildCache();
@@ -150,16 +157,17 @@ public class CacheDataReader {
     private JsonObjectBuilder dataToJson(TvmlData data) {
         return Json.createObjectBuilder()
                 .add("folders", buildFolders(data.getFolders()))
-                .add("movies", buildMovies(data.getMovies()));
+                .add("movies", buildMovies(data.getMovies()))
+                .add("title", data.getTitle());
     }
 
     private JsonArrayBuilder buildFolders(List<FolderData> folders) {
         JsonArrayBuilder builder = Json.createArrayBuilder();
         for (FolderData folder: folders) {
             builder = builder.add(Json.createObjectBuilder()
-                    .add("name", folder.getName())
-                    .add("path", folder.getPath())
-                    .add("displayOrder", folder.getDisplayOrder())
+                    .add("name", nullSafe(folder.getName()))
+                    .add("path", nullSafe(folder.getPath()))
+                    .add("displayOrder", null == folder.getDisplayOrder() ? 99000 : folder.getDisplayOrder())
             );
         }
 
@@ -170,16 +178,21 @@ public class CacheDataReader {
         JsonArrayBuilder builder = Json.createArrayBuilder();
         for (MovieData movie: movies) {
             builder = builder.add(Json.createObjectBuilder()
-                    .add("name", movie.getName())
-                    .add("path", movie.getPath())
-                    .add("displayOrder", movie.getDisplayOrder())
-                    .add("description", movie.getDescription())
-                    .add("year", movie.getYear())
+                    .add("name", nullSafe(movie.getName()))
+                    .add("path", nullSafe(movie.getPath()))
+                    .add("displayOrder", null == movie.getDisplayOrder() ? 99000 : movie.getDisplayOrder())
+                    .add("description", nullSafe(movie.getDescription()))
+                    .add("year", nullSafe(movie.getYear()))
                     .add("genreName", movie.getGenreName())
                     .add("serieName", movie.getSerieName())
+                    .add("id", movie.getId())
             );
         }
 
         return builder;
+    }
+
+    private String nullSafe(String value) {
+        return null == value ? "" : value;
     }
 }

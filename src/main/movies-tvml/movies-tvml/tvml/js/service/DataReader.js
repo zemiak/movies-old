@@ -2,6 +2,7 @@ var DataReader = {
     DATA_URL: null,
     VERSION_URL: null,
     currentFolder: null,
+    movieCache: {},
 
     init: function() {
         DataReader.DATA_URL = Presenter.options.BaseUrl + "tvml";
@@ -86,7 +87,7 @@ var DataReader = {
             DataReader.currentFolder = "/";
         }
 
-        Presenter.navigateReplace("Folders");
+        Presenter.navigateReplace("Folder");
     },
 
     read: function(folder) {
@@ -94,7 +95,7 @@ var DataReader = {
 
         if (MovieData.cache[folder]) {
             LOG.log("DataReader.read: Cache hit for folder " + folder);
-            Presenter.navigate("Folders");
+            Presenter.navigate("Folder");
             return;
         }
 
@@ -120,6 +121,14 @@ var DataReader = {
         MovieData.cache[that._folder] = JSON.parse(that.responseText);
         LOG.log("folderDataLoaded: Got data for folder " + that._folder);
 
-        Presenter.navigate("Folders");
+        Presenter.navigate("Folder");
     },
+
+    saveMovie: function(data) {
+        DataReader.movieCache[data.path] = data;
+    },
+
+    loadMovie: function(path) {
+        return DataReader.movieCache[path];
+    }
 };

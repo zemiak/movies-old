@@ -32,13 +32,11 @@ public class TvmlCovers {
             Serie serie = series.find(getId(path));
             Path existing = Paths.get(imgPath, "serie", serie.getPictureFileName());
             return existing.toString();
-        } else if (path.startsWith("m")) {
-            Movie movie = movies.find(getId(path));
-            Path existing = Paths.get(imgPath, "movie", movie.getPictureFileName());
-            return existing.toString();
-        } else {
-            return null;
         }
+
+        Movie movie = movies.find(Integer.valueOf(path));
+        Path existing = Paths.get(imgPath, "movie", movie.getPictureFileName());
+        return existing.toString();
     }
 
     private Integer getId(String path) {

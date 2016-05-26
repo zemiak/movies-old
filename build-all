@@ -11,9 +11,13 @@ then
     docker stop movies-dev
     docker rm -f movies-dev
     docker build --tag movies-dev . || exit 4
-    docker run -d -p 8080:8080 -p 8787:8787 -p 9990:9990 -p 2200:22 \
-        --name=movies-dev \
-        -v /mnt/media:/mnt/media \
-        movies-dev
+
+    echo "#!/bin/sh" >/tmp/run-movies.sh
+    printf -- "docker run -d -p 8080:8080 -p 8787:8787 -p 9990:9990 -p 2200:22 " >>/tmp/run-movies.sh
+    printf -- "-v /home/docker/media:/mnt/media " >>/tmp/run-movies.sh
+    printf -- "--name=movies-dev " >>/tmp/run-movies.sh
+    echo "movies-dev" >>/tmp/run-movies.sh
+    docker-machine scp localhost:/tmp/run-movies.sh default:/tmp/
+    docker-machine ssh default "sh /tmp/run-movies.sh"
     cd ../../../..
 fi
