@@ -6,6 +6,7 @@ import com.zemiak.movies.batch.service.logs.BatchLogger;
 import com.zemiak.movies.batch.service.logs.SendLogFile;
 import com.zemiak.movies.domain.CacheClearEvent;
 import com.zemiak.movies.service.BackupService;
+import com.zemiak.movies.service.tvml.CacheDataReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Schedule;
@@ -26,6 +27,7 @@ public class UpdateMoviesScheduler {
     @Inject BackupService backup;
     @Inject InfuseService infuseService;
     @Inject MetadataService metadataService;
+    @Inject CacheDataReader cache;
 
     @Schedule(dayOfWeek="*", hour="03", minute="10")
     public void startScheduled() {
@@ -59,6 +61,10 @@ public class UpdateMoviesScheduler {
             infuseService.process();
 
             stats.dump();
+
+            if (stats.haveBeenChanged()) {
+                cache.clear();
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             LOG1.log(Level.SEVERE, "Exception running movies update batch " + ex.getMessage(), ex);

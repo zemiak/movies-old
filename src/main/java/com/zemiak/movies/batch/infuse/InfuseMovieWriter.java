@@ -66,8 +66,6 @@ public class InfuseMovieWriter {
             i++;
         }
 
-        stats.incrementLinksCreated();
-
         LOG.log(Level.FINE, "Created Infuse movie link for movie ", movie.getFileName());
     }
 

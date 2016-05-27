@@ -39,7 +39,7 @@ public class CacheDataReader {
     private JsonObject cache;
 
     @PostConstruct
-    public void clearVersion() {
+    public void clear() {
         version = null;
         cache = null;
     }
