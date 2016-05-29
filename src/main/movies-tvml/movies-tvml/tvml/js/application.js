@@ -11,7 +11,6 @@ App.onLaunch = function(options) {
     var javascriptFiles = [
         resourceLoaderLocal.scriptUrl("MovieData.js"),
         resourceLoaderLocal.scriptUrl("service/Presenter.js"),
-        resourceLoaderLocal.scriptUrl("service/ApplicationStorage.js"),
         resourceLoaderLocal.scriptUrl("service/DataReader.js"),
         resourceLoaderLocal.scriptUrl("service/MoviePlayer.js"),
         resourceLoaderLocal.scriptUrl("lib/mustache.min.js")
@@ -19,13 +18,10 @@ App.onLaunch = function(options) {
 
     evaluateScripts(javascriptFiles, function(success) {
         if (success) {
-            DataReader.clearCache();
-
             Presenter.options = options;
             Presenter.loader = resourceLoaderLocal;
             DataReader.init();
-            DataReader.check();
-            DataReader.read("/"); // navigates to Folder template after reading the data
+            DataReader.readAndNavigate();
         } else {
             var errorDoc = createAlert("Evaluate Scripts Error", "Error attempting to evaluate external JavaScript files.");
             navigationDocument.presentModal(errorDoc);

@@ -98,6 +98,8 @@ public class TvmlReader {
         data.setYear(null == movie.getYear() ? "" : movie.getYear().toString());
         data.setDisplayOrder(movie.getDisplayOrder());
         data.setId(movie.getId());
+        data.setGenreKey(null == movie.getGenre() ? "" : "g" + movie.getGenre().getId());
+        data.setSerieKey(null == movie.getSerie() ? "" : "s" + movie.getSerie().getId());
 
         return data;
     }

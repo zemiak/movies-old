@@ -5,7 +5,7 @@ function FolderTemplate_fillFolders(data, folders) {
         var itemData = folders[i];
         var item = {name: itemData.name,
             src: Presenter.options.BaseUrl + "tvml/covers?path=" + encodeURIComponent(itemData.path),
-            action: "DataReader.read('" + itemData.path + "');"};
+            action: "DataReader.navigate('" + itemData.path + "');"};
 
         data.folders.push(item);
     }
@@ -16,11 +16,10 @@ function FolderTemplate_fillMovies(data, movies) {
         var itemData = movies[i];
         DataReader.saveMovie(itemData);
 
-        var item = {name: itemData.name,
-            src: Presenter.options.BaseUrl + "tvml/covers?path=" + itemData.id,
-            action: "MoviePlayer.play('" + itemData.path + "')"};
+        itemData.src = Presenter.options.BaseUrl + "tvml/covers?path=" + itemData.id;
+        itemData.action = "MoviePlayer.navigateToMovie('" + itemData.id + "')";
 
-        data.movies.push(item);
+        data.movies.push(itemData);
     }
 }
 
@@ -29,9 +28,9 @@ var Template = function() {
     LOG.log("Preparing template for folder " + folder);
 
     var serverData = DataReader.getFolderData(folder);
-    var data = {title: serverData.title, folders: [], movies: [], mainFolder: folder};
+    var data = {title: serverData.name, folders: [], movies: [], mainFolder: folder};
 
-    LOG.log("Data: ", serverData);
+    LOG.log("Data: ", JSON.stringify(serverData));
 
     FolderTemplate_fillFolders(data, serverData.folders);
     FolderTemplate_fillMovies(data, serverData.movies);

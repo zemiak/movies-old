@@ -1,9 +1,6 @@
 /* global navigationDocument, resourceLoaderLocal, Template */
 
 var Presenter = {
-    width: 293,
-    height: 161,
-
     makeDocument: function(resource) {
         if (!Presenter.parser) {
             Presenter.parser = new DOMParser();

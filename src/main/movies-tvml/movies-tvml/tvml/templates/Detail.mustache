@@ -1,15 +1,49 @@
 <document>
-    <oneupTemplate id="template-data" data-template="Photos" data-folder="{{&mainFolder}}">
+   <productTemplate id="template-data" data-movieId="{{id}}" data-template="Detail">
+      <banner>
+        <infoList>
+          <info>
+            <header><title>Žáner</title></header>
+            <text>{{genreName}}</text>
+          </info>
+
+          {{#hasRelated}}
+            <info>
+              <header><title>Séria</title></header>
+              <text>{{serieName}}</text>
+            </info>
+          {{/hasRelated}}
+
+          <info>
+            <header><title>Rok vydania</title></header>
+            <text>{{year}}</text>
+          </info>
+        </infoList>
+        <stack>
+            <title>{{name}}</title>
+            <description allowsZooming="true" moreLabel="viac">{{description}}</description>
+            <row>
+                    <buttonLockup action="MoviePlayer.play('{{&path}}')">
+                    <badge src="resource://button-play"/>
+                    <title>Štart</title>
+                </buttonLockup>
+            </row>
+        </stack>
+        <heroImg src="{{&artwork}}" />
+      </banner>
+
+      {{#hasRelated}}
+      <shelf>
+        <header><title>Filmy zo série</title></header>
         <section>
-            {{#photos}}
-                <lockup>
-                    <img src="{{&src}}" width="{{width}}" height="{{height}}" />
-                    <title>{{title}}</title>
-                    <row>
-                        <subtitle>{{index}} / {{count}}</subtitle>
-                    </row>
+            {{#related}}
+                <lockup action="MoviePlayer.navigateToMovie('{{id}}')">
+                    <img src="{{&artwork}}" width="215" height="310" />
+                    <title>{{name}}</title>
                 </lockup>
-            {{/photos}}
+            {{/related}}
         </section>
-    </oneupTemplate>
+      </shelf>
+      {{/hasRelated}}
+   </productTemplate>
 </document>

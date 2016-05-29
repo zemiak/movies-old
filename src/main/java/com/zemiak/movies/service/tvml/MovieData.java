@@ -9,6 +9,24 @@ public class MovieData {
     private String serieName;
     private Integer displayOrder;
     private Integer id;
+    private String genreKey;
+    private String serieKey;
+
+    public String getGenreKey() {
+        return genreKey;
+    }
+
+    public void setGenreKey(String genreKey) {
+        this.genreKey = genreKey;
+    }
+
+    public String getSerieKey() {
+        return serieKey;
+    }
+
+    public void setSerieKey(String serieKey) {
+        this.serieKey = serieKey;
+    }
 
     public Integer getId() {
         return id;

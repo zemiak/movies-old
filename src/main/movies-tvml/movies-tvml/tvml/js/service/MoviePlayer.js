@@ -2,6 +2,7 @@
 
 var MoviePlayer = {
     player: null,
+    currentMovie: null,
 
     play: function(url) {
         LOG.log("MoviePlayer.play(): begin");
@@ -26,5 +27,18 @@ var MoviePlayer = {
 
         LOG.log("MoviePlayer.play(): playing");
         MoviePlayer.player.play();
+    },
+
+    navigateToMovie: function(id) {
+        MoviePlayer.setCurrentMovie(id);
+        Presenter.navigate("Detail");
+    },
+
+    setCurrentMovie: function(id) {
+        MoviePlayer.currentMovie = id;
+    },
+
+    getCurrentMovieData: function() {
+        return DataReader.loadMovie(MoviePlayer.currentMovie);
     }
 };

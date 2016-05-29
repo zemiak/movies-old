@@ -1,32 +1,31 @@
-/* global Presenter, Mustache */
-
-function PhotosTemplate_process(itemData, data, i, count) {
-    var item = {title: itemData.title,
-    src: Presenter.options.BaseUrl + "files?path=" + encodeURIComponent(itemData.path),
-    action: "Presenter.navigate('Photos')", width: itemData.width, height: itemData.height,
-        index: i, count: count};
-
-    data.photos.push(item);
-}
+/* global resourceLoaderLocal, Mustache */
 
 var Template = function() {
-    var folder = DataReader.currentFolder;
-    var startFrom = PhotoViewer.currentIndex;
-    LOG.log("Preparing template for photo folder " + folder + " and index " + startFrom);
+    var data = MoviePlayer.getCurrentMovieData();
+    data.artwork = Presenter.options.BaseUrl + "tvml/covers?path=" + data.id;
 
-    var serverData = DataReader.getFolderData(folder);
-    var data = {title: folder, folders: [], photos: [], mainFolder: folder};
-    var count = serverData.files.length, i;
+    var related = [];
+    if ("" !== data.serieKey && "s0" !== data.serieKey) {
+        LOG.log("Building related movies for serie " + data.serieKey);
+        data.hasRelated = true;
+        var serie = DataReader.getFolderData(data.serieKey);
+        for (var i in serie.movies) {
+            var item = serie.movies[i];
 
-    for (i = startFrom; i < count; i++) {
-        PhotosTemplate_process(serverData.files[i], data, i, count);
+            if (item.id == data.id) {
+                continue;
+            }
+            
+            item.artwork = Presenter.options.BaseUrl + "tvml/covers?path=" + item.id;
+            related.push(item);
+        }
+    } else {
+        data.hasRelated = false;
     }
 
-    for (i = 0; i < startFrom; i++) {
-        PhotosTemplate_process(serverData.files[i], data, i, count);
-    }
+    data.related = related;
 
-    var template = resourceLoaderLocal.loadBundleResource("templates/Photos.mustache");
+    var template = resourceLoaderLocal.loadBundleResource("templates/Detail.mustache");
     var html = Mustache.render(template, data);
     LOG.log(html);
     return html;

@@ -40,8 +40,8 @@ public class CacheDataReader {
 
     @PostConstruct
     public void clear() {
-        version = null;
-        cache = null;
+        buildVersion();
+        buildCache();
     }
 
     public String getVersion() {
@@ -186,6 +186,8 @@ public class CacheDataReader {
                     .add("genreName", movie.getGenreName())
                     .add("serieName", movie.getSerieName())
                     .add("id", movie.getId())
+                    .add("genreKey", movie.getGenreKey())
+                    .add("serieKey", movie.getSerieKey())
             );
         }
 
