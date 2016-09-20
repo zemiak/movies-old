@@ -54,8 +54,9 @@ public class InfuseMovieWriter {
             return;
         }
 
-        String movieName = (null == movie.getOriginalName() || "".equals(movie.getOriginalName().trim()))
-                ? movie.getName() : movie.getOriginalName();
+        String movieName = getNumberPrefix(movie) +
+                ((null == movie.getOriginalName() || "".equals(movie.getOriginalName().trim()))
+                ? movie.getName() : movie.getOriginalName());
         if (null == movieName || "".equals(movieName)) {
             LOG.log(Level.SEVERE, "Movie {0} has no name", movie.getFileName());
             return;
@@ -93,5 +94,13 @@ public class InfuseMovieWriter {
             movie.setSerie(null);
             makeMovieLinkNoException(movie);
         });
+    }
+
+    private String getNumberPrefix(Movie movie) {
+        if (null == movie.getDisplayOrder() || movie.getDisplayOrder().equals(0L) || movie.getDisplayOrder() > 999) {
+            return "";
+        }
+
+        return String.valueOf(movie.getDisplayOrder());
     }
 }

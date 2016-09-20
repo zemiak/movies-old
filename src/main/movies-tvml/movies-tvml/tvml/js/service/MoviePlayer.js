@@ -21,9 +21,11 @@ var MoviePlayer = {
         var mediaItem = new MediaItem("video", url);
         MoviePlayer.player.playlist.push(mediaItem);
 
-        MoviePlayer.player.addEventListener("stateDidChange", function(e) {
-            LOG.log("Player.player.stateDidChange: " + MoviePlayer.player.playbackState);
-        }, false);
+        MoviePlayer.player.addEventListener("stateDidChange", function(event) {
+            // (new) state: playing, paused, and scanning
+            // oldState: playing, paused, and scanning
+            console.log("Event: " + event.type + "\ntarget: " + event.target + "\ntimestamp: " + event.timeStamp + "\noldState: " + event.oldState + "\nnew state: " + event.state);
+        });
 
         LOG.log("MoviePlayer.play(): playing");
         MoviePlayer.player.play();

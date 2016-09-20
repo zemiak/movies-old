@@ -5,6 +5,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -28,6 +29,13 @@ public class TvmlResource {
         TvmlData data = reader.readData(path);
         return Response.ok(data, MediaType.APPLICATION_JSON).build();
     }
+
+    @PUT
+    @Path("movies/{id}/played")
+    public Response played(@NotNull @PathParam("id") Long id) {
+        return Response.ok("Mock mock").build();
+    }
+
 
     @GET
     @Path("covers")
