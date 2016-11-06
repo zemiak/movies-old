@@ -40,12 +40,21 @@ public class MetadataReader {
         try {
             isoFile = new IsoFile(fileName);
         } catch (IOException ex) {
-            LOG.log(Level.SEVERE, "Cannot open file", ex);
+            LOG.log(Level.SEVERE, "Cannot open file " + fileName, ex);
             return;
         }
 
-        MovieBox moov = isoFile.getMovieBox();
+
+        MovieBox moov;
+        try {
+            moov = isoFile.getMovieBox();
+        } catch (java.lang.RuntimeException ex) {
+            LOG.log(Level.SEVERE, "Cannot read file metadata/1 " + fileName, ex);
+            return;
+        }
+
         if (null == moov) {
+            LOG.log(Level.SEVERE, "Cannot read file metadata/2 " + fileName, null);
             return;
         }
 
@@ -55,7 +64,7 @@ public class MetadataReader {
         try {
             isoFile.close();
         } catch (IOException ex) {
-            LOG.log(Level.SEVERE, "Cannot close file", ex);
+            LOG.log(Level.SEVERE, "Cannot close file " + fileName, ex);
         }
 
         if (null != metaData.getMovie() && !metaData.getMovie().isEmptySerie() && null != service) {

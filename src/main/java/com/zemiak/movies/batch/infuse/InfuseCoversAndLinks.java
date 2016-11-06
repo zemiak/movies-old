@@ -5,7 +5,6 @@ import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.strings.Encodings;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,19 +27,11 @@ public class InfuseCoversAndLinks {
     public void createGenreAndSerieCovers() {
         service.all().stream().forEach(movie -> {
             if (null != movie.getGenre()) {
-                try {
-                    createGenreCover(movie);
-                } catch (IOException ex) {
-                    LOG.log(Level.SEVERE, "Cannot create genre cover", ex);
-                }
+                createGenreCover(movie);
             }
 
             if (null != movie.getSerie()) {
-                try {
-                    createSerieCover(movie);
-                } catch (IOException ex) {
-                    LOG.log(Level.SEVERE, "Cannot create serie cover", ex);
-                }
+                createSerieCover(movie);
             }
         });
     }
@@ -75,7 +66,7 @@ public class InfuseCoversAndLinks {
 
         try {
             Files.createSymbolicLink(linkName, existing);
-        } catch (FileAlreadyExistsException ex) {
+        } catch (IOException ex) {
             return false;
         }
 
@@ -85,22 +76,24 @@ public class InfuseCoversAndLinks {
         return true;
     }
 
-    private void createSerieCover(Movie movie) throws IOException {
+    private void createSerieCover(Movie movie) {
         Serie serie = movie.getSerie();
         Path link = Paths.get(infuseLinkPath,
                     Encodings.deAccent(getGenreName(movie)),
                     Encodings.deAccent(serie.getName()),
                     "folder." + getFileExt(serie.getPictureFileName()));
         Path existing = Paths.get(imgPath, "serie", serie.getPictureFileName());
-        Files.createSymbolicLink(link, existing);
+
+        createSymbolicLink(link, existing);
     }
 
-    private void createGenreCover(Movie movie) throws IOException {
+    private void createGenreCover(Movie movie) {
         Path link = Paths.get(infuseLinkPath,
                     Encodings.deAccent(getGenreName(movie)),
                     "folder." + getFileExt(movie.getGenre().getPictureFileName()));
         Path existing = Paths.get(imgPath, "genre", movie.getGenre().getPictureFileName());
-        Files.createSymbolicLink(link, existing);
+
+        createSymbolicLink(link, existing);
     }
 
     private String getFileExt(String name) {
@@ -108,7 +101,7 @@ public class InfuseCoversAndLinks {
         return name.substring(pos + 1);
     }
 
-    private void createMovieCover(Movie movie, Path linkName) throws IOException {
+    private void createMovieCover(Movie movie, Path linkName) {
         String linkAbsoluteName = linkName.toString();
         int pos = linkAbsoluteName.lastIndexOf("/");
         String fileNameWithExt = linkAbsoluteName.substring(pos + 1);
@@ -119,7 +112,7 @@ public class InfuseCoversAndLinks {
 
         Path link = Paths.get(filePath, fileNameWithoutExt + "." + getFileExt(movie.getPictureFileName()));
         Path existing = Paths.get(imgPath, "movie", movie.getPictureFileName());
-        Files.createSymbolicLink(link, existing);
+        createSymbolicLink(link, existing);
     }
 
     private String getGenreName(Movie movie) {
@@ -140,5 +133,13 @@ public class InfuseCoversAndLinks {
 //        }
 //
 //        return serieNamer.process(movie);
+    }
+
+    private void createSymbolicLink(Path link, Path existing) {
+        try {
+            Files.createSymbolicLink(link, existing);
+        } catch (IOException ex) {
+            LOG.log(Level.INFO, "Cannot create symbolic link for {0} as {1}", new Object[]{link.toString(), existing.toString()});
+        }
     }
 }
