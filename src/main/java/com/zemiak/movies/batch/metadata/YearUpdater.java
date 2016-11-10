@@ -23,11 +23,16 @@ public class YearUpdater {
                 .map(fileName -> Paths.get(fileName).toFile().getAbsolutePath())
                 .map(fileName -> service.findByFilename(fileName.substring(path.length())))
                 .filter(movie -> null != movie)
-                .filter(movie -> null != movie.getUrl())
+                .filter(movie -> null != movie.getUrl() && !movie.getUrl().trim().isEmpty())
                 .filter(movie -> null == movie.getYear())
                 .filter(movie -> null != movie.getWebPage())
                 .forEach(movie -> {
-                    movie.setYear(reader.parseYear(movie));
+                    final Integer year = reader.parseYear(movie);
+                    if (null == year) {
+                        return;
+                    }
+                    
+                    movie.setYear(year);
                     service.mergeAndSave(movie);
 
                     LOG.log(Level.INFO, "... updated year in DB of " + movie.getFileName() + " to " + movie.getYear(), movie.getId());
