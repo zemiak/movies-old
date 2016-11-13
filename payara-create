@@ -1,0 +1,26 @@
+#!/bin/sh
+
+SERVER="/Users/vasko/Downloads/payara-4.1.1.163.zip"
+DRIVER="$(pwd)/src/main/docker/postgresql-9.4.1212.jar"
+FOLDER=payara41
+SAVE="$(pwd)"
+
+cd ~
+rm -rf "$FOLDER"
+unzip -qq "$SERVER"
+cp "$DRIVER" "$FOLDER/glassfish/domains/domain1/lib/"
+cd "$FOLDER"
+bin/asadmin start-domain domain1 || exit 1
+
+echo "AS_ADMIN_PASSWORD=" > payarapwd
+echo "AS_ADMIN_NEWPASSWORD=admin" >> payarapwd
+bin/asadmin --user=admin --passwordfile=payarapwd change-admin-password || exit 2
+echo "AS_ADMIN_PASSWORD=admin" > payarapwd
+
+DB_SERVER="zemiak-retina-macbook.local"
+bin/asadmin --user=admin --passwordfile=payarapwd create-jdbc-connection-pool --datasourceclassname org.postgresql.xa.PGXADataSource --restype javax.sql.XADataSource --property user=postgres:serverName=${DB_SERVER}:databaseName=movies:port=5432:password=\"\" movies_pool || exit 3
+bin/asadmin --user=admin --passwordfile=payarapwd create-jdbc-resource --connectionpoolid movies_pool movies_db || exit 4
+bin/asadmin --user=admin --passwordfile=payarapwd enable-secure-admin
+bin/asadmin --user=admin --passwordfile=payarapwd stop-domain domain1
+rm payarapwd
+cd "$SAVE"

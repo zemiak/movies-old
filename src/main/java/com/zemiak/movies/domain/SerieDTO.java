@@ -23,7 +23,7 @@ public class SerieDTO {
         id = source.getId();
         name = source.getName();
         pictureFileName = source.getPictureFileName();
-        displayOrder = source.getDisplayOrder();
+        displayOrder = null == source.getDisplayOrder() ? Integer.MAX_VALUE : source.getDisplayOrder();
         created = null == source.getCreated() ? "" : new SimpleDateFormat("yyyy-MM-dd").format(source.getCreated());
         genre = source.getGenreName();
         tvShow = source.isTvShow();

@@ -146,12 +146,13 @@ public class MovieService {
         em.detach(movie);
     }
 
-    public void save(Movie bean, Integer genreId, Integer serieId, String languageId, String originalLanguageId, String subtitlesId) {
+    public void save(Movie bean, Integer genreId, Integer serieId, String languageId, String originalLanguageId, String subtitlesId, Integer year) {
         bean.setGenre(em.getReference(Genre.class, genreId));
         bean.setSerie(em.getReference(Serie.class, serieId));
         bean.setLanguage(em.getReference(Language.class, languageId));
         bean.setOriginalLanguage(em.getReference(Language.class, originalLanguageId));
         bean.setSubtitles(em.getReference(Language.class, subtitlesId));
+        bean.setYear(year);
 
         save(bean);
     }

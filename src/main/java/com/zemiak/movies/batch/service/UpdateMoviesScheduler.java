@@ -5,7 +5,6 @@ import com.zemiak.movies.batch.metadata.MetadataService;
 import com.zemiak.movies.batch.service.logs.BatchLogger;
 import com.zemiak.movies.batch.service.logs.SendLogFile;
 import com.zemiak.movies.domain.CacheClearEvent;
-import com.zemiak.movies.service.BackupService;
 import com.zemiak.movies.service.tvml.CacheDataReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +23,6 @@ public class UpdateMoviesScheduler {
     @Inject SendLogFile logFileMailer;
     @Inject RefreshStatistics stats;
     @Inject Event<CacheClearEvent> clearEvent;
-    @Inject BackupService backup;
     @Inject InfuseService infuseService;
     @Inject MetadataService metadataService;
     @Inject CacheDataReader cache;
@@ -38,17 +36,6 @@ public class UpdateMoviesScheduler {
 
 
         start();
-    }
-
-    @Schedule(dayOfWeek="0,2,4,6", hour="05", minute="15")
-    public void backupAndClean() {
-        if (developmentSystem) {
-            LOG.log(Level.INFO, "Scheduled backup cancelled, a development system is in use.");
-            return;
-        }
-
-        backup.removeOldBackups();
-        backup.backup();
     }
 
     public void start() {

@@ -23,7 +23,7 @@ public class MovieEditForm implements Serializable {
     private final UrlController urlControl;
     private String selectedUrl;
     private String languageId, originalLanguageId, subtitlesId;
-    private Integer serieId, genreId;
+    private Integer serieId, genreId, year;
     private WebMetadataReader reader;
 
     @Inject private String path;
@@ -66,6 +66,7 @@ public class MovieEditForm implements Serializable {
         languageId = (null == bean.getLanguage()) ? "  " : bean.getLanguage().getId();
         subtitlesId = (null == bean.getSubtitles()) ? "  " : bean.getSubtitles().getId();
         originalLanguageId = (null == bean.getOriginalLanguage()) ? "" : bean.getOriginalLanguage().getId();
+        year = bean.getYear();
 
         return null;
     }
@@ -83,7 +84,7 @@ public class MovieEditForm implements Serializable {
     }
 
     public String save() {
-        service.save(bean, genreId, serieId, languageId, originalLanguageId, subtitlesId);
+        service.save(bean, genreId, serieId, languageId, originalLanguageId, subtitlesId, year);
         JsfMessages.addSuccessMessage("The movie has been saved");
 
         return close();
@@ -145,7 +146,6 @@ public class MovieEditForm implements Serializable {
 
     public void fetchInfoFromUrlSelection() {
         bean.setUrl(selectedUrl);
-        bean.setWebPage(null);
 
         fetchDescription();
         fetchPicture();
@@ -209,5 +209,11 @@ public class MovieEditForm implements Serializable {
         this.subtitlesId = subtitlesId;
     }
 
+    public Integer getYear() {
+        return year;
+    }
 
+    public void setYear(Integer year) {
+        this.year = year;
+    }
 }

@@ -34,7 +34,7 @@ public class MovieDTO {
         originalLanguage = source.getOriginalLanguageName();
         url = source.getUrl();
         pictureFileName = source.getPictureFileName();
-        displayOrder = source.getDisplayOrder();
+        displayOrder = null == source.getDisplayOrder() ? Integer.MAX_VALUE : source.getDisplayOrder();
         description = source.getDescription();
         serie = source.getSerieName();
         subtitles = source.getSubtitlesName();
@@ -42,6 +42,6 @@ public class MovieDTO {
         language = source.getLanguageName();
         genre = source.getGenreName();
         created = null == source.getCreated() ? "" : new SimpleDateFormat("yyyy-MM-dd").format(source.getCreated());
-        year = source.getYear();
+        year = null == source.getYear() ? 1970 : source.getYear();
     }
 }

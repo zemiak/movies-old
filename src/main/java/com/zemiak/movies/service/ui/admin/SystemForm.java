@@ -71,9 +71,4 @@ public class SystemForm implements Serializable {
             JsfMessages.addErrorMessage("Cannot restart Plex: " + ex.getMessage());
         }
     }
-
-    public void runBackup() {
-        runner.backupAndClean();
-        JsfMessages.addSuccessMessage("DB backup has been successful");
-    }
 }
