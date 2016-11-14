@@ -4,6 +4,7 @@ docker-machine stop default
 docker-machine rm -f default
 docker-machine create --driver virtualbox default
 docker-machine ssh default "tce-load -wi sshfs-fuse && mkdir media"
+eval $(docker-machine env default)
 
 FOLDER="$(pwd)"
 cd ../docker/containers/templates
