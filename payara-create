@@ -20,6 +20,7 @@ echo "AS_ADMIN_PASSWORD=admin" > payarapwd
 DB_SERVER="zemiak-retina-macbook.local"
 bin/asadmin --user=admin --passwordfile=payarapwd create-jdbc-connection-pool --datasourceclassname org.postgresql.xa.PGXADataSource --restype javax.sql.XADataSource --property user=postgres:serverName=${DB_SERVER}:databaseName=movies:port=5432:password=\"\" movies_pool || exit 3
 bin/asadmin --user=admin --passwordfile=payarapwd create-jdbc-resource --connectionpoolid movies_pool movies_db || exit 4
+bin/asadmin --user=admin --passwordfile=payarapwd create-javamail-resource --mailuser none --fromaddress noreply@nowhere.com --mailhost 192.168.2.10 mail/movies
 bin/asadmin --user=admin --passwordfile=payarapwd enable-secure-admin
 bin/asadmin --user=admin --passwordfile=payarapwd stop-domain domain1
 rm payarapwd
