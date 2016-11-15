@@ -1,0 +1,22 @@
+#/bin/sh
+
+export JAVA_HOME=$(/usr/libexec/java_home)
+mvn -Pmachine package  || exit 3
+
+if [ $? -eq 0 ]
+then
+    cp ./target/movies.war ./src/main/docker/
+    cd ./src/main/docker
+    docker kill movies-dev
+    docker rm -f movies-dev
+    docker build --tag movies-dev . || exit 4
+
+    IP=$(ifconfig | grep "inet 192.168.2" | cut -d ' ' -f 2)
+
+    docker run --add-host mail:192.168.2.10 --add-host database:$IP -d \
+        -p 8080:8080 -p 4848:4848 -p 9009:9009 -p 2200:22 \
+        -v /Volumes/media:/mnt/media \
+        --name=movies-dev movies-dev
+
+    cd ../../../..
+fi
