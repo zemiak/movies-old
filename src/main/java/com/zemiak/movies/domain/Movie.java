@@ -31,7 +31,7 @@ public class Movie implements Serializable, Comparable<Movie> {
     private static final long serialVersionUID = 3L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_global")
     @Basic(optional = false)
     @Column(name = "id")
     @NotNull
@@ -127,6 +127,7 @@ public class Movie implements Serializable, Comparable<Movie> {
         this.setSerie(entity.getSerie());
         this.setSubtitles(entity.getSubtitles());
         this.setUrl(entity.getUrl());
+        this.setYear(entity.getYear());
     }
 
     public Integer getId() {

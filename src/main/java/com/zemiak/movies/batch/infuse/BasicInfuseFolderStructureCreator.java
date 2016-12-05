@@ -1,22 +1,18 @@
 package com.zemiak.movies.batch.infuse;
 
+import com.zemiak.movies.service.ConfigurationProvider;
 import java.io.IOException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
+import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
 
 @Dependent
 public class BasicInfuseFolderStructureCreator {
     private static final Logger LOG = Logger.getLogger(BasicInfuseFolderStructureCreator.class.getName());
 
-    @Inject String infuseLinkPath;
+    private final String infuseLinkPath = ConfigurationProvider.getInfuseLinkPath();
 
     public void cleanAndCreate() {
         Path directory = Paths.get(infuseLinkPath);

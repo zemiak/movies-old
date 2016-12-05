@@ -1,6 +1,5 @@
 package com.zemiak.movies.batch.service.logs;
 
-import com.zemiak.movies.lookup.CDILookup;
 import com.zemiak.movies.service.ConfigurationProvider;
 import java.io.*;
 import java.util.logging.Level;
@@ -15,19 +14,13 @@ public class BatchLogger {
 
     private final static String LOGFILE = "/tmp/" + BatchLogger.class.getName() + ".log";
     private final Logger logger;
-    private final boolean developmentSystem;
 
     public BatchLogger(final String clazz) {
         this.logger = Logger.getLogger(clazz);
-        
-        ConfigurationProvider configuration;
-        configuration = new CDILookup().lookup(ConfigurationProvider.class);
-
-        developmentSystem = null == configuration ? true : "true".equals(configuration.getConfigValue("developmentSystem"));
     }
 
     public void log(final Level level, final String message, final Object[] params) {
-        if (!developmentSystem && level.intValue() < Level.INFO.intValue()) {
+        if (!ConfigurationProvider.isDevelopmentSystem() && level.intValue() < Level.INFO.intValue()) {
             return;
         }
 

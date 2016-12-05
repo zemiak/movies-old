@@ -2,10 +2,7 @@ package com.zemiak.movies.service.ui.admin;
 
 import com.zemiak.movies.batch.service.UpdateMoviesScheduler;
 import com.zemiak.movies.domain.CacheClearEvent;
-import com.zemiak.movies.service.GenreService;
-import com.zemiak.movies.service.LanguageService;
-import com.zemiak.movies.service.MovieService;
-import com.zemiak.movies.service.SerieService;
+import com.zemiak.movies.service.*;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Event;
@@ -21,21 +18,22 @@ public class SystemForm implements Serializable {
     @Inject MovieService movies;
     @Inject Event<CacheClearEvent> clearCacheEvents;
     @Inject UpdateMoviesScheduler runner;
-    @Inject Boolean developmentSystem;
+
+    private final Boolean developmentSystem = ConfigurationProvider.isDevelopmentSystem();
 
     public SystemForm() {
     }
 
     public String getTitleIndex() {
-        return developmentSystem ? "Movies (DEV)" : "Movies";
+        return developmentSystem ? "Movies (" + ConfigurationProvider.getSystemName() + ")" : "Movies";
     }
 
     public String getTitleNew() {
-        return developmentSystem ? "New Movies (DEV)" : "New Movies";
+        return developmentSystem ? "New Movies (" + ConfigurationProvider.getSystemName() + ")" : "New Movies";
     }
 
     public String getTitleSystem() {
-        return developmentSystem ? "System (DEV)" : "System";
+        return developmentSystem ? "System (" + ConfigurationProvider.getSystemName() + ")" : "System";
     }
 
     public Integer getGenres() {

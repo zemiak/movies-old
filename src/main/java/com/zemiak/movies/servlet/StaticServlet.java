@@ -4,6 +4,7 @@ import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
 import com.zemiak.movies.lookup.CDILookup;
+import com.zemiak.movies.service.ConfigurationProvider;
 import com.zemiak.movies.service.GenreService;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.SerieService;
@@ -31,7 +32,7 @@ public class StaticServlet extends HttpServlet {
     private final GenreService genres;
 
     public StaticServlet() {
-        imgPath = new CDILookup().lookup(ServletConfiguration.class).getImgPath();
+        imgPath = ConfigurationProvider.getImgPath();
         movies = new CDILookup().lookup(MovieService.class);
         series = new CDILookup().lookup(SerieService.class);
         genres = new CDILookup().lookup(GenreService.class);

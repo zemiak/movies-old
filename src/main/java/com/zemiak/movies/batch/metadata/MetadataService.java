@@ -1,7 +1,6 @@
 package com.zemiak.movies.batch.metadata;
 
 import com.zemiak.movies.batch.service.lists.PrepareMovieFileList;
-import com.zemiak.movies.batch.service.lists.PrepareMusicFileList;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
@@ -12,7 +11,6 @@ public class MetadataService {
     @Inject DescriptionsUpdater descUpdater;
     @Inject ThumbnailCreator thumbnails;
     @Inject PrepareMovieFileList movieFileList;
-    @Inject PrepareMusicFileList musicFileList;
     @Inject YearUpdater years;
     @Inject WebPageScraper scraper;
 

@@ -5,6 +5,7 @@ import com.zemiak.movies.batch.metadata.MetadataService;
 import com.zemiak.movies.batch.service.logs.BatchLogger;
 import com.zemiak.movies.batch.service.logs.SendLogFile;
 import com.zemiak.movies.domain.CacheClearEvent;
+import com.zemiak.movies.service.ConfigurationProvider;
 import com.zemiak.movies.service.tvml.CacheDataReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,8 +19,6 @@ public class UpdateMoviesScheduler {
     private static final Logger LOG = Logger.getLogger(UpdateMoviesScheduler.class.getName());
     private static final BatchLogger LOG1 = BatchLogger.getLogger(UpdateMoviesScheduler.class.getName());
 
-    @Inject Boolean developmentSystem;
-
     @Inject SendLogFile logFileMailer;
     @Inject RefreshStatistics stats;
     @Inject Event<CacheClearEvent> clearEvent;
@@ -29,7 +28,7 @@ public class UpdateMoviesScheduler {
 
     @Schedule(dayOfWeek="*", hour="03", minute="10")
     public void startScheduled() {
-        if (developmentSystem) {
+        if (ConfigurationProvider.isDevelopmentSystem()) {
             LOG.log(Level.INFO, "Scheduled batch update cancelled, a development system is in use.");
             return;
         }

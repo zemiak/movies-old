@@ -2,6 +2,7 @@ package com.zemiak.movies.batch.infuse;
 
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
+import com.zemiak.movies.service.ConfigurationProvider;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.strings.Encodings;
 import java.io.IOException;
@@ -17,12 +18,13 @@ import javax.inject.Inject;
 public class InfuseCoversAndLinks {
     private static final Logger LOG = Logger.getLogger(InfuseCoversAndLinks.class.getName());
 
-    @Inject String infuseLinkPath;
+    private final String infuseLinkPath = ConfigurationProvider.getInfuseLinkPath();
+    private final String path = ConfigurationProvider.getPath();
+    private final String imgPath = ConfigurationProvider.getImgPath();
+
     @Inject MovieService service;
-    @Inject String imgPath;
     @Inject InfuseSerieName serieNamer;
     @Inject InfuseMetadataWriter metadata;
-    @Inject String path;
 
     public void createGenreAndSerieCovers() {
         service.all().stream().forEach(movie -> {

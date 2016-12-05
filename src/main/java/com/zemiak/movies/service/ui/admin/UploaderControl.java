@@ -1,5 +1,6 @@
 package com.zemiak.movies.service.ui.admin;
 
+import com.zemiak.movies.service.ConfigurationProvider;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
@@ -12,21 +13,17 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
-import javax.inject.Inject;
 import javax.servlet.http.Part;
 
 @Dependent
 public class UploaderControl implements Serializable {
     private static final int IMAGE_SIZE = 500*1024;
 
-    @Inject
-    private String imgPath;
-
     private Part file;
 
     public void upload(String subfolder, String pictureFileName) {
         try {
-            Path imagePath = Paths.get(imgPath, subfolder, pictureFileName);
+            Path imagePath = Paths.get(ConfigurationProvider.getImgPath(), subfolder, pictureFileName);
             Files.copy(file.getInputStream(), imagePath);
 
             JsfMessages.addSuccessMessage("The image has been uploaded to " + imagePath.toString());

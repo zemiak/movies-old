@@ -3,6 +3,7 @@ package com.zemiak.movies.service.tvml;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
+import com.zemiak.movies.service.ConfigurationProvider;
 import com.zemiak.movies.service.GenreService;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.SerieService;
@@ -15,7 +16,8 @@ public class TvmlCovers {
     @Inject MovieService movies;
     @Inject SerieService series;
     @Inject GenreService genres;
-    @Inject String imgPath;
+
+    private final String imgPath = ConfigurationProvider.getImgPath();
 
     public File getCoverFile(String path) {
         String fileName = getFileName(path);

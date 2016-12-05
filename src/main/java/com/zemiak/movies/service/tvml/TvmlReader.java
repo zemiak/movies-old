@@ -3,6 +3,7 @@ package com.zemiak.movies.service.tvml;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
+import com.zemiak.movies.service.ConfigurationProvider;
 import com.zemiak.movies.service.GenreService;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.SerieService;
@@ -14,7 +15,8 @@ public class TvmlReader {
     @Inject GenreService genres;
     @Inject SerieService series;
     @Inject MovieService movies;
-    @Inject String externalUrl;
+
+    private final String externalUrl = ConfigurationProvider.getExternalURL();
 
     public TvmlData readData(String path) {
         TvmlData data = new TvmlData();

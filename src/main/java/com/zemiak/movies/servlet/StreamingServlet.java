@@ -19,6 +19,7 @@ package com.zemiak.movies.servlet;
 
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.lookup.CDILookup;
+import com.zemiak.movies.service.ConfigurationProvider;
 import com.zemiak.movies.service.MovieService;
 import java.io.*;
 import java.nio.file.Paths;
@@ -45,7 +46,7 @@ public class StreamingServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        this.basePath = new CDILookup().lookup(ServletConfiguration.class).getPath();
+        this.basePath = ConfigurationProvider.getPath();
         this.service = new CDILookup().lookup(MovieService.class);
     }
 

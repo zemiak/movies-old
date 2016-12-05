@@ -27,7 +27,7 @@ public class Genre implements Serializable, Comparable<Genre> {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_global")
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;

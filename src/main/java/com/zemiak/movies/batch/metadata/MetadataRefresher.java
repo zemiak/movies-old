@@ -4,6 +4,7 @@ import com.zemiak.movies.batch.service.RefreshStatistics;
 import com.zemiak.movies.batch.service.logs.BatchLogger;
 import com.zemiak.movies.batch.service.logs.CommandLine;
 import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.service.ConfigurationProvider;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.scraper.WebMetadataReader;
 import com.zemiak.movies.strings.Joiner;
@@ -21,13 +22,15 @@ public class MetadataRefresher {
     private static final BatchLogger LOG = BatchLogger.getLogger(MetadataRefresher.class.getName());
 
     private WebMetadataReader descriptions;
+
     @Inject private MovieService service;
-    @Inject private String mp4tags;
-    @Inject private String path;
-    @Inject private String imgPath;
-    @Inject private String ffmpeg;
-    @Inject Boolean developmentSystem;
     @Inject RefreshStatistics stats;
+
+    private final String mp4tags = ConfigurationProvider.getMp4Tags();
+    private final String path = ConfigurationProvider.getPath();
+    private final String imgPath = ConfigurationProvider.getImgPath();
+    private final String ffmpeg = ConfigurationProvider.getFFMpeg();
+    private final Boolean developmentSystem = ConfigurationProvider.isDevelopmentSystem();
 
     private static final String GENRE = "-g";
     private static final String NAME = "-s";

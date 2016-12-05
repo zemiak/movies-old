@@ -1,6 +1,7 @@
 package com.zemiak.movies.batch.metadata;
 
 import com.zemiak.movies.batch.service.logs.BatchLogger;
+import com.zemiak.movies.service.ConfigurationProvider;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.scraper.WebMetadataReader;
 import java.nio.file.Paths;
@@ -13,7 +14,6 @@ import javax.inject.Inject;
 public class WebPageScraper {
     private static final BatchLogger LOG = BatchLogger.getLogger("YearUpdater");
 
-    @Inject private String path;
     @Inject private MovieService service;
 
     public void process(final List<String> files) {
@@ -21,7 +21,7 @@ public class WebPageScraper {
 
         files.stream()
                 .map(fileName -> Paths.get(fileName).toFile().getAbsolutePath())
-                .map(fileName -> service.findByFilename(fileName.substring(path.length())))
+                .map(fileName -> service.findByFilename(fileName.substring(ConfigurationProvider.getPath().length())))
                 .filter(movie -> null != movie)
                 .filter(movie -> null != movie.getUrl() && !"".equals(movie.getUrl()))
                 .filter(movie -> null == movie.getWebPage() || "".equals(movie.getWebPage()))

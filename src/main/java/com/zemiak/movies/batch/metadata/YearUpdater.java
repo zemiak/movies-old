@@ -1,6 +1,7 @@
 package com.zemiak.movies.batch.metadata;
 
 import com.zemiak.movies.batch.service.logs.BatchLogger;
+import com.zemiak.movies.service.ConfigurationProvider;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.scraper.WebMetadataReader;
 import java.nio.file.Paths;
@@ -13,7 +14,6 @@ import javax.inject.Inject;
 public class YearUpdater {
     private static final BatchLogger LOG = BatchLogger.getLogger("YearUpdater");
 
-    @Inject private String path;
     @Inject private MovieService service;
 
     public void process(final List<String> files) {
@@ -21,7 +21,7 @@ public class YearUpdater {
 
         files.stream()
                 .map(fileName -> Paths.get(fileName).toFile().getAbsolutePath())
-                .map(fileName -> service.findByFilename(fileName.substring(path.length())))
+                .map(fileName -> service.findByFilename(fileName.substring(ConfigurationProvider.getPath().length())))
                 .filter(movie -> null != movie)
                 .filter(movie -> null != movie.getUrl() && !movie.getUrl().trim().isEmpty())
                 .filter(movie -> null == movie.getYear())
@@ -31,7 +31,7 @@ public class YearUpdater {
                     if (null == year) {
                         return;
                     }
-                    
+
                     movie.setYear(year);
                     service.mergeAndSave(movie);
 

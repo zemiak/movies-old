@@ -10,11 +10,9 @@ import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.List;
 import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
 
 @Dependent
 public class InfuseMetadataWriter {
-    @Inject String path;
     private static final String TEMPLATE = "<media type=\"Movie\">\n"
             + "<title>{{title}}</title>\n"
             + "<description>{{description}}</description>\n"

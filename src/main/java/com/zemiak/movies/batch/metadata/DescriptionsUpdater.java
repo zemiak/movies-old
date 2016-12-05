@@ -1,6 +1,7 @@
 package com.zemiak.movies.batch.metadata;
 
 import com.zemiak.movies.batch.service.logs.BatchLogger;
+import com.zemiak.movies.service.ConfigurationProvider;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.scraper.WebMetadataReader;
 import java.util.List;
@@ -14,7 +15,7 @@ public class DescriptionsUpdater {
 
     private final WebMetadataReader reader = new WebMetadataReader(null, null, null, true);
     @Inject private MovieService service;
-    @Inject private String path;
+    private final String path = ConfigurationProvider.getPath();
 
     public void process(final List<String> files) {
         files.stream()

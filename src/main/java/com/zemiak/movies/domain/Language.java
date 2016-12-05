@@ -24,8 +24,8 @@ public class Language implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2)
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_global")
     private String id;
 
     @Basic(optional = false)

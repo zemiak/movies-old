@@ -1,10 +1,10 @@
 package com.zemiak.movies.batch.service;
 
 import com.zemiak.movies.batch.service.logs.BatchLogger;
+import com.zemiak.movies.service.ConfigurationProvider;
 import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 
 @ApplicationScoped
 public class RefreshStatistics {
@@ -13,8 +13,6 @@ public class RefreshStatistics {
     private int created;
     private int updated;
 
-    @Inject Boolean developmentSystem;
-
     @PostConstruct
     public void reset() {
         created = 0;
@@ -22,7 +20,7 @@ public class RefreshStatistics {
     }
 
     public void dump() {
-        dump(developmentSystem || haveBeenChanged() ? Level.INFO : Level.FINE);
+        dump(ConfigurationProvider.isDevelopmentSystem() || haveBeenChanged() ? Level.INFO : Level.FINE);
     }
 
     private void dump(Level level) {

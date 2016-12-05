@@ -27,7 +27,7 @@ public class Serie implements Serializable, Comparable<Serie> {
     private static final long serialVersionUID = 4L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_global")
     @Basic(optional = false)
     @Column(name = "id")
     @NotNull

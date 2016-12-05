@@ -1,56 +1,68 @@
 package com.zemiak.movies.service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
-import javax.annotation.PostConstruct;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-@Singleton
-@Startup
-public class ConfigurationProvider {
-    private final Map<String, String> configuration = new HashMap<>();
-
-    @PostConstruct
-    public void readConfiguration() {
-	ResourceBundle props = ResourceBundle.getBundle("config");
-
-        props.keySet().stream().forEach((key) -> {
-            configuration.put(key, props.getString(key));
-        });
-    }
-
-    @Produces
-    public String getString(InjectionPoint point) {
-        String fieldName = point.getMember().getName();
-        String valueForFieldName = configuration.get(fieldName);
-        return valueForFieldName;
-    }
-
-    @Produces
-    public Integer getInt(InjectionPoint point) {
-        String stringValue = getString(point);
-        if (stringValue == null) {
-            return null;
+/**
+ * Needed ENV keys are listed below.
+ *
+ * BIN_PATH
+ * MEDIA_PATH
+ * EXTERNAL_URL
+ * SYSTEM_NAME
+ * MAIL_TO
+ */
+public final class ConfigurationProvider {
+    private static String get(String key) {
+        String value = System.getenv(key);
+        if (null == value || value.trim().isEmpty()) {
+            throw new IllegalStateException("Missing configuration " + key);
         }
 
-        return Integer.parseInt(stringValue);
+        return value;
     }
 
-    @Produces
-    public Boolean getBoolean(InjectionPoint point) {
-        String stringValue = getString(point);
-        if (stringValue == null) {
-            return null;
-        }
-
-        return "true".equals(stringValue);
+    private static Path getBinPath() {
+        return Paths.get(get("BIN_PATH"));
     }
 
-    public String getConfigValue(String key) {
-        return configuration.get(key);
+    private static Path getBasePath() {
+        return Paths.get(get("MEDIA_PATH"));
+    }
+
+    public static String getInfuseLinkPath() {
+        return Paths.get(getPath(), "infuse").toString();
+    }
+
+    public static String getImgPath() {
+        return Paths.get(getPath(), "Pictures", "Movies").toString();
+    }
+
+    public static String getPath() {
+        return getBasePath().toString();
+    }
+
+    public static String getMp4Tags() {
+        return Paths.get(getBinPath().toString(), "mp4tags").toString();
+    }
+
+    public static String getFFMpeg() {
+        return Paths.get(getBinPath().toString(), "ffmpeg").toString();
+    }
+
+    public static String getExternalURL() {
+        return get("EXTERNAL_URL");
+    }
+
+    public static String getMailTo() {
+        return get("MAIL_TO");
+    }
+
+    public static String getSystemName() {
+        return get("SYSTEM_NAME");
+    }
+
+    public static boolean isDevelopmentSystem() {
+        return !"prod".equalsIgnoreCase(getSystemName());
     }
 }

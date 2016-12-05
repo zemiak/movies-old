@@ -1,6 +1,7 @@
 package com.zemiak.movies.batch.metadata;
 
 import com.zemiak.movies.batch.service.logs.BatchLogger;
+import com.zemiak.movies.service.ConfigurationProvider;
 import com.zemiak.movies.service.MovieService;
 import com.zemiak.movies.service.scraper.WebMetadataReader;
 import java.nio.file.Paths;
@@ -13,10 +14,10 @@ import javax.inject.Inject;
 public class ThumbnailCreator {
     private static final BatchLogger LOG = BatchLogger.getLogger("ThumbnailCreator");
 
-    @Inject private String path;
-    @Inject private String imgPath;
-    @Inject private String ffmpeg;
-    @Inject Boolean developmentSystem;
+    private final String path = ConfigurationProvider.getPath();
+    private final String imgPath = ConfigurationProvider.getImgPath();
+    private final String ffmpeg = ConfigurationProvider.getFFMpeg();
+    private final Boolean developmentSystem = ConfigurationProvider.isDevelopmentSystem();
 
     @Inject private MovieService service;
 

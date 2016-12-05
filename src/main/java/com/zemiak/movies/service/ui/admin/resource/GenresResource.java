@@ -17,8 +17,7 @@ import javax.ws.rs.core.MediaType;
 @Produces(value = MediaType.APPLICATION_JSON)
 @Consumes(value = MediaType.APPLICATION_JSON)
 public class GenresResource {
-    @Inject
-    private GenreService genres;
+    @Inject private GenreService genres;
 
     @GET
     public DataTablesAjaxData<GenreDTO> getAllMovies() {

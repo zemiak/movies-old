@@ -1,10 +1,7 @@
 package com.zemiak.movies.service.ui.admin;
 
 import com.zemiak.movies.domain.*;
-import com.zemiak.movies.service.GenreService;
-import com.zemiak.movies.service.LanguageService;
-import com.zemiak.movies.service.MovieService;
-import com.zemiak.movies.service.SerieService;
+import com.zemiak.movies.service.*;
 import com.zemiak.movies.service.scraper.WebMetadataReader;
 import java.io.Serializable;
 import java.util.List;
@@ -26,14 +23,16 @@ public class MovieEditForm implements Serializable {
     private Integer serieId, genreId, year;
     private WebMetadataReader reader;
 
-    @Inject private String path;
-    @Inject private String imgPath;
+    private final String path = ConfigurationProvider.getPath();
+    private final String imgPath = ConfigurationProvider.getImgPath();
+    private final String ffmpeg = ConfigurationProvider.getFFMpeg();
+    private final Boolean developmentSystem = ConfigurationProvider.isDevelopmentSystem();
+
     @Inject private MovieService service;
     @Inject private GenreService genres;
     @Inject private SerieService series;
     @Inject private LanguageService languages;
-    @Inject private String ffmpeg;
-    @Inject Boolean developmentSystem;
+
 
     public MovieEditForm() {
         urlControl = new UrlController();

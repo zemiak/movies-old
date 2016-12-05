@@ -1,5 +1,6 @@
 package com.zemiak.movies.batch.service.logs;
 
+import com.zemiak.movies.service.ConfigurationProvider;
 import java.io.File;
 import java.util.Date;
 import java.util.logging.Level;
@@ -9,7 +10,6 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.annotation.Resource;
 import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
@@ -20,19 +20,15 @@ import javax.mail.internet.MimeMultipart;
 public class SendLogFile {
     private static final Logger LOG = Logger.getLogger(SendLogFile.class.getName());
 
-    @Resource(name = "java:mail/movies")
+    @Resource(name = "mail/movies")
     private Session mailSession;
 
-    @Inject private String mailSubject;
-    @Inject private String mailTo;
-    @Inject private String mailFrom;
-    @Inject private Boolean developmentSystem;
-
-    public SendLogFile() {
-    }
+    private final String mailSubject = "Movies " + ConfigurationProvider.getSystemName() + ": Batch Results";
+    private final String mailTo = ConfigurationProvider.getMailTo();
+    private final String mailFrom = "noreply@movies-" + ConfigurationProvider.getSystemName().toLowerCase() + ".zemiakbox.com";
 
     public void send() {
-        if (developmentSystem) {
+        if (ConfigurationProvider.isDevelopmentSystem()) {
             return;
         }
 

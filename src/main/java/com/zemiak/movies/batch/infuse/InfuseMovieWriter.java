@@ -4,12 +4,12 @@ import com.zemiak.movies.batch.service.RefreshStatistics;
 import com.zemiak.movies.batch.service.logs.BatchLogger;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.service.ConfigurationProvider;
 import com.zemiak.movies.service.MovieService;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -17,12 +17,10 @@ import javax.persistence.PersistenceContext;
 
 @Dependent
 public class InfuseMovieWriter {
-    private static final Logger LOG1 = Logger.getLogger(InfuseMovieWriter.class.getName());
     private static final BatchLogger LOG = BatchLogger.getLogger(InfuseMovieWriter.class.getName());
 
     @Inject MovieService service;
-    @Inject String path;
-    @Inject String infuseLinkPath;
+    private final String path = ConfigurationProvider.getPath();
     @Inject RefreshStatistics stats;
     @Inject InfuseCoversAndLinks metadataFiles;
     @PersistenceContext EntityManager em;

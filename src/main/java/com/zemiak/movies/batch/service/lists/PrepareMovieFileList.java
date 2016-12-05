@@ -1,8 +1,7 @@
 package com.zemiak.movies.batch.service.lists;
 
-import static com.zemiak.movies.batch.service.lists.PrepareMusicFileList.getFileExtension;
-import static com.zemiak.movies.batch.service.lists.PrepareMusicFileList.getRelativeFileName;
 import com.zemiak.movies.batch.service.logs.BatchLogger;
+import com.zemiak.movies.service.ConfigurationProvider;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -11,12 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
 
 @Dependent
 public class PrepareMovieFileList {
-    @Inject
-    private String path;
+    private final String path = ConfigurationProvider.getPath();
 
     private final List<String> files = new ArrayList<>();
     private static final BatchLogger LOG = BatchLogger.getLogger(PrepareMovieFileList.class.getName());
@@ -63,5 +60,19 @@ public class PrepareMovieFileList {
         if (!relative.startsWith(".") && ("mp4".equals(ext) || "m4v".equals(ext))) {
             files.add(absolutePath);
         }
+    }
+
+    private static String getFileExtension(final String absolutePath) {
+        final int pos = absolutePath.lastIndexOf(".");
+        final String part = absolutePath.substring(pos + 1, absolutePath.length()).toLowerCase();
+
+        return part;
+    }
+
+    private static String getRelativeFileName(final String absolutePath) {
+        final int pos = absolutePath.lastIndexOf("/");
+        final String part = absolutePath.substring(pos + 1, absolutePath.length()).toLowerCase();
+
+        return part;
     }
 }
