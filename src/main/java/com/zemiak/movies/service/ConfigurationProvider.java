@@ -38,15 +38,15 @@ public final class ConfigurationProvider {
     }
 
     public static String getInfuseLinkPath() {
-        return Paths.get(getPath(), "infuse").toString();
+        return Paths.get(getBasePath().toString(), "infuse").toString();
     }
 
     public static String getImgPath() {
-        return Paths.get(getPath(), "Pictures", "Movies").toString();
+        return Paths.get(getBasePath().toString(), "Pictures", "Movies").toString();
     }
 
     public static String getPath() {
-        return getBasePath().toString();
+        return Paths.get(getBasePath().toString(), "Movies").toString();
     }
 
     public static String getMp4Tags() {

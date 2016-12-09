@@ -25,8 +25,8 @@ public class Language implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
-    @SequenceGenerator(name="pk_global", sequenceName="seq_global")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_global")
+    @SequenceGenerator(name="seq_global", sequenceName="seq_global", initialValue = 47000000, allocationSize = 1, schema = "data")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_global")
     private String id;
 
     @Basic(optional = false)

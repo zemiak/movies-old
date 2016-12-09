@@ -31,8 +31,8 @@ public class Movie implements Serializable, Comparable<Movie> {
     private static final long serialVersionUID = 3L;
 
     @Id
-    @SequenceGenerator(name="pk_global", sequenceName="seq_global")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_global")
+    @SequenceGenerator(name="seq_global", sequenceName="seq_global", initialValue = 47000000, allocationSize = 1, schema = "data")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_global")
     @Basic(optional = false)
     @Column(name = "id")
     @NotNull

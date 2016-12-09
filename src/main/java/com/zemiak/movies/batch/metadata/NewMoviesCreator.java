@@ -30,11 +30,15 @@ public class NewMoviesCreator {
     }
 
     private String getRelativeFilename(final String absoluteFilename) {
-        String absoluteWithSlashes = absoluteFilename;
-        if (absoluteWithSlashes.startsWith(path)) {
-            absoluteWithSlashes = absoluteWithSlashes.substring(path.length());
+        String relative = absoluteFilename;
+        if (relative.startsWith(path)) {
+            relative = relative.substring(path.length());
         }
 
-        return absoluteWithSlashes;
+        if (relative.startsWith(System.getProperty("file.separator"))) {
+            relative = relative.substring(System.getProperty("file.separator").length());
+        }
+
+        return relative;
     }
 }
