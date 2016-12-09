@@ -1,5 +1,6 @@
 package com.zemiak.movies.batch.metadata;
 
+import com.zemiak.movies.TestConfigurationProvider;
 import com.zemiak.movies.domain.Genre;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
@@ -19,6 +20,8 @@ public class MovieMetadataTest {
 
     @Before
     public void initData() {
+        TestConfigurationProvider.init();
+
         Genre genre = new Genre();
         genre.setId(-1);
         genre.setName("S/F");

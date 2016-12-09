@@ -2,6 +2,7 @@ package com.zemiak.movies.service;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
 
 /**
  * Needed ENV keys are listed below.
@@ -13,8 +14,14 @@ import java.nio.file.Paths;
  * MAIL_TO
  */
 public final class ConfigurationProvider {
+    private static Map<String, String> providedConfig = null;
+
+    public static void setProvidedConfig(Map<String, String> config) {
+        providedConfig = config;
+    }
+
     private static String get(String key) {
-        String value = System.getenv(key);
+        String value = null == providedConfig ? System.getenv(key) : providedConfig.get(key);
         if (null == value || value.trim().isEmpty()) {
             throw new IllegalStateException("Missing configuration " + key);
         }
