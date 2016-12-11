@@ -35,9 +35,7 @@ public class NewMoviesCreator {
             relative = relative.substring(path.length());
         }
 
-        if (relative.startsWith(System.getProperty("file.separator"))) {
-            relative = relative.substring(System.getProperty("file.separator").length());
-        }
+        relative = MovieService.removeFileSeparatorFromStartIfNeeded(relative);
 
         return relative;
     }

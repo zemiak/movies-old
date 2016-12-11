@@ -108,7 +108,9 @@ public class MovieService {
         return res;
     }
 
-    public Movie findByFilename(String fileName) {
+    public Movie findByFilename(final String fileNameStart) {
+        String fileName = removeFileSeparatorFromStartIfNeeded(fileNameStart);
+
         Query query = em.createNamedQuery("Movie.findByFileName");
         query.setParameter("fileName", fileName);
         Movie movie;
@@ -200,5 +202,9 @@ public class MovieService {
 
     public List<Movie> getRecentlyAdded() {
         return getLastMovies(64);
+    }
+
+    public static String removeFileSeparatorFromStartIfNeeded(String relative) {
+        return !relative.startsWith(File.separator) ? relative : relative.substring(1);
     }
 }
