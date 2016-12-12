@@ -15,7 +15,7 @@ public class MetadataService {
     @Inject WebPageScraper scraper;
 
     public void process() {
-        scraper.process(movieFileList.getFiles());
+//        scraper.process(movieFileList.getFiles());
         creator.process(movieFileList.getFiles());
         refresher.process(movieFileList.getFiles());
         descUpdater.process(movieFileList.getFiles());
