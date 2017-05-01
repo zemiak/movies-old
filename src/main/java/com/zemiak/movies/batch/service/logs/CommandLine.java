@@ -1,24 +1,11 @@
 package com.zemiak.movies.batch.service.logs;
 
-import com.zemiak.movies.batch.service.logs.BatchLogger;
 import com.zemiak.movies.strings.Joiner;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -55,9 +42,9 @@ public class CommandLine {
         }
 
         if (result.isError()) {
-            LOG.log(Level.SEVERE, "... execCmd: error code is {0}, arguments {1}, output is {2}",
-                    new Object[]{result.getExitValue(), null == arguments ? "" : Joiner.join(arguments, "|"),
-                        Joiner.join(result.getOutput(), "|")});
+            LOG.log(Level.SEVERE, "... execCmd: error code is {0}, command {1}, arguments {2}, output is {3}, error is {4}",
+                    new Object[]{result.getExitValue(), cmd, null == arguments ? "" : Joiner.join(arguments, "|"),
+                        Joiner.join(result.getOutput(), "|"), Joiner.join(result.getError(), "|")});
             throw new IllegalStateException("Exit code " + result.getExitValue() + " instead of success");
         }
 
@@ -105,6 +92,13 @@ public class CommandLine {
             CommandLineResult result = new CommandLineResult();
             result.setExitValue(exitValue);
             result.setOutput(lines);
+
+            lines.clear();
+            try (InputStream stream = process.getErrorStream();) {
+                lines.addAll(Arrays.asList(streamToString(stream).split(System.getProperty("line.separator"))));
+            }
+
+            result.setError(lines);
 
             return result;
         };
