@@ -29,7 +29,7 @@ public class MetadataRefresher {
     private final String mp4tags = ConfigurationProvider.getMp4Tags();
     private final String path = ConfigurationProvider.getPath();
     private final String imgPath = ConfigurationProvider.getImgPath();
-    private final String ffmpeg = ConfigurationProvider.getFFMpeg();
+    private final String ffmpeg = ConfigurationProvider.getFFMpegThumbnailer();
     private final Boolean developmentSystem = ConfigurationProvider.isDevelopmentSystem();
 
     private static final String GENRE = "-g";

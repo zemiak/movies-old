@@ -25,7 +25,7 @@ public class MovieEditForm implements Serializable {
 
     private final String path = ConfigurationProvider.getPath();
     private final String imgPath = ConfigurationProvider.getImgPath();
-    private final String ffmpeg = ConfigurationProvider.getFFMpeg();
+    private final String ffmpeg = ConfigurationProvider.getFFMpegThumbnailer();
     private final Boolean developmentSystem = ConfigurationProvider.isDevelopmentSystem();
 
     @Inject private MovieService service;

@@ -29,6 +29,11 @@ public class WebMetadataReader {
             }
         }
 
+        SeriesDescriptionReader descriptions = new SeriesDescriptionReader(path, ffmpeg, developmentSystem);
+        if (descriptions.accepts(movie)) {
+            return descriptions.parseDescription(movie);
+        }
+
         return null;
     }
 

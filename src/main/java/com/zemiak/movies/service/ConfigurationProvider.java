@@ -53,8 +53,8 @@ public final class ConfigurationProvider {
         return Paths.get(getBinPath().toString(), "mp4tags").toString();
     }
 
-    public static String getFFMpeg() {
-        return Paths.get(getBinPath().toString(), "ffmpeg").toString();
+    public static String getFFMpegThumbnailer() {
+        return Paths.get(getBinPath().toString(), "ffmpegthumbnailer").toString();
     }
 
     public static String getExternalURL() {
