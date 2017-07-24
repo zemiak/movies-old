@@ -37,6 +37,10 @@ public final class ConfigurationProvider {
         return Paths.get(get("MEDIA_PATH"));
     }
 
+    public static String getPhotoPath() {
+        return Paths.get(getBasePath().toString(), "Pictures").toString();
+    }
+
     public static String getInfuseLinkPath() {
         return Paths.get(getBasePath().toString(), "infuse").toString();
     }
@@ -47,6 +51,10 @@ public final class ConfigurationProvider {
 
     public static String getPath() {
         return Paths.get(getBasePath().toString(), "Movies").toString();
+    }
+
+    public static String getMusicPath() {
+        return Paths.get(getBasePath().toString(), "Music").toString();
     }
 
     public static String getMp4Tags() {
@@ -71,5 +79,9 @@ public final class ConfigurationProvider {
 
     public static boolean isDevelopmentSystem() {
         return !"prod".equalsIgnoreCase(getSystemName());
+    }
+
+    public static String getPlexLinkPath() {
+        return Paths.get(getBasePath().toString(), "plex").toString();
     }
 }

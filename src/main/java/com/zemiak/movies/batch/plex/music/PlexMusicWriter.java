@@ -15,8 +15,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Level;
 import javax.enterprise.context.Dependent;
-import javax.faces.view.facelets.TagException;
 import javax.inject.Inject;
+import org.farng.mp3.TagException;
 import org.farng.mp3.id3.ID3v1_1;
 import org.farng.mp3.id3.ID3v2_2;
 
@@ -39,13 +39,12 @@ public class PlexMusicWriter {
     }
 
     private void process(String musicFileName) throws IOException {
-        // Music/Artist_Name - Album_Name/Track_Number - Track_Name.ext
+        String plexLinkPath = ConfigurationProvider.getPlexLinkPath();
         String ext = PrepareMusicFileList.getFileExtension(musicFileName);
 
         MovieMetadata data = getSongMetadata(musicFileName, ext);
         if (null == data) {
             LOG.log(Level.FINE, "No metadata for the song {0}", musicFileName);
-            stats.incrementMissingMusicMetadata();
             return;
         }
 

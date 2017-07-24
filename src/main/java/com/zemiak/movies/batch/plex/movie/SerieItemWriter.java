@@ -3,6 +3,7 @@ package com.zemiak.movies.batch.plex.movie;
 import com.zemiak.movies.batch.service.RefreshStatistics;
 import com.zemiak.movies.domain.Movie;
 import com.zemiak.movies.domain.Serie;
+import com.zemiak.movies.service.ConfigurationProvider;
 import com.zemiak.movies.strings.Encodings;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,12 +24,11 @@ public class SerieItemWriter {
     static final Integer GOT = 1000;
     static final Integer MASH = 1;
 
-    @Inject String plexLinkPath;
-    @Inject String path;
     @Inject RefreshStatistics stats;
     @PersistenceContext EntityManager em;
 
     public void process(Movie movie) throws IOException {
+        String plexLinkPath = ConfigurationProvider.getPlexLinkPath();
         Serie serie = movie.getSerie();
         Path folder = Paths.get(plexLinkPath, PATH, Encodings.deAccent(serie.getName()));
 
@@ -44,6 +44,7 @@ public class SerieItemWriter {
     }
 
     private void process(Path folder, Movie movie, Integer decimals, Integer season) throws IOException {
+        String path = ConfigurationProvider.getPath();
         String serie = Encodings.deAccent(movie.getSerieName());
         String seasonNumber = String.format("%02d", season);
         String format = "%0" + String.valueOf(decimals) + "d";
@@ -65,9 +66,7 @@ public class SerieItemWriter {
 
         Files.createDirectories(linkFolder);
         Files.createSymbolicLink(linkName, existing);
-        stats.incrementLinksCreated();
 
-        movie.setPlexFileName(linkName.toString());
         em.merge(movie);
 
         LOG.log(Level.FINE, "Created TV Show link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});

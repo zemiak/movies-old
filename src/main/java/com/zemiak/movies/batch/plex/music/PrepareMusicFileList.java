@@ -1,6 +1,6 @@
 package com.zemiak.movies.batch.plex.music;
 
-import com.zemiak.movies.batch.service.BatchLogger;
+import com.zemiak.movies.service.ConfigurationProvider;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -9,35 +9,32 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
 
 @Dependent
 public class PrepareMusicFileList {
-    @Inject
-    private String musicPath;
-
     private final List<String> files = new ArrayList<>();
 
-    private static final BatchLogger LOG = BatchLogger.getLogger(PrepareMusicFileList.class.getName());
-    private static final Logger LOG1 = Logger.getLogger(PrepareMusicFileList.class.getName());
+    private static final Logger LOG = Logger.getLogger(PrepareMusicFileList.class.getName());
 
 
     @PostConstruct
     public void init() {
+        String musicPath = ConfigurationProvider.getMusicPath();
+
         File mainDir = new File(musicPath);
         if (! mainDir.isDirectory()) {
-            LOG.log(Level.SEVERE, musicPath + " is not a directory", null);
+            LOG.log(Level.SEVERE, "{0} is not a directory", musicPath);
             return;
         }
 
         if (! mainDir.canExecute() || ! mainDir.canRead()) {
-            LOG.log(Level.SEVERE, musicPath + " is not readable", null);
+            LOG.log(Level.SEVERE, "{0} is not readable", musicPath);
             return;
         }
 
         readMusicFiles(mainDir);
 
-        LOG1.log(Level.FINE, "Found {0} music files on HDD.", files.size());
+        LOG.log(Level.FINE, "Found {0} music files on HDD.", files.size());
     }
 
     public List<String> getFiles() {

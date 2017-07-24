@@ -1,6 +1,7 @@
 package com.zemiak.movies.batch.plex.photo;
 
 import com.zemiak.movies.batch.service.RefreshStatistics;
+import com.zemiak.movies.service.ConfigurationProvider;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,9 +18,7 @@ public class PlexPhotoWriter {
     private static final Logger LOG = Logger.getLogger(PlexPhotoWriter.class.getName());
     public static final String PATH = "Photos";
 
-    @Inject String plexLinkPath;
     @Inject RefreshStatistics stats;
-    @Inject String photoPath;
 
     public void process(final List<String> list) {
         list.stream().filter(obj -> null != obj).forEach(mainYearFolder -> {
@@ -32,6 +31,8 @@ public class PlexPhotoWriter {
     }
 
     private void process(String yearFolder) throws IOException {
+        String plexLinkPath = ConfigurationProvider.getPlexLinkPath();
+        String photoPath = ConfigurationProvider.getPhotoPath();
         Path existing = Paths.get(photoPath, yearFolder);
         Files.createDirectories(Paths.get(plexLinkPath, PATH, yearFolder));
 

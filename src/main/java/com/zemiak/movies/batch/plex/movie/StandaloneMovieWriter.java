@@ -2,6 +2,7 @@ package com.zemiak.movies.batch.plex.movie;
 
 import com.zemiak.movies.batch.service.RefreshStatistics;
 import com.zemiak.movies.domain.Movie;
+import com.zemiak.movies.service.ConfigurationProvider;
 import com.zemiak.movies.strings.Encodings;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,12 +20,12 @@ public class StandaloneMovieWriter {
     public static final String PATH = "Movies";
     private static final Logger LOG = Logger.getLogger(StandaloneMovieWriter.class.getName());
 
-    @Inject String path;
-    @Inject String plexLinkPath;
     @Inject RefreshStatistics stats;
     @PersistenceContext EntityManager em;
 
     public void process(Movie movie) throws IOException {
+        String plexLinkPath = ConfigurationProvider.getPlexLinkPath();
+        String path = ConfigurationProvider.getPath();
         String movieName = (null == movie.getOriginalName() || "".equals(movie.getOriginalName().trim()))
                 ? movie.getName() : movie.getOriginalName();
         Path linkName = Paths.get(plexLinkPath, PATH, Encodings.deAccent(movieName) + ".m4v");
@@ -45,9 +46,6 @@ public class StandaloneMovieWriter {
 
         Path existing = Paths.get(path, movie.getFileName());
         Files.createSymbolicLink(linkName, existing);
-        stats.incrementLinksCreated();
-
-        movie.setPlexFileName(linkName.toString());
         em.merge(movie);
 
         LOG.log(Level.FINE, "Created movie link {0} -> {1}", new Object[]{linkName.toString(), existing.toString()});

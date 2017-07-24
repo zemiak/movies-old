@@ -11,12 +11,10 @@ public class PlexService {
     @Inject BasicPlexFolderStructureCreator plexFolders;
     @Inject PlexMovieWriter plexMovies;
     @Inject PlexMusicWriter plexMusic;
-    @Inject TriggerPlexRefresh plexRefresh;
 
     public void process(List<String> movieFileList, List<String> musicFileList) {
         plexFolders.cleanAndCreate();
         plexMovies.process(movieFileList);
         plexMusic.process(musicFileList);
-        plexRefresh.refreshAll();
     }
 }

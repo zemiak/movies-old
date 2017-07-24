@@ -2,7 +2,7 @@ package com.zemiak.movies.batch.plex.movie;
 
 import static com.zemiak.movies.batch.plex.music.PrepareMusicFileList.getFileExtension;
 import static com.zemiak.movies.batch.plex.music.PrepareMusicFileList.getRelativeFileName;
-import com.zemiak.movies.batch.service.BatchLogger;
+import com.zemiak.movies.service.ConfigurationProvider;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -11,33 +11,32 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
 
 @Dependent
 public class PrepareMovieFileList {
-    @Inject
-    private String path;
+    //private String path;
 
     private final List<String> files = new ArrayList<>();
-    private static final BatchLogger LOG = BatchLogger.getLogger(PrepareMovieFileList.class.getName());
-    private static final Logger LOG1 = Logger.getLogger(PrepareMovieFileList.class.getName());
+    private static final Logger LOG = Logger.getLogger(PrepareMovieFileList.class.getName());
 
 
     @PostConstruct
     public void init() {
+        String path = ConfigurationProvider.getPath();
+
         File mainDir = new File(path);
         if (! mainDir.isDirectory()) {
-            LOG.log(Level.SEVERE, path + " is not a directory", null);
+            LOG.log(Level.SEVERE, " is not a directory" + path);
             return;
         }
 
         if (! mainDir.canExecute() || ! mainDir.canRead()) {
-            LOG.log(Level.SEVERE, path + " is not readable", null);
+            LOG.log(Level.SEVERE, "{0} is not readable", path);
             return;
         }
 
         readMovieFiles(mainDir);
-        LOG1.log(Level.FINE, "Found {0} movies on HDD.", files.size());
+        LOG.log(Level.FINE, "Found {0} movies on HDD.", files.size());
     }
 
     public List<String> getFiles() {
