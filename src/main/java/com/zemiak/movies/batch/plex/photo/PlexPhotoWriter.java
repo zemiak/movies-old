@@ -54,7 +54,7 @@ public class PlexPhotoWriter {
             Path existingPhoto = Paths.get(existing.toString(), fileName);
             final File file = existing.toFile();
 
-            if (file.isFile() && file.canRead()) {
+            if (file.canRead()) {
                 Path linkPhotoPath = Paths.get(linkPath.toString(), fileName);
                 Files.createSymbolicLink(linkPhotoPath, existingPhoto);
             }

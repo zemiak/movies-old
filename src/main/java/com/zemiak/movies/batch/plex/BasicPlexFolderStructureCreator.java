@@ -4,17 +4,17 @@ import com.zemiak.movies.batch.plex.movie.SerieItemWriter;
 import com.zemiak.movies.batch.plex.movie.StandaloneMovieWriter;
 import com.zemiak.movies.batch.plex.music.PlexMusicWriter;
 import com.zemiak.movies.batch.plex.photo.PlexPhotoWriter;
+import com.zemiak.movies.batch.service.logs.BatchLogger;
 import com.zemiak.movies.service.ConfigurationProvider;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
 
 @Dependent
 public class BasicPlexFolderStructureCreator {
-    private static final Logger LOG = Logger.getLogger(BasicPlexFolderStructureCreator.class.getName());
+    private static final BatchLogger LOG = BatchLogger.getLogger(BasicPlexFolderStructureCreator.class.getName());
 
     public void cleanAndCreate() {
         String plexLinkPath = ConfigurationProvider.getPlexLinkPath();

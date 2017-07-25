@@ -2,6 +2,7 @@ package com.zemiak.movies.batch.service;
 
 import com.zemiak.movies.batch.infuse.InfuseService;
 import com.zemiak.movies.batch.metadata.MetadataService;
+import com.zemiak.movies.batch.plex.PlexService;
 import com.zemiak.movies.batch.service.logs.BatchLogger;
 import com.zemiak.movies.batch.service.logs.SendLogFile;
 import com.zemiak.movies.domain.CacheClearEvent;
@@ -25,6 +26,7 @@ public class UpdateMoviesScheduler {
     @Inject InfuseService infuseService;
     @Inject MetadataService metadataService;
     @Inject CacheDataReader cache;
+    @Inject PlexService plexService;
 
     @Schedule(dayOfWeek="*", hour="03", minute="10")
     public void startScheduled() {
@@ -45,6 +47,7 @@ public class UpdateMoviesScheduler {
 
             metadataService.process();
             infuseService.process();
+            plexService.process();
 
             stats.dump();
 
