@@ -47,7 +47,7 @@ public class UpdateMoviesScheduler {
 
             metadataService.process();
             infuseService.process();
-            plexService.process();
+//            plexService.process();
 
             stats.dump();
 
