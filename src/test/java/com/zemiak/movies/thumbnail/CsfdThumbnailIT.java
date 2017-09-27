@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CsfdThumbnailIT {
+    private static final String MOVIE_URL = "https://www.csfd.cz/film/434887-wind-river/";
+
     private Movie movie;
     private Csfd reader;
 
@@ -25,7 +27,7 @@ public class CsfdThumbnailIT {
         movie.setUrl("http://www.imdb.com/title/tt0096895/?ref_=fn_al_tt_1");
         assertFalse(reader.accepts(movie));
 
-        movie.setUrl("http://www.csfd.cz/film/9499-matrix/");
+        movie.setUrl(MOVIE_URL);
         assertTrue(reader.accepts(movie));
 
         movie.setUrl("http://www.csfd.cz/film/1069-batman/");
@@ -35,7 +37,7 @@ public class CsfdThumbnailIT {
     @Test
     public void testDownload() {
         String fileName = "/tmp/csfd-" + Math.random() + ".jpg";
-        movie.setUrl("http://www.csfd.cz/film/9499-matrix/");
+        movie.setUrl(MOVIE_URL);
         reader.setImageFileName(fileName);
         reader.processThumbnail(movie);
 

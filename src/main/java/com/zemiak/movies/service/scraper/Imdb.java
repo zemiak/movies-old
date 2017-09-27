@@ -19,12 +19,13 @@ public class Imdb implements IWebMetadataReader {
 
     private static final String URL1 = "www.imdb.com/";
     private static final String URL2 = "http://" + URL1;
+    private static final String URL3 = "https://" + URL1;
     private static final String SEARCH_URL = URL2 + "find?q=";
 
     @Override
     public boolean accepts(final Movie movie) {
         final String url = movie.getUrl();
-        return (null != url) && (url.startsWith(URL1) || url.startsWith(URL2));
+        return (null != url) && (url.startsWith(URL1) || url.startsWith(URL2) || url.startsWith(URL3));
     }
 
     @Override

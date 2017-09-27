@@ -21,6 +21,7 @@ public class Csfd implements IWebMetadataReader {
 
     private static final String URL1 = "www.csfd.cz/";
     private static final String URL2 = "http://" + URL1;
+    private static final String URL3 = "https://" + URL1;
     private static final String SEARCH_URL = URL2 + "hledat/?q=";
 
     private String imageFileName;
@@ -29,7 +30,7 @@ public class Csfd implements IWebMetadataReader {
     public boolean accepts(final Movie movie) {
         final String url = movie.getUrl();
 
-        return (null != url) && (url.startsWith(URL1) || url.startsWith(URL2));
+        return (null != url) && (url.startsWith(URL1) || url.startsWith(URL2) || url.startsWith(URL3));
     }
 
     @Override
