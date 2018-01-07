@@ -7,6 +7,8 @@
 *~
 target
 .DS_Store
+.idea
+.idea/*
 
 src/main/resources/META-INF/persistence.xml
 nb-configuration.xml

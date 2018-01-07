@@ -29,11 +29,6 @@ public class WebMetadataReader {
             }
         }
 
-        SeriesDescriptionReader descriptions = new SeriesDescriptionReader(path, ffmpeg, developmentSystem);
-        if (descriptions.accepts(movie)) {
-            return descriptions.parseDescription(movie);
-        }
-
         return null;
     }
 
@@ -42,11 +37,6 @@ public class WebMetadataReader {
                 .filter(reader -> reader.accepts(movie))
                 .findFirst()
                 .isPresent();
-    }
-
-    public boolean isSpecialDescriptions(Movie movie) {
-        SeriesDescriptionReader descriptions = new SeriesDescriptionReader(path, ffmpeg, developmentSystem);
-        return descriptions.accepts(movie);
     }
 
     public boolean processThumbnail(final Movie movie) {

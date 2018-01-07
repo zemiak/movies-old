@@ -128,14 +128,6 @@ public class MovieMetadata {
             return true;
         }
 
-        if (commentsAreEmpty && DESCRIPTIONS.isSpecialDescriptions(movie)) {
-            if (debug) {
-                LOG.log(Level.INFO, "{0}: metadata comments empty, but descriptions available internaly. Updating.", movie.getFileName());
-            }
-
-            return true;
-        }
-
         return false;
     }
 
