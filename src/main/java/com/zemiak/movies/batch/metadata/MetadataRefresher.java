@@ -89,6 +89,18 @@ public class MetadataRefresher {
 
                 data.getMovie().setDescription(desc);
                 service.mergeAndSave(data.getMovie());
+            } else {
+                if (null == desc) {
+                    LOG.info("Wanted to update comment, but not because of null desc");
+                }
+
+                if (desc.trim().isEmpty()) {
+                    LOG.info("Wanted to update comment, but not because of desc is empty");
+                }
+
+                if (!desc.equals(data.getComments())) {
+                    LOG.info("Wanted to update comment, but not because of desc is filled in and correct");
+                }
             }
         }
     }
