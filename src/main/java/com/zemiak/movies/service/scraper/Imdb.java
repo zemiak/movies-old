@@ -124,19 +124,18 @@ public class Imdb implements IWebMetadataReader {
             return null;
         }
 
-        Element datePublished = doc.select("meta[itemprop=datePublished]").first();
+        Element datePublished = doc.select("span[id=titleYear]>a").first();
         if (null == datePublished) {
             LOG.log(Level.SEVERE, "Cannot read origin", null);
             return null;
         }
 
-        String dateText = datePublished.attr("content");
-        if (null == dateText || "".equals(dateText) || !dateText.contains("-")) {
-            LOG.log(Level.SEVERE, "Bad format of date text (1). Should be yyyy-mm-dd, is " + dateText, dateText);
+        String dateText = datePublished.text();
+        if (null == dateText || dateText.length() != 4) {
+            LOG.log(Level.SEVERE, "Bad format of date text (1). Should be yyyy, is " + dateText, dateText);
             return null;
         }
 
-        String[] dateArray = dateText.split("-");
-        return Integer.valueOf(dateArray[0]);
+        return Integer.valueOf(dateText);
     }
 }
