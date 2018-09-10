@@ -96,14 +96,14 @@ public class InfuseMovieWriter {
     }
 
     private String getNumberPrefix(Movie movie) {
-        if (null == movie.getDisplayOrder() && Objects.nonNull(movie.getYear()) && movie.getYear() > 1800) {
-            return String.format("%4d", (2500 - movie.getYear())) + "-";
+        if ((null == movie.getSerie() || movie.getSerie().isEmpty()) && Objects.nonNull(movie.getYear()) && movie.getYear() > 1800) {
+            return String.format("%04d", (2500 - movie.getYear())) + "-";
         }
 
         if (null == movie.getDisplayOrder() || movie.getDisplayOrder().equals(0L) || movie.getDisplayOrder() > 999) {
             return "";
         }
 
-        return String.format("%4d", movie.getDisplayOrder()) + "-";
+        return String.format("%04d", movie.getDisplayOrder()) + "-";
     }
 }
