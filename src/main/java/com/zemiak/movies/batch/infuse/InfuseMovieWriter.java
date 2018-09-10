@@ -9,6 +9,7 @@ import com.zemiak.movies.service.MovieService;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -95,10 +96,14 @@ public class InfuseMovieWriter {
     }
 
     private String getNumberPrefix(Movie movie) {
+        if (null == movie.getDisplayOrder() && Objects.nonNull(movie.getYear()) && movie.getYear() > 1800) {
+            return String.format("%4d", (2500 - movie.getYear())) + "-";
+        }
+
         if (null == movie.getDisplayOrder() || movie.getDisplayOrder().equals(0L) || movie.getDisplayOrder() > 999) {
             return "";
         }
 
-        return String.valueOf(movie.getDisplayOrder());
+        return String.format("%4d", movie.getDisplayOrder()) + "-";
     }
 }
